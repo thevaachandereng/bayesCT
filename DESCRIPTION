@@ -1,0 +1,21 @@
+Package: ACT
+Type: Package
+Title: Adaptive Clinical Trial (ACT)
+Version: 1.0.0
+Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu", role = c("cre", "aut")), 
+             person("Donnie", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
+             person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com", role = c("aut")))
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+LazyLoad: yes
+License: GPL-3
+URL: https://github.com/thevaachandereng/ACT
+BugReports: https://github.com/thevaachandereng/ACT/issues    
+Encoding: UTF-8
+LazyData: true
+Imports: Rcpp
+RoxygenNote: 6.0.1
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
