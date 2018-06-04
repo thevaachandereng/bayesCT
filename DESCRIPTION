@@ -1,6 +1,6 @@
-Package: ACT
+Package: BACT
 Type: Package
-Title: Adaptive Clinical Trial (ACT)
+Title: Bayesian Adaptive Clinical Trial (ACT)
 Version: 1.0.0
 Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu", role = c("cre", "aut")), 
              person("Donnie", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
