@@ -17,16 +17,23 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 
 # Introduction
 
-Clinical Trial are randomized intervention comparing a new treatment/drug to a current treatment/drug (control). 
-Most analysis developed for clinical trials have been highly focused on frequentist approach. 
-Bayesian adaptive trial have not gain much popularity until recent years. 
 
-Bayesian adaptive trials provides much more flexibility over the conventional frequestist approach in terms of the design and analysis of a clinical trial.
-Bayesian adaptive trials 
+Clinical Trial is randomized intervention comparing a new treatment/drug to a current treatment/drug (control). 
+Most of the analysis developed for clinical trials have been highly focused on frequentist approach. 
+The Bayesian adaptive trial has not gained much popularity until recent years. 
+
+Bayesian adaptive trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial.
+Bayesian adaptive trials can incorporate historical data which helps reduce the sample size required in a clinical trial. 
+Bayesian adaptive trials are also useful in an interim analysis for early stopping for success or futility. 
+Bayesian adaptive trials have also been used in multiple treatments vs control which allows dropping a treatment which is not successful during a trial. 
+Statistician has altered randomization ratio to promote efficiency in a trial or even to increase recruitment of patients into a trial. 
+
+However, simulation of a Bayesian adaptive trial is much more complex compared to the general frequentist approach. 
+This package should aid with the simulation of Bayesian adaptive trials. 
 
 
+If you use BACT in published research, please cite:
 
-If you use BACT in published research, please cite our preprint:
 
 
 If after reading through this vignette you have questions or problems
@@ -72,5 +79,11 @@ After successful installation, the package must be loaded into the working space
 ```{r lib, results="asis", eval=TRUE}
 library(BACT)
 ```
+
+
+
+# Recruitment
+
+The recruitment of patients are assumed to follow a poisson process. 
 
 
