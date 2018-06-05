@@ -41,6 +41,7 @@ enrollment <- function(param, N_total, time = NULL){
       output <- c(output, rep(count, rpois(1, param[index])))
     }
   }
+  #adjusting trial and ouputs
   output <- output[1:N_total]
   output <- output - output[1]
   output
