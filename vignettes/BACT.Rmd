@@ -84,6 +84,34 @@ library(BACT)
 
 # Recruitment
 
-The recruitment of patients are assumed to follow a poisson process. 
+The recruitment of patients is assumed to follow a Poisson process.
+Since patient recruitment in a trial is independent of one another, the "memoryless property" helps in the modeling of recruitment of patient. 
+However, we cannot assume a homogeneous Poisson process since patient recruitment varies over time. 
+Thus, the enrollment() function assumes a stepwise Poisson process with different $\lambda$ over a different time interval. 
+The function also omits an enrollment date since the first enrollment till it reaches the sample size capacity. 
+For instance, if we have a piecewise function of $\lambda$ as below, t representing the time interval with a sample size (N_total) of 50, the example function to simulate enrollment dates are as below.  
+
+
+
+\[  \lambda  \left\{
+\begin{array}{ll}
+      0.3 & t \in [0, 5) \\
+      0.7 & t \in [5, 10) \\
+      0.9 & t \in [10, 15) \\
+      1.2 & t \in [15, \infty) \\
+\end{array} 
+\right. \]
+
+
+```{r}
+set.seed(20000)
+enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15, 100))
+```
+
+
+
+
+
+
 
 
