@@ -1,0 +1,76 @@
+---
+title: "BACT: Bayesian Adaptive Clinical Trial"
+author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{bayesian trial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+```
+
+
+# Introduction
+
+Clinical Trial are randomized intervention comparing a new treatment/drug to a current treatment/drug (control). 
+Most analysis developed for clinical trials have been highly focused on frequentist approach. 
+Bayesian adaptive trial have not gain much popularity until recent years. 
+
+Bayesian adaptive trials provides much more flexibility over the conventional frequestist approach in terms of the design and analysis of a clinical trial.
+Bayesian adaptive trials 
+
+
+
+If you use BACT in published research, please cite our preprint:
+
+
+If after reading through this vignette you have questions or problems
+using LPWC, please post them to https://github.com/thevaachandereng/BACT/issues.
+This will notify the package maintainers and benefit other users.
+
+
+You should **not** email your question to the package authors, as we will
+just reply that the question should be posted to the
+**Github support site**.
+
+
+
+# Running BACT
+
+Prior to analyzing your data, the R package needs to be installed.
+
+The easiest way to install BACT is through CRAN:
+```{r, eval = FALSE}
+install.packages("BACT")
+```
+
+
+There are other additional ways to download BACT.
+The first option is most useful if want to download a specific version of BACT
+(which can be found at https://github.com/thevaachandereng/BACT/releases).
+```{r, eval = FALSE}
+devtools::install_github("thevaachandereng/BACT@vx.xx.x")
+#OR 
+devtools::install_version("BACT", version = "x.x.x", repos = "http://cran.us.r-project.org")
+```
+
+
+The second option is to download through GitHub. 
+
+```{r, results='asis', eval=FALSE}
+devtools::install_github("thevaachandereng/BACT")
+```
+
+
+After successful installation, the package must be loaded into the working space:
+
+```{r lib, results="asis", eval=TRUE}
+library(BACT)
+```
+
+
