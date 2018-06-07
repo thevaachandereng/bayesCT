@@ -1,0 +1,8 @@
+context("")
+test_that("The enrollment is", {
+  set.seed(200)
+  check <- c(replicate(2, rpois(1, 1.5)), replicate(3, rpois(1, 2)))
+  set.seed(200)
+  expect_equal(as.numeric(table(enrollment(param = c(1.5, 2), 10, time = c(2, 9)))), check)
+  expect_error(enrollment(param = c(1.2, 2), N_total = 20))
+})
