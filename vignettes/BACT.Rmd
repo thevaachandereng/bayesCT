@@ -37,7 +37,7 @@ If you use BACT in published research, please cite:
 
 
 If after reading through this vignette you have questions or problems
-using LPWC, please post them to https://github.com/thevaachandereng/BACT/issues.
+using BACT, please post them to https://github.com/thevaachandereng/BACT/issues.
 This will notify the package maintainers and benefit other users.
 
 
