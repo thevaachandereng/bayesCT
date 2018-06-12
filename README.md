@@ -45,7 +45,7 @@ devtools::install_github("thevaachandereng/BACT")
 After successful installation, the package must be loaded into the working space:
 
 ``` r 
-library(bact)
+library(BACT)
 ```
 
 Usage
