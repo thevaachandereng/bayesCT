@@ -9,7 +9,7 @@ enrollment(param, N_total, time = NULL)
 \arguments{
 \item{param}{a vector of lambda in poisson}
 
-\item{N_total}{a numeric value of}
+\item{N_total}{a numeric value of total sample size}
 
 \item{time}{a vector of the same size as param indicating end of time when a specific lambda is used}
 }
