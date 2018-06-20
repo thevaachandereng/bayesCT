@@ -1,8 +1,10 @@
 #' @title Binomial counts for Bayesian Adaptive Trial
 #'
+#' @description Simulation for binomial counts for Bayesian Adaptive trial with different inputs to
+#'              control for power, sample size, type 1 error rate, and etc.
 #'
-#' @param p_treatment scalar. Proportion of an event under the treatment group.
 #' @param p_control scalar. Proportion of an event under the contrl group.
+#' @param p_treatment scalar. Proportion of an event under the treatment group.
 #' @param N_total scalar. Total sample size
 #' @param lambda vector. Lambda for different enrollment rates across times.
 #' @param lambda_time vector. Same size as lambda, denote times at lambda changes.
@@ -34,8 +36,8 @@
 
 
 binomialBACT <- function(
-  p_treatment,
   p_control,
+  p_treatment,
   N_total,
   lambda,
   lambda_time,
@@ -60,7 +62,7 @@ binomialBACT <- function(
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
 
   # simulating group and treatment group assignment
-  group <- randomization(N_total = N, block = block, scheme = rand.ratio)
+  group <- randomization(N_total = N_total, block = block, scheme = rand.ratio)
 
   #simulate binomial outcome
   sim <- rbinom(N_total, 1, prob = group * p_treatment + (1 - group) * p_control)
@@ -227,14 +229,14 @@ binomialBACT <- function(
     }
 
     # Test if futility success criteria is met
-    if(futility_test/N_imput < futility_prob){
+    if(futility_test/N_impute < futility_prob){
       stop_futility       <- 1
       stage_trial_stopped <- analysis_at_enrollnumber[ii]
       break
     }
 
     # Test if expected success criteria met
-    if(expected_success_test/N_imput > expected_success_prob ){
+    if(expected_success_test/N_impute > expected_success_prob ){
       stop_expected_success <- 1
       stage_trial_stopped   <- analysis_at_enrollnumber[ii]
       break
@@ -263,7 +265,7 @@ binomialBACT <- function(
     filter(id <= stage_trial_stopped,
            !loss_to_fu)
 
-  MLE <- glm(Y ~ treatment, data=data_final, family = "binomial")
+  MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
 
   post <- bdpbinomial(y_t                 = sum(data$Y[data$treatment == 1]),
                       N_t                 = length(data$Y[data$treatment == 1]),

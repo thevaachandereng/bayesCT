@@ -4,7 +4,7 @@
 \alias{binomialBACT}
 \title{Binomial counts for Bayesian Adaptive Trial}
 \usage{
-binomialBACT(p_treatment, p_control, N_total, lambda, lambda_time,
+binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time,
   analysis_at_enrollnumber, EndofStudy, weibull_scale, weibull_shape,
   discount_function = "identity", bpd_method = "fixed", block = 2,
   rand.ratio = c(1, 1), prop_loss_to_followup = 0.15, h0 = 0,
@@ -12,9 +12,9 @@ binomialBACT(p_treatment, p_control, N_total, lambda, lambda_time,
   N_impute = 100)
 }
 \arguments{
-\item{p_treatment}{scalar. Proportion of an event under the treatment group.}
-
 \item{p_control}{scalar. Proportion of an event under the contrl group.}
+
+\item{p_treatment}{scalar. Proportion of an event under the treatment group.}
 
 \item{N_total}{scalar. Total sample size}
 
@@ -56,4 +56,8 @@ Integer values mapping the size of the block.}
 }
 \value{
 a list of output
+}
+\description{
+Simulation for binomial counts for Bayesian Adaptive trial with different inputs to
+             control for power, sample size, type 1 error rate, and etc.
 }
