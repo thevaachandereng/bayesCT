@@ -30,7 +30,12 @@
 #' @return a list of output
 #'
 #'
-#'
+#' @example
+#' binomialBACT(p_control = 0.13, p_treatment = 0.10, N_total = 300,
+#'              lambda = c(0.3, 1), lambda_time = c(25, 50),
+#'              analysis_at_enrollnumber = c(110, 140, 220, 270),
+#'              EndofStudy = 50, weibull_scale = c(0.5, 0.5),
+#'              weibull_shape = c(3, 3))
 #'
 #'
 
@@ -47,14 +52,14 @@ binomialBACT <- function(
   weibull_shape,
   discount_function     = "identity",
   bpd_method            = "fixed",
-  block                 = 2,              # block size for randomization
-  rand.ratio            = c(1, 1),        # randomization ratio in control to treatament (default 1:1)
-  prop_loss_to_followup = 0.15,           # Proportion of loss in data
-  h0                    = 0,              # Null hypothesis value
-  futility_prob         = 0.05,           # Futility probability
-  expected_success_prob = 0.9,            # Expected success probability
-  prob_ha               = 0.95,           # Posterior probability of accepting alternative hypothesis
-  N_impute              = 100             # Number of imputation simulations for predictive distribution
+  block                 = 2,            # block size for randomization
+  rand.ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
+  prop_loss_to_followup = 0.15,         # Proportion of loss in data
+  h0                    = 0,            # Null hypothesis value
+  futility_prob         = 0.05,         # Futility probability
+  expected_success_prob = 0.9,          # Expected success probability
+  prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
+  N_impute              = 100           # Number of imputation simulations for predictive distribution
 
   ){
 
@@ -86,7 +91,6 @@ binomialBACT <- function(
     loss_to_fu = loss_to_fu)
 
   #assigning stop_futility and expected success
-
   stop_futility         <- 0
   stop_expected_success <- 0
 
@@ -265,8 +269,11 @@ binomialBACT <- function(
     filter(id <= stage_trial_stopped,
            !loss_to_fu)
 
+
+  # Compute the final MLE for the complete data using GLM function
   MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
 
+  # Analyze complete data using discount funtion via binomial
   post <- bdpbinomial(y_t                 = sum(data$Y[data$treatment == 1]),
                       N_t                 = length(data$Y[data$treatment == 1]),
                       y_c                 = sum(data$Y[data$treatment == 0]),
