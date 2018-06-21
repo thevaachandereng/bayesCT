@@ -16,7 +16,8 @@
 #'
 
 randomization <- function(N_total, block = 2, scheme = c(1, 1)){
-  stopifnot(block %% 1 == 0, block %% sum(scheme) == 0)
+  stopifnot(block %% 1 == 0, block %% sum(scheme) == 0,
+            N_total > block, block > 0, all(scheme %% 1 == 0))
   sampling <- NULL
   while(length(sampling) < (N_total - block)){
     item <- rep(rep(0:1, scheme), each = block / sum(scheme))
