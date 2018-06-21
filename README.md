@@ -5,6 +5,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![](https://cranlogs.r-pkg.org/badges/BACT)](https://cran.r-project.org/package=BACT)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/thevaachandereng/BACT?branch=master&svg=true)](https://ci.appveyor.com/project/thevaachandereng/BACT)
+[![codecov](https://codecov.io/gh/thevaachandereng/BACT/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/BACT)
 
 
 **Authors**: Thevaa Chandereng, Donald Musgrove and Tarek Haddad
