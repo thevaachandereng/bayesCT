@@ -63,7 +63,7 @@ binomialBACT <- function(
 
   ){
   #checking inputs
-  stopifnot((p_control < 1 & p_control > 1), (p_treatment < 1 & p_treatment > 1),
+  stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),
             all(N_total > analysis_at_enrollnumber), length(lambda) == length(lambda_time),
             EndofStudy > 0, length(weibull_scale) == 2, length(weibull_shape) == 2,
             block %% sum(rand.ratio)  == 0,
