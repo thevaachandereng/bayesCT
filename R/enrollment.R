@@ -16,7 +16,7 @@
 
 enrollment <- function(param, N_total, time = NULL){
   #checking each inputs
-  stopifnot(all(param > 0), if(length(param) >= 1){!is.null(time)}
+  stopifnot(all(param > 0), if(length(param) >= 1){!is.null(time)},
             N_total > 0)
   output <- NULL
   count <- 0
