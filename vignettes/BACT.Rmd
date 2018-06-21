@@ -105,7 +105,7 @@ For instance, if we have a piecewise function of $\lambda$ as below, t represent
 
 ```{r}
 set.seed(20000)
-enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15, 100))
+enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15))
 ```
 
 

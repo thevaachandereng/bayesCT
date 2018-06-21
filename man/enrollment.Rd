@@ -11,7 +11,7 @@ enrollment(param, N_total, time = NULL)
 
 \item{N_total}{a numeric value of total sample size}
 
-\item{time}{a vector of the same size as param indicating end of time when a specific lambda is used}
+\item{time}{a vector of the \code{length(param)} - 1 indicating end of time when a specific lambda is used}
 }
 \value{
 a vector of enrollment dates
@@ -20,8 +20,8 @@ a vector of enrollment dates
 This function simulates enrollment dates using either poisson or binomial distribution
 }
 \examples{
-enrollment(param = c(0.003, 0.7), 100, time = c(10, 400))
-enrollment(param = c(0.3, 0.5, 0.9, 1.2, 2.1), 200, c(20, 30, 40, 60, 110))
+enrollment(param = c(0.003, 0.7), 100, time = 10)
+enrollment(param = c(0.3, 0.5, 0.9, 1.2, 2.1), 200, c(20, 30, 40, 60, 200))
 
 
 }
