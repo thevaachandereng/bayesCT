@@ -62,6 +62,15 @@ binomialBACT <- function(
   N_impute              = 100           # Number of imputation simulations for predictive distribution
 
   ){
+  #checking inputs
+  stopifnot((p_control < 1 & p_control > 1), (p_treatment < 1 & p_treatment > 1),
+            all(N_total > analysis_at_enrollnumber), length(lambda) == length(lambda_time),
+            EndofStudy > 0, length(weibull_scale) == 2, length(weibull_shape) == 2,
+            block %% sum(rand.ratio)  == 0,
+            (prop_loss_to_followup > 0 & prop_loss_to_followup) < 0.75,
+            (h0 >= 0 & h_0 < 1), (futility_prob < 0.20 & futility_prob > 0),
+            (expected_success_prob > 0.70 & expected_success_prob <= 1),
+            (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
 
   #assignment of enrollment based on the enrollment function
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
@@ -316,4 +325,10 @@ binomialBACT <- function(
   results_list
 
 }
+
+
+
+
+
+
 
