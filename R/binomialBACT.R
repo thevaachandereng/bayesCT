@@ -32,10 +32,9 @@
 #'
 #' @example
 #' binomialBACT(p_control = 0.13, p_treatment = 0.10, N_total = 300,
-#'              lambda = c(0.3, 1), lambda_time = c(25, 50),
+#'              lambda = c(0.3, 1), lambda_time = c(25),
 #'              analysis_at_enrollnumber = c(110, 140, 220, 270),
-#'              EndofStudy = 50, weibull_scale = c(0.5, 0.5),
-#'              weibull_shape = c(3, 3))
+#'              EndofStudy = 50)
 #'
 #'
 
@@ -48,8 +47,8 @@ binomialBACT <- function(
   lambda_time,
   analysis_at_enrollnumber,
   EndofStudy,
-  weibull_scale,
-  weibull_shape,
+  weibull_scale         = NULL,
+  weibull_shape         = NULL,
   discount_function     = "identity",
   bpd_method            = "fixed",
   block                 = 2,            # block size for randomization
@@ -59,16 +58,15 @@ binomialBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 100           # Number of imputation simulations for predictive distribution
+  N_impute              = 1000           # Number of imputation simulations for predictive distribution
 
   ){
   #checking inputs
   stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),
-            all(N_total > analysis_at_enrollnumber), length(lambda) == length(lambda_time),
-            EndofStudy > 0, length(weibull_scale) == 2, length(weibull_shape) == 2,
-            block %% sum(rand.ratio)  == 0,
-            (prop_loss_to_followup > 0 & prop_loss_to_followup) < 0.75,
-            (h0 >= 0 & h_0 < 1), (futility_prob < 0.20 & futility_prob > 0),
+            all(N_total > analysis_at_enrollnumber), length(lambda) == (length(lambda_time) + 1),
+            EndofStudy > 0, block %% sum(rand.ratio)  == 0,
+            (prop_loss_to_followup > 0 & prop_loss_to_followup < 0.75),
+            (h0 >= 0 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
 
@@ -295,9 +293,11 @@ binomialBACT <- function(
 
 
   ### Format and output results
-  effect       <- post$final$posterior       #Posterior effect size: test vs control
-  N_treatment  <- sum(data_final$treatment)  #Total sample size analyzed - test group
-  N_control    <- sum(!data_final$treatment) #Total sample size analyzed - control group
+  effect        <- post$final$posterior       #Posterior effect size: test vs control
+  N_treatment   <- sum(data_final$treatment)  #Total sample size analyzed - test group
+  N_control     <- sum(!data_final$treatment) #Total sample size analyzed - control group
+  weibull_scale <- post$args1$weibull_scale   #Extracting the weibull scale for discount function
+  weibull_shape <- post$args1$weibull_shape   #Extracting the weibull shape for discount function
 
 
   ## output
