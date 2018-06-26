@@ -5,11 +5,11 @@
 \title{Binomial counts for Bayesian Adaptive Trial}
 \usage{
 binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time,
-  analysis_at_enrollnumber, EndofStudy, weibull_scale, weibull_shape,
-  discount_function = "identity", bpd_method = "fixed", block = 2,
-  rand.ratio = c(1, 1), prop_loss_to_followup = 0.15, h0 = 0,
-  futility_prob = 0.05, expected_success_prob = 0.9, prob_ha = 0.95,
-  N_impute = 100)
+  analysis_at_enrollnumber, EndofStudy, weibull_scale = NULL,
+  weibull_shape = NULL, discount_function = "identity",
+  bpd_method = "fixed", block = 2, rand.ratio = c(1, 1),
+  prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 1000)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of an event under the contrl group.}
