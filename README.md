@@ -8,7 +8,7 @@
 [![codecov](https://codecov.io/gh/thevaachandereng/BACT/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/BACT)
 
 
-**Authors**: Thevaa Chandereng, Donald Musgrove and Tarek Haddad
+**Authors**: Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Timothy Hanson and Theodore Lystig
 
 
 Overview
