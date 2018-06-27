@@ -20,11 +20,12 @@ randomization <- function(N_total, block = 2, scheme = c(1, 1)){
             N_total >= block, block > 0, all(scheme %% 1 == 0))
   sampling <- NULL
   while(length(sampling) < (N_total - block)){
-    item <- rep(rep(0:1, scheme), each = block / sum(scheme))
+    item <- rep(rep(0:1, times = scheme), each = block / sum(scheme))
     sampling <- c(sampling, sample(x = item, size = block))
   }
   if(N_total > length(sampling)){
-  sampling <- c(sampling, sample(item, size = (N_total - length(sampling))))
+    item <- rep(rep(0:1, times = scheme), each = block / sum(scheme))
+    sampling <- c(sampling, sample(item, size = (N_total - length(sampling))))
   }
   return(sampling)
 }
