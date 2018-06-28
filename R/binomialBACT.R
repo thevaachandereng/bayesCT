@@ -33,7 +33,7 @@
 #' @example
 #' binomialBACT(p_control = 0.13, p_treatment = 0.10, N_total = 300,
 #'              lambda = c(0.3, 1), lambda_time = c(25),
-#'              analysis_at_enrollnumber = c(110, 140, 220, 270),
+#'              interim_look = c(110, 140, 220, 270),
 #'              EndofStudy = 50)
 #'
 #'
@@ -45,12 +45,9 @@ binomialBACT <- function(
   N_total,
   lambda,
   lambda_time,
-  analysis_at_enrollnumber,
+  interim_look,
   EndofStudy,
-  weibull_scale         = NULL,
-  weibull_shape         = NULL,
-  discount_function     = "identity",
-  bpd_method            = "fixed",
+  prior                 = c(1, 1),
   block                 = 2,            # block size for randomization
   rand.ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
   prop_loss_to_followup = 0.15,         # Proportion of loss in data
@@ -58,17 +55,20 @@ binomialBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 1000           # Number of imputation simulations for predictive distribution
+  N_impute              = 100          # Number of imputation simulations for predictive distribution
 
   ){
   #checking inputs
   stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),
-            all(N_total > analysis_at_enrollnumber), length(lambda) == (length(lambda_time) + 1),
+            all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand.ratio)  == 0,
             (prop_loss_to_followup > 0 & prop_loss_to_followup < 0.75),
             (h0 >= 0 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
+
+  ##assigining interim look and final look
+  analysis_at_enrollnumber <- c(interim_look, N_total)
 
   #assignment of enrollment based on the enrollment function
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
@@ -116,8 +116,9 @@ binomialBACT <- function(
       mutate(subject_enrolled = id <= analysis_at_enrollnumber[i],
              subject_impute_futility = !subject_enrolled) %>%
       group_by(subject_enrolled) %>%
-      mutate(subject_impute_sucess = (max(enrollment)-enrollment <= EndofStudy & subject_enrolled) |
+      mutate(subject_impute_sucess = (max(enrollment) - enrollment <= EndofStudy & subject_enrolled) |
                (subject_enrolled & loss_to_fu))
+
 
     # Carry out interim analysis on patients with complete data only
     # - Set-up `new data` data frame
@@ -134,10 +135,8 @@ binomialBACT <- function(
                         y_c                    = sum(data$Y[data$treatment == 0]),
                         N_c                    = length(data$Y[data$treatment == 0]),
                         number_mcmc            = number_mcmc,
-                        discount_function      = discount_function,
-                        method                 = bdp_method,
-                        weibull_scale          = weibull_scale,
-                        weibull_shape          = weibull_shape)
+                        a0                     = prior[1],
+                        b0                     = prior[2])
 
 
     # Imputation phase futility and expected success - initialize counters
@@ -176,10 +175,8 @@ binomialBACT <- function(
                               y_c                    = sum(data$Y[data$treatment == 0]),
                               N_c                    = length(data$Y[data$treatment == 0]),
                               number_mcmc            = number_mcmc,
-                              discount_function      = discount_function,
-                              method                 = bdp_method,
-                              weibull_scale          = weibull_scale,
-                              weibull_shape          = weibull_shape)
+                              a0                     = prior[1],
+                              b0                     = prior[2])
 
 
       # Estimation of the posterior effect for difference between test and control
@@ -223,10 +220,8 @@ binomialBACT <- function(
                               y_c                    = sum(data$Y[data$treatment == 0]),
                               N_c                    = length(data$Y[data$treatment == 0]),
                               number_mcmc            = number_mcmc,
-                              discount_function      = discount_function,
-                              method                 = bdp_method,
-                              weibull_scale          = weibull_scale,
-                              weibull_shape          = weibull_shape)
+                              a0                     = prior[1],
+                              b0                     = prior[2])
 
       # Estimation of the posterior effect for difference between test and control
       post_control <- post_imp$posterior_control$posterior_flat
@@ -239,27 +234,31 @@ binomialBACT <- function(
 
     }
 
+    print(analysis_at_enrollnumber[i])
+
     # Test if futility success criteria is met
-    if(futility_test/N_impute < futility_prob){
+    if(futility_test / N_impute < futility_prob){
       stop_futility       <- 1
-      stage_trial_stopped <- analysis_at_enrollnumber[ii]
+      stage_trial_stopped <- analysis_at_enrollnumber[i]
       break
     }
 
     # Test if expected success criteria met
-    if(expected_success_test/N_impute > expected_success_prob ){
+    if(expected_success_test / N_impute > expected_success_prob ){
       stop_expected_success <- 1
-      stage_trial_stopped   <- analysis_at_enrollnumber[ii]
+      stage_trial_stopped   <- analysis_at_enrollnumber[i]
       break
     }
 
     # Stop study if at last interim look
-    if(analysis_at_enrollnumber[ii+1] == N_total){
-      stage_trial_stopped <- analysis_at_enrollnumber[ii+1]
+    if(analysis_at_enrollnumber[i + 1] == N_total){
+      stage_trial_stopped <- analysis_at_enrollnumber[i + 1]
       break
     }
 
+
   }
+
 
   ##############################################################################
   ### 4) Final analysis
@@ -267,8 +266,11 @@ binomialBACT <- function(
   # Estimation of the posterior of the difference
   effect_int <- post$final$posterior
 
+
   # Number of patients enrolled at trial stop
   N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
+
+  print(N_enrolled)
 
   # All patients that have made it to the end of study
   # - Subset out patients loss to follow-up
@@ -286,10 +288,8 @@ binomialBACT <- function(
                       y_c                 = sum(data$Y[data$treatment == 0]),
                       N_c                 = length(data$Y[data$treatment == 0]),
                       number_mcmc         = number_mcmc,
-                      discount_function   = discount_function,
-                      method              = bdp_method,
-                      weibull_scale       = weibull_scale,
-                      weibull_shape       = weibull_shape)
+                      a0                  = prior[1],
+                      b0                  = prior[2])
 
 
   ### Format and output results
@@ -314,9 +314,6 @@ binomialBACT <- function(
     est_int               = mean(effect_int),       # Posterior Mean of treatment effect at interim analysis
     MLE_est               = MLE$coe[2],             # Treatment effect useing MLE
     MLE_est_int           = MLE_int$coe[2],         # Treatment effect useing MLE at interim analysis
-    discount_function     = discount_function,      # Discount function used
-    weibull_scale         = weibull_scale,          # Discount Weibull function scale
-    weibull_shape         = weibull_shape,          # Discount Weibull function schape
     p_treatment           = p_treatment,            # probability of treatment in binomial
     p_control             = p_control               # probability of control in binomial
   )
