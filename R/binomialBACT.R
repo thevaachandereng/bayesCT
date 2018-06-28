@@ -8,15 +8,10 @@
 #' @param N_total scalar. Total sample size
 #' @param lambda vector. Lambda for different enrollment rates across times.
 #' @param lambda_time vector. Same size as lambda, denote times at lambda changes.
-#' @param analysis_at_enrollnumber vector. Sample size for interim looks,
+#' @param interim_look vector. Sample size for interim looks,
 #'                                 total size not included.
 #' @param EndofStudy scalar. Length of the study.
-#' @param weibull_scale vector. The weibull scale used in control and treatment group.
-#' @param weibull_shape vector. The weibull shape used in control and treatment group.
-#' @param discount_function character. The default is set to identity.
-#'                          For more options look at bayesDP package.
-#' @param bpd_method character. The default is set to fixed.
-#'                   For more options look at bayesDP package.
+#' @param prior vector. Prior value of beta rate, beta(a0, b0)
 #' @param block scalar. Block size for randomization to be implemented.
 #' @param rand.ratio vector. Randomization ratio for control to treatment.
 #'                    Integer values mapping the size of the block.
@@ -31,7 +26,7 @@
 #'
 #'
 #' @example
-#' binomialBACT(p_control = 0.13, p_treatment = 0.10, N_total = 300,
+#' binomialBACT(p_control = 0.12, p_treatment = 0.10, N_total = 300,
 #'              lambda = c(0.3, 1), lambda_time = c(25),
 #'              interim_look = c(110, 140, 220, 270),
 #'              EndofStudy = 50)
@@ -55,8 +50,7 @@ binomialBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 100          # Number of imputation simulations for predictive distribution
-
+  N_impute              = 1000         # Number of imputation simulations for predictive distribution
   ){
   #checking inputs
   stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),

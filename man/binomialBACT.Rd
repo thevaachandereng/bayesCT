@@ -4,10 +4,8 @@
 \alias{binomialBACT}
 \title{Binomial counts for Bayesian Adaptive Trial}
 \usage{
-binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time,
-  analysis_at_enrollnumber, EndofStudy, weibull_scale = NULL,
-  weibull_shape = NULL, discount_function = "identity",
-  bpd_method = "fixed", block = 2, rand.ratio = c(1, 1),
+binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time, interim_look,
+  EndofStudy, prior = c(1, 1), block = 2, rand.ratio = c(1, 1),
   prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
   expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 1000)
 }
@@ -22,20 +20,12 @@ binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time,
 
 \item{lambda_time}{vector. Same size as lambda, denote times at lambda changes.}
 
-\item{analysis_at_enrollnumber}{vector. Sample size for interim looks,
+\item{interim_look}{vector. Sample size for interim looks,
 total size not included.}
 
 \item{EndofStudy}{scalar. Length of the study.}
 
-\item{weibull_scale}{vector. The weibull scale used in control and treatment group.}
-
-\item{weibull_shape}{vector. The weibull shape used in control and treatment group.}
-
-\item{discount_function}{character. The default is set to identity.
-For more options look at bayesDP package.}
-
-\item{bpd_method}{character. The default is set to fixed.
-For more options look at bayesDP package.}
+\item{prior}{vector. Prior value of beta rate, beta(a0, b0)}
 
 \item{block}{scalar. Block size for randomization to be implemented.}
 
