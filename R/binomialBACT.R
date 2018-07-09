@@ -24,13 +24,16 @@
 #'
 #' @return a list of output
 #'
-#'
 #' @example
 #' binomialBACT(p_control = 0.12, p_treatment = 0.10, N_total = 300,
 #'              lambda = c(0.3, 1), lambda_time = c(25),
 #'              interim_look = c(110, 140, 220, 270),
 #'              EndofStudy = 50)
 #'
+#' @importFrom magrittr %>%
+#' @importFrom stats rbinom glm
+#' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom bayesDP bdpbinomial
 #'
 
 
@@ -290,8 +293,6 @@ binomialBACT <- function(
   effect        <- post$final$posterior       #Posterior effect size: test vs control
   N_treatment   <- sum(data_final$treatment)  #Total sample size analyzed - test group
   N_control     <- sum(!data_final$treatment) #Total sample size analyzed - control group
-  weibull_scale <- post$args1$weibull_scale   #Extracting the weibull scale for discount function
-  weibull_shape <- post$args1$weibull_shape   #Extracting the weibull shape for discount function
 
 
   ## output
