@@ -16,3 +16,6 @@ proportion(p_control = NULL, p_treatment = NULL, data = NULL)
 \value{
 a list with proportion of control and treatment group.
 }
+\description{
+Wrapper function for proportion of failure in control and treatment group.
+}

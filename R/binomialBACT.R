@@ -322,7 +322,7 @@ binomialBACT <- function(
 
 #' @title Proportion of failure in control and treatment
 #'
-#' @desscription Wrapper function for proportion of failure in control and treatment group.
+#' @description Wrapper function for proportion of failure in control and treatment group.
 #'
 #' @param p_control numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.
 #' @param p_treatment numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.
