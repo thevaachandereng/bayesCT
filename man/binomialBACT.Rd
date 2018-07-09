@@ -7,7 +7,7 @@
 binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time, interim_look,
   EndofStudy, prior = c(1, 1), block = 2, rand.ratio = c(1, 1),
   prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 1000)
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of an event under the contrl group.}

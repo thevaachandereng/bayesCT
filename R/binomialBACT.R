@@ -50,7 +50,7 @@ binomialBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 1000         # Number of imputation simulations for predictive distribution
+  N_impute              = 100         # Number of imputation simulations for predictive distribution
   ){
   #checking inputs
   stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),
@@ -316,6 +316,111 @@ binomialBACT <- function(
   results_list
 
 }
+
+
+
+
+#' @title Proportion of failure in control and treatment
+#'
+#' @desscription Wrapper function for proportion of failure in control and treatment group.
+#'
+#' @param p_control numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.
+#' @param p_treatment numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.
+#' @param data NULL. stores the proportion of control and treatment.
+#'
+#' @return a list with proportion of control and treatment group.
+#'
+#' @example proportion(p_control = 0.12, p_treatment = 0.08) %>%
+
+
+proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
+  data$p_control <- p_control
+  data$p_treatment <- p_treatment
+  data
+}
+
+
+
+
+#' @title Sample size wrapper
+#'
+#' @desscription Wrapper function for sample size and length of study.
+#'
+#' @param sample.size integer. The number of sample size needed.
+#' @param end.of.study integer. The length of the study.
+#' @param data NULL. stores the sample size and length of study.
+#'
+#' @return a list with sample size and length of the study.
+#'
+#' @example sample.size(sample.size = 300, end.of.study = 50)
+
+sample.size <- function(sample.size, end.of.study, data){
+  data$N_total <- sample.size
+  data$EndofStudy <- end.of.study
+  data
+}
+
+
+
+
+
+#' @title Interim look wrapper
+#'
+#' @desscription Wrapper function for interim looks
+#'
+#' @param interim_look vector. Vector with interim looks.
+#' @param data NULL. stores the impute function
+#'
+#' @return a list with interim look information
+#'
+#' @example looks(interim_look = c(210, 240, 270))
+
+
+looks <- function(interim_look = NULL, data = NULL){
+  data$interim_look <- interim_look
+  data
+}
+
+
+
+
+#' @title Enrollment rate wrapper
+#'
+#' @desscription Wrapper function for enrollment rate
+#'
+#' @param lambda vector. Vector with different enrollment rate.
+#' @param time vector. Vector with different cutoff time for lambda.
+#' @param data NULL. stores the impute function
+#'
+#' @return a list with enrollment rate information
+#'
+#' @example enrollment_rate(lambda = c(0.3, 1), time = 25)
+
+
+enrollment_rate <- function(lambda = NULL, time = NULL, data = NULL){
+  data$lambda <- lambda
+  data$lambda_time <- time
+  data
+}
+
+#' @title Imputation wrapper
+#'
+#' @desscription Wrapper function for no_of _impute
+#'
+#' @param no_of_impute integer. Number of Monte Carlo imputation for missing data
+#' @param data NULL. stores the impute function
+#'
+#' @return a list with number of imputation
+#'
+#' @example n_impute(100)
+
+
+n_impute <- function(no_of_impute, data = NULL){
+  data$N_impute <- no_of_impute
+  data
+}
+
+
 
 
 
