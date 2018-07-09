@@ -14,3 +14,6 @@ looks(interim_look = NULL, data = NULL)
 \value{
 a list with interim look information
 }
+\description{
+Wrapper function for interim looks
+}

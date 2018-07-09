@@ -344,7 +344,7 @@ proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
 
 #' @title Sample size wrapper
 #'
-#' @desscription Wrapper function for sample size and length of study.
+#' @description Wrapper function for sample size and length of study.
 #'
 #' @param sample.size integer. The number of sample size needed.
 #' @param end.of.study integer. The length of the study.
@@ -366,7 +366,7 @@ sample.size <- function(sample.size, end.of.study, data){
 
 #' @title Interim look wrapper
 #'
-#' @desscription Wrapper function for interim looks
+#' @description Wrapper function for interim looks
 #'
 #' @param interim_look vector. Vector with interim looks.
 #' @param data NULL. stores the impute function
@@ -386,7 +386,7 @@ looks <- function(interim_look = NULL, data = NULL){
 
 #' @title Enrollment rate wrapper
 #'
-#' @desscription Wrapper function for enrollment rate
+#' @description Wrapper function for enrollment rate
 #'
 #' @param lambda vector. Vector with different enrollment rate.
 #' @param time vector. Vector with different cutoff time for lambda.
@@ -405,7 +405,7 @@ enrollment_rate <- function(lambda = NULL, time = NULL, data = NULL){
 
 #' @title Imputation wrapper
 #'
-#' @desscription Wrapper function for no_of _impute
+#' @description Wrapper function for no_of _impute
 #'
 #' @param no_of_impute integer. Number of Monte Carlo imputation for missing data
 #' @param data NULL. stores the impute function

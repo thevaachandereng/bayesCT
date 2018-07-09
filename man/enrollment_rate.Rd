@@ -16,3 +16,6 @@ enrollment_rate(lambda = NULL, time = NULL, data = NULL)
 \value{
 a list with enrollment rate information
 }
+\description{
+Wrapper function for enrollment rate
+}

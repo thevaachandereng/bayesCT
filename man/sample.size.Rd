@@ -16,3 +16,6 @@ sample.size(sample.size, end.of.study, data)
 \value{
 a list with sample size and length of the study.
 }
+\description{
+Wrapper function for sample size and length of study.
+}

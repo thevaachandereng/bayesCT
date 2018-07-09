@@ -14,3 +14,6 @@ n_impute(no_of_impute, data = NULL)
 \value{
 a list with number of imputation
 }
+\description{
+Wrapper function for no_of _impute
+}
