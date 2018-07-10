@@ -12,6 +12,7 @@ vignette: >
 
 ```{r setup, echo=FALSE, results="hide"}
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+library(magrittr)
 ```
 
 
@@ -69,7 +70,7 @@ devtools::install_version("BACT", version = "x.x.x", repos = "http://cran.us.r-p
 
 The second option is to download through GitHub. 
 
-```{r, results='asis', eval=FALSE}
+```{r, results ='asis', eval = FALSE}
 devtools::install_github("thevaachandereng/BACT")
 ```
 
@@ -127,8 +128,18 @@ randomization(N_total = 140, block = 6, scheme = c(2, 1))
 In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. 
 
 
+## Binomial 
+```{r}
+value <- 
+  proportion(p_control = 0.12, p_treatment = 0.08) %>%
+  enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
+  sample.size(sample.size = 300, end.of.study = 50) %>%
+  looks(interim_look = c(210, 240, 270)) %>%
+  n_impute(no_of_impute = 1000)
 
 
+do.call(binomialBACT, value)
+```
 
 
 

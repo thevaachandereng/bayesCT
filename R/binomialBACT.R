@@ -20,7 +20,8 @@
 #' @param futility_prob scalar. Type 1 error rate.
 #' @param expected_success_prob scalar. Power of the study.
 #' @param prob_ha scalar. Probability of alternative hypothesis.
-#' @param N_impute scalar. Number of imputation for monte carlo simulation.
+#' @param N_impute scalar. Number of imputation for monte carlo simulation for missing data.
+#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain in sampling posterior.
 #'
 #' @return a list of output
 #'
@@ -53,7 +54,8 @@ binomialBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 100         # Number of imputation simulations for predictive distribution
+  N_impute              = 100,           # Number of imputation simulations for predictive distribution
+  number_mcmc           = 1000
   ){
   #checking inputs
   stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),
@@ -113,7 +115,7 @@ binomialBACT <- function(
       mutate(subject_enrolled = id <= analysis_at_enrollnumber[i],
              subject_impute_futility = !subject_enrolled) %>%
       group_by(subject_enrolled) %>%
-      mutate(subject_impute_sucess = (max(enrollment) - enrollment <= EndofStudy & subject_enrolled) |
+      mutate(subject_impute_success = (max(enrollment) - enrollment <= EndofStudy & subject_enrolled) |
                (subject_enrolled & loss_to_fu))
 
 
@@ -121,7 +123,7 @@ binomialBACT <- function(
     # - Set-up `new data` data frame
     data <- data_interim %>%
       filter(subject_enrolled,
-             !subject_impute_sucess)
+             !subject_impute_success)
 
     # MLE of data at interim analysis
     MLE_int        <- glm(Y ~ treatment, data = data, family = "binomial")
@@ -145,13 +147,13 @@ binomialBACT <- function(
       #imputing the success for control group
       data_control_success_impute <- data_interim %>%
         filter(treatment == 0) %>%
-        mutate(Y_impute = ifelse(subject_impute_sucess & subject_enrolled,
+        mutate(Y_impute = ifelse(subject_impute_success & subject_enrolled,
                                  rbinom(n(), 1, p_control),
                                  Y))
       # imputing success for treatment group
       data_treatment_success_impute  <- data_interim %>%
         filter(treatment == 1) %>%
-        mutate(Y_impute = ifelse(subject_impute_sucess & subject_enrolled,
+        mutate(Y_impute = ifelse(subject_impute_success & subject_enrolled,
                                  rbinom(n(), 1, p_treatment),
                                  Y))
 
