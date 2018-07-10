@@ -13,7 +13,7 @@
 #' @param EndofStudy scalar. Length of the study.
 #' @param prior vector. Prior value of beta rate, beta(a0, b0)
 #' @param block scalar. Block size for randomization to be implemented.
-#' @param rand.ratio vector. Randomization ratio for control to treatment.
+#' @param rand_ratio vector. Randomization ratio for control to treatment.
 #'                    Integer values mapping the size of the block.
 #' @param prop_loss_to_followup scalar. Proportion of loss in follow up.
 #' @param h0 scalar. treshold for comparing two proportions. default at 0.
@@ -48,7 +48,7 @@ binomialBACT <- function(
   EndofStudy,
   prior                 = c(1, 1),
   block                 = 2,            # block size for randomization
-  rand.ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
+  rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
   prop_loss_to_followup = 0.15,         # Proportion of loss in data
   h0                    = 0,            # Null hypothesis value
   futility_prob         = 0.05,         # Futility probability
@@ -60,7 +60,7 @@ binomialBACT <- function(
   #checking inputs
   stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),
             all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),
-            EndofStudy > 0, block %% sum(rand.ratio)  == 0,
+            EndofStudy > 0, block %% sum(rand_ratio)  == 0,
             (prop_loss_to_followup > 0 & prop_loss_to_followup < 0.75),
             (h0 >= 0 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
@@ -73,7 +73,7 @@ binomialBACT <- function(
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
 
   # simulating group and treatment group assignment
-  group <- randomization(N_total = N_total, block = block, scheme = rand.ratio)
+  group <- randomization(N_total = N_total, block = block, scheme = rand_ratio)
 
   #simulate binomial outcome
   sim <- rbinom(N_total, 1, prob = group * p_treatment + (1 - group) * p_control)
@@ -415,17 +415,33 @@ enrollment_rate <- function(lambda = NULL, time = NULL, data = NULL){
 #'
 #' @return a list with number of imputation
 #'
-#' @example n_impute(100)
+#' @example impute(no_of_impute = 100)
 
 
-n_impute <- function(no_of_impute, data = NULL){
+impute <- function(no_of_impute, data = NULL){
   data$N_impute <- no_of_impute
   data
 }
 
 
+#' @title Randomization scheme wrapper
+#'
+#' @description Wrapper function for the randomization scheme in the trial
+#'
+#' @param block_size integer. Block size for the complete randomization in a block
+#' @param randomization_ratio vector. The randomization ratio control to treatment.
+#' @param data NULL. stores the randomization scheme function
+#'
+#' @return a list with
+#'
+#' @example randomization(block_size = 100, randomization_ratio = c(2, 3))
 
 
+randomization <- function(block_size, randomization_ratio, data = NULL){
+  data$block <- block_size
+  data$rand_ratio <- randomization_ratio
+  data
+}
 
 
 
