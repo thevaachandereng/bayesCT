@@ -7,7 +7,8 @@
 binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time, interim_look,
   EndofStudy, prior = c(1, 1), block = 2, rand.ratio = c(1, 1),
   prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100)
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100,
+  number_mcmc = 1000)
 }
 \arguments{
 \item{p_control}{scalar. Proportion of an event under the contrl group.}
@@ -42,7 +43,9 @@ Integer values mapping the size of the block.}
 
 \item{prob_ha}{scalar. Probability of alternative hypothesis.}
 
-\item{N_impute}{scalar. Number of imputation for monte carlo simulation.}
+\item{N_impute}{scalar. Number of imputation for monte carlo simulation for missing data.}
+
+\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain in sampling posterior.}
 }
 \value{
 a list of output
