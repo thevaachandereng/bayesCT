@@ -1,11 +1,14 @@
 ---
 title: "BACT: Bayesian Adaptive Clinical Trial"
-author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad"
-output: rmarkdown::html_vignette
+author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Timothy Hanson, Theodore Lystig"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{bayesian trial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 
@@ -83,7 +86,7 @@ library(BACT)
 
 
 
-## Recruitment
+# Recruitment
 
 The recruitment of patients is assumed to follow a Poisson process.
 Since patient recruitment in a trial is independent of one another, the "memoryless property" helps in the modeling of recruitment of patient. 
@@ -110,7 +113,7 @@ enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15))
 ```
 
 
-## Randomization scheme
+# Randomization scheme
 
 Randomization scheme is important in a clinical trial. A complete randomization is not always ideal due to the chance of drawing a large block of one-arm of treatment, which can affect the time of an arm in a trial. Therefore, our randomization scheme is randomized in terms of a block. The randomization scheme also allows different randomization ratio but they must be in integer form. The block should also be an integer that is divisible by the sum of randomization scheme. 
 
@@ -128,14 +131,14 @@ randomization(N_total = 140, block = 6, scheme = c(2, 1))
 In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. 
 
 
-## Binomial 
+# Binomial 
 ```{r}
 value <- 
   proportion(p_control = 0.12, p_treatment = 0.08) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   sample.size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
-  n_impute(no_of_impute = 1000)
+  impute(no_of_impute = 1000)
 
 
 do.call(binomialBACT, value)
