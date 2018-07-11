@@ -444,6 +444,25 @@ randomization <- function(block_size, randomization_ratio, data = NULL){
 }
 
 
+#' @title Posterior wrapper
+#'
+#' @description Wrapper function for the posterior function
+#'
+#' @param
+#' @param data NULL. stores the randomization scheme function
+#'
+#' @return a list with
+#'
+#' @example randomizate(block_size = 100, randomization_ratio = c(2, 3))
+
+
+randomize <- function(block_size, randomization_ratio, data = NULL){
+    data$block <- block_size
+    data$rand_ratio <- randomization_ratio
+    data
+}
+
+
 
 
 
