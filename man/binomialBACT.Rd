@@ -5,7 +5,7 @@
 \title{Binomial counts for Bayesian Adaptive Trial}
 \usage{
 binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time, interim_look,
-  EndofStudy, prior = c(1, 1), block = 2, rand.ratio = c(1, 1),
+  EndofStudy, prior = c(1, 1), block = 2, rand_ratio = c(1, 1),
   prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
   expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100,
   number_mcmc = 1000)
@@ -30,7 +30,7 @@ total size not included.}
 
 \item{block}{scalar. Block size for randomization to be implemented.}
 
-\item{rand.ratio}{vector. Randomization ratio for control to treatment.
+\item{rand_ratio}{vector. Randomization ratio for control to treatment.
 Integer values mapping the size of the block.}
 
 \item{prop_loss_to_followup}{scalar. Proportion of loss in follow up.}
