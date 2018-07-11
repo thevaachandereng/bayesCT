@@ -136,7 +136,7 @@ In the code above, the total sample size is 140, the block size is 6 and the ran
 value <- 
   proportion(p_control = 0.12, p_treatment = 0.08) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  sample.size(sample.size = 300, end.of.study = 50) %>%
+  sample_size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
   impute(no_of_impute = 1000) %>%
   randomize(block_size = 2, randomization_ratio = c(1, 1))

@@ -17,3 +17,6 @@ a list with number of imputation
 \description{
 Wrapper function for no_of _impute
 }
+\examples{
+impute(no_of_impute = 100)
+}

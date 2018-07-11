@@ -25,7 +25,7 @@
 #'
 #' @return a list of output
 #'
-#' @example
+#' @examples
 #' binomialBACT(p_control = 0.12, p_treatment = 0.10, N_total = 300,
 #'              lambda = c(0.3, 1), lambda_time = c(25),
 #'              interim_look = c(110, 140, 220, 270),
@@ -333,7 +333,7 @@ binomialBACT <- function(
 #'
 #' @return a list with proportion of control and treatment group.
 #'
-#' @example proportion(p_control = 0.12, p_treatment = 0.08) %>%
+#' @examples proportion(p_control = 0.12, p_treatment = 0.08) %>%
 
 
 proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
@@ -355,9 +355,9 @@ proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
 #'
 #' @return a list with sample size and length of the study.
 #'
-#' @example sample.size(sample.size = 300, end.of.study = 50)
+#' @examples sample_size(sample.size = 300, end.of.study = 50)
 
-sample.size <- function(sample.size, end.of.study, data){
+sample_size <- function(sample.size, end.of.study, data){
   data$N_total <- sample.size
   data$EndofStudy <- end.of.study
   data
@@ -376,7 +376,7 @@ sample.size <- function(sample.size, end.of.study, data){
 #'
 #' @return a list with interim look information
 #'
-#' @example looks(interim_look = c(210, 240, 270))
+#' @examples looks(interim_look = c(210, 240, 270))
 
 
 looks <- function(interim_look = NULL, data = NULL){
@@ -397,7 +397,7 @@ looks <- function(interim_look = NULL, data = NULL){
 #'
 #' @return a list with enrollment rate information
 #'
-#' @example enrollment_rate(lambda = c(0.3, 1), time = 25)
+#' @examples enrollment_rate(lambda = c(0.3, 1), time = 25)
 
 
 enrollment_rate <- function(lambda = NULL, time = NULL, data = NULL){
@@ -415,7 +415,7 @@ enrollment_rate <- function(lambda = NULL, time = NULL, data = NULL){
 #'
 #' @return a list with number of imputation
 #'
-#' @example impute(no_of_impute = 100)
+#' @examples impute(no_of_impute = 100)
 
 
 impute <- function(no_of_impute, data = NULL){

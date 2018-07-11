@@ -19,3 +19,6 @@ a list with enrollment rate information
 \description{
 Wrapper function for enrollment rate
 }
+\examples{
+enrollment_rate(lambda = c(0.3, 1), time = 25)
+}

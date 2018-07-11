@@ -17,3 +17,6 @@ a list with interim look information
 \description{
 Wrapper function for interim looks
 }
+\examples{
+looks(interim_look = c(210, 240, 270))
+}
