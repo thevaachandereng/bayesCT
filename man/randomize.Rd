@@ -2,16 +2,20 @@
 % Please edit documentation in R/binomialBACT.R
 \name{randomize}
 \alias{randomize}
-\title{Posterior wrapper}
+\title{Randomization scheme wrapper}
 \usage{
 randomize(block_size, randomization_ratio, data = NULL)
 }
 \arguments{
+\item{block_size}{integer. Block size for the complete randomization in a block}
+
+\item{randomization_ratio}{vector. The randomization ratio control to treatment.}
+
 \item{data}{NULL. stores the randomization scheme function}
 }
 \value{
 a list with
 }
 \description{
-Wrapper function for the posterior function
+Wrapper function for the randomization scheme in the trial
 }
