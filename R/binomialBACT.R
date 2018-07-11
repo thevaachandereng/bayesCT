@@ -434,8 +434,11 @@ impute <- function(no_of_impute, data = NULL){
 #'
 #' @return a list with
 #'
-#' @example randomization(block_size = 100, randomization_ratio = c(2, 3))
-
+#' @examples
+#' randomize(block_size = 100, randomization_ratio = c(2, 3))
+#' randomize(block_size = 10, randomization_ratio = c(1, 4))
+#'
+#'
 
 randomize <- function(block_size, randomization_ratio, data = NULL){
   data$block <- block_size
