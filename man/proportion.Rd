@@ -20,5 +20,5 @@ a list with proportion of control and treatment group.
 Wrapper function for proportion of failure in control and treatment group.
 }
 \examples{
-proportion(p_control = 0.12, p_treatment = 0.08) \%>\%
+proportion(p_control = 0.12, p_treatment = 0.08)
 }

@@ -331,7 +331,7 @@ binomialBACT <- function(
 #'
 #' @return a list with proportion of control and treatment group.
 #'
-#' @examples proportion(p_control = 0.12, p_treatment = 0.08) %>%
+#' @examples proportion(p_control = 0.12, p_treatment = 0.08)
 #' @export proportion
 proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
   data$p_control <- p_control
