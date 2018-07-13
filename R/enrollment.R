@@ -12,9 +12,7 @@
 #' enrollment(param = c(0.3, 0.5, 0.9, 1.2, 2.1), 200, c(20, 30, 40, 60))
 #'
 #' @importFrom stats rpois
-#'
-
-
+#' @export enrollment
 enrollment <- function(param, N_total, time = NULL){
   #checking each inputs
   stopifnot(all(param > 0), if(length(param) >= 1){!is.null(time)},

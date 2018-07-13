@@ -35,9 +35,7 @@
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpbinomial
-#'
-
-
+#' @export binomialBACT
 binomialBACT <- function(
   p_control,
   p_treatment,
@@ -334,8 +332,7 @@ binomialBACT <- function(
 #' @return a list with proportion of control and treatment group.
 #'
 #' @examples proportion(p_control = 0.12, p_treatment = 0.08) %>%
-
-
+#' @export proportion
 proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
   data$p_control <- p_control
   data$p_treatment <- p_treatment
@@ -356,7 +353,7 @@ proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
 #' @return a list with sample size and length of the study.
 #'
 #' @examples sample_size(sample.size = 300, end.of.study = 50)
-
+#' @export sample_size
 sample_size <- function(sample.size, end.of.study, data){
   data$N_total <- sample.size
   data$EndofStudy <- end.of.study
@@ -377,8 +374,7 @@ sample_size <- function(sample.size, end.of.study, data){
 #' @return a list with interim look information
 #'
 #' @examples looks(interim_look = c(210, 240, 270))
-
-
+#' @export looks
 looks <- function(interim_look = NULL, data = NULL){
   data$interim_look <- interim_look
   data
@@ -398,8 +394,7 @@ looks <- function(interim_look = NULL, data = NULL){
 #' @return a list with enrollment rate information
 #'
 #' @examples enrollment_rate(lambda = c(0.3, 1), time = 25)
-
-
+#' @export enrollment_rate
 enrollment_rate <- function(lambda = NULL, time = NULL, data = NULL){
   data$lambda <- lambda
   data$lambda_time <- time
@@ -416,8 +411,7 @@ enrollment_rate <- function(lambda = NULL, time = NULL, data = NULL){
 #' @return a list with number of imputation
 #'
 #' @examples impute(no_of_impute = 100)
-
-
+#' @export impute
 impute <- function(no_of_impute, data = NULL){
   data$N_impute <- no_of_impute
   data
@@ -437,9 +431,7 @@ impute <- function(no_of_impute, data = NULL){
 #' @examples
 #' randomize(block_size = 100, randomization_ratio = c(2, 3))
 #' randomize(block_size = 10, randomization_ratio = c(1, 4))
-#'
-#'
-
+#' @export randomize
 randomize <- function(block_size, randomization_ratio, data = NULL){
   data$block <- block_size
   data$rand_ratio <- randomization_ratio

@@ -13,8 +13,7 @@
 #' randomization(100, block = 5, c(2, 3))
 #' #randomization scheme with 2:1 for control to treatment
 #' randomization(70, block = 9, c(2, 1))
-#'
-
+#' @export randomization
 randomization <- function(N_total, block = 2, scheme = c(1, 1)){
   stopifnot(block %% 1 == 0, block %% sum(scheme) == 0,
             N_total >= block, block > 0, all(scheme %% 1 == 0))

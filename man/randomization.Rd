@@ -24,5 +24,4 @@ Implements randomization scheme for control and treatment with different randomi
 randomization(100, block = 5, c(2, 3))
 #randomization scheme with 2:1 for control to treatment
 randomization(70, block = 9, c(2, 1))
-
 }
