@@ -354,7 +354,7 @@ proportion <- function(p_control = NULL, p_treatment = NULL, data = NULL){
 #'
 #' @examples sample_size(sample.size = 300, end.of.study = 50)
 #' @export sample_size
-sample_size <- function(sample.size, end.of.study, data){
+sample_size <- function(sample.size, end.of.study, data = NULL){
   data$N_total <- sample.size
   data$EndofStudy <- end.of.study
   data

@@ -4,7 +4,7 @@
 \alias{sample_size}
 \title{Sample size wrapper}
 \usage{
-sample_size(sample.size, end.of.study, data)
+sample_size(sample.size, end.of.study, data = NULL)
 }
 \arguments{
 \item{sample.size}{integer. The number of sample size needed.}
