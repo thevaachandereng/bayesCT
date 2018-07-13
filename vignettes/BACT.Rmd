@@ -15,7 +15,6 @@ vignette: >
 
 ```{r setup, echo=FALSE, results="hide"}
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
-library(magrittr)
 ```
 
 
