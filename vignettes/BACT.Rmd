@@ -15,6 +15,7 @@ vignette: >
 
 ```{r setup, echo=FALSE, results="hide"}
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+library(magrittr)
 ```
 
 
@@ -132,6 +133,7 @@ In the code above, the total sample size is 140, the block size is 6 and the ran
 
 # Binomial 
 ```{r}
+library(magrittr)
 value <- 
   proportion(p_control = 0.12, p_treatment = 0.08) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
