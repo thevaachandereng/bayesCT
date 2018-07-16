@@ -133,7 +133,7 @@ In the code above, the total sample size is 140, the block size is 6 and the ran
 # Binomial 
 ```{r}
 value <- 
-  proportion(p_control = 0.12, p_treatment = 0.08) %>%
+  binomial_outcome(p_control = 0.12, p_treatment = 0.08) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   sample_size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
