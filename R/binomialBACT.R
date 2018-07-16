@@ -335,7 +335,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @return a list with proportion of control and treatment group.
 #'
-#' @examples proportion(p_control = 0.12, p_treatment = 0.08)
+#' @examples binomial_outcome(p_control = 0.12, p_treatment = 0.08)
 #' @export binomial_outcome
 binomial_outcome <- function(p_control = NULL, p_treatment = NULL, data = NULL){
   data$p_control <- p_control
