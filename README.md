@@ -15,7 +15,8 @@ Overview
 --------
 
 BACT is a R package in Bayesian adaptive clinical trial. 
-It is designed to simulate Bayesian adaptive trial for different parameters and distribution. 
+It is designed to simulate Bayesian adaptive trial for different parameters and distribution.
+The BACT website is available [here](https://thevaachandereng.github.io/BACT/). 
 
 
 Installation
