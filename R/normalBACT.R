@@ -229,7 +229,6 @@ normalBACT <- function(
 
       # Estimation of the posterior effect for difference between test and control
       post_final <- post_imp$final$posterior
-      if(mean(post_final > h0) > prob_ha){
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
       if(mean(post_final > h0) > prob_ha){
@@ -331,10 +330,11 @@ normalBACT <- function(
 
 
 
+
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")
-  utils::globalVariables(c("Y", "Y_impute", "id", "subject_enrolled",
-                           "subject_impute_success", "subject_impute_futility"))
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "subject_enrolled",
+                                                        "subject_impute_success", "subject_impute_futility"))
+
 
 
 
