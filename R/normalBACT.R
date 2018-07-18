@@ -337,4 +337,25 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 
 
 
+#' @title Parameters for treatment and control in normal case
+#'
+#' @description Wrapper function for mean and standard deviation with normal outcome.
+#'
+#' @param mu_control numeric. The mean for the control group.
+#' @param sd_control numeric. The standard deviation for the control group.
+#' @param mu_treatment numeric. The mean for the treatment group.
+#' @param sd_treatment numeric. The standard deviation for the treatment group.
+#' @param data NULL. stores the proportion of control and treatment.
+#'
+#' @return a list with proportion of control and treatment group.
+#'
+#' @examples normal_outcome(mu_control = 12, mu_treatment = 8, sd_treatment = 2.2, sd_control = 1.6)
+#' @export normal_outcome
+normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = NULL, sd_treatment = NULL, data = NULL){
+  data$mu_control <- mu_control
+  data$sd_control <- sd_control
+  data$mu_treatment <- mu_treatment
+  data$sd_treatment <- sd_treatment
+  data
+}
 
