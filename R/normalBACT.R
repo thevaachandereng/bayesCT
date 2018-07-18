@@ -82,7 +82,7 @@ normalBACT <- function(
 
   #simulate binomial outcome
   sim <- rnorm(N_total, mean = group * mu_treatment + (1 - group) * mu_control,
-               sd = group * mu_treatment + (1 - group) * mu_control)
+               sd = group * sd_treatment + (1 - group) * sd_control)
 
   #dividing treatment and control
   control <- sim[group == 0]
@@ -186,7 +186,7 @@ normalBACT <- function(
 
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
-      post_final <- post_imp$final$posterior
+      post_imp_final <- post_imp$final$posterior
       if(mean(post_final > h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
@@ -205,7 +205,7 @@ normalBACT <- function(
       data_treatment_futility_impute <- data_success_impute %>%
         filter(treatment == 1) %>%
         mutate(Y_impute = ifelse(subject_impute_futility,
-                                 rbinom(n(), mu_treatment, sd_treatment),
+                                 rnorm(n(), mu_treatment, sd_treatment),
                                  Y))
 
       # Combine the treatment and control imputed datasets
@@ -228,10 +228,10 @@ normalBACT <- function(
                             number_mcmc  = number_mcmc)
 
       # Estimation of the posterior effect for difference between test and control
-      post_final <- post_imp$final$posterior
+      post_imp_final <- post_imp$final$posterior
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if(mean(post_final > h0) > prob_ha){
+      if(mean(post_imp_final > h0) > prob_ha){
         futility_test <- futility_test + 1
       }
 
