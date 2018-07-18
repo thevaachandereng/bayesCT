@@ -187,7 +187,7 @@ normalBACT <- function(
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
       post_imp_final <- post_imp$final$posterior
-      if(mean(post_final > h0) > prob_ha){
+      if(mean(post_imp_final > h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
 
