@@ -28,16 +28,19 @@
 #' @return a list of output
 #'
 #' @examples
-#' normalBACT(p_control = 0.12, p_treatment = 0.10, N_total = 300,
-#'              lambda = c(0.3, 1), lambda_time = c(25),
-#'              interim_look = c(110, 140, 220, 270),
-#'              EndofStudy = 50)
+#' normalBACT(mu_control = 10, mu_treatment = 8,
+#'            sd_control = 0.8, sd_treatment = 1.2, N_total = 300,
+#'            lambda = c(0.3, 1), lambda_time = c(25),
+#'            interim_look = c(110, 140, 220, 270),
+#'            EndofStudy = 50)
 #'
 #' @importFrom magrittr %>%
-#' @importFrom stats rnorm lm
+#' @importFrom stats rnorm lm sd
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpnormal
-#' @export binomialBACT
+#' @export normalBACT
+
+
 normalBACT <- function(
   mu_control,
   sd_control,
@@ -183,9 +186,8 @@ normalBACT <- function(
 
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
-      post_control <- post_imp$posterior_control$posterior_flat
-      post_treatment <- post_imp$posterior_treatment$posterior_flat
-      if(mean(post_control - post_treatment > h0) > prob_ha){
+      post_final <- post_imp$final$posterior
+      if(mean(post_final > h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
 
@@ -226,11 +228,11 @@ normalBACT <- function(
                             number_mcmc  = number_mcmc)
 
       # Estimation of the posterior effect for difference between test and control
-      post_control <- post_imp$posterior_control$posterior_flat
-      post_treatment <- post_imp$posterior_treatment$posterior_flat
+      post_final <- post_imp$final$posterior
+      if(mean(post_final > h0) > prob_ha){
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if(mean(post_control - post_treatment > h0) > prob_ha){
+      if(mean(post_final > h0) > prob_ha){
         futility_test <- futility_test + 1
       }
 
