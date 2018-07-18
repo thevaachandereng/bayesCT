@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • BACT</title>
+<title>Parameters for treatment and control in normal case — normal_outcome • BACT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Parameters for treatment and control in normal case — normal_outcome" />
+
+<meta property="og:description" content="Wrapper function for mean and standard deviation with normal outcome." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +49,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -95,102 +98,76 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Parameters for treatment and control in normal case</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/BACT/blob/master/R/normalBACT.R'><code>R/normalBACT.R</code></a></small>
+    <div class="hidden name"><code>normal_outcome.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Wrapper function for mean and standard deviation with normal outcome.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="binomialBACT.html">binomialBACT()</a></code> </p>
-        </td>
-        <td><p>Binomial counts for Bayesian Adaptive Trial</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="binomial_outcome.html">binomial_outcome()</a></code> </p>
-        </td>
-        <td><p>Proportion of failure in control and treatment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enrollment.html">enrollment()</a></code> </p>
-        </td>
-        <td><p>Simulating enrollment dates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enrollment_rate.html">enrollment_rate()</a></code> </p>
-        </td>
-        <td><p>Enrollment rate wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="impute.html">impute()</a></code> </p>
-        </td>
-        <td><p>Imputation wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="looks.html">looks()</a></code> </p>
-        </td>
-        <td><p>Interim look wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="normalBACT.html">normalBACT()</a></code> </p>
-        </td>
-        <td><p>Normal distribution for Bayesian Adaptive Trial</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="normal_outcome.html">normal_outcome()</a></code> </p>
-        </td>
-        <td><p>Parameters for treatment and control in normal case</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="randomization.html">randomization()</a></code> </p>
-        </td>
-        <td><p>Randomization scheme</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="randomize.html">randomize()</a></code> </p>
-        </td>
-        <td><p>Randomization scheme wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sample_size.html">sample_size()</a></code> </p>
-        </td>
-        <td><p>Sample size wrapper</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>normal_outcome</span>(<span class='kw'>mu_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sd_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mu_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sd_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>mu_control</th>
+      <td><p>numeric. The mean for the control group.</p></td>
+    </tr>
+    <tr>
+      <th>sd_control</th>
+      <td><p>numeric. The standard deviation for the control group.</p></td>
+    </tr>
+    <tr>
+      <th>mu_treatment</th>
+      <td><p>numeric. The mean for the treatment group.</p></td>
+    </tr>
+    <tr>
+      <th>sd_treatment</th>
+      <td><p>numeric. The standard deviation for the treatment group.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>NULL. stores the proportion of control and treatment.</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>a list with proportion of control and treatment group.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>normal_outcome</span>(<span class='kw'>mu_control</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>mu_treatment</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>sd_treatment</span> <span class='kw'>=</span> <span class='fl'>2.2</span>, <span class='kw'>sd_control</span> <span class='kw'>=</span> <span class='fl'>1.6</span>)</div><div class='output co'>#&gt; $mu_control
+#&gt; [1] 12
+#&gt; 
+#&gt; $sd_control
+#&gt; [1] 1.6
+#&gt; 
+#&gt; $mu_treatment
+#&gt; [1] 8
+#&gt; 
+#&gt; $sd_treatment
+#&gt; [1] 2.2
+#&gt; </div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
