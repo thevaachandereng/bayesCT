@@ -280,10 +280,10 @@ binomialBACT <- function(
   MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
 
   # Analyze complete data using discount funtion via binomial
-  post <- bdpbinomial(y_t                 = sum(data$Y[data$treatment == 1]),
-                      N_t                 = length(data$Y[data$treatment == 1]),
-                      y_c                 = sum(data$Y[data$treatment == 0]),
-                      N_c                 = length(data$Y[data$treatment == 0]),
+  post <- bdpbinomial(y_t                 = sum(data_final$Y[data_final$treatment == 1]),
+                      N_t                 = length(data_final$Y[data_final$treatment == 1]),
+                      y_c                 = sum(data_final$Y[data_final$treatment == 0]),
+                      N_c                 = length(data_final$Y[data_final$treatment == 0]),
                       number_mcmc         = number_mcmc,
                       a0                  = prior[1],
                       b0                  = prior[2])
