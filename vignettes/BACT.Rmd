@@ -72,7 +72,7 @@ devtools::install_version("BACT", version = "x.x.x", repos = "http://cran.us.r-p
 
 The second option is to download through GitHub. 
 
-```{r, results ='asis', eval = FALSE}
+```{r, results ='asis'}
 devtools::install_github("thevaachandereng/BACT")
 ```
 
@@ -137,7 +137,7 @@ value <-
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   sample_size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
-  impute(no_of_impute = 5) %>%
+  impute(no_of_impute = 25) %>%
   randomize(block_size = 2, randomization_ratio = c(1, 1))
 
 
@@ -152,7 +152,7 @@ value <-
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   sample_size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
-  impute(no_of_impute = 5) %>%
+  impute(no_of_impute = 25) %>%
   randomize(block_size = 2, randomization_ratio = c(1, 1))
   
 do.call(normalBACT, value)
