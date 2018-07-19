@@ -148,7 +148,7 @@ do.call(binomialBACT, value)
 # Normal
 ```{r}
 value <- 
-  normal_outcome(mu_control = 15, mu_treatment = 12, sd_treatment = 1.4, sd_control = 1.9) %>%
+  normal_outcome(mu_control = 16, mu_treatment = 12, sd_treatment = 1.4, sd_control = 1.9) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   sample_size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
