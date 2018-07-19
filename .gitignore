@@ -34,5 +34,4 @@ vignettes/*.R
 *.knit.md
 .Rproj.user
 
-# Silence build of pkgdown update
-docs/*.
+
