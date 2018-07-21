@@ -52,7 +52,7 @@ binomialBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 100,           # Number of imputation simulations for predictive distribution
+  N_impute              = 1000,           # Number of imputation simulations for predictive distribution
   number_mcmc           = 1000
   ){
   #checking inputs
@@ -178,9 +178,10 @@ binomialBACT <- function(
 
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
-      post_control <- post_imp$posterior_control$posterior_flat
-      post_treatment <- post_imp$posterior_treatment$posterior_flat
-      if(mean(post_control - post_treatment > h0) > prob_ha){
+
+      effect_imp <- post_imp$final$posterior
+
+      if(mean(effect_imp > h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
 
@@ -221,11 +222,10 @@ binomialBACT <- function(
                               b0                     = prior[2])
 
       # Estimation of the posterior effect for difference between test and control
-      post_control <- post_imp$posterior_control$posterior_flat
-      post_treatment <- post_imp$posterior_treatment$posterior_flat
+      effect_imp <- post_imp$final$posterior
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if(mean(post_control - post_treatment > h0) > prob_ha){
+      if(mean(effect_imp > h0) > prob_ha){
         futility_test <- futility_test + 1
       }
 
