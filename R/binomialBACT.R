@@ -297,20 +297,21 @@ binomialBACT <- function(
 
   ## output
   results_list <- list(
-    prob_ha               = prob_ha,
-    N_treatment           = N_treatment,
-    N_control             = N_control,
-    N_total               = N_enrolled,             # Total sample size enrolled when trial stopped
-    N_max                 = N_total, 				        # Total potential sample size
-    stop_futility         = stop_futility,          # Did the trial stop for futility
-    stop_expected_success = stop_expected_success,  # Did the trial stop for expected success
-    prob_ha_final         = mean(effect < h0),      # Posterior probability that alternative hypothesis is true
-    est_final             = mean(effect),           # Posterior Mean of treatment effect
-    est_int               = mean(effect_int),       # Posterior Mean of treatment effect at interim analysis
-    MLE_est               = MLE$coe[2],             # Treatment effect useing MLE
-    MLE_est_int           = MLE_int$coe[2],         # Treatment effect useing MLE at interim analysis
-    p_treatment           = p_treatment,            # probability of treatment in binomial
-    p_control             = p_control               # probability of control in binomial
+    p_treatment                                = p_treatment,             # probability of treatment in binomial
+    p_control                                  = p_control,               # probability of control in binomial
+    prob_of_accepting_alternative              = prob_ha,
+    N_treatment                                = N_treatment,
+    N_control                                  = N_control,
+    N_complete                                 = N_treatment + N_Control
+    N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
+    N_max                                      = N_total, 				  # Total potential sample size
+    stop_futility                              = stop_futility,           # Did the trial stop for futility
+    stop_expected_success                      = stop_expected_success,   # Did the trial stop for expected success
+    post_prob_accept_alternative               = mean(effect < h0),       # Posterior probability that alternative hypothesis is true
+    est_final                                  = mean(effect),            # Posterior Mean of treatment effect
+    est_interim                                = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
+    MLE_est                                    = MLE$coe[2],              # Treatment effect useing MLE
+    MLE_est_int                                = MLE_int$coe[2],          # Treatment effect useing MLE at interim analysis
   )
 
   #return results
