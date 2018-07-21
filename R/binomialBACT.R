@@ -302,16 +302,16 @@ binomialBACT <- function(
     prob_of_accepting_alternative              = prob_ha,
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
-    N_complete                                 = N_treatment + N_Control
+    N_complete                                 = N_treatment + N_Control,
     N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
-    N_max                                      = N_total, 				  # Total potential sample size
+    N_max                                      = N_total, 				        # Total potential sample size
     stop_futility                              = stop_futility,           # Did the trial stop for futility
     stop_expected_success                      = stop_expected_success,   # Did the trial stop for expected success
     post_prob_accept_alternative               = mean(effect < h0),       # Posterior probability that alternative hypothesis is true
     est_final                                  = mean(effect),            # Posterior Mean of treatment effect
     est_interim                                = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
     MLE_est                                    = MLE$coe[2],              # Treatment effect useing MLE
-    MLE_est_int                                = MLE_int$coe[2],          # Treatment effect useing MLE at interim analysis
+    MLE_est_int                                = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
   )
 
   #return results
@@ -442,5 +442,28 @@ randomize <- function(block_size, randomization_ratio, data = NULL){
   data$rand_ratio <- randomization_ratio
   data
 }
+
+
+
+#' @title Hypothesis wrapper
+#'
+#' @description Wrapper function for the null hypothesis in the trial
+#'
+#' @param
+#' @param randomization_ratio vector. The randomization ratio control to treatment.
+#' @param data NULL. stores the randomization scheme function
+#'
+#' @return a list with
+#'
+#' @examples
+#' randomize(block_size = 100, randomization_ratio = c(2, 3))
+#' randomize(block_size = 10, randomization_ratio = c(1, 4))
+#' @export randomize
+randomize <- function(block_size, randomization_ratio, data = NULL){
+  data$block <- block_size
+  data$rand_ratio <- randomization_ratio
+  data
+}
+
 
 
