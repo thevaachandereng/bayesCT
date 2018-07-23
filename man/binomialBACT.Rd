@@ -7,7 +7,7 @@
 binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time, interim_look,
   EndofStudy, prior = c(1, 1), block = 2, rand_ratio = c(1, 1),
   prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100,
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 1000,
   number_mcmc = 1000)
 }
 \arguments{

@@ -52,7 +52,7 @@ binomialBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 1000,           # Number of imputation simulations for predictive distribution
+  N_impute              = 1000,         # Number of imputation simulations for predictive distribution
   number_mcmc           = 1000
   ){
   #checking inputs
@@ -302,7 +302,7 @@ binomialBACT <- function(
     prob_of_accepting_alternative              = prob_ha,
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
-    N_complete                                 = N_treatment + N_Control,
+    N_complete                                 = N_treatment + N_control,
     N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
     N_max                                      = N_total, 				        # Total potential sample size
     stop_futility                              = stop_futility,           # Did the trial stop for futility
@@ -445,25 +445,6 @@ randomize <- function(block_size, randomization_ratio, data = NULL){
 
 
 
-#' @title Hypothesis wrapper
-#'
-#' @description Wrapper function for the null hypothesis in the trial
-#'
-#' @param
-#' @param randomization_ratio vector. The randomization ratio control to treatment.
-#' @param data NULL. stores the randomization scheme function
-#'
-#' @return a list with
-#'
-#' @examples
-#' randomize(block_size = 100, randomization_ratio = c(2, 3))
-#' randomize(block_size = 10, randomization_ratio = c(1, 4))
-#' @export randomize
-randomize <- function(block_size, randomization_ratio, data = NULL){
-  data$block <- block_size
-  data$rand_ratio <- randomization_ratio
-  data
-}
 
 
 
