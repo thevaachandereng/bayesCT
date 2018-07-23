@@ -181,7 +181,7 @@ binomialBACT <- function(
 
       effect_imp <- post_imp$final$posterior
 
-      if(mean(effect_imp > h0) > prob_ha){
+      if(mean(effect_imp < h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
 
