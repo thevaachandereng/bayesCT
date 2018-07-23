@@ -311,7 +311,7 @@ binomialBACT <- function(
     est_final                                  = mean(effect),            # Posterior Mean of treatment effect
     est_interim                                = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
     MLE_est                                    = MLE$coe[2],              # Treatment effect useing MLE
-    MLE_est_int                                = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
+    MLE_est_interim                            = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
   )
 
   #return results
