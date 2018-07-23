@@ -106,7 +106,7 @@
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; Installing BACT</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; '/home/travis/R-bin/lib/R/bin/R' --no-site-file --no-environ --no-save  \</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;   --no-restore --quiet CMD INSTALL  \</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;   '/tmp/RtmpSapKS2/devtools2e8117729c6a/thevaachandereng-BACT-cbca4e9'  \</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;   '/tmp/RtmpQIwpDr/devtools2eb4d444d49/thevaachandereng-BACT-0605be4'  \</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;   --library='/home/travis/R/Library' --install-tests</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; </span></a></code></pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
@@ -158,52 +158,53 @@
 <a class="sourceLine" id="cb8-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="kw">do.call</span>(binomialBACT, value)</a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; [1] 210</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; [1] 240</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; [1] 270</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; [1] 300</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; $prob_ha</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; [1] 0.95</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; $N_treatment</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; [1] 130</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; $N_control</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; [1] 125</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; $N_total</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; [1] 300</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; $N_max</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; [1] 300</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; $stop_futility</span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; $stop_expected_success</span></a>
-<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt; $prob_ha_final</span></a>
-<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt; [1] 0.978</span></a>
-<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt; $est_final</span></a>
-<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt; [1] -0.06494037</span></a>
-<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt; $est_int</span></a>
-<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt; [1] -0.07855387</span></a>
-<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt; $MLE_est</span></a>
-<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt; treatment </span></a>
-<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt; -0.873844 </span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; [1] 210</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; $p_treatment</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; [1] 0.08</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; $p_control</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; [1] 0.12</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; $prob_of_accepting_alternative</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; [1] 0.95</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; $N_treatment</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; [1] 91</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; $N_control</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; [1] 87</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; $N_complete</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; [1] 178</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; $N_enrolled</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; [1] 210</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt; $N_max</span></a>
+<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt; [1] 300</span></a>
+<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt; $stop_futility</span></a>
+<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt; $stop_expected_success</span></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt; [1] 0</span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt; $post_prob_accept_alternative</span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt; [1] 0.975</span></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt; $est_final</span></a>
+<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt; [1] -0.08328794</span></a>
 <a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt; $MLE_est_int</span></a>
-<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; treatment </span></a>
-<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt; -1.007396 </span></a>
-<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">#&gt; $p_treatment</span></a>
-<a class="sourceLine" id="cb8-54" data-line-number="54"><span class="co">#&gt; [1] 0.08</span></a>
+<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt; $est_interim</span></a>
+<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; [1] -0.01864065</span></a>
+<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">#&gt; $MLE_est</span></a>
+<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">#&gt; treatment </span></a>
+<a class="sourceLine" id="cb8-54" data-line-number="54"><span class="co">#&gt; -1.012328 </span></a>
 <a class="sourceLine" id="cb8-55" data-line-number="55"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-56" data-line-number="56"><span class="co">#&gt; $p_control</span></a>
-<a class="sourceLine" id="cb8-57" data-line-number="57"><span class="co">#&gt; [1] 0.12</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-56" data-line-number="56"><span class="co">#&gt; $MLE_est_int</span></a>
+<a class="sourceLine" id="cb8-57" data-line-number="57"><span class="co">#&gt;  treatment </span></a>
+<a class="sourceLine" id="cb8-58" data-line-number="58"><span class="co">#&gt; -0.3169623</span></a></code></pre></div>
 </div>
 <div id="normal" class="section level1">
 <h1 class="hasAnchor">
@@ -223,10 +224,10 @@
 <a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; [1] 0.95</span></a>
 <a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; $N_treatment</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; [1] 94</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; [1] 88</span></a>
 <a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt; $N_control</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; [1] 86</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt; [1] 89</span></a>
 <a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt; $N_total</span></a>
 <a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; [1] 210</span></a>
@@ -241,21 +242,21 @@
 <a class="sourceLine" id="cb9-31" data-line-number="31"><span class="co">#&gt; [1] 0</span></a>
 <a class="sourceLine" id="cb9-32" data-line-number="32"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-33" data-line-number="33"><span class="co">#&gt; $prob_ha_final</span></a>
-<a class="sourceLine" id="cb9-34" data-line-number="34"><span class="co">#&gt; [1] 0.947</span></a>
+<a class="sourceLine" id="cb9-34" data-line-number="34"><span class="co">#&gt; [1] 0.961</span></a>
 <a class="sourceLine" id="cb9-35" data-line-number="35"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-36" data-line-number="36"><span class="co">#&gt; $est_final</span></a>
-<a class="sourceLine" id="cb9-37" data-line-number="37"><span class="co">#&gt; [1] -4.01467</span></a>
+<a class="sourceLine" id="cb9-37" data-line-number="37"><span class="co">#&gt; [1] -4.129096</span></a>
 <a class="sourceLine" id="cb9-38" data-line-number="38"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-39" data-line-number="39"><span class="co">#&gt; $est_int</span></a>
-<a class="sourceLine" id="cb9-40" data-line-number="40"><span class="co">#&gt; [1] -4.053656</span></a>
+<a class="sourceLine" id="cb9-40" data-line-number="40"><span class="co">#&gt; [1] -4.280391</span></a>
 <a class="sourceLine" id="cb9-41" data-line-number="41"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-42" data-line-number="42"><span class="co">#&gt; $MLE_est</span></a>
 <a class="sourceLine" id="cb9-43" data-line-number="43"><span class="co">#&gt; treatment </span></a>
-<a class="sourceLine" id="cb9-44" data-line-number="44"><span class="co">#&gt; -4.053129 </span></a>
+<a class="sourceLine" id="cb9-44" data-line-number="44"><span class="co">#&gt; -4.152475 </span></a>
 <a class="sourceLine" id="cb9-45" data-line-number="45"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-46" data-line-number="46"><span class="co">#&gt; $MLE_est_int</span></a>
 <a class="sourceLine" id="cb9-47" data-line-number="47"><span class="co">#&gt; treatment </span></a>
-<a class="sourceLine" id="cb9-48" data-line-number="48"><span class="co">#&gt; -4.044104 </span></a>
+<a class="sourceLine" id="cb9-48" data-line-number="48"><span class="co">#&gt; -4.109881 </span></a>
 <a class="sourceLine" id="cb9-49" data-line-number="49"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-50" data-line-number="50"><span class="co">#&gt; $mu_treatment</span></a>
 <a class="sourceLine" id="cb9-51" data-line-number="51"><span class="co">#&gt; [1] 12</span></a>
