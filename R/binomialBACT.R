@@ -225,7 +225,7 @@ binomialBACT <- function(
       effect_imp <- post_imp$final$posterior
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if(mean(effect_imp > h0) > prob_ha){
+      if(mean(effect_imp < h0) > prob_ha){
         futility_test <- futility_test + 1
       }
 
