@@ -137,12 +137,14 @@ value <-
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   sample_size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
-  impute(no_of_impute = 25) %>%
-  randomize(block_size = 2, randomization_ratio = c(1, 1))
+  impute(no_of_impute = 25) %>% 
+  randomize(block_size = 2, randomization_ratio = c(1, 1))%>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)
 
 
 do.call(binomialBACT, value)
 ```
+
 
 
 # Normal
@@ -153,7 +155,8 @@ value <-
   sample_size(sample.size = 300, end.of.study = 50) %>%
   looks(interim_look = c(210, 240, 270)) %>%
   impute(no_of_impute = 25) %>%
-  randomize(block_size = 2, randomization_ratio = c(1, 1))
+  randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)
   
 do.call(normalBACT, value)
 ```
