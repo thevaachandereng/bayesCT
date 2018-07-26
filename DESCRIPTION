@@ -11,22 +11,21 @@ Description: Simulation of bayesian adaptive clinical trial, incorporates power,
              futility analysis and optimal randomization ratio.
 LazyLoad: yes
 License: GPL-3
-NeedsCompilation: yes
-URL: https://github.com/thevaachandereng/BACT
-BugReports: https://github.com/thevaachandereng/BACT/issues    
+NeedsCompilation: no
+URL: https://github.com/thevaachandereng/BACT/
+BugReports: https://github.com/thevaachandereng/BACT/issues/    
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-LinkingTo: Rcpp
 Suggests: testthat,
     knitr,
     rmarkdown, 
     pkgdown
 VignetteBuilder: knitr
-Imports: Rcpp,
-    tidyr,
+Imports: tidyr,
     dplyr,
     bayesDP,
     parallel,
     msm,
-    magrittr
+    magrittr,
+    devtools

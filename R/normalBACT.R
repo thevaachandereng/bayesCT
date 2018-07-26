@@ -352,6 +352,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @examples normal_outcome(mu_control = 12, mu_treatment = 8, sd_treatment = 2.2, sd_control = 1.6)
 #' @export normal_outcome
+#'
 normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = NULL, sd_treatment = NULL, data = NULL){
   data$mu_control <- mu_control
   data$sd_control <- sd_control
