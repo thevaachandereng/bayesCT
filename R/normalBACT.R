@@ -66,7 +66,7 @@ normalBACT <- function(
   stopifnot((mu_control > 0 & sd_control > 0), (mu_treatment > 0 & sd_treatment > 0),
             all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
-            (prop_loss_to_followup > 0 & prop_loss_to_followup < 0.75),
+            (prop_loss_to_followup >= 0 & prop_loss_to_followup < 0.75),
             (h0 >= 0 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
