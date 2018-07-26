@@ -309,9 +309,9 @@ binomialBACT <- function(
     stop_expected_success                      = stop_expected_success,   # Did the trial stop for expected success
     post_prob_accept_alternative               = mean(effect < h0),       # Posterior probability that alternative hypothesis is true
     est_final                                  = mean(effect),            # Posterior Mean of treatment effect
-    est_interim                                = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
-    MLE_est                                    = MLE$coe[2],              # Treatment effect useing MLE
-    MLE_est_interim                            = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
+    est_interim                                = mean(effect_int)        # Posterior Mean of treatment effect at interim analysis
+    #MLE_est                                    = MLE$coe[2],              # Treatment effect useing MLE
+    #MLE_est_interim                            = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
   )
 
   #return results
