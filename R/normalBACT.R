@@ -311,7 +311,7 @@ normalBACT <- function(
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
     N_complete                                 = N_treatment + N_control,
-    N_total                                    = N_enrolled,              # Total sample size enrolled when trial stopped
+    N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
     N_max                                      = N_total, 				        # Total potential sample size
     stop_futility                              = stop_futility,           # Did the trial stop for futility
     stop_expected_success                      = stop_expected_success,   # Did the trial stop for expected success
