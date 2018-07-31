@@ -4,16 +4,16 @@
 \alias{binomialBACT}
 \title{Binomial counts for Bayesian Adaptive Trial}
 \usage{
-binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time, interim_look,
-  EndofStudy, prior = c(1, 1), block = 2, rand_ratio = c(1, 1),
-  prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
+binomialBACT(p_treatment, p_control = NULL, N_total, lambda, lambda_time,
+  interim_look, EndofStudy, prior = c(1, 1), block = 2, rand_ratio = c(1,
+  1), prop_loss_to_followup = 0.1, h0 = 0, futility_prob = 0.05,
   expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 1000,
   number_mcmc = 1000)
 }
 \arguments{
-\item{p_control}{scalar. Proportion of an event under the contrl group.}
-
 \item{p_treatment}{scalar. Proportion of an event under the treatment group.}
+
+\item{p_control}{scalar. Proportion of an event under the contrl group.}
 
 \item{N_total}{scalar. Total sample size}
 
