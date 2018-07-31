@@ -37,8 +37,8 @@
 #' @importFrom bayesDP bdpbinomial
 #' @export binomialBACT
 binomialBACT <- function(
-  p_control,
   p_treatment,
+  p_control             = NULL,
   N_total,
   lambda,
   lambda_time,
@@ -47,7 +47,7 @@ binomialBACT <- function(
   prior                 = c(1, 1),
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
-  prop_loss_to_followup = 0.15,         # Proportion of loss in data
+  prop_loss_to_followup = 0.10,         # Proportion of loss in data
   h0                    = 0,            # Null hypothesis value
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
@@ -55,11 +55,13 @@ binomialBACT <- function(
   N_impute              = 1000,         # Number of imputation simulations for predictive distribution
   number_mcmc           = 1000
   ){
+  #checking p_control
+  if(!is.null(p_control)){stopifnot(p_control > 0 & p_control < 1)}
   #checking inputs
-  stopifnot((p_control < 1 & p_control > 0), (p_treatment < 1 & p_treatment > 0),
-            all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),
+  stopifnot((p_treatment < 1 & p_treatment > 0), all(N_total > interim_look),
+            length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
-            (prop_loss_to_followup > 0 & prop_loss_to_followup < 0.75),
+            (prop_loss_to_followup >= 0 & prop_loss_to_followup < 0.75),
             (h0 >= 0 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
@@ -71,18 +73,27 @@ binomialBACT <- function(
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
 
   # simulating group and treatment group assignment
-  group <- randomization(N_total = N_total, block = block, scheme = rand_ratio)
+  if(!is.null(p_control)){
+    group <- randomization(N_total = N_total, block = block, scheme = rand_ratio)
+  }
+  else{
+    group <- rep(1, N_total)
+  }
 
   #simulate binomial outcome
-  sim <- rbinom(N_total, 1, prob = group * p_treatment + (1 - group) * p_control)
-
-  #dividing treatment and control
-  control <- sim[group == 0]
-  treatment <- sim[group == 1]
+  if(!is.null(p_control)){
+    sim <- rbinom(N_total, 1, prob = group * p_treatment + (1 - group) * p_control)
+    #dividing treatment and control
+    control <- sim[group == 0]
+    treatment <- sim[group == 1]
+  }
+  else{
+    sim <- rbinom(N_total, 1, p_treatment)
+  }
 
   # Simulate loss to follow-up
   n_loss_to_fu <- ceiling(prop_loss_to_followup * N_total)
-  loss_to_fu   <- rep(FALSE,N_total)
+  loss_to_fu   <- rep(FALSE, N_total)
   loss_to_fu[sample(1:N_total, n_loss_to_fu)] <- TRUE
 
 
@@ -100,7 +111,7 @@ binomialBACT <- function(
 
 
 
-  for(i in 1:(length(analysis_at_enrollnumber)-1) ){
+  for(i in 1:(length(analysis_at_enrollnumber) - 1)){
 
     # Analysis at the `analysis_at_enrollnumber` look
     # Indicators for subject type:
@@ -124,13 +135,23 @@ binomialBACT <- function(
              !subject_impute_success)
 
     # MLE of data at interim analysis
-    MLE_int        <- glm(Y ~ treatment, data = data, family = "binomial")
+    # MLE_int        <- glm(Y ~ treatment, data = data, family = "binomial")
+
+    # assigning input for control arm given it is a single or double arm
+    if(!is.null(p_control)){
+      y_c <- sum(data$Y[data$treatment == 0])
+      N_c <- length(data$Y[data$treatment == 0])
+    }
+    else{
+      y_c <- NULL
+      N_c <- NULL
+    }
 
     # Analyze data using discount funtion via binomial
     post <- bdpbinomial(y_t                    = sum(data$Y[data$treatment == 1]),
                         N_t                    = length(data$Y[data$treatment == 1]),
-                        y_c                    = sum(data$Y[data$treatment == 0]),
-                        N_c                    = length(data$Y[data$treatment == 0]),
+                        y_c                    = y_c,
+                        N_c                    = N_c,
                         number_mcmc            = number_mcmc,
                         a0                     = prior[1],
                         b0                     = prior[2])
@@ -166,11 +187,21 @@ binomialBACT <- function(
         filter(subject_enrolled)
 
 
+      # assigning input for control arm given it is a single or double arm
+      if(!is.null(p_control)){
+        y_c <- sum(data$Y[data$treatment == 0])
+        N_c <- length(data$Y[data$treatment == 0])
+      }
+      else{
+        y_c <- NULL
+        N_c <- NULL
+      }
+
       # Analyze complete+imputed data using discount funtion via binomial
       post_imp <- bdpbinomial(y_t                    = sum(data$Y[data$treatment == 1]),
                               N_t                    = length(data$Y[data$treatment == 1]),
-                              y_c                    = sum(data$Y[data$treatment == 0]),
-                              N_c                    = length(data$Y[data$treatment == 0]),
+                              y_c                    = y_c,
+                              N_c                    = N_c,
                               number_mcmc            = number_mcmc,
                               a0                     = prior[1],
                               b0                     = prior[2])
@@ -178,8 +209,12 @@ binomialBACT <- function(
 
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
-
-      effect_imp <- post_imp$final$posterior
+      if(!is.null(p_control)){
+        effect_imp <- post_imp$final$posterior
+      }
+      else{
+        effect_imp <- post_imp$final$posterior - p_treatment
+      }
 
       if(mean(effect_imp < h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
@@ -212,17 +247,31 @@ binomialBACT <- function(
       #Create enrolled subject data frame for discount function analysis
       data <- data_futility_impute
 
+      if(!is.null(p_control)){
+        y_c <- sum(data$Y[data$treatment == 0])
+        N_c <- length(data$Y[data$treatment == 0])
+      }
+      else{
+        y_c <- NULL
+        N_c <- NULL
+      }
+
       # Analyze complete+imputed data using discount funtion via binomial
       post_imp <- bdpbinomial(y_t                    = sum(data$Y[data$treatment == 1]),
                               N_t                    = length(data$Y[data$treatment == 1]),
-                              y_c                    = sum(data$Y[data$treatment == 0]),
-                              N_c                    = length(data$Y[data$treatment == 0]),
+                              y_c                    = y_c,
+                              N_c                    = N_c,
                               number_mcmc            = number_mcmc,
                               a0                     = prior[1],
                               b0                     = prior[2])
 
       # Estimation of the posterior effect for difference between test and control
-      effect_imp <- post_imp$final$posterior
+      if(!is.null(p_control)){
+        effect_imp <- post_imp$final$posterior
+      }
+      else{
+        effect_imp <- post_imp$final$posterior - p_treatment
+      }
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
       if(mean(effect_imp < h0) > prob_ha){
@@ -277,21 +326,38 @@ binomialBACT <- function(
 
 
   # Compute the final MLE for the complete data using GLM function
-  MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
+  # MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
+
+  if(!is.null(p_control)){
+    y_c <- sum(data_final$Y[data_final$treatment == 0])
+    N_c <- length(data_final$Y[data_final$treatment == 0])
+  }
+  else{
+    y_c <- NULL
+    N_c <- NULL
+  }
 
   # Analyze complete data using discount funtion via binomial
   post <- bdpbinomial(y_t                 = sum(data_final$Y[data_final$treatment == 1]),
                       N_t                 = length(data_final$Y[data_final$treatment == 1]),
-                      y_c                 = sum(data_final$Y[data_final$treatment == 0]),
-                      N_c                 = length(data_final$Y[data_final$treatment == 0]),
+                      y_c                 = y_c,
+                      N_c                 = N_c,
                       number_mcmc         = number_mcmc,
                       a0                  = prior[1],
                       b0                  = prior[2])
 
 
   ### Format and output results
-  effect        <- post$final$posterior       #Posterior effect size: test vs control
+  #Posterior effect size: test vs control or treatment itself
+  if(!is.null(p_control)){
+    effect <- post$final$posterior
+  }
+  else{
+    effect <- post$final$posterior - p_treatment
+  }
+
   N_treatment   <- sum(data_final$treatment)  #Total sample size analyzed - test group
+
   N_control     <- sum(!data_final$treatment) #Total sample size analyzed - control group
 
 
