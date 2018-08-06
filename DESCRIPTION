@@ -3,7 +3,7 @@ Type: Package
 Title: Bayesian Adaptive Clinical Trial (BACT)
 Version: 1.0.0
 Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu", role = c("cre", "aut")), 
-             person("Donnie", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
+             person("Donald", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
              person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com", role = c("aut")),
              person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com", role = c("aut")),
              person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com", role = c("aut")))

@@ -36,6 +36,7 @@
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpbinomial
 #' @export binomialBACT
+
 binomialBACT <- function(
   p_treatment,
   p_control             = NULL,
@@ -108,7 +109,6 @@ binomialBACT <- function(
   #assigning stop_futility and expected success
   stop_futility         <- 0
   stop_expected_success <- 0
-
 
 
   for(i in 1:(length(analysis_at_enrollnumber) - 1)){
@@ -209,12 +209,8 @@ binomialBACT <- function(
 
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
-      if(!is.null(p_control)){
-        effect_imp <- post_imp$final$posterior
-      }
-      else{
-        effect_imp <- post_imp$final$posterior - p_treatment
-      }
+      effect_imp <- post_imp$final$posterior
+
 
       if(mean(effect_imp < h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
@@ -266,12 +262,7 @@ binomialBACT <- function(
                               b0                     = prior[2])
 
       # Estimation of the posterior effect for difference between test and control
-      if(!is.null(p_control)){
-        effect_imp <- post_imp$final$posterior
-      }
-      else{
-        effect_imp <- post_imp$final$posterior - p_treatment
-      }
+      effect_imp <- post_imp$final$posterior
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
       if(mean(effect_imp < h0) > prob_ha){
@@ -348,17 +339,9 @@ binomialBACT <- function(
 
 
   ### Format and output results
-  #Posterior effect size: test vs control or treatment itself
-  if(!is.null(p_control)){
-    effect <- post$final$posterior
-  }
-  else{
-    effect <- post$final$posterior - p_treatment
-  }
-
-  N_treatment   <- sum(data_final$treatment)  #Total sample size analyzed - test group
-
-  N_control     <- sum(!data_final$treatment) #Total sample size analyzed - control group
+  effect       <- post$final$posterior        # Posterior effect size: test vs control or treatment itself
+  N_treatment  <- sum(data_final$treatment)   # Total sample size analyzed - test group
+  N_control    <- sum(!data_final$treatment)  # Total sample size analyzed - control group
 
 
   ## output
