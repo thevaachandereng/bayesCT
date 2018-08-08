@@ -4,14 +4,15 @@
 \alias{binomial_outcome}
 \title{Proportion of failure in control and treatment}
 \usage{
-binomial_outcome(p_control = NULL, p_treatment = NULL, data = NULL)
+binomial_outcome(p_control_true = NULL, p_treatment_true = NULL,
+  data = NULL)
 }
 \arguments{
-\item{p_control}{numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.}
+\item{p_control_true}{numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.}
 
-\item{p_treatment}{numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.}
+\item{p_treatment_true}{numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.}
 
-\item{data}{NULL. stores the proportion of control and treatment.}
+\item{data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
 \value{
 a list with proportion of control and treatment group.
@@ -20,5 +21,5 @@ a list with proportion of control and treatment group.
 Wrapper function for proportion of failure in control and treatment group with binomial outcome.
 }
 \examples{
-binomial_outcome(p_control = 0.12, p_treatment = 0.08)
+binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
 }

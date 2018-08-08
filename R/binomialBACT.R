@@ -379,17 +379,17 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @description Wrapper function for proportion of failure in control and treatment group with binomial outcome.
 #'
-#' @param p_control numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.
-#' @param p_treatment numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.
-#' @param data NULL. stores the proportion of control and treatment.
+#' @param p_control_true numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.
+#' @param p_treatment_true numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.
+#' @param data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with proportion of control and treatment group.
 #'
-#' @examples binomial_outcome(p_control = 0.12, p_treatment = 0.08)
+#' @examples binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
 #' @export binomial_outcome
-binomial_outcome <- function(p_control = NULL, p_treatment = NULL, data = NULL){
-  data$p_control <- p_control
-  data$p_treatment <- p_treatment
+binomial_outcome <- function(p_control_true = NULL, p_treatment_true = NULL, data = NULL){
+  data$p_control <- p_control_true
+  data$p_treatment <- p_treatment_true
   data
 }
 

@@ -4,19 +4,19 @@
 \alias{normal_outcome}
 \title{Parameters for treatment and control in normal case}
 \usage{
-normal_outcome(mu_control = NULL, sd_control = NULL, mu_treatment = NULL,
-  sd_treatment = NULL, data = NULL)
+normal_outcome(mu_control_true = NULL, sd_control_true = NULL,
+  mu_treatment_true = NULL, sd_treatment_true = NULL, data = NULL)
 }
 \arguments{
-\item{mu_control}{numeric. The mean for the control group.}
+\item{mu_control_true}{numeric. The mean for the control group.}
 
-\item{sd_control}{numeric. The standard deviation for the control group.}
+\item{sd_control_true}{numeric. The standard deviation for the control group.}
 
-\item{mu_treatment}{numeric. The mean for the treatment group.}
+\item{mu_treatment_true}{numeric. The mean for the treatment group.}
 
-\item{sd_treatment}{numeric. The standard deviation for the treatment group.}
+\item{sd_treatment_true}{numeric. The standard deviation for the treatment group.}
 
-\item{data}{NULL. stores the proportion of control and treatment.}
+\item{data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
 \value{
 a list with proportion of control and treatment group.
