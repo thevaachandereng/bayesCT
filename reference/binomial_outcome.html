@@ -111,22 +111,23 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>binomial_outcome</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>binomial_outcome</span>(<span class='kw'>p_control_true</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>p_treatment_true</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>p_control</th>
+      <th>p_control_true</th>
       <td><p>numeric. The proportion of failure in the control group, 0 &lt; $p_control$ &lt; 1.</p></td>
     </tr>
     <tr>
-      <th>p_treatment</th>
+      <th>p_treatment_true</th>
       <td><p>numeric. The proportion of failure in the treatment group, 0 &lt; $p_treatment$ &lt; 1.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>NULL. stores the proportion of control and treatment.</p></td>
+      <td><p>NULL. stores the proportion of control and treatment, please do not fill it in.</p></td>
     </tr>
     </table>
     
@@ -136,7 +137,7 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>binomial_outcome</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.12</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.08</span>)</div><div class='output co'>#&gt; $p_control
+    <pre class="examples"><div class='input'><span class='fu'>binomial_outcome</span>(<span class='kw'>p_control_true</span> <span class='kw'>=</span> <span class='fl'>0.12</span>, <span class='kw'>p_treatment_true</span> <span class='kw'>=</span> <span class='fl'>0.08</span>)</div><div class='output co'>#&gt; $p_control
 #&gt; [1] 0.12
 #&gt; 
 #&gt; $p_treatment
