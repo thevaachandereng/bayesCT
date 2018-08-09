@@ -13,7 +13,7 @@ LazyLoad: yes
 License: GPL-3
 NeedsCompilation: no
 URL: https://github.com/thevaachandereng/BACT/
-BugReports: https://github.com/thevaachandereng/BACT/issues/    
+BugReports: https://github.com/thevaachandereng/BACT/issues/
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
