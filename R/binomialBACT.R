@@ -5,13 +5,22 @@
 #'
 #' @param p_control scalar. Proportion of an event under the contrl group.
 #' @param p_treatment scalar. Proportion of an event under the treatment group.
+#' @param y0_treatment scalar. Number of events for the historical treatment group.
+#' @param N0_treatment scalar. Sample size of the historical treatment group.
+#' @param y0_control scalar. Number of events for the historical control group.
+#' @param N0_control scalar. Sample size of the historical control group.
+#' @param discount_function character. Specify the discount function to use. Currently supports weibull,
+#'                          scaledweibull, and identity. The discount function scaledweibull scales the
+#'                          output of the Weibull CDF to have a max value of 1. The identity discount function
+#'                          uses the posterior probability directly as the discount weight. Default value is
+#'                          "identity".
 #' @param N_total scalar. Total sample size
 #' @param lambda vector. Lambda for different enrollment rates across times.
 #' @param lambda_time vector. Same size as lambda, denote times at lambda changes.
 #' @param interim_look vector. Sample size for interim looks,
 #'                                 total size not included.
 #' @param EndofStudy scalar. Length of the study.
-#' @param prior vector. Prior value of beta rate, beta(a0, b0)
+#' @param prior vector. Prior value of beta rate, beta(a0, b0). Default is set to c(1, 1).
 #' @param block scalar. Block size for randomization to be implemented.
 #' @param rand_ratio vector. Randomization ratio for control to treatment.
 #'                    Integer values mapping the size of the block.
@@ -40,6 +49,11 @@
 binomialBACT <- function(
   p_treatment,
   p_control             = NULL,
+  y0_treatment          = NULL,
+  N0_treatment          = NULL,
+  y0_control            = NULL,
+  N0_control            = NULL,
+  discount_function     = "identity",
   N_total,
   lambda,
   lambda_time,
@@ -56,9 +70,20 @@ binomialBACT <- function(
   N_impute              = 1000,         # Number of imputation simulations for predictive distribution
   number_mcmc           = 1000
   ){
+
   #checking p_control
   if(!is.null(p_control)){stopifnot(p_control > 0 & p_control < 1)}
-  #checking inputs
+  #checking historical data for treatment group
+  if(!is.null(y0_treatment) | !is.null(N0_treatment)){
+    stopifnot((y0_treatment > 0 & N0_treatment > 0), y0_treatment <= N0_treatment,
+              (discount_function == "identity" | discount_function == "weibull" |
+               discount_function == "scaledweibull"))
+  }
+  #checking historical data for control group
+  if(!is.null(y0_control) | !is.null(N0_control)){
+    stopifnot((y0_control > 0 & N0_control > 0), y0_control <= N0_control)
+  }
+  #checking other inputs
   stopifnot((p_treatment < 1 & p_treatment > 0), all(N_total > interim_look),
             length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
@@ -152,6 +177,11 @@ binomialBACT <- function(
                         N_t                    = length(data$Y[data$treatment == 1]),
                         y_c                    = y_c,
                         N_c                    = N_c,
+                        y0_t                   = y0_treatment,
+                        N0_t                   = N0_treatment,
+                        y0_c                   = y0_control,
+                        N0_c                   = N0_control,
+                        discount_function      = discount_function,
                         number_mcmc            = number_mcmc,
                         a0                     = prior[1],
                         b0                     = prior[2])
@@ -202,10 +232,14 @@ binomialBACT <- function(
                               N_t                    = length(data$Y[data$treatment == 1]),
                               y_c                    = y_c,
                               N_c                    = N_c,
+                              y0_t                   = y0_treatment,
+                              N0_t                   = N0_treatment,
+                              y0_c                   = y0_control,
+                              N0_c                   = N0_control,
+                              discount_function      = discount_function,
                               number_mcmc            = number_mcmc,
                               a0                     = prior[1],
                               b0                     = prior[2])
-
 
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
@@ -257,6 +291,11 @@ binomialBACT <- function(
                               N_t                    = length(data$Y[data$treatment == 1]),
                               y_c                    = y_c,
                               N_c                    = N_c,
+                              y0_t                   = y0_treatment,
+                              N0_t                   = N0_treatment,
+                              y0_c                   = y0_control,
+                              N0_c                   = N0_control,
+                              discount_function      = discount_function,
                               number_mcmc            = number_mcmc,
                               a0                     = prior[1],
                               b0                     = prior[2])
@@ -329,13 +368,18 @@ binomialBACT <- function(
   }
 
   # Analyze complete data using discount funtion via binomial
-  post <- bdpbinomial(y_t                 = sum(data_final$Y[data_final$treatment == 1]),
-                      N_t                 = length(data_final$Y[data_final$treatment == 1]),
-                      y_c                 = y_c,
-                      N_c                 = N_c,
-                      number_mcmc         = number_mcmc,
-                      a0                  = prior[1],
-                      b0                  = prior[2])
+  post <- bdpbinomial(y_t                  = sum(data_final$Y[data_final$treatment == 1]),
+                      N_t                  = length(data_final$Y[data_final$treatment == 1]),
+                      y_c                  = y_c,
+                      N_c                  = N_c,
+                      y0_t                 = y0_treatment,
+                      N0_t                 = N0_treatment,
+                      y0_c                 = y0_control,
+                      N0_c                 = N0_control,
+                      number_mcmc          = number_mcmc,
+                      discount_function    = discount_function,
+                      a0                   = prior[1],
+                      b0                   = prior[2])
 
 
   ### Format and output results
@@ -381,20 +425,60 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @param p_control_true numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.
 #' @param p_treatment_true numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.
-#' @param data NULL. stores the proportion of control and treatment, please do not fill it in.
+#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with proportion of control and treatment group.
 #'
 #' @examples binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
 #' @export binomial_outcome
-binomial_outcome <- function(p_control_true = NULL, p_treatment_true = NULL, data = NULL){
-  data$p_control <- p_control_true
-  data$p_treatment <- p_treatment_true
-  data
+binomial_outcome <- function(p_control_true = NULL, p_treatment_true = NULL, .data = NULL){
+  .data$p_control <- p_control_true
+  .data$p_treatment <- p_treatment_true
+  .data
+}
+
+
+#' @title Historical data for binomial distribution
+#'
+#' @description Wrapper function for historical data from binomial outcome.
+#'
+#' @param y0_treatment numeric. The proportion of event in the historical treatment group.
+#' @param N0_treatment numeric. The sample size for the historical treatment group.
+#' @param y0_control numeric. The proportion of event in the historical control group.
+#' @param N0_control numeric. The sample size for the historical control group.
+#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#'
+#' @return a list with historical data for control and treatment group.
+#'
+#' @examples historical_binomial(y0_treatment = 5, N0_treatment = 10, y0_control = 15, N0_control = 23)
+#' @export historical_binomial
+historical_binomial <- function(y0_treatment = NULL,
+                                N0_treatment = NULL,
+                                y0_control = NULL,
+                                N0_control = NULL,
+                                .data = NULL){
+  .data$y0_treatment <- y0_treatment
+  .data$N0_treatment <- N0_treatment
+  .data$y0_control <- y0_control
+  .data$N0_control <- N0_control
+  .data
 }
 
 
 
-
+#' @title Complete binomial wrapper function
+#'
+#' @description Wrapper function for complete binomial bayesCT function to compute power and type 1 error.
+#'
+#' @param input list. Input function for all binomial_BACT.
+#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#'
+#' @return a list with results of the clinical outcome.
+#'
+#' @export BACT_binomial
+BACTbinomial <- function(input, .data = NULL){
+  .data <- do.call(binomialBACT, input)
+  .data
+}
 
 

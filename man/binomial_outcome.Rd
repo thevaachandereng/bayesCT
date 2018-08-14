@@ -5,14 +5,14 @@
 \title{Proportion of failure in control and treatment}
 \usage{
 binomial_outcome(p_control_true = NULL, p_treatment_true = NULL,
-  data = NULL)
+  .data = NULL)
 }
 \arguments{
 \item{p_control_true}{numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.}
 
 \item{p_treatment_true}{numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.}
 
-\item{data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
 \value{
 a list with proportion of control and treatment group.
