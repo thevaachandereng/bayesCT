@@ -1,11 +1,11 @@
 # bayesCT - Tool for Simulation in Adaptive Bayesian Clinical Trials
 
 
-[![Build Status](https://travis-ci.org/thevaachandereng/BACT.svg?branch=master)](https://travis-ci.org/thevaachandereng/BACT)
+[![Build Status](https://travis-ci.org/thevaachandereng/bayesCT.svg?branch=master)](https://travis-ci.org/thevaachandereng/bayesCT)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![](https://cranlogs.r-pkg.org/badges/BACT)](https://cran.r-project.org/package=BACT)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/thevaachandereng/BACT?branch=master&svg=true)](https://ci.appveyor.com/project/thevaachandereng/BACT)
-[![codecov](https://codecov.io/gh/thevaachandereng/BACT/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/BACT)
+[![](https://cranlogs.r-pkg.org/badges/bayesCT)](https://cran.r-project.org/package=bayesCT)
+[![Build status](https://ci.appveyor.com/api/projects/status/2wfwigrrcpom0oi9/branch/master?svg=true)](https://ci.appveyor.com/project/thevaachandereng/bayesct/branch/master)
+[![codecov](https://codecov.io/gh/thevaachandereng/bayesCT/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/bayesCT)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 
