@@ -1,6 +1,6 @@
-Package: BACT
+Package: bayesCT
 Type: Package
-Title: Bayesian Adaptive Clinical Trial (BACT)
+Title: An R Package for Simulation in Adaptive Bayesian Clinical Trials (bayesCT)
 Version: 1.0.0
 Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu", role = c("cre", "aut")), 
              person("Donald", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
@@ -12,8 +12,8 @@ Description: Simulation of bayesian adaptive clinical trial, incorporates power,
 LazyLoad: yes
 License: GPL-3
 NeedsCompilation: no
-URL: https://github.com/thevaachandereng/BACT/
-BugReports: https://github.com/thevaachandereng/BACT/issues/
+URL: https://github.com/thevaachandereng/bayesCT/
+BugReports: https://github.com/thevaachandereng/bayesCT/issues/
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

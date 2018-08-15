@@ -1,2 +1,2 @@
 library(testthat)
-test_check("BACT")
+test_check("bayesCT")
