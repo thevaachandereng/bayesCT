@@ -5,7 +5,8 @@
 \title{Historical data for binomial distribution}
 \usage{
 historical_binomial(y0_treatment = NULL, N0_treatment = NULL,
-  y0_control = NULL, N0_control = NULL, .data = NULL)
+  y0_control = NULL, N0_control = NULL, discount_function = "identity",
+  .data = NULL)
 }
 \arguments{
 \item{y0_treatment}{numeric. The proportion of event in the historical treatment group.}
@@ -16,10 +17,16 @@ historical_binomial(y0_treatment = NULL, N0_treatment = NULL,
 
 \item{N0_control}{numeric. The sample size for the historical control group.}
 
+\item{discount_function}{character. Specify the discount function to use. Currently supports weibull,
+scaledweibull, and identity. The discount function scaledweibull scales the
+output of the Weibull CDF to have a max value of 1. The identity discount function
+uses the posterior probability directly as the discount weight. Default value is
+"identity".}
+
 \item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
 \value{
-a list with historical data for control and treatment group.
+a list with historical data for control and treatment group with the discount function.
 }
 \description{
 Wrapper function for historical data from binomial outcome.

@@ -4,14 +4,14 @@
 \alias{enrollment_rate}
 \title{Enrollment rate wrapper}
 \usage{
-enrollment_rate(lambda = NULL, time = NULL, data = NULL)
+enrollment_rate(lambda = NULL, time = NULL, .data = NULL)
 }
 \arguments{
 \item{lambda}{vector. Vector with different enrollment rate.}
 
 \item{time}{vector. Vector with different cutoff time for lambda.}
 
-\item{data}{NULL. stores the impute function}
+\item{.data}{NULL. stores the impute function}
 }
 \value{
 a list with enrollment rate information

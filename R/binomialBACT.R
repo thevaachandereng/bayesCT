@@ -421,12 +421,12 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 "subject_impute_success", "subject_impute_futility"))
 
 
-#' @title Proportion of failure in control and treatment
+#' @title Proportion of an event in control and treatment
 #'
-#' @description Wrapper function for proportion of failure in control and treatment group with binomial outcome.
+#' @description Wrapper function for proportion of an event in control and treatment group with binomial outcome.
 #'
-#' @param p_control_true numeric. The proportion of failure in the control group, 0 < $p_control$ < 1.
-#' @param p_treatment_true numeric. The proportion of failure in the treatment group, 0 < $p_treatment$ < 1.
+#' @param p_control_true numeric. The proportion of an event in the control group, 0 < $p_control$ < 1.
+#' @param p_treatment_true numeric. The proportion of an event in the treatment group, 0 < $p_treatment$ < 1.
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with proportion of control and treatment group.
@@ -434,8 +434,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #' @examples binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
 #' @export binomial_outcome
 binomial_outcome <- function(p_control_true = NULL, p_treatment_true = NULL, .data = NULL){
-  .data$p_control <- p_control_true
-  .data$p_treatment <- p_treatment_true
+  .data$p_control    <- p_control_true
+  .data$p_treatment  <- p_treatment_true
   .data
 }
 
@@ -449,20 +449,28 @@ binomial_outcome <- function(p_control_true = NULL, p_treatment_true = NULL, .da
 #' @param y0_control numeric. The proportion of event in the historical control group.
 #' @param N0_control numeric. The sample size for the historical control group.
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#' @param discount_function character. Specify the discount function to use. Currently supports weibull,
+#'                          scaledweibull, and identity. The discount function scaledweibull scales the
+#'                          output of the Weibull CDF to have a max value of 1. The identity discount function
+#'                          uses the posterior probability directly as the discount weight. Default value is
+#'                          "identity".
 #'
-#' @return a list with historical data for control and treatment group.
+#' @return a list with historical data for control and treatment group with the discount function.
 #'
 #' @examples historical_binomial(y0_treatment = 5, N0_treatment = 10, y0_control = 15, N0_control = 23)
 #' @export historical_binomial
-historical_binomial <- function(y0_treatment = NULL,
-                                N0_treatment = NULL,
-                                y0_control = NULL,
-                                N0_control = NULL,
-                                .data = NULL){
-  .data$y0_treatment <- y0_treatment
-  .data$N0_treatment <- N0_treatment
-  .data$y0_control <- y0_control
-  .data$N0_control <- N0_control
+historical_binomial <- function(y0_treatment       = NULL,
+                                N0_treatment       = NULL,
+                                y0_control         = NULL,
+                                N0_control         = NULL,
+                                discount_function  = "identity",
+                                .data              = NULL
+                                ){
+  .data$y0_treatment       <- y0_treatment
+  .data$N0_treatment       <- N0_treatment
+  .data$y0_control         <- y0_control
+  .data$N0_control         <- N0_control
+  .data$discount_function  <- discount_function
   .data
 }
 

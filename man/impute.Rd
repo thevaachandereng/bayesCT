@@ -4,12 +4,14 @@
 \alias{impute}
 \title{Imputation wrapper}
 \usage{
-impute(no_of_impute, data = NULL)
+impute(no_of_impute, number_mcmc, .data = NULL)
 }
 \arguments{
 \item{no_of_impute}{integer. Number of Monte Carlo imputation for missing data}
 
-\item{data}{NULL. stores the impute function}
+\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain in sampling posterior.}
+
+\item{.data}{NULL. stores the impute function}
 }
 \value{
 a list with number of imputation
@@ -18,5 +20,5 @@ a list with number of imputation
 Wrapper function for no_of _impute
 }
 \examples{
-impute(no_of_impute = 100)
+impute(no_of_impute = 100, number_mcmc = 1000)
 }

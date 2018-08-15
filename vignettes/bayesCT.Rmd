@@ -134,11 +134,13 @@ In the code above, the total sample size is 140, the block size is 6 and the ran
 ```{r}
 value <- 
   binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08) %>%
-  historical_binomial(y0_treatment = 5, N0_treatment = 55, y0_control = 3, N0_control = 39) %>%
+  historical_binomial(y0_treatment = 5, N0_treatment = 55, 
+                      y0_control = 3, N0_control = 39, 
+                      discount_function = "identity") %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  sample_size(sample.size = 300, end.of.study = 50) %>%
-  looks(interim_look = c(210, 240, 270)) %>%
-  impute(no_of_impute = 25) %>% 
+  study_details(total_sample_size = 300, study_period = 50, 
+                interim_look = c(210, 240, 270)) %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>% 
   randomize(block_size = 2, randomization_ratio = c(1, 1))%>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
   BACTbinomial()
@@ -153,9 +155,9 @@ value <-
   normal_outcome(mu_control_true = 16, mu_treatment_true = 12, 
                  sd_treatment_true = 1.4, sd_control_true = 1.9) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  sample_size(sample.size = 300, end.of.study = 50) %>%
-  looks(interim_look = c(210, 240, 270)) %>%
-  impute(no_of_impute = 25) %>%
+  study_details(total_sample_size = 300, study_period = 50, 
+                interim_look = c(210, 240, 270)) %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>%
   randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, 
              expected_success_prob = 0.90) %>%

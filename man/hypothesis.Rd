@@ -4,7 +4,7 @@
 \alias{hypothesis}
 \title{Hypothesis wrapper}
 \usage{
-hypothesis(delta, futility_prob, prob_ha, expected_success_prob, data = NULL)
+hypothesis(delta, futility_prob, prob_ha, expected_success_prob, .data = NULL)
 }
 \arguments{
 \item{delta}{numeric. threshold set for margin in null hypothesis}
@@ -15,7 +15,7 @@ hypothesis(delta, futility_prob, prob_ha, expected_success_prob, data = NULL)
 
 \item{expected_success_prob}{numeric. probability of expecting success.}
 
-\item{data}{NULL. stores the randomization scheme function}
+\item{.data}{NULL. stores the randomization scheme function}
 }
 \value{
 a list with information of hypothesis testing (threshold, futility probability,
