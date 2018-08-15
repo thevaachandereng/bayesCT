@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BACT: Bayesian Adaptive Clinical Trial • BACT</title>
+<title>bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials • bayesCT</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="BACT: Bayesian Adaptive Clinical Trial">
+<script src="../pkgdown.js"></script><meta property="og:title" content="bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -28,7 +28,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">BACT</a>
+        <a class="navbar-link" href="../index.html">bayesCT</a>
         <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.0.0</span>
       </span>
     </div>
@@ -42,7 +42,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/BACT.html">Get started</a>
+  <a href="../articles/bayesCT.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -50,7 +50,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/thevaachandereng/BACT/">
+  <a href="https://github.com/thevaachandereng/bayesCT/">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -67,12 +67,12 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>BACT: Bayesian Adaptive Clinical Trial</h1>
+      <h1>bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials</h1>
                         <h4 class="author">Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Timothy Hanson, Theodore Lystig</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/thevaachandereng/BACT//blob/master/vignettes/BACT.Rmd"><code>vignettes/BACT.Rmd</code></a></small>
-      <div class="hidden name"><code>BACT.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/thevaachandereng/bayesCT//blob/master/vignettes/bayesCT.Rmd"><code>vignettes/bayesCT.Rmd</code></a></small>
+      <div class="hidden name"><code>bayesCT.Rmd</code></div>
 
     </div>
 
@@ -81,36 +81,36 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Clinical Trial is randomized intervention comparing a new treatment/drug to a current treatment/drug (control). Most of the analysis developed for clinical trials have been highly focused on frequentist approach. The Bayesian adaptive trial has not gained much popularity until recent years.</p>
-<p>Bayesian adaptive trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial. Bayesian adaptive trials can incorporate historical data which helps reduce the sample size required in a clinical trial. Bayesian adaptive trials are also useful in an interim analysis for early stopping for success or futility. Bayesian adaptive trials have also been used in multiple treatments vs control which allows dropping a treatment which is not successful during a trial. Statistician has altered randomization ratio to promote efficiency in a trial or even to increase recruitment of patients into a trial.</p>
-<p>However, simulation of a Bayesian adaptive trial is much more complex compared to the general frequentist approach. This package should aid with the simulation of Bayesian adaptive trials.</p>
-<p>If you use BACT in published research, please cite:</p>
-<p>If after reading through this vignette you have questions or problems using BACT, please post them to <a href="https://github.com/thevaachandereng/BACT/issues" class="uri">https://github.com/thevaachandereng/BACT/issues</a>. This will notify the package maintainers and benefit other users.</p>
+<p>Clinical Trial is randomized intervention comparing a new treatment/drug to a current treatment/drug (control). Most of the analysis developed for clinical trials have been highly focused on frequentist approach. The adaptive Bayesian trial has not gained much popularity until recent years.</p>
+<p>Adaptive Bayesian trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial. Adaptive Bayesian trials can incorporate historical data which helps reduce the sample size required in a clinical trial. Adaptive Bayesian trials are also useful in an interim analysis for early stopping for success or futility. Adaptive Bayesian trials have also been used in multiple treatments vs control which allows dropping a treatment which is not successful during a trial. Statistician has altered randomization ratio to promote efficiency in a trial or even to increase recruitment of patients into a trial.</p>
+<p>However, simulation of an adaptive Bayesian trial is much more complex compared to the general frequentist approach. This package should aid with the simulation of adaptive Bayesian trials.</p>
+<p>If you use bayesCT in published research, please cite:</p>
+<p>If after reading through this vignette you have questions or problems using bayesCT, please post them to <a href="https://github.com/thevaachandereng/bayesCT/issues" class="uri">https://github.com/thevaachandereng/bayesCT/issues</a>. This will notify the package maintainers and benefit other users.</p>
 <p>You should <strong>not</strong> email your question to the package authors, as we will just reply that the question should be posted to the <strong>Github support site</strong>.</p>
 </div>
-<div id="running-bact" class="section level1">
+<div id="running-bayesct" class="section level1">
 <h1 class="hasAnchor">
-<a href="#running-bact" class="anchor"></a>Running BACT</h1>
+<a href="#running-bayesct" class="anchor"></a>Running bayesCT</h1>
 <p>Prior to analyzing your data, the R package needs to be installed.</p>
-<p>The easiest way to install BACT is through CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"BACT"</span>)</a></code></pre></div>
-<p>There are other additional ways to download BACT. The first option is most useful if want to download a specific version of BACT (which can be found at <a href="https://github.com/thevaachandereng/BACT/releases" class="uri">https://github.com/thevaachandereng/BACT/releases</a>).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"thevaachandereng/BACT@vx.xx.x"</span>)</a>
+<p>The easiest way to install bayesCT is through CRAN:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"bayesCT"</span>)</a></code></pre></div>
+<p>There are other additional ways to download bayesCT. The first option is most useful if want to download a specific version of bayesCT (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT@vx.xx.x"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#OR </span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_version">install_version</a></span>(<span class="st">"BACT"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_version">install_version</a></span>(<span class="st">"bayesCT"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
 <p>The second option is to download through GitHub.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"thevaachandereng/BACT"</span>)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; Using GitHub PAT from envvar GITHUB_PAT</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Downloading GitHub repo thevaachandereng/BACT@master</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; from URL https://api.github.com/repos/thevaachandereng/BACT/zipball/master</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; Installing BACT</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; Downloading GitHub repo thevaachandereng/bayesCT@master</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; from URL https://api.github.com/repos/thevaachandereng/bayesCT/zipball/master</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; Installing bayesCT</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; '/home/travis/R-bin/lib/R/bin/R' --no-site-file --no-environ --no-save  \</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;   --no-restore --quiet CMD INSTALL  \</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;   '/tmp/RtmpIJajzh/devtools2fd251a5eb96/thevaachandereng-BACT-097c554'  \</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;   '/tmp/Rtmp3xMNCK/devtools2ed7ba61119/thevaachandereng-bayesCT-69fa457'  \</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;   --library='/home/travis/R/Library' --install-tests</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; </span></a></code></pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(BACT)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(bayesCT)</a></code></pre></div>
 </div>
 <div id="recruitment" class="section level1">
 <h1 class="hasAnchor">
@@ -125,7 +125,7 @@
 \end{array} 
 \right. \]</span></p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">20000</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/enrollment">enrollment</a></span>(<span class="dt">param =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment</a></span>(<span class="dt">param =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;  [1]  0  1  2  2  4  6  9  9 12 14 16 17 17 17 18 18 19 22 22 23 25 26 26</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [24] 26 28 28 32 34 36 36 37 38 38 39 39 41 42 44 44 46 46 46 49 52 53 54</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [47] 54 56 56 56</span></a></code></pre></div>
@@ -135,9 +135,9 @@
 <a href="#randomization-scheme" class="anchor"></a>Randomization scheme</h1>
 <p>Randomization scheme is important in a clinical trial. A complete randomization is not always ideal due to the chance of drawing a large block of one-arm of treatment, which can affect the time of an arm in a trial. Therefore, our randomization scheme is randomized in terms of a block. The randomization scheme also allows different randomization ratio but they must be in integer form. The block should also be an integer that is divisible by the sum of randomization scheme.</p>
 <p>For instance,</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">scheme =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">scheme =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p>will not work because the sum of the scheme is not a multiple of the block.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">scheme =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">scheme =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 0 0 0 0 1 1 0 0 1 0 0 1 1 0 1 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 1 0 1 0</span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 1 0 0 0 1 0 0 0 1 0 0 1 0 0 1 0 1 0 1 0 0 0 0 1 1 0 0 0 0 1 0 1 0 1</span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 0 0 0 0 1 0 0 1 1 0 0 0 0 1 1 0 0 0 1 0 0 0 1 1 0 0 0 0 0 1 1 0 1 1 0</span></a>
@@ -148,26 +148,26 @@
 <h1 class="hasAnchor">
 <a href="#binomial" class="anchor"></a>Binomial</h1>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">value &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/binomial_outcome">binomial_outcome</a></span>(<span class="dt">p_control_true =</span> <span class="fl">0.12</span>, <span class="dt">p_treatment_true =</span> <span class="fl">0.08</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/historical_binomial">historical_binomial</a></span>(<span class="dt">y0_treatment =</span> <span class="dv">5</span>, <span class="dt">N0_treatment =</span> <span class="dv">55</span>, <span class="dt">y0_control =</span> <span class="dv">3</span>, <span class="dt">N0_control =</span> <span class="dv">39</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/enrollment_rate">enrollment_rate</a></span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="dv">1</span>), <span class="dt">time =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/sample_size">sample_size</a></span>(<span class="dt">sample.size =</span> <span class="dv">300</span>, <span class="dt">end.of.study =</span> <span class="dv">50</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/looks">looks</a></span>(<span class="dt">interim_look =</span> <span class="kw">c</span>(<span class="dv">210</span>, <span class="dv">240</span>, <span class="dv">270</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/impute">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/randomize">randomize</a></span>(<span class="dt">block_size =</span> <span class="dv">2</span>, <span class="dt">randomization_ratio =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/binomial_outcome">binomial_outcome</a></span>(<span class="dt">p_control_true =</span> <span class="fl">0.12</span>, <span class="dt">p_treatment_true =</span> <span class="fl">0.08</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/historical_binomial">historical_binomial</a></span>(<span class="dt">y0_treatment =</span> <span class="dv">5</span>, <span class="dt">N0_treatment =</span> <span class="dv">55</span>, <span class="dt">y0_control =</span> <span class="dv">3</span>, <span class="dt">N0_control =</span> <span class="dv">39</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/enrollment_rate">enrollment_rate</a></span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="dv">1</span>), <span class="dt">time =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/sample_size">sample_size</a></span>(<span class="dt">sample.size =</span> <span class="dv">300</span>, <span class="dt">end.of.study =</span> <span class="dv">50</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/looks">looks</a></span>(<span class="dt">interim_look =</span> <span class="kw">c</span>(<span class="dv">210</span>, <span class="dv">240</span>, <span class="dv">270</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/impute">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomize">randomize</a></span>(<span class="dt">block_size =</span> <span class="dv">2</span>, <span class="dt">randomization_ratio =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>)</a></code></pre></div>
 </div>
 <div id="normal" class="section level1">
 <h1 class="hasAnchor">
 <a href="#normal" class="anchor"></a>Normal</h1>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">value &lt;-<span class="st"> </span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/normal_outcome">normal_outcome</a></span>(<span class="dt">mu_control_true =</span> <span class="dv">16</span>, <span class="dt">mu_treatment_true =</span> <span class="dv">12</span>, <span class="dt">sd_treatment_true =</span> <span class="fl">1.4</span>, <span class="dt">sd_control_true =</span> <span class="fl">1.9</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/enrollment_rate">enrollment_rate</a></span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="dv">1</span>), <span class="dt">time =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/sample_size">sample_size</a></span>(<span class="dt">sample.size =</span> <span class="dv">300</span>, <span class="dt">end.of.study =</span> <span class="dv">50</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/looks">looks</a></span>(<span class="dt">interim_look =</span> <span class="kw">c</span>(<span class="dv">210</span>, <span class="dv">240</span>, <span class="dv">270</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/impute">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/randomize">randomize</a></span>(<span class="dt">block_size =</span> <span class="dv">2</span>, <span class="dt">randomization_ratio =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/BACT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/normal_outcome">normal_outcome</a></span>(<span class="dt">mu_control_true =</span> <span class="dv">16</span>, <span class="dt">mu_treatment_true =</span> <span class="dv">12</span>, <span class="dt">sd_treatment_true =</span> <span class="fl">1.4</span>, <span class="dt">sd_control_true =</span> <span class="fl">1.9</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/enrollment_rate">enrollment_rate</a></span>(<span class="dt">lambda =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="dv">1</span>), <span class="dt">time =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/sample_size">sample_size</a></span>(<span class="dt">sample.size =</span> <span class="dv">300</span>, <span class="dt">end.of.study =</span> <span class="dv">50</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/looks">looks</a></span>(<span class="dt">interim_look =</span> <span class="kw">c</span>(<span class="dv">210</span>, <span class="dv">240</span>, <span class="dv">270</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/impute">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomize">randomize</a></span>(<span class="dt">block_size =</span> <span class="dv">2</span>, <span class="dt">randomization_ratio =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>)</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">  </a>
 <a class="sourceLine" id="cb9-10" data-line-number="10"><span class="kw">do.call</span>(normalBACT, value)</a>
 <a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; [1] 210</span></a>
@@ -227,7 +227,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#running-bact">Running BACT</a></li>
+      <li><a href="#running-bayesct">Running bayesCT</a></li>
       <li><a href="#recruitment">Recruitment</a></li>
       <li><a href="#randomization-scheme">Randomization scheme</a></li>
       <li><a href="#binomial">Binomial</a></li>
