@@ -60,4 +60,4 @@ See the vignettes for usage instructions.
 
 License
 ------------
-bayesCT is available under the open source [GNU General Public License, version 3](https://opensource.org/licenses GPL-3.0).
+bayesCT is available under the open source [GNU General Public License, version 3](https://www.r-project.org/Licenses/GPL-3).
