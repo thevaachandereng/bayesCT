@@ -111,7 +111,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>impute</span>(<span class='no'>no_of_impute</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>impute</span>(<span class='no'>no_of_impute</span>, <span class='no'>number_mcmc</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -121,7 +121,11 @@
       <td><p>integer. Number of Monte Carlo imputation for missing data</p></td>
     </tr>
     <tr>
-      <th>data</th>
+      <th>number_mcmc</th>
+      <td><p>scalar. Number of Monte Carlo Markov Chain in sampling posterior.</p></td>
+    </tr>
+    <tr>
+      <th>.data</th>
       <td><p>NULL. stores the impute function</p></td>
     </tr>
     </table>
@@ -132,8 +136,11 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>impute</span>(<span class='kw'>no_of_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; $N_impute
+    <pre class="examples"><div class='input'><span class='fu'>impute</span>(<span class='kw'>no_of_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; $N_impute
 #&gt; [1] 100
+#&gt; 
+#&gt; $number_mcmc
+#&gt; [1] 1000
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

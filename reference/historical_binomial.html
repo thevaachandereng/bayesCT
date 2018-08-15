@@ -112,7 +112,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>historical_binomial</span>(<span class='kw'>y0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,6 +135,14 @@
       <td><p>numeric. The sample size for the historical control group.</p></td>
     </tr>
     <tr>
+      <th>discount_function</th>
+      <td><p>character. Specify the discount function to use. Currently supports weibull,
+scaledweibull, and identity. The discount function scaledweibull scales the
+output of the Weibull CDF to have a max value of 1. The identity discount function
+uses the posterior probability directly as the discount weight. Default value is
+"identity".</p></td>
+    </tr>
+    <tr>
       <th>.data</th>
       <td><p>NULL. stores the proportion of control and treatment, please do not fill it in.</p></td>
     </tr>
@@ -141,7 +150,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with historical data for control and treatment group.</p>
+    <p>a list with historical data for control and treatment group with the discount function.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -156,6 +165,9 @@
 #&gt; 
 #&gt; $N0_control
 #&gt; [1] 23
+#&gt; 
+#&gt; $discount_function
+#&gt; [1] "identity"
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

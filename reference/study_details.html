@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sample size wrapper — sample_size • bayesCT</title>
+<title>Details of the clinical study — study_details • bayesCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Sample size wrapper — sample_size" />
+<meta property="og:title" content="Details of the clinical study — study_details" />
 
-<meta property="og:description" content="Wrapper function for sample size and length of study." />
+<meta property="og:description" content="Wrapper function for details of the clinical study simulation." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,47 +100,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sample size wrapper</h1>
+    <h1>Details of the clinical study</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT//blob/master/R/wrapper.R'><code>R/wrapper.R</code></a></small>
-    <div class="hidden name"><code>sample_size.Rd</code></div>
+    <div class="hidden name"><code>study_details.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Wrapper function for sample size and length of study.</p>
+    <p>Wrapper function for details of the clinical study simulation.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sample_size</span>(<span class='no'>sample.size</span>, <span class='no'>end.of.study</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>study_details</span>(<span class='no'>total_sample_size</span>, <span class='no'>study_period</span>, <span class='no'>interim_look</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>sample.size</th>
+      <th>total_sample_size</th>
       <td><p>integer. The number of sample size needed.</p></td>
     </tr>
     <tr>
-      <th>end.of.study</th>
+      <th>study_period</th>
       <td><p>integer. The length of the study.</p></td>
     </tr>
     <tr>
-      <th>data</th>
+      <th>interim_look</th>
+      <td><p>vector. Vector with interim looks.</p></td>
+    </tr>
+    <tr>
+      <th>.data</th>
       <td><p>NULL. stores the sample size and length of study.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with sample size and length of the study.</p>
+    <p>a list with sample size and length of the study and interim looks.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>sample_size</span>(<span class='kw'>sample.size</span> <span class='kw'>=</span> <span class='fl'>300</span>, <span class='kw'>end.of.study</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; $N_total
+    <pre class="examples"><div class='input'><span class='fu'>study_details</span>(<span class='kw'>total_sample_size</span> <span class='kw'>=</span> <span class='fl'>300</span>, <span class='kw'>study_period</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>interim_look</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>210</span>, <span class='fl'>240</span>, <span class='fl'>270</span>))</div><div class='output co'>#&gt; $N_total
 #&gt; [1] 300
 #&gt; 
 #&gt; $EndofStudy
 #&gt; [1] 50
+#&gt; 
+#&gt; $interim_look
+#&gt; [1] 210 240 270
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
