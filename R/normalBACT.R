@@ -361,3 +361,28 @@ normal_outcome <- function(mu_control_true = NULL, sd_control_true = NULL, mu_tr
   data
 }
 
+
+
+#' @title Complete normal wrapper function
+#'
+#' @description Wrapper function for complete normal bayesCT function to compute power and type 1 error.
+#'
+#' @param input list. Input function for all normalBACT.
+#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#'
+#' @return a list with results of the clinical outcome.
+#'
+#' @importFrom stats rbinom glm
+#' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom bayesDP bdpbinomial
+#'
+#' @export BACTnormal
+#'
+BACTnormal <- function(input, .data = NULL){
+  .data <- do.call(normalBACT, input)
+  .data
+}
+
+
+
+
