@@ -478,7 +478,7 @@ historical_binomial <- function(y0_treatment = NULL,
 #'
 #' @return a list with results of the clinical outcome.
 #'
-#' @export BACT_binomial
+#' @export BACTbinomial
 #'
 BACTbinomial <- function(input, .data = NULL){
   .data <- do.call(binomialBACT, input)
