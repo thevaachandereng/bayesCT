@@ -34,7 +34,6 @@
 #'            interim_look = c(110, 140, 220, 270),
 #'            EndofStudy = 50)
 #'
-#' @importFrom magrittr %>%
 #' @importFrom stats rnorm lm sd
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpnormal
@@ -372,9 +371,9 @@ normal_outcome <- function(mu_control_true = NULL, sd_control_true = NULL, mu_tr
 #'
 #' @return a list with results of the clinical outcome.
 #'
-#' @importFrom stats rbinom glm
+#' @importFrom stats rnorm lm sd
 #' @importFrom dplyr mutate filter group_by bind_rows select n
-#' @importFrom bayesDP bdpbinomial
+#' @importFrom bayesDP bdpnormal
 #'
 #' @export BACTnormal
 #'
