@@ -43,7 +43,6 @@
 #'              interim_look = c(210, 240, 270),
 #'              EndofStudy = 50)
 #'
-#' @importFrom magrittr %>%
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpbinomial
@@ -477,6 +476,10 @@ historical_binomial <- function(y0_treatment = NULL,
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with results of the clinical outcome.
+#'
+#' @importFrom stats rbinom glm
+#' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom bayesDP bdpbinomial
 #'
 #' @export BACTbinomial
 #'

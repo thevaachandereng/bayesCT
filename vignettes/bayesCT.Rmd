@@ -140,7 +140,8 @@ value <-
   looks(interim_look = c(210, 240, 270)) %>%
   impute(no_of_impute = 25) %>% 
   randomize(block_size = 2, randomization_ratio = c(1, 1))%>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)
+  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
+  BACTbinomial()
 
 ```
 
