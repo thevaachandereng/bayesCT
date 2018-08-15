@@ -106,7 +106,7 @@
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; Installing bayesCT</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; '/home/travis/R-bin/lib/R/bin/R' --no-site-file --no-environ --no-save  \</span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;   --no-restore --quiet CMD INSTALL  \</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;   '/tmp/RtmpaZJeg6/devtools31bda59d240/thevaachandereng-bayesCT-1eaa0cb'  \</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;   '/tmp/Rtmp8zT02e/devtools2fd6546f53b0/thevaachandereng-bayesCT-fbf5094'  \</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;   --library='/home/travis/R/Library' --install-tests</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; </span></a></code></pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
@@ -155,7 +155,12 @@
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/looks">looks</a></span>(<span class="dt">interim_look =</span> <span class="kw">c</span>(<span class="dv">210</span>, <span class="dv">240</span>, <span class="dv">270</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/impute">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomize">randomize</a></span>(<span class="dt">block_size =</span> <span class="dv">2</span>, <span class="dt">randomization_ratio =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/BACTbinomial">BACTbinomial</a></span>()</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; [1] 210</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; [1] 240</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; [1] 270</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; [1] 300</span></a></code></pre></div>
 </div>
 <div id="normal" class="section level1">
 <h1 class="hasAnchor">
@@ -211,13 +216,13 @@
 <a class="sourceLine" id="cb9-49" data-line-number="49"><span class="co">#&gt; [1] 0</span></a>
 <a class="sourceLine" id="cb9-50" data-line-number="50"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-51" data-line-number="51"><span class="co">#&gt; $post_prob_accept_alternative</span></a>
-<a class="sourceLine" id="cb9-52" data-line-number="52"><span class="co">#&gt; [1] 0.963</span></a>
+<a class="sourceLine" id="cb9-52" data-line-number="52"><span class="co">#&gt; [1] 0.962</span></a>
 <a class="sourceLine" id="cb9-53" data-line-number="53"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-54" data-line-number="54"><span class="co">#&gt; $est_final</span></a>
-<a class="sourceLine" id="cb9-55" data-line-number="55"><span class="co">#&gt; [1] -4.41829</span></a>
+<a class="sourceLine" id="cb9-55" data-line-number="55"><span class="co">#&gt; [1] -4.23335</span></a>
 <a class="sourceLine" id="cb9-56" data-line-number="56"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-57" data-line-number="57"><span class="co">#&gt; $est_interim</span></a>
-<a class="sourceLine" id="cb9-58" data-line-number="58"><span class="co">#&gt; [1] -4.322285</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-58" data-line-number="58"><span class="co">#&gt; [1] -3.959719</span></a></code></pre></div>
 </div>
   </div>
 
