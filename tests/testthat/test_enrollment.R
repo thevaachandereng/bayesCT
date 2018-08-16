@@ -7,5 +7,4 @@ test_that("The enrollment is", {
   expect_error(enrollment(param = c(1.2, 2), N_total = 20))
   set.seed(52552)
   expect_equal(sum(enrollment(10, 100) == 0), 10)
-
 })
