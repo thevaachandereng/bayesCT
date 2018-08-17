@@ -23,7 +23,7 @@ test_that("The binomial bayesCT is ", {
   expect_equal(BACTbinomial(input1)$p_control, 0.12)
   expect_equal(do.call(binomialBACT, input2)$p_treatment, 0.09)
   set.seed(20288)
-  expec_equal(BACTbinomial(input3)$prob_of_accepting_alternative, 0.95)
+  expect_equal(BACTbinomial(input3)$prob_of_accepting_alternative, 0.95)
   input1$p_control <- 1.2
   expect_error(do.call(binomialBACT, input1))
 })
