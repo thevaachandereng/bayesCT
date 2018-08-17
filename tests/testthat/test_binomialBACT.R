@@ -9,6 +9,7 @@ context("")
 test_that("The binomial bayesCT is ", {
   set.seed(200)
   expect_equal(do.call(binomialBACT, input)$p_treatment, 0.10)
+  input$p_control <- 1.2
   expect_error(do.call(binomialBACT, input))
 })
 
