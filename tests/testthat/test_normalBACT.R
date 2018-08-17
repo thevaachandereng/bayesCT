@@ -11,7 +11,6 @@ test_that("The normal bayesCT is ", {
   expect_equal(do.call(normalBACT, input1)$mu_treatment, 8)
   set.seed(12225)
   expect_equal(do.call(normalBACT, input1)$sd_control, 0.8)
-  expect_equal(do.call(normalBACT, input2)$p_treatment, 0.09)
   input$sd_control <- -1.2
   expect_error(do.call(normalBACT, input1))
 })
