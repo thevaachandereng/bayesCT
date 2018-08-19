@@ -5,4 +5,6 @@ test_that("The enrollment is", {
   set.seed(200)
   expect_equal(as.numeric(table(enrollment(param = c(1.5, 2), 10, time = 2))), check)
   expect_error(enrollment(param = c(1.2, 2), N_total = 20))
+  set.seed(52552)
+  expect_equal(sum(enrollment(10, 100) == 0), 10)
 })

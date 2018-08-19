@@ -1,9 +1,9 @@
-Package: BACT
+Package: bayesCT
 Type: Package
-Title: Bayesian Adaptive Clinical Trial (BACT)
+Title: An R Package for Simulation in Adaptive Bayesian Clinical Trials (bayesCT)
 Version: 1.0.0
 Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu", role = c("cre", "aut")), 
-             person("Donnie", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
+             person("Donald", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
              person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com", role = c("aut")),
              person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com", role = c("aut")),
              person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com", role = c("aut")))
@@ -11,22 +11,21 @@ Description: Simulation of bayesian adaptive clinical trial, incorporates power,
              futility analysis and optimal randomization ratio.
 LazyLoad: yes
 License: GPL-3
-NeedsCompilation: yes
-URL: https://github.com/thevaachandereng/BACT
-BugReports: https://github.com/thevaachandereng/BACT/issues    
+NeedsCompilation: no
+URL: https://github.com/thevaachandereng/bayesCT/
+BugReports: https://github.com/thevaachandereng/bayesCT/issues/
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-LinkingTo: Rcpp
 Suggests: testthat,
     knitr,
     rmarkdown, 
     pkgdown
 VignetteBuilder: knitr
-Imports: Rcpp,
-    tidyr,
+Imports: tidyr,
     dplyr,
     bayesDP,
     parallel,
     msm,
-    magrittr
+    magrittr,
+    devtools

@@ -34,7 +34,6 @@
 #'            interim_look = c(110, 140, 220, 270),
 #'            EndofStudy = 50)
 #'
-#' @importFrom magrittr %>%
 #' @importFrom stats rnorm lm sd
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpnormal
@@ -66,7 +65,7 @@ normalBACT <- function(
   stopifnot((mu_control > 0 & sd_control > 0), (mu_treatment > 0 & sd_treatment > 0),
             all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
-            (prop_loss_to_followup > 0 & prop_loss_to_followup < 0.75),
+            (prop_loss_to_followup >= 0 & prop_loss_to_followup < 0.75),
             (h0 >= 0 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
@@ -187,7 +186,7 @@ normalBACT <- function(
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
       post_imp_final <- post_imp$final$posterior
-      if(mean(post_imp_final > h0) > prob_ha){
+      if(mean(post_imp_final < h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
 
@@ -231,7 +230,7 @@ normalBACT <- function(
       post_imp_final <- post_imp$final$posterior
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if(mean(post_imp_final > h0) > prob_ha){
+      if(mean(post_imp_final < h0) > prob_ha){
         futility_test <- futility_test + 1
       }
 
@@ -303,22 +302,23 @@ normalBACT <- function(
 
   ## output
   results_list <- list(
-    prob_ha               = prob_ha,
-    N_treatment           = N_treatment,
-    N_control             = N_control,
-    N_total               = N_enrolled,             # Total sample size enrolled when trial stopped
-    N_max                 = N_total, 				        # Total potential sample size
-    stop_futility         = stop_futility,          # Did the trial stop for futility
-    stop_expected_success = stop_expected_success,  # Did the trial stop for expected success
-    prob_ha_final         = mean(effect < h0),      # Posterior probability that alternative hypothesis is true
-    est_final             = mean(effect),           # Posterior Mean of treatment effect
-    est_int               = mean(effect_int),       # Posterior Mean of treatment effect at interim analysis
-    MLE_est               = MLE$coe[2],             # Treatment effect useing MLE
-    MLE_est_int           = MLE_int$coe[2],         # Treatment effect useing MLE at interim analysis
-    mu_treatment          = mu_treatment,           # mean of treatment in normal
-    mu_control            = mu_control,             # mean of control in normal
-    sd_treatment          = sd_treatment,           # sd of treatment in normal
-    sd_control            = sd_control              # sd of control in normal
+    mu_treatment_true                          = mu_treatment,            # mean of treatment in normal
+    mu_control_true                            = mu_control,              # mean of control in normal
+    sd_treatment_true                          = sd_treatment,            # sd of treatment in normal
+    sd_control_true                            = sd_control,              # sd of control in normal
+    prob_of_accepting_alternative              = prob_ha,
+    N_treatment                                = N_treatment,
+    N_control                                  = N_control,
+    N_complete                                 = N_treatment + N_control,
+    N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
+    N_max                                      = N_total, 				        # Total potential sample size
+    stop_futility                              = stop_futility,           # Did the trial stop for futility
+    stop_expected_success                      = stop_expected_success,   # Did the trial stop for expected success
+    post_prob_accept_alternative               = mean(effect < h0),       # Posterior probability that alternative hypothesis is true
+    est_final                                  = mean(effect),            # Posterior Mean of treatment effect
+    est_interim                                = mean(effect_int)         # Posterior Mean of treatment effect at interim analysis
+    #MLE_est                                   = MLE$coe[2],              # Treatment effect useing MLE
+    #MLE_est_interim                           = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
   )
 
   #return results
@@ -341,21 +341,47 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @description Wrapper function for mean and standard deviation with normal outcome.
 #'
-#' @param mu_control numeric. The mean for the control group.
-#' @param sd_control numeric. The standard deviation for the control group.
-#' @param mu_treatment numeric. The mean for the treatment group.
-#' @param sd_treatment numeric. The standard deviation for the treatment group.
-#' @param data NULL. stores the proportion of control and treatment.
+#' @param mu_control_true numeric. The mean for the control group.
+#' @param sd_control_true numeric. The standard deviation for the control group.
+#' @param mu_treatment_true numeric. The mean for the treatment group.
+#' @param sd_treatment_true numeric. The standard deviation for the treatment group.
+#' @param data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with proportion of control and treatment group.
 #'
 #' @examples normal_outcome(mu_control = 12, mu_treatment = 8, sd_treatment = 2.2, sd_control = 1.6)
 #' @export normal_outcome
-normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = NULL, sd_treatment = NULL, data = NULL){
-  data$mu_control <- mu_control
-  data$sd_control <- sd_control
-  data$mu_treatment <- mu_treatment
-  data$sd_treatment <- sd_treatment
+#'
+normal_outcome <- function(mu_control_true = NULL, sd_control_true = NULL, mu_treatment_true = NULL, sd_treatment_true = NULL, data = NULL){
+  data$mu_control <- mu_control_true
+  data$sd_control <- sd_control_true
+  data$mu_treatment <- mu_treatment_true
+  data$sd_treatment <- sd_treatment_true
   data
 }
+
+
+
+#' @title Complete normal wrapper function
+#'
+#' @description Wrapper function for complete normal bayesCT function to compute power and type 1 error.
+#'
+#' @param input list. Input function for all normalBACT.
+#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#'
+#' @return a list with results of the clinical outcome.
+#'
+#' @importFrom stats rnorm lm sd
+#' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom bayesDP bdpnormal
+#'
+#' @export BACTnormal
+#'
+BACTnormal <- function(input, .data = NULL){
+  .data <- do.call(normalBACT, input)
+  .data
+}
+
+
+
 

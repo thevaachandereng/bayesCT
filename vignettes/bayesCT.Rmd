@@ -1,5 +1,5 @@
 ---
-title: "BACT: Bayesian Adaptive Clinical Trial"
+title: "bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials"
 author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Timothy Hanson, Theodore Lystig"
 output: 
   rmarkdown::html_vignette:
@@ -23,24 +23,24 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 
 Clinical Trial is randomized intervention comparing a new treatment/drug to a current treatment/drug (control). 
 Most of the analysis developed for clinical trials have been highly focused on frequentist approach. 
-The Bayesian adaptive trial has not gained much popularity until recent years. 
+The adaptive Bayesian trial has not gained much popularity until recent years. 
 
-Bayesian adaptive trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial.
-Bayesian adaptive trials can incorporate historical data which helps reduce the sample size required in a clinical trial. 
-Bayesian adaptive trials are also useful in an interim analysis for early stopping for success or futility. 
-Bayesian adaptive trials have also been used in multiple treatments vs control which allows dropping a treatment which is not successful during a trial. 
+Adaptive Bayesian trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial.
+Adaptive Bayesian trials can incorporate historical data which helps reduce the sample size required in a clinical trial. 
+Adaptive Bayesian trials are also useful in an interim analysis for early stopping for success or futility. 
+Adaptive Bayesian trials have also been used in multiple treatments vs control which allows dropping a treatment which is not successful during a trial. 
 Statistician has altered randomization ratio to promote efficiency in a trial or even to increase recruitment of patients into a trial. 
 
-However, simulation of a Bayesian adaptive trial is much more complex compared to the general frequentist approach. 
-This package should aid with the simulation of Bayesian adaptive trials. 
+However, simulation of an adaptive Bayesian trial is much more complex compared to the general frequentist approach. 
+This package should aid with the simulation of adaptive Bayesian trials. 
 
 
-If you use BACT in published research, please cite:
+If you use bayesCT in published research, please cite:
 
 
 
 If after reading through this vignette you have questions or problems
-using BACT, please post them to https://github.com/thevaachandereng/BACT/issues.
+using bayesCT, please post them to https://github.com/thevaachandereng/bayesCT/issues.
 This will notify the package maintainers and benefit other users.
 
 
@@ -50,37 +50,37 @@ just reply that the question should be posted to the
 
 
 
-# Running BACT
+# Running bayesCT
 
 Prior to analyzing your data, the R package needs to be installed.
 
-The easiest way to install BACT is through CRAN:
+The easiest way to install bayesCT is through CRAN:
 ```{r, eval = FALSE}
-install.packages("BACT")
+install.packages("bayesCT")
 ```
 
 
-There are other additional ways to download BACT.
-The first option is most useful if want to download a specific version of BACT
-(which can be found at https://github.com/thevaachandereng/BACT/releases).
+There are other additional ways to download bayesCT.
+The first option is most useful if want to download a specific version of bayesCT
+(which can be found at https://github.com/thevaachandereng/bayesCT/releases).
 ```{r, eval = FALSE}
-devtools::install_github("thevaachandereng/BACT@vx.xx.x")
+devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
 #OR 
-devtools::install_version("BACT", version = "x.x.x", repos = "http://cran.us.r-project.org")
+devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.r-project.org")
 ```
 
 
 The second option is to download through GitHub. 
 
-```{r, results ='asis', eval = FALSE}
-devtools::install_github("thevaachandereng/BACT")
+```{r, results ='asis'}
+devtools::install_github("thevaachandereng/bayesCT")
 ```
 
 
 After successful installation, the package must be loaded into the working space:
 
 ```{r lib, results="asis", eval=TRUE}
-library(BACT)
+library(bayesCT)
 ```
 
 
@@ -133,29 +133,36 @@ In the code above, the total sample size is 140, the block size is 6 and the ran
 # Binomial 
 ```{r}
 value <- 
-  binomial_outcome(p_control = 0.12, p_treatment = 0.08) %>%
+  binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08) %>%
+  historical_binomial(y0_treatment = 5, N0_treatment = 55, 
+                      y0_control = 3, N0_control = 39, 
+                      discount_function = "identity") %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  sample_size(sample.size = 300, end.of.study = 50) %>%
-  looks(interim_look = c(210, 240, 270)) %>%
-  impute(no_of_impute = 5) %>%
-  randomize(block_size = 2, randomization_ratio = c(1, 1))
+  study_details(total_sample_size = 300, study_period = 50, 
+                interim_look = c(210, 240, 270)) %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>% 
+  randomize(block_size = 2, randomization_ratio = c(1, 1))%>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
+  BACTbinomial()
 
-
-do.call(binomialBACT, value)
 ```
+
 
 
 # Normal
 ```{r}
 value <- 
-  normal_outcome(mu_control = 15, mu_treatment = 12, sd_treatment = 1.4, sd_control = 1.9) %>%
+  normal_outcome(mu_control_true = 16, mu_treatment_true = 12, 
+                 sd_treatment_true = 1.4, sd_control_true = 1.9) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  sample_size(sample.size = 300, end.of.study = 50) %>%
-  looks(interim_look = c(210, 240, 270)) %>%
-  impute(no_of_impute = 5) %>%
-  randomize(block_size = 2, randomization_ratio = c(1, 1))
+  study_details(total_sample_size = 300, study_period = 50, 
+                interim_look = c(210, 240, 270)) %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>%
+  randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, 
+             expected_success_prob = 0.90) %>%
+  BACTnormal()
   
-do.call(normalBACT, value)
 ```
 
 

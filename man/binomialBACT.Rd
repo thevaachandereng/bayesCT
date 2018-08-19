@@ -4,16 +4,32 @@
 \alias{binomialBACT}
 \title{Binomial counts for Bayesian Adaptive Trial}
 \usage{
-binomialBACT(p_control, p_treatment, N_total, lambda, lambda_time, interim_look,
+binomialBACT(p_treatment, p_control = NULL, y0_treatment = NULL,
+  N0_treatment = NULL, y0_control = NULL, N0_control = NULL,
+  discount_function = "identity", N_total, lambda, lambda_time, interim_look,
   EndofStudy, prior = c(1, 1), block = 2, rand_ratio = c(1, 1),
-  prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100,
+  prop_loss_to_followup = 0.1, h0 = 0, futility_prob = 0.05,
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 1000,
   number_mcmc = 1000)
 }
 \arguments{
+\item{p_treatment}{scalar. Proportion of an event under the treatment group.}
+
 \item{p_control}{scalar. Proportion of an event under the contrl group.}
 
-\item{p_treatment}{scalar. Proportion of an event under the treatment group.}
+\item{y0_treatment}{scalar. Number of events for the historical treatment group.}
+
+\item{N0_treatment}{scalar. Sample size of the historical treatment group.}
+
+\item{y0_control}{scalar. Number of events for the historical control group.}
+
+\item{N0_control}{scalar. Sample size of the historical control group.}
+
+\item{discount_function}{character. Specify the discount function to use. Currently supports weibull,
+scaledweibull, and identity. The discount function scaledweibull scales the
+output of the Weibull CDF to have a max value of 1. The identity discount function
+uses the posterior probability directly as the discount weight. Default value is
+"identity".}
 
 \item{N_total}{scalar. Total sample size}
 
@@ -26,7 +42,7 @@ total size not included.}
 
 \item{EndofStudy}{scalar. Length of the study.}
 
-\item{prior}{vector. Prior value of beta rate, beta(a0, b0)}
+\item{prior}{vector. Prior value of beta rate, beta(a0, b0). Default is set to c(1, 1).}
 
 \item{block}{scalar. Block size for randomization to be implemented.}
 
@@ -55,9 +71,12 @@ Simulation for binomial counts for Bayesian Adaptive trial with different inputs
              control for power, sample size, type 1 error rate, and etc.
 }
 \examples{
-binomialBACT(p_control = 0.12, p_treatment = 0.10, N_total = 300,
+binomialBACT(p_control = 0.12, p_treatment = 0.10,
+             y0_treatment = 8, N0_treatment = 90,
+             y0_control = 13, N0_control = 95,
+             N_total = 300,
              lambda = c(0.3, 1), lambda_time = c(25),
-             interim_look = c(110, 140, 220, 270),
+             interim_look = c(210, 240, 270),
              EndofStudy = 50)
 
 }

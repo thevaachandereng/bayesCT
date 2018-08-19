@@ -13,10 +13,12 @@
 #'
 #' @importFrom stats rpois
 #' @export enrollment
+#'
 enrollment <- function(param, N_total, time = NULL){
   #checking each inputs
-  stopifnot(all(param > 0), if(length(param) >= 1){!is.null(time)},
-            N_total > 0, length(param) == (length(time) + 1))
+  stopifnot(all(param > 0), N_total > 0,
+            if(length(param) > 1){!is.null(time)} else{is.null(time)},
+            if(length(param) > 1){length(param) == (length(time) + 1)} else{is.null(time)})
   output <- NULL
   count <- 0
   # for constant lambda in poisson
