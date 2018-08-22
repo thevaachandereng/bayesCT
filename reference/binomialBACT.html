@@ -115,11 +115,11 @@
 
     <pre class="usage"><span class='fu'>binomialBACT</span>(<span class='no'>p_treatment</span>, <span class='kw'>p_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>N_total</span>, <span class='no'>lambda</span>, <span class='no'>lambda_time</span>, <span class='no'>interim_look</span>,
-  <span class='no'>EndofStudy</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>),
-  <span class='kw'>prop_loss_to_followup</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
+  <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='no'>N_total</span>, <span class='no'>lambda</span>, <span class='no'>lambda_time</span>,
+  <span class='kw'>interim_look</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>EndofStudy</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>prop_loss_to_followup</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -229,7 +229,7 @@ Integer values mapping the size of the block.</p></td>
     <pre class="examples"><div class='input'><span class='fu'>binomialBACT</span>(<span class='kw'>p_control</span> <span class='kw'>=</span> <span class='fl'>0.12</span>, <span class='kw'>p_treatment</span> <span class='kw'>=</span> <span class='fl'>0.10</span>,
              <span class='kw'>y0_treatment</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='fl'>90</span>,
              <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='fl'>13</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='fl'>95</span>,
-             <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>300</span>,
+             <span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>300</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>,
              <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.3</span>, <span class='fl'>1</span>), <span class='kw'>lambda_time</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>25</span>),
              <span class='kw'>interim_look</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>210</span>, <span class='fl'>240</span>, <span class='fl'>270</span>),
              <span class='kw'>EndofStudy</span> <span class='kw'>=</span> <span class='fl'>50</span>)</div><div class='output co'>#&gt; [1] 210
@@ -259,20 +259,20 @@ Integer values mapping the size of the block.</p></td>
 #&gt; $N_max
 #&gt; [1] 300
 #&gt; 
+#&gt; $post_prob_accept_alternative
+#&gt; [1] 0.946
+#&gt; 
+#&gt; $est_final
+#&gt; [1] -0.05560319
+#&gt; 
+#&gt; $est_interim
+#&gt; [1] -0.03217806
+#&gt; 
 #&gt; $stop_futility
 #&gt; [1] 0
 #&gt; 
 #&gt; $stop_expected_success
 #&gt; [1] 0
-#&gt; 
-#&gt; $post_prob_accept_alternative
-#&gt; [1] 0.948
-#&gt; 
-#&gt; $est_final
-#&gt; [1] -0.05582124
-#&gt; 
-#&gt; $est_interim
-#&gt; [1] -0.0353247
 #&gt; </div><div class='input'>
 </div></pre>
   </div>
