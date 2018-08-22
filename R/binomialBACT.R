@@ -38,7 +38,7 @@
 #' binomialBACT(p_control = 0.12, p_treatment = 0.10,
 #'              y0_treatment = 8, N0_treatment = 90,
 #'              y0_control = 13, N0_control = 95,
-#'              N_total = 300,
+#'              N_total = 300, N_impute = 100,
 #'              lambda = c(0.3, 1), lambda_time = c(25),
 #'              interim_look = c(210, 240, 270),
 #'              EndofStudy = 50)
@@ -59,7 +59,7 @@ binomialBACT <- function(
   N_total,
   lambda,
   lambda_time,
-  interim_look,
+  interim_look          = NULL,
   EndofStudy,
   prior                 = c(1, 1),
   block                 = 2,            # block size for randomization
@@ -85,8 +85,12 @@ binomialBACT <- function(
   if(!is.null(y0_control) | !is.null(N0_control)){
     stopifnot((y0_control > 0 & N0_control > 0), y0_control <= N0_control)
   }
+  #checking interim_look
+  if(!is.null(interim_look)){
+    stopifnot(all(N_total  > interim_look))
+  }
   #checking other inputs
-  stopifnot((p_treatment < 1 & p_treatment > 0), all(N_total > interim_look),
+  stopifnot((p_treatment < 1 & p_treatment > 0),
             length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
             (prop_loss_to_followup >= 0 & prop_loss_to_followup < 0.75),
@@ -137,7 +141,7 @@ binomialBACT <- function(
   stop_futility         <- 0
   stop_expected_success <- 0
 
-
+  if(length(analysis_at_enrollnumber) > 1){
   for(i in 1:(length(analysis_at_enrollnumber) - 1)){
 
     # Analysis at the `analysis_at_enrollnumber` look
@@ -344,10 +348,14 @@ binomialBACT <- function(
   # Estimation of the posterior of the difference
   effect_int <- post$final$posterior
 
-
   # Number of patients enrolled at trial stop
   N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
-
+  }
+  #assigning stage trial stopped given no interim look
+  else{
+    N_enrolled <- N_total
+    stage_trial_stopped <- N_total
+  }
   print(N_enrolled)
 
   # All patients that have made it to the end of study
@@ -400,14 +408,19 @@ binomialBACT <- function(
     N_complete                                 = N_treatment + N_control,
     N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
     N_max                                      = N_total, 				        # Total potential sample size
-    stop_futility                              = stop_futility,           # Did the trial stop for futility
-    stop_expected_success                      = stop_expected_success,   # Did the trial stop for expected success
     post_prob_accept_alternative               = mean(effect < h0),       # Posterior probability that alternative hypothesis is true
-    est_final                                  = mean(effect),            # Posterior Mean of treatment effect
-    est_interim                                = mean(effect_int)        # Posterior Mean of treatment effect at interim analysis
-    #MLE_est                                    = MLE$coe[2],              # Treatment effect useing MLE
-    #MLE_est_interim                            = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
+    est_final                                  = mean(effect)             # Posterior Mean of treatment effect
+    #MLE_est                                    = MLE$coe[2],             # Treatment effect useing MLE
+    #MLE_est_interim                            = MLE_int$coe[2]          # Treatment effect useing MLE at interim analysis
   )
+
+  if(length(analysis_at_enrollnumber) > 1){
+    result_list                                = c(result_list,
+    est_interim                                = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
+    stop_futility                              = stop_futility,           # Did the trial stop for futility
+    stop_expected_success                      = stop_expected_success    # Did the trial stop for expected success
+    )
+  }
 
   #return results
   results_list
