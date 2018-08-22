@@ -415,10 +415,10 @@ binomialBACT <- function(
   )
 
   if(length(analysis_at_enrollnumber) > 1){
-    result_list                                = c(result_list,
-    est_interim                                = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
-    stop_futility                              = stop_futility,           # Did the trial stop for futility
-    stop_expected_success                      = stop_expected_success    # Did the trial stop for expected success
+    results_list                            <- c(results_list,
+    est_interim                             = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
+    stop_futility                           = stop_futility,           # Did the trial stop for futility
+    stop_expected_success                   = stop_expected_success    # Did the trial stop for expected success
     )
   }
 
