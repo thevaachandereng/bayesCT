@@ -11,66 +11,48 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-
-
 # Introduction
 
+Randomized control trial (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being comparing a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.
 
-Clinical Trial is randomized intervention comparing a new treatment/drug to a current treatment/drug (control). 
-Most of the analysis developed for clinical trials have been highly focused on frequentist approach. 
-The adaptive Bayesian trial has not gained much popularity until recent years. 
+Adaptive Bayesian trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial. Notably, Adaptive Bayesian trials:
 
-Adaptive Bayesian trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial.
-Adaptive Bayesian trials can incorporate historical data which helps reduce the sample size required in a clinical trial. 
-Adaptive Bayesian trials are also useful in an interim analysis for early stopping for success or futility. 
-Adaptive Bayesian trials have also been used in multiple treatments vs control which allows dropping a treatment which is not successful during a trial. 
-Statistician has altered randomization ratio to promote efficiency in a trial or even to increase recruitment of patients into a trial. 
+- can incorporate historical data, which helps reduce the sample size required;
+- can be exploited for interim analyses of early stopping for success or futility;
+- can be used in trials of multiple treatment arms (versus a single control), allowing for treatments not demonstrating success to be dropped; and
+- can be used to alter the randomization ratio to improve trial efficiency or even to increase trial recruitment.
 
-However, simulation of an adaptive Bayesian trial is much more complex compared to the general frequentist approach. 
-This package should aid with the simulation of adaptive Bayesian trials. 
+A fundamental requirement of an adaptive trial is the *a priori* evaluation of the operating characteristics. In a Bayesian adaptive trial, these are generally not of closed-form; hence, a simulation approach is required. Nonetheless, simulation of an adaptive Bayesian trial is substantially more complex compared to the general frequentist approach. This package removes still obstacle and allows for simulation of adaptive Bayesian trials under a range of trial designs and outcome types.
 
+If you use `bayesCT` in published research, please cite: **TBA**.
 
-If you use bayesCT in published research, please cite:
-
-
-
-If after reading through this vignette you have questions or problems
-using bayesCT, please post them to https://github.com/thevaachandereng/bayesCT/issues.
-This will notify the package maintainers and benefit other users.
-
-
-You should **not** email your question to the package authors, as we will
-just reply that the question should be posted to the
-**Github support site**.
-
-
+If after reading through this vignette you have questions or problems using `bayesCT`, please post them to https://github.com/thevaachandereng/bayesCT/issues. This will notify the package maintainers and benefit other users. Please note that comments and questions should **not** be emailed directly to the package authors.
 
 # Running bayesCT
 
 Prior to analyzing your data, the R package needs to be installed.
 
 The easiest way to install bayesCT is through CRAN:
+
 ```{r, eval = FALSE}
 install.packages("bayesCT")
 ```
 
+There are additional ways to download `bayesCT`. The first option is most useful if want to download a specific version of `bayesCT` (which can be found at https://github.com/thevaachandereng/bayesCT/releases):
 
-There are other additional ways to download bayesCT.
-The first option is most useful if want to download a specific version of bayesCT
-(which can be found at https://github.com/thevaachandereng/bayesCT/releases).
 ```{r, eval = FALSE}
 devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
-#OR 
+
+# or 
+
 devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.r-project.org")
 ```
 
+The second option is to download through GitHub:
 
-The second option is to download through GitHub. 
-
-```{r, results ='asis'}
+```{r, eval = FALSE}
 devtools::install_github("thevaachandereng/bayesCT")
 ```
-
 
 After successful installation, the package must be loaded into the working space:
 
@@ -79,19 +61,12 @@ library(bayesCT)
 ```
 
 
-
 # Recruitment
 
-The recruitment of patients is assumed to follow a Poisson process.
-Since patient recruitment in a trial is independent of one another, the "memoryless property" helps in the modeling of recruitment of patient. 
-However, we cannot assume a homogeneous Poisson process since patient recruitment varies over time. 
-Thus, the enrollment() function assumes a stepwise Poisson process with different $\lambda$ over a different time interval. 
-The function also omits an enrollment date since the first enrollment till it reaches the sample size capacity. 
-For instance, if we have a piecewise function of $\lambda$ as below, t representing the time interval with a sample size (N_total) of 50, the example function to simulate enrollment dates are as below.  
+The recruitment of subjects is assumed to follow a Poisson process. Since subject recruitment in a trial is independent of one another, the ["memoryless property"](https://en.wikipedia.org/wiki/Memorylessness) helps in the modeling of subject recruitment. However, we cannot assume a homogeneous Poisson process since subject recruitment varies over time. Thus, the `enrollment()` function assumes a piecewise stationary Poisson process with a different $\lambda$ parameter over different time intervals. The function also omits an enrollment date since the first enrollment till it reaches the sample size capacity. 
+For instance, if we have the following piecewise function of $\lambda$, with $t$ representing the time interval,  
 
-
-
-\[  \lambda  \left\{
+\[  \lambda = \left\{
 \begin{array}{ll}
       0.3 & t \in [0, 5) \\
       0.7 & t \in [5, 10) \\
@@ -100,18 +75,19 @@ For instance, if we have a piecewise function of $\lambda$ as below, t represent
 \end{array} 
 \right. \]
 
+then to simulate enrollment dates with a sample size (`N_total`) of 50, one would use
 
 ```{r}
-set.seed(20000)
 enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15))
 ```
 
 
 # Randomization scheme
 
-Randomization scheme is important in a clinical trial. A complete randomization is not always ideal due to the chance of drawing a large block of one-arm of treatment, which can affect the time of an arm in a trial. Therefore, our randomization scheme is randomized in terms of a block. The randomization scheme also allows different randomization ratio but they must be in integer form. The block should also be an integer that is divisible by the sum of randomization scheme. 
+The randomization scheme is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization scheme is generally preferable. Block randomization schemes also allow for a different randomization ratio but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization scheme. 
 
-For instance, 
+For instance,
+
 ```{r, eval = FALSE}
 randomization(N_total = 140, block = 7, scheme = c(2, 1))
 ```
@@ -122,10 +98,10 @@ will not work because the sum of the scheme is not a multiple of the block.
 randomization(N_total = 140, block = 6, scheme = c(2, 1))
 ```
 
-In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. 
+In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As $2+1 = 3$ is a multiple of the block size, this scheme is allowed.
 
+# Binomial
 
-# Binomial 
 ```{r}
 value <- 
   binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08) %>%
@@ -139,12 +115,10 @@ value <-
   randomize(block_size = 2, randomization_ratio = c(1, 1))%>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
   BACTbinomial()
-
 ```
 
-
-
 # Normal
+
 ```{r}
 value <- 
   normal_outcome(mu_control_true = 16, mu_treatment_true = 12, 
@@ -157,7 +131,6 @@ value <-
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, 
              expected_success_prob = 0.90) %>%
   BACTnormal()
-  
 ```
 
 
