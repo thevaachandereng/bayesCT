@@ -6,6 +6,10 @@
 #' @param N_total an integer value of total sample size for randomization scheme.
 #' @param block an integer value of the block size for randomization. Note that it needs to be a multiple of the sum of \code{scheme}.
 #' @param scheme a numeric vector of the randomization scheme in the order \code{c(control, treatment)}.
+=======
+#' @description Implements randomization scheme for control and treatment with different randomization ratios and block.
+#'
+#' @param N_total a numeric value of total sample size for randomization scheme.
 #' @param block a integer value of the block size for randomization, it needs to be a multiple of the sum of scheme.
 #' @param scheme a numeric vector of the randomization scheme \code{c(control, treatment)}.
 >>>>>>> 28313653367b41c6397c1abed1d41108a09bce70
@@ -19,7 +23,10 @@
 #' # Randomization scheme with 2:1 for control to treatment
 #' randomization(70, block = 9, c(2, 1))
 #' @export randomization
+<<<<<<< HEAD
 =======
+
+>>>>>>> 28313653367b41c6397c1abed1d41108a09bce70
 randomization <- function(N_total, block = 2, scheme = c(1, 1)) {
   if (block %% 1 != 0 || block <= 0) {
     stop("'block' must be a non-negative integer")
