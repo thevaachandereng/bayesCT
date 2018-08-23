@@ -382,6 +382,47 @@ BACTnormal <- function(input, .data = NULL){
   .data
 }
 
+#' @title Historical data for normal distribution
+#'
+#' @description Wrapper function for historical data from normal outcome.
+#'
+#' @param mu0_treatment numeric. Mean of the historical treatment group.
+#' @param sd0_treatment numeric. The  Standard deviation of the historical treatment group.
+#' @param N0_treatment numeric. scalar. Number of observations of the historical treatment group.
+#' @param mu0_control numeric. Mean of the historical control group.
+#' @param sd0_control numeric. The  Standard deviation of the historical control group.
+#' @param N0_control numeric. umber of observations of the historical control group.
+#' @param discount_function character. Specify the discount function to use. Currently supports weibull,
+#'                          scaledweibull, and identity. The discount function scaledweibull scales the
+#'                          output of the Weibull CDF to have a max value of 1. The identity discount function
+#'                          uses the posterior probability directly as the discount weight. Default value is
+#'                          "identity".
+#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#'
+#' @return a list with historical data for control and treatment group with the discount function.
+#'
+#' @examples historical_normal(mu0_treatment = 15, sd0_treatment = 2, N0_treatment = 10,
+#'                             mu0_control = 17, sd0_control = 3, N0_control = 20)
+#' @export historical_normal
+historical_normal <- function(mu0_treatment       = NULL,
+                              sd0_treatment       = NULL,
+                              N0_treatment        = NULL,
+                              mu0_control         = NULL,
+                              sd0_control         = NULL,
+                              N0_control          = NULL,
+                              discount_function   = "identity",
+                              .data               = NULL
+){
+  .data$mu0_treatment       <- mu0_treatment
+  .data$sd0_treatment       <- sd0_treatment
+  .data$N0_treatment        <- N0_treatment
+  .data$mu0_control         <- mu0_control
+  .data$sd0_control         <- sd0_control
+  .data$N0_control          <- N0_control
+  .data$discount_function   <- discount_function
+  .data
+}
+
 
 
 
