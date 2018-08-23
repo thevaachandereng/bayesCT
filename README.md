@@ -14,34 +14,28 @@
 
 Overview
 --------
-
-bayesCT is a R package for simulation in Adaptive Bayesian Clinical Trials
-It is designed to simulate Bayesian adaptive trial for different parameters and distribution.
-Currently, it supports normal, binomial and survival data.
-The BACT website is available [here](https://thevaachandereng.github.io/bayesCT/). 
-The package is still under development. 
+`bayesCT` is a R package for simulation of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian, binomial and time-to-event data. The `bayesCT` package website is available [here](https://thevaachandereng.github.io/bayesCT/). Please note this package is still under development. 
 
 
 Installation
 ------------
-Prior to analyzing your data, the R package needs to be installed.
-
-The easiest way to install bayesCT is through CRAN:
+Prior to analyzing your data, the R package needs to be installed. The easiest way to install `bayesCT` is through CRAN:
 
 ``` r
 install.packages("bayesCT")
 ```
 
-There are other additional ways to download bayesCT.
-The first option is most useful if want to download a specific version of BACT
-(which can be found at https://github.com/thevaachandereng/bayesCT/releases).
+There are other additional ways to download `bayesCT`. The first option is most useful if want to download a specific version of `bayesCT` (which can be found at https://github.com/thevaachandereng/bayesCT/releases):
+
 ``` r 
 devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
-# OR 
+
+# or 
+
 devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.r-project.org")
 ```
 
-The second option is to download through GitHub. 
+The second option is to download through GitHub: 
 
 ``` r
 devtools::install_github("thevaachandereng/bayesCT")
@@ -53,11 +47,12 @@ After successful installation, the package must be loaded into the working space
 library(bayesCT)
 ```
 
+
 Usage
 ------------
-See the vignettes for usage instructions.
+See the vignettes for usage instructions and example.
 
 
 License
 ------------
-bayesCT is available under the open source [GNU General Public License, version 3](https://www.r-project.org/Licenses/GPL-3).
+`bayesCT` is available under the open source [GNU General Public License, version 3](https://www.r-project.org/Licenses/GPL-3).
