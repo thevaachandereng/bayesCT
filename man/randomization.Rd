@@ -12,20 +12,12 @@ randomization(N_total, block = 2, scheme = c(1, 1))
 \item{block}{an integer value of the block size for randomization. Note that it needs to be a multiple of the sum of \code{scheme}.}
 
 \item{scheme}{a numeric vector of the randomization scheme in the order \code{c(control, treatment)}.}
-
-\item{N_total}{a numeric value of total sample size for randomization scheme.}
-
-\item{block}{a integer value of the block size for randomization, it needs to be a multiple of the sum of scheme.}
-
-\item{scheme}{a numeric vector of the randomization scheme \code{c(control, treatment)}.}
 }
 \value{
 the randomization scheme with 0, 1 for control and treatment
 }
 \description{
 Implements a randomization scheme for control and treatment arms with different randomization ratios and block sizes.
-
-Implements randomization scheme for control and treatment with different randomization ratios and block.
 }
 \examples{
 # Implementing randomization scheme for control to treatment with 1:1.5 randomization ratio
