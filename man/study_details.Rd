@@ -13,13 +13,13 @@ study_details(total_sample_size, study_period, interim_look, .data = NULL)
 
 \item{interim_look}{vector. Vector with interim looks.}
 
-\item{.data}{NULL. stores the sample size and length of study.}
+\item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
-a list with sample size and length of the study and interim looks.
+a list with sample size and length of the study and interim looks
 }
 \description{
-Wrapper function for details of the clinical study simulation.
+Wrapper function for details of the clinical trial simulation.
 }
 \examples{
 study_details(total_sample_size = 300, study_period = 50, interim_look = c(210, 240, 270))

@@ -1,29 +1,28 @@
-#' @title Normal distribution for Bayesian Adaptive Trial
+#' @title Normal distribution for Bayesian Adaptive Trials
 #'
 #' @description Simulation for normal distribution for Bayesian Adaptive trial with different inputs to
-#'              control for power, sample size, type 1 error rate, and etc.
+#'              control for power, sample size, type I error rate, etc.
 #'
-#' @param mu_control scalar. Mean of the control group.
-#' @param sd_control scalar. Standard deviation of the control group.
-#' @param mu_treatment scalar. Mean of the treatment group.
-#' @param sd_treatment scalar. Standard deviation of the treatment group.
-#' @param N_total scalar. Total sample size
+#' @param mu_control scalar. Mean outcome in the control arm.
+#' @param sd_control scalar. Standard deviation of outcome in the control arm.
+#' @param mu_treatment scalar. Mean outcome in the treatment arm.
+#' @param sd_treatment scalar. Standard deviation of outcome in the treatment arm.
+#' @param N_total scalar. Total sample size.
 #' @param lambda vector. Lambda for different enrollment rates across times.
 #' @param lambda_time vector. Same size as lambda, denote times at lambda changes.
-#' @param interim_look vector. Sample size for interim looks,
-#'                                 total size not included.
+#' @param interim_look vector. Sample size for interim looks. Note: the overall trial size should not be included.
 #' @param EndofStudy scalar. Length of the study.
-#' @param prior vector. Prior value of beta rate, beta(a0, b0)
+#' @param prior vector. Prior value of beta rate, beta(a0, b0).
 #' @param block scalar. Block size for randomization to be implemented.
 #' @param rand_ratio vector. Randomization ratio for control to treatment.
 #'                    Integer values mapping the size of the block.
-#' @param prop_loss_to_followup scalar. Proportion of loss in follow up.
-#' @param h0 scalar. treshold for comparing two proportions. default at 0.
-#' @param futility_prob scalar. Type 1 error rate.
+#' @param prop_loss_to_followup scalar. Proportion of subjects lost to follow-up.
+#' @param h0 scalar. Treshold for comparing two proportions. Default is \code{h0=0}.
+#' @param futility_prob scalar. Type I error rate.
 #' @param expected_success_prob scalar. Power of the study.
 #' @param prob_ha scalar. Probability of alternative hypothesis.
-#' @param N_impute scalar. Number of imputation for monte carlo simulation for missing data.
-#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain in sampling posterior.
+#' @param N_impute scalar. Number of imputations for Monte Carlo simulation of missing data.
+#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.
 #'
 #' @return a list of output
 #'
@@ -38,8 +37,6 @@
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpnormal
 #' @export normalBACT
-
-
 normalBACT <- function(
   mu_control,
   sd_control,
@@ -58,10 +55,10 @@ normalBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 100,           # Number of imputation simulations for predictive distribution
+  N_impute              = 100,          # Number of imputation simulations for predictive distribution
   number_mcmc           = 1000
 ){
-  #checking inputs
+  # checking inputs
   stopifnot((mu_control > 0 & sd_control > 0), (mu_treatment > 0 & sd_treatment > 0),
             all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
@@ -70,24 +67,24 @@ normalBACT <- function(
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
 
-  ##assigining interim look and final look
+  # assigining interim look and final look
   analysis_at_enrollnumber <- c(interim_look, N_total)
 
-  #assignment of enrollment based on the enrollment function
+  # assignment of enrollment based on the enrollment function
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
 
   # simulating group and treatment group assignment
   group <- randomization(N_total = N_total, block = block, scheme = rand_ratio)
 
-  #simulate binomial outcome
+  # simulate binomial outcome
   sim <- rnorm(N_total, mean = group * mu_treatment + (1 - group) * mu_control,
                sd = group * sd_treatment + (1 - group) * sd_control)
 
-  #dividing treatment and control
+  # dividing treatment and control
   control <- sim[group == 0]
   treatment <- sim[group == 1]
 
-  # Simulate loss to follow-up
+  # simulate loss to follow-up
   n_loss_to_fu <- ceiling(prop_loss_to_followup * N_total)
   loss_to_fu   <- rep(FALSE,N_total)
   loss_to_fu[sample(1:N_total, n_loss_to_fu)] <- TRUE
@@ -101,11 +98,9 @@ normalBACT <- function(
     id         = 1:N_total,
     loss_to_fu = loss_to_fu)
 
-  #assigning stop_futility and expected success
+  # assigning stop_futility and expected success
   stop_futility         <- 0
   stop_expected_success <- 0
-
-
 
   for(i in 1:(length(analysis_at_enrollnumber)-1) ){
 
@@ -123,7 +118,6 @@ normalBACT <- function(
       mutate(subject_impute_success = (max(enrollment) - enrollment <= EndofStudy & subject_enrolled) |
                (subject_enrolled & loss_to_fu))
 
-
     # Carry out interim analysis on patients with complete data only
     # - Set-up `new data` data frame
     data <- data_interim %>%
@@ -131,9 +125,9 @@ normalBACT <- function(
              !subject_impute_success)
 
     # MLE of data at interim analysis
-    MLE_int        <- lm(Y ~ treatment, data = data)
+    MLE_int <- lm(Y ~ treatment, data = data)
 
-    # Analyze data using discount funtion via normal
+    # analyze data using discount funtion via normal
     post <- bdpnormal(mu_t         = mean(data$Y[data$treatment == 1]),
                       sigma_t      = sd(data$Y[data$treatment == 1]),
                       N_t          = length(data$treatment == 1),
@@ -142,14 +136,13 @@ normalBACT <- function(
                       N_c          = length(data$treatment == 0),
                       number_mcmc  = number_mcmc)
 
-
     # Imputation phase futility and expected success - initialize counters
     # for the current imputation phase
     futility_test         <- 0
     expected_success_test <- 0
 
     for(j in 1:N_impute){
-      #imputing the success for control group
+      # imputing the success for control group
       data_control_success_impute <- data_interim %>%
         filter(treatment == 0) %>%
         mutate(Y_impute = ifelse(subject_impute_success & subject_enrolled,
@@ -162,18 +155,17 @@ normalBACT <- function(
                                  rnorm(n(), mu_treatment, sd_treatment),
                                  Y))
 
-      # Combine the treatment and control imputed datasets
+      # combine the treatment and control imputed datasets
       data_success_impute <- bind_rows(data_control_success_impute,
                                        data_treatment_success_impute) %>%
         mutate(Y = Y_impute) %>%
         select(-Y_impute)
 
-      #Create enrolled subject data frame for discount function analysis
+      # create enrolled subject data frame for discount function analysis
       data <- data_success_impute %>%
         filter(subject_enrolled)
 
-
-      # Analyze complete+imputed data using discount funtion via normal
+      # analyze complete+imputed data using discount funtion via normal
       post_imp <- bdpnormal(mu_t         = mean(data$Y[data$treatment == 1]),
                             sigma_t      = sd(data$Y[data$treatment == 1]),
                             N_t          = length(data$treatment == 1),
@@ -193,8 +185,8 @@ normalBACT <- function(
       ##########################################################################
       ### Futility computations
       ##########################################################################
-      ## For patients not enrolled, impute the outcome
 
+      # For patients not enrolled, impute the outcome
       data_control_futility_impute <- data_success_impute %>%
         filter(treatment == 0) %>%
         mutate(Y_impute = ifelse(subject_impute_futility,
@@ -214,7 +206,7 @@ normalBACT <- function(
         select(-Y_impute)
 
 
-      #Create enrolled subject data frame for discount function analysis
+      # Create enrolled subject data frame for discount function analysis
       data <- data_futility_impute
 
       # Analyze complete+imputed data using discount funtion via normal
@@ -261,10 +253,10 @@ normalBACT <- function(
 
   }
 
+  ##############################################################################
+  ### Final analysis
+  ##############################################################################
 
-  ##############################################################################
-  ### 4) Final analysis
-  ##############################################################################
   # Estimation of the posterior of the difference
   effect_int <- post$final$posterior
 
@@ -294,13 +286,13 @@ normalBACT <- function(
                     number_mcmc  = number_mcmc)
 
 
-  ### Format and output results
+  # Format and output results
   effect        <- post$final$posterior       #Posterior effect size: test vs control
   N_treatment   <- sum(data_final$treatment)  #Total sample size analyzed - test group
   N_control     <- sum(!data_final$treatment) #Total sample size analyzed - control group
 
 
-  ## output
+  # output
   results_list <- list(
     mu_treatment_true                          = mu_treatment,            # mean of treatment in normal
     mu_control_true                            = mu_control,              # mean of control in normal
@@ -321,7 +313,7 @@ normalBACT <- function(
     #MLE_est_interim                           = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
   )
 
-  #return results
+  # return results
   results_list
 
 }

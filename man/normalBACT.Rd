@@ -2,7 +2,7 @@
 % Please edit documentation in R/normalBACT.R
 \name{normalBACT}
 \alias{normalBACT}
-\title{Normal distribution for Bayesian Adaptive Trial}
+\title{Normal distribution for Bayesian Adaptive Trials}
 \usage{
 normalBACT(mu_control, sd_control, mu_treatment, sd_treatment, N_total, lambda,
   lambda_time, interim_look, EndofStudy, prior = c(1, 1), block = 2,
@@ -11,52 +11,51 @@ normalBACT(mu_control, sd_control, mu_treatment, sd_treatment, N_total, lambda,
   N_impute = 100, number_mcmc = 1000)
 }
 \arguments{
-\item{mu_control}{scalar. Mean of the control group.}
+\item{mu_control}{scalar. Mean outcome in the control arm.}
 
-\item{sd_control}{scalar. Standard deviation of the control group.}
+\item{sd_control}{scalar. Standard deviation of outcome in the control arm.}
 
-\item{mu_treatment}{scalar. Mean of the treatment group.}
+\item{mu_treatment}{scalar. Mean outcome in the treatment arm.}
 
-\item{sd_treatment}{scalar. Standard deviation of the treatment group.}
+\item{sd_treatment}{scalar. Standard deviation of outcome in the treatment arm.}
 
-\item{N_total}{scalar. Total sample size}
+\item{N_total}{scalar. Total sample size.}
 
 \item{lambda}{vector. Lambda for different enrollment rates across times.}
 
 \item{lambda_time}{vector. Same size as lambda, denote times at lambda changes.}
 
-\item{interim_look}{vector. Sample size for interim looks,
-total size not included.}
+\item{interim_look}{vector. Sample size for interim looks. Note: the overall trial size should not be included.}
 
 \item{EndofStudy}{scalar. Length of the study.}
 
-\item{prior}{vector. Prior value of beta rate, beta(a0, b0)}
+\item{prior}{vector. Prior value of beta rate, beta(a0, b0).}
 
 \item{block}{scalar. Block size for randomization to be implemented.}
 
 \item{rand_ratio}{vector. Randomization ratio for control to treatment.
 Integer values mapping the size of the block.}
 
-\item{prop_loss_to_followup}{scalar. Proportion of loss in follow up.}
+\item{prop_loss_to_followup}{scalar. Proportion of subjects lost to follow-up.}
 
-\item{h0}{scalar. treshold for comparing two proportions. default at 0.}
+\item{h0}{scalar. Treshold for comparing two proportions. Default is \code{h0=0}.}
 
-\item{futility_prob}{scalar. Type 1 error rate.}
+\item{futility_prob}{scalar. Type I error rate.}
 
 \item{expected_success_prob}{scalar. Power of the study.}
 
 \item{prob_ha}{scalar. Probability of alternative hypothesis.}
 
-\item{N_impute}{scalar. Number of imputation for monte carlo simulation for missing data.}
+\item{N_impute}{scalar. Number of imputations for Monte Carlo simulation of missing data.}
 
-\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain in sampling posterior.}
+\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.}
 }
 \value{
 a list of output
 }
 \description{
 Simulation for normal distribution for Bayesian Adaptive trial with different inputs to
-             control for power, sample size, type 1 error rate, and etc.
+             control for power, sample size, type I error rate, etc.
 }
 \examples{
 normalBACT(mu_control = 10, mu_treatment = 8,
