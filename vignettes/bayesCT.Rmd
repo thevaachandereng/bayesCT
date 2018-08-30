@@ -20,7 +20,7 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 
 # Introduction
 
-Randomized control trial (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being comparing a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.
+Randomized control trials (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.
 
 Adaptive Bayesian trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial. Notably, Adaptive Bayesian trials:
 
@@ -29,7 +29,7 @@ Adaptive Bayesian trials provide much more flexibility over the conventional fre
 - can be used in trials of multiple treatment arms (versus a single control), allowing for treatments not demonstrating success to be dropped; and
 - can be used to alter the randomization ratio to improve trial efficiency or even to increase trial recruitment.
 
-A fundamental requirement of an adaptive trial is the *a priori* evaluation of the operating characteristics. In a Bayesian adaptive trial, these are generally not of closed-form; hence, a simulation approach is required. Nonetheless, simulation of an adaptive Bayesian trial is substantially more complex compared to the general frequentist approach. This package removes still obstacle and allows for simulation of adaptive Bayesian trials under a range of trial designs and outcome types.
+A fundamental requirement of an adaptive trial is the *a priori* evaluation of the operating characteristics. In a Bayesian adaptive trial, these are generally not of closed-form; hence, a simulation approach is required. Nonetheless, simulation of adaptive Bayesian trial designs are substantially more complex compared to the general frequentist approach. This package removes this obstacle and allows for simulation of adaptive Bayesian trials under a range of trial designs and outcome types.
 
 If you use `bayesCT` in published research, please cite: **TBA**.
 
@@ -39,7 +39,7 @@ If after reading through this vignette you have questions or problems using `bay
 
 Prior to analyzing your data, the R package needs to be installed.
 
-The easiest way to install bayesCT is through CRAN:
+The easiest way to install `bayesCT` is through CRAN:
 
 ```{r, eval = FALSE}
 install.packages("bayesCT")
@@ -71,6 +71,7 @@ library(bayesCT)
 # Recruitment
 
 The recruitment of subjects is assumed to follow a Poisson process. Since subject recruitment in a trial is independent of one another, the ["memoryless property"](https://en.wikipedia.org/wiki/Memorylessness) helps in the modeling of subject recruitment. However, we cannot assume a homogeneous Poisson process since subject recruitment varies over time. Thus, the `enrollment()` function assumes a piecewise stationary Poisson process with a different $\lambda$ parameter over different time intervals. The function also omits an enrollment date since the first enrollment till it reaches the sample size capacity. 
+
 For instance, if we have the following piecewise function of $\lambda$, with $t$ representing the time interval,  
 
 \[  \lambda = \left\{
@@ -107,6 +108,7 @@ randomization(N_total = 140, block = 6, scheme = c(2, 1))
 
 In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As $2+1 = 3$ is a multiple of the block size, this scheme is allowed.
 
+
 # Binomial
 
 ```{r}
@@ -123,6 +125,7 @@ value <-
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
   BACTbinomial()
 ```
+
 
 # Normal
 
