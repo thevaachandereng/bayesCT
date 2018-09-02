@@ -13,9 +13,9 @@ binomialBACT(p_treatment, p_control = NULL, y0_treatment = NULL,
   N_impute = 1000, number_mcmc = 1000)
 }
 \arguments{
-\item{p_treatment}{scalar. Proportion of events under the treatment arm}
+\item{p_treatment}{scalar. Proportion of events under the treatment arm.}
 
-\item{p_control}{scalar. Proportion of events under the control arm}
+\item{p_control}{scalar. Proportion of events under the control arm.}
 
 \item{y0_treatment}{scalar. Number of events for the historical treatment
 arm.}
@@ -28,7 +28,7 @@ arm.}
 
 \item{discount_function}{character. Specify the discount function to use.
 Currently supports the Weibull function
-(\code{discount_function="weibull}), the scaled-Weibull function
+(\code{discount_function="weibull"}), the scaled-Weibull function
 (\code{discount_function="scaledweibull"}), and the identity function
 (\code{discount_function="identity"}). The scaled-Weibull discount function
 scales the output of the Weibull CDF to have a max value of 1. The identity

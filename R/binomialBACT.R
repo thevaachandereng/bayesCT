@@ -3,8 +3,8 @@
 #' @description Simulation for binomial counts for Bayesian Adaptive trial with
 #'   different inputs to control for power, sample size, type 1 error rate, etc.
 #'
-#' @param p_control scalar. Proportion of events under the control arm
-#' @param p_treatment scalar. Proportion of events under the treatment arm
+#' @param p_control scalar. Proportion of events under the control arm.
+#' @param p_treatment scalar. Proportion of events under the treatment arm.
 #' @param y0_treatment scalar. Number of events for the historical treatment
 #'   arm.
 #' @param N0_treatment scalar. Sample size of the historical treatment arm.
@@ -12,7 +12,7 @@
 #' @param N0_control scalar. Sample size of the historical control arm.
 #' @param discount_function character. Specify the discount function to use.
 #'   Currently supports the Weibull function
-#'   (\code{discount_function="weibull}), the scaled-Weibull function
+#'   (\code{discount_function="weibull"}), the scaled-Weibull function
 #'   (\code{discount_function="scaledweibull"}), and the identity function
 #'   (\code{discount_function="identity"}). The scaled-Weibull discount function
 #'   scales the output of the Weibull CDF to have a max value of 1. The identity
