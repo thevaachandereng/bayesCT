@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Normal distribution for Bayesian Adaptive Trial — normalBACT • bayesCT</title>
+<title>Normal distribution for Bayesian Adaptive Trials — normalBACT • bayesCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="Normal distribution for Bayesian Adaptive Trial — normalBACT" />
+<meta property="og:title" content="Normal distribution for Bayesian Adaptive Trials — normalBACT" />
 
 <meta property="og:description" content="Simulation for normal distribution for Bayesian Adaptive trial with different inputs to
-             control for power, sample size, type 1 error rate, and etc." />
+             control for power, sample size, type I error rate, etc." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,7 +101,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Normal distribution for Bayesian Adaptive Trial</h1>
+    <h1>Normal distribution for Bayesian Adaptive Trials</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT//blob/master/R/normalBACT.R'><code>R/normalBACT.R</code></a></small>
     <div class="hidden name"><code>normalBACT.Rd</code></div>
     </div>
@@ -109,7 +109,7 @@
     <div class="ref-description">
     
     <p>Simulation for normal distribution for Bayesian Adaptive trial with different inputs to
-             control for power, sample size, type 1 error rate, and etc.</p>
+             control for power, sample size, type I error rate, etc.</p>
     
     </div>
 
@@ -124,23 +124,23 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mu_control</th>
-      <td><p>scalar. Mean of the control group.</p></td>
+      <td><p>scalar. Mean outcome in the control arm.</p></td>
     </tr>
     <tr>
       <th>sd_control</th>
-      <td><p>scalar. Standard deviation of the control group.</p></td>
+      <td><p>scalar. Standard deviation of outcome in the control arm.</p></td>
     </tr>
     <tr>
       <th>mu_treatment</th>
-      <td><p>scalar. Mean of the treatment group.</p></td>
+      <td><p>scalar. Mean outcome in the treatment arm.</p></td>
     </tr>
     <tr>
       <th>sd_treatment</th>
-      <td><p>scalar. Standard deviation of the treatment group.</p></td>
+      <td><p>scalar. Standard deviation of outcome in the treatment arm.</p></td>
     </tr>
     <tr>
       <th>N_total</th>
-      <td><p>scalar. Total sample size</p></td>
+      <td><p>scalar. Total sample size.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
@@ -152,8 +152,7 @@
     </tr>
     <tr>
       <th>interim_look</th>
-      <td><p>vector. Sample size for interim looks,
-total size not included.</p></td>
+      <td><p>vector. Sample size for interim looks. Note: the overall trial size should not be included.</p></td>
     </tr>
     <tr>
       <th>EndofStudy</th>
@@ -161,7 +160,7 @@ total size not included.</p></td>
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>vector. Prior value of beta rate, beta(a0, b0)</p></td>
+      <td><p>vector. Prior value of beta rate, beta(a0, b0).</p></td>
     </tr>
     <tr>
       <th>block</th>
@@ -174,15 +173,15 @@ Integer values mapping the size of the block.</p></td>
     </tr>
     <tr>
       <th>prop_loss_to_followup</th>
-      <td><p>scalar. Proportion of loss in follow up.</p></td>
+      <td><p>scalar. Proportion of subjects lost to follow-up.</p></td>
     </tr>
     <tr>
       <th>h0</th>
-      <td><p>scalar. treshold for comparing two proportions. default at 0.</p></td>
+      <td><p>scalar. Treshold for comparing two proportions. Default is <code>h0=0</code>.</p></td>
     </tr>
     <tr>
       <th>futility_prob</th>
-      <td><p>scalar. Type 1 error rate.</p></td>
+      <td><p>scalar. Type I error rate.</p></td>
     </tr>
     <tr>
       <th>expected_success_prob</th>
@@ -194,11 +193,11 @@ Integer values mapping the size of the block.</p></td>
     </tr>
     <tr>
       <th>N_impute</th>
-      <td><p>scalar. Number of imputation for monte carlo simulation for missing data.</p></td>
+      <td><p>scalar. Number of imputations for Monte Carlo simulation of missing data.</p></td>
     </tr>
     <tr>
       <th>number_mcmc</th>
-      <td><p>scalar. Number of Monte Carlo Markov Chain in sampling posterior.</p></td>
+      <td><p>scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.</p></td>
     </tr>
     </table>
     

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Binomial counts for Bayesian Adaptive Trial — binomialBACT • bayesCT</title>
+<title>Binomial counts for Bayesian Adaptive Trials — binomialBACT • bayesCT</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="Binomial counts for Bayesian Adaptive Trial — binomialBACT" />
+<meta property="og:title" content="Binomial counts for Bayesian Adaptive Trials — binomialBACT" />
 
-<meta property="og:description" content="Simulation for binomial counts for Bayesian Adaptive trial with different inputs to
-             control for power, sample size, type 1 error rate, and etc." />
+<meta property="og:description" content="Simulation for binomial counts for Bayesian Adaptive trial with
+  different inputs to control for power, sample size, type 1 error rate, etc." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -101,15 +101,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Binomial counts for Bayesian Adaptive Trial</h1>
+    <h1>Binomial counts for Bayesian Adaptive Trials</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT//blob/master/R/binomialBACT.R'><code>R/binomialBACT.R</code></a></small>
     <div class="hidden name"><code>binomialBACT.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Simulation for binomial counts for Bayesian Adaptive trial with different inputs to
-             control for power, sample size, type 1 error rate, and etc.</p>
+    <p>Simulation for binomial counts for Bayesian Adaptive trial with
+  different inputs to control for power, sample size, type 1 error rate, etc.</p>
     
     </div>
 
@@ -126,39 +126,43 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>p_treatment</th>
-      <td><p>scalar. Proportion of an event under the treatment group.</p></td>
+      <td><p>scalar. Proportion of events under the treatment arm.</p></td>
     </tr>
     <tr>
       <th>p_control</th>
-      <td><p>scalar. Proportion of an event under the contrl group.</p></td>
+      <td><p>scalar. Proportion of events under the control arm.</p></td>
     </tr>
     <tr>
       <th>y0_treatment</th>
-      <td><p>scalar. Number of events for the historical treatment group.</p></td>
+      <td><p>scalar. Number of events for the historical treatment
+arm.</p></td>
     </tr>
     <tr>
       <th>N0_treatment</th>
-      <td><p>scalar. Sample size of the historical treatment group.</p></td>
+      <td><p>scalar. Sample size of the historical treatment arm.</p></td>
     </tr>
     <tr>
       <th>y0_control</th>
-      <td><p>scalar. Number of events for the historical control group.</p></td>
+      <td><p>scalar. Number of events for the historical control arm.</p></td>
     </tr>
     <tr>
       <th>N0_control</th>
-      <td><p>scalar. Sample size of the historical control group.</p></td>
+      <td><p>scalar. Sample size of the historical control arm.</p></td>
     </tr>
     <tr>
       <th>discount_function</th>
-      <td><p>character. Specify the discount function to use. Currently supports weibull,
-scaledweibull, and identity. The discount function scaledweibull scales the
-output of the Weibull CDF to have a max value of 1. The identity discount function
-uses the posterior probability directly as the discount weight. Default value is
-"identity".</p></td>
+      <td><p>character. Specify the discount function to use.
+Currently supports the Weibull function
+(<code>discount_function="weibull"</code>), the scaled-Weibull function
+(<code>discount_function="scaledweibull"</code>), and the identity function
+(<code>discount_function="identity"</code>). The scaled-Weibull discount function
+scales the output of the Weibull CDF to have a max value of 1. The identity
+discount function uses the posterior probability directly as the discount
+weight. Default value is <code>"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>N_total</th>
-      <td><p>scalar. Total sample size</p></td>
+      <td><p>scalar. Total sample size.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
@@ -170,8 +174,7 @@ uses the posterior probability directly as the discount weight. Default value is
     </tr>
     <tr>
       <th>interim_look</th>
-      <td><p>vector. Sample size for interim looks,
-total size not included.</p></td>
+      <td><p>vector. Sample size for interim looks. Note: the overall trial size should not be included.</p></td>
     </tr>
     <tr>
       <th>EndofStudy</th>
@@ -179,7 +182,7 @@ total size not included.</p></td>
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>vector. Prior value of beta rate, beta(a0, b0). Default is set to c(1, 1).</p></td>
+      <td><p>vector. Prior value of beta rate, beta(a0, b0).</p></td>
     </tr>
     <tr>
       <th>block</th>
@@ -192,15 +195,15 @@ Integer values mapping the size of the block.</p></td>
     </tr>
     <tr>
       <th>prop_loss_to_followup</th>
-      <td><p>scalar. Proportion of loss in follow up.</p></td>
+      <td><p>scalar. Proportion of subjects lost to follow-up.</p></td>
     </tr>
     <tr>
       <th>h0</th>
-      <td><p>scalar. treshold for comparing two proportions. default at 0.</p></td>
+      <td><p>scalar. Treshold for comparing two proportions. Default is <code>h0=0</code>.</p></td>
     </tr>
     <tr>
       <th>futility_prob</th>
-      <td><p>scalar. Type 1 error rate.</p></td>
+      <td><p>scalar. Type I error rate.</p></td>
     </tr>
     <tr>
       <th>expected_success_prob</th>
@@ -212,11 +215,11 @@ Integer values mapping the size of the block.</p></td>
     </tr>
     <tr>
       <th>N_impute</th>
-      <td><p>scalar. Number of imputation for monte carlo simulation for missing data.</p></td>
+      <td><p>scalar. Number of imputations for Monte Carlo simulation of missing data.</p></td>
     </tr>
     <tr>
       <th>number_mcmc</th>
-      <td><p>scalar. Number of Monte Carlo Markov Chain in sampling posterior.</p></td>
+      <td><p>scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.</p></td>
     </tr>
     </table>
     
