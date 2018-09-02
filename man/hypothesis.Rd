@@ -7,22 +7,24 @@
 hypothesis(delta, futility_prob, prob_ha, expected_success_prob, .data = NULL)
 }
 \arguments{
-\item{delta}{numeric. threshold set for margin in null hypothesis}
+\item{delta}{numeric. Threshold set for margin in null hypothesis.}
 
-\item{futility_prob}{numeric. probability of futility}
+\item{futility_prob}{numeric. Probability of futility.}
 
-\item{prob_ha}{numeric. posterior probability of accepting alternative.}
+\item{prob_ha}{numeric. Posterior probability of accepting alternative
+hypothesis.}
 
-\item{expected_success_prob}{numeric. probability of expecting success.}
+\item{expected_success_prob}{numeric. Probability of expected success.}
 
-\item{.data}{NULL. stores the randomization scheme function}
+\item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
-a list with information of hypothesis testing (threshold, futility probability,
-probability of alternative and probability of expected success.)
+a list with information of hypothesis testing (threshold, futility
+  probability, probability of alternative hypothesis, and probability of
+  expected success).
 }
 \description{
-Wrapper function for the hypothesis in the trial
+Wrapper function for the hypothesis in the trial.
 }
 \examples{
 hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)

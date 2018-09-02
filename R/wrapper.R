@@ -2,14 +2,14 @@
 
 #' @title Details of the clinical study
 #'
-#' @description Wrapper function for details of the clinical study simulation.
+#' @description Wrapper function for details of the clinical trial simulation.
 #'
 #' @param total_sample_size integer. The number of sample size needed.
 #' @param study_period integer. The length of the study.
 #' @param interim_look vector. Vector with interim looks.
-#' @param .data NULL. stores the sample size and length of study.
+#' @param .data NULL. This should not be changed by the user.
 #'
-#' @return a list with sample size and length of the study and interim looks.
+#' @return a list with sample size and length of the study and interim looks
 #'
 #' @examples study_details(total_sample_size = 300, study_period = 50, interim_look = c(210, 240, 270))
 #' @export study_details
@@ -21,14 +21,13 @@ study_details <- function(total_sample_size, study_period, interim_look, .data =
 }
 
 
-
 #' @title Enrollment rate wrapper
 #'
-#' @description Wrapper function for enrollment rate
+#' @description Wrapper function for enrollment rate.
 #'
-#' @param lambda vector. Vector with different enrollment rate.
-#' @param time vector. Vector with different cutoff time for lambda.
-#' @param .data NULL. stores the impute function
+#' @param lambda vector. Vector with different enrollment rate parameters.
+#' @param time vector. Vector with different cut-off times for lambda.
+#' @inheritParams study_details
 #'
 #' @return a list with enrollment rate information
 #'
@@ -43,11 +42,13 @@ enrollment_rate <- function(lambda = NULL, time = NULL, .data = NULL){
 
 #' @title Imputation wrapper
 #'
-#' @description Wrapper function for no_of _impute
+#' @description Wrapper function for no_of_impute.
 #'
-#' @param no_of_impute integer. Number of Monte Carlo imputation for missing data
-#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain in sampling posterior.
-#' @param .data NULL. stores the impute function
+#' @param no_of_impute integer. Number of Monte Carlo imputation for missing
+#'   data.
+#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws from
+#'   posterior distribution.
+#' @inheritParams study_details
 #'
 #' @return a list with number of imputation
 #'
@@ -62,11 +63,13 @@ impute <- function(no_of_impute, number_mcmc, .data = NULL){
 
 #' @title Randomization scheme wrapper
 #'
-#' @description Wrapper function for the randomization scheme in the trial
+#' @description Wrapper function for the randomization scheme in the trial.
 #'
-#' @param block_size integer. Block size for the complete randomization in a block
-#' @param randomization_ratio vector. The randomization ratio control to treatment.
-#' @param .data NULL. stores the randomization scheme function
+#' @param block_size integer. Block size for the complete randomization in a
+#'   block.
+#' @param randomization_ratio vector. The randomization ratio control to
+#'   treatment.
+#' @inheritParams study_details
 #'
 #' @return a list with randomization details (block size and ratio).
 #'
@@ -81,20 +84,20 @@ randomize <- function(block_size, randomization_ratio, .data = NULL){
 }
 
 
-
-
 #' @title Hypothesis wrapper
 #'
-#' @description Wrapper function for the hypothesis in the trial
+#' @description Wrapper function for the hypothesis in the trial.
 #'
-#' @param delta numeric. threshold set for margin in null hypothesis
-#' @param futility_prob numeric. probability of futility
-#' @param prob_ha numeric. posterior probability of accepting alternative.
-#' @param expected_success_prob numeric. probability of expecting success.
-#' @param .data NULL. stores the randomization scheme function
+#' @param delta numeric. Threshold set for margin in null hypothesis.
+#' @param futility_prob numeric. Probability of futility.
+#' @param prob_ha numeric. Posterior probability of accepting alternative
+#'   hypothesis.
+#' @param expected_success_prob numeric. Probability of expected success.
+#' @inheritParams study_details
 #'
-#' @return a list with information of hypothesis testing (threshold, futility probability,
-#' probability of alternative and probability of expected success.)
+#' @return a list with information of hypothesis testing (threshold, futility
+#'   probability, probability of alternative hypothesis, and probability of
+#'   expected success).
 #'
 #' @examples
 #' hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)

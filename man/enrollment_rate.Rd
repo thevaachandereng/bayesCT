@@ -7,17 +7,17 @@
 enrollment_rate(lambda = NULL, time = NULL, .data = NULL)
 }
 \arguments{
-\item{lambda}{vector. Vector with different enrollment rate.}
+\item{lambda}{vector. Vector with different enrollment rate parameters.}
 
-\item{time}{vector. Vector with different cutoff time for lambda.}
+\item{time}{vector. Vector with different cut-off times for lambda.}
 
-\item{.data}{NULL. stores the impute function}
+\item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
 a list with enrollment rate information
 }
 \description{
-Wrapper function for enrollment rate
+Wrapper function for enrollment rate.
 }
 \examples{
 enrollment_rate(lambda = c(0.3, 1), time = 25)

@@ -1,36 +1,24 @@
-#' @title Binomial counts for Bayesian Adaptive Trial
+#' @title Binomial counts for Bayesian Adaptive Trials
 #'
-#' @description Simulation for binomial counts for Bayesian Adaptive trial with different inputs to
-#'              control for power, sample size, type 1 error rate, and etc.
+#' @description Simulation for binomial counts for Bayesian Adaptive trial with
+#'   different inputs to control for power, sample size, type 1 error rate, etc.
 #'
-#' @param p_control scalar. Proportion of an event under the contrl group.
-#' @param p_treatment scalar. Proportion of an event under the treatment group.
-#' @param y0_treatment scalar. Number of events for the historical treatment group.
-#' @param N0_treatment scalar. Sample size of the historical treatment group.
-#' @param y0_control scalar. Number of events for the historical control group.
-#' @param N0_control scalar. Sample size of the historical control group.
-#' @param discount_function character. Specify the discount function to use. Currently supports weibull,
-#'                          scaledweibull, and identity. The discount function scaledweibull scales the
-#'                          output of the Weibull CDF to have a max value of 1. The identity discount function
-#'                          uses the posterior probability directly as the discount weight. Default value is
-#'                          "identity".
-#' @param N_total scalar. Total sample size
-#' @param lambda vector. Lambda for different enrollment rates across times.
-#' @param lambda_time vector. Same size as lambda, denote times at lambda changes.
-#' @param interim_look vector. Sample size for interim looks,
-#'                                 total size not included.
-#' @param EndofStudy scalar. Length of the study.
-#' @param prior vector. Prior value of beta rate, beta(a0, b0). Default is set to c(1, 1).
-#' @param block scalar. Block size for randomization to be implemented.
-#' @param rand_ratio vector. Randomization ratio for control to treatment.
-#'                    Integer values mapping the size of the block.
-#' @param prop_loss_to_followup scalar. Proportion of loss in follow up.
-#' @param h0 scalar. treshold for comparing two proportions. default at 0.
-#' @param futility_prob scalar. Type 1 error rate.
-#' @param expected_success_prob scalar. Power of the study.
-#' @param prob_ha scalar. Probability of alternative hypothesis.
-#' @param N_impute scalar. Number of imputation for monte carlo simulation for missing data.
-#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain in sampling posterior.
+#' @param p_control scalar. Proportion of events under the control arm.
+#' @param p_treatment scalar. Proportion of events under the treatment arm.
+#' @param y0_treatment scalar. Number of events for the historical treatment
+#'   arm.
+#' @param N0_treatment scalar. Sample size of the historical treatment arm.
+#' @param y0_control scalar. Number of events for the historical control arm.
+#' @param N0_control scalar. Sample size of the historical control arm.
+#' @param discount_function character. Specify the discount function to use.
+#'   Currently supports the Weibull function
+#'   (\code{discount_function="weibull"}), the scaled-Weibull function
+#'   (\code{discount_function="scaledweibull"}), and the identity function
+#'   (\code{discount_function="identity"}). The scaled-Weibull discount function
+#'   scales the output of the Weibull CDF to have a max value of 1. The identity
+#'   discount function uses the posterior probability directly as the discount
+#'   weight. Default value is \code{"identity"}.
+#' @inheritParams normalBACT
 #'
 #' @return a list of output
 #'
@@ -47,7 +35,6 @@
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpbinomial
 #' @export binomialBACT
-
 binomialBACT <- function(
   p_treatment,
   p_control             = NULL,
@@ -73,23 +60,27 @@ binomialBACT <- function(
   number_mcmc           = 1000
   ){
 
-  #checking p_control
+  # checking p_control
   if(!is.null(p_control)){stopifnot(p_control > 0 & p_control < 1)}
-  #checking historical data for treatment group
+
+  # checking historical data for treatment group
   if(!is.null(y0_treatment) | !is.null(N0_treatment)){
     stopifnot((y0_treatment > 0 & N0_treatment > 0), y0_treatment <= N0_treatment,
               (discount_function == "identity" | discount_function == "weibull" |
                discount_function == "scaledweibull"))
   }
-  #checking historical data for control group
+
+  # checking historical data for control group
   if(!is.null(y0_control) | !is.null(N0_control)){
     stopifnot((y0_control > 0 & N0_control > 0), y0_control <= N0_control)
   }
-  #checking interim_look
+
+  # checking interim_look
   if(!is.null(interim_look)){
     stopifnot(all(N_total  > interim_look))
   }
-  #checking other inputs
+
+  # checking other inputs
   stopifnot((p_treatment < 1 & p_treatment > 0),
             length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
@@ -98,10 +89,10 @@ binomialBACT <- function(
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
 
-  ##assigining interim look and final look
+  # assigining interim look and final look
   analysis_at_enrollnumber <- c(interim_look, N_total)
 
-  #assignment of enrollment based on the enrollment function
+  # assignment of enrollment based on the enrollment function
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
 
   # simulating group and treatment group assignment
@@ -112,10 +103,10 @@ binomialBACT <- function(
     group <- rep(1, N_total)
   }
 
-  #simulate binomial outcome
+  # simulate binomial outcome
   if(!is.null(p_control)){
     sim <- rbinom(N_total, 1, prob = group * p_treatment + (1 - group) * p_control)
-    #dividing treatment and control
+    # dividing treatment and control
     control <- sim[group == 0]
     treatment <- sim[group == 1]
   }
@@ -123,7 +114,7 @@ binomialBACT <- function(
     sim <- rbinom(N_total, 1, p_treatment)
   }
 
-  # Simulate loss to follow-up
+  # simulate loss to follow-up
   n_loss_to_fu <- ceiling(prop_loss_to_followup * N_total)
   loss_to_fu   <- rep(FALSE, N_total)
   loss_to_fu[sample(1:N_total, n_loss_to_fu)] <- TRUE
@@ -137,7 +128,7 @@ binomialBACT <- function(
     id         = 1:N_total,
     loss_to_fu = loss_to_fu)
 
-  #assigning stop_futility and expected success
+  # assigning stop_futility and expected success
   stop_futility         <- 0
   stop_expected_success <- 0
 
@@ -166,7 +157,7 @@ binomialBACT <- function(
              !subject_impute_success)
 
     # MLE of data at interim analysis
-    # MLE_int        <- glm(Y ~ treatment, data = data, family = "binomial")
+    # MLE_int <- glm(Y ~ treatment, data = data, family = "binomial")
 
     # assigning input for control arm given it is a single or double arm
     if(!is.null(p_control)){
@@ -192,7 +183,6 @@ binomialBACT <- function(
                         a0                     = prior[1],
                         b0                     = prior[2])
 
-
     # Imputation phase futility and expected success - initialize counters
     # for the current imputation phase
     futility_test         <- 0
@@ -212,13 +202,13 @@ binomialBACT <- function(
                                  rbinom(n(), 1, p_treatment),
                                  Y))
 
-      # Combine the treatment and control imputed datasets
+      # combine the treatment and control imputed datasets
       data_success_impute <- bind_rows(data_control_success_impute,
                                        data_treatment_success_impute) %>%
         mutate(Y = Y_impute) %>%
         select(-Y_impute)
 
-      #Create enrolled subject data frame for discount function analysis
+      # create enrolled subject data frame for discount function analysis
       data <- data_success_impute %>%
         filter(subject_enrolled)
 
@@ -233,7 +223,7 @@ binomialBACT <- function(
         N_c <- NULL
       }
 
-      # Analyze complete+imputed data using discount funtion via binomial
+      # analyze complete+imputed data using discount funtion via binomial
       post_imp <- bdpbinomial(y_t                    = sum(data$Y[data$treatment == 1]),
                               N_t                    = length(data$Y[data$treatment == 1]),
                               y_c                    = y_c,
@@ -247,10 +237,9 @@ binomialBACT <- function(
                               a0                     = prior[1],
                               b0                     = prior[2])
 
-      # Estimation of the posterior effect for difference between test and control
-      # - If expected success, add 1 to the counter
+      # estimation of the posterior effect for difference between test and
+      # control - If expected success, add 1 to the counter
       effect_imp <- post_imp$final$posterior
-
 
       if(mean(effect_imp < h0) > prob_ha){
         expected_success_test <- expected_success_test + 1
@@ -259,8 +248,8 @@ binomialBACT <- function(
       ##########################################################################
       ### Futility computations
       ##########################################################################
-      ## For patients not enrolled, impute the outcome
 
+      # For patients not enrolled, impute the outcome
       data_control_futility_impute <- data_success_impute %>%
         filter(treatment == 0) %>%
         mutate(Y_impute = ifelse(subject_impute_futility,
@@ -280,7 +269,7 @@ binomialBACT <- function(
         select(-Y_impute)
 
 
-      #Create enrolled subject data frame for discount function analysis
+      # Create enrolled subject data frame for discount function analysis
       data <- data_futility_impute
 
       if(!is.null(p_control)){
@@ -306,7 +295,8 @@ binomialBACT <- function(
                               a0                     = prior[1],
                               b0                     = prior[2])
 
-      # Estimation of the posterior effect for difference between test and control
+      # Estimation of the posterior effect for difference between test and
+      # control
       effect_imp <- post_imp$final$posterior
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
@@ -338,20 +328,19 @@ binomialBACT <- function(
       break
     }
 
-
   }
 
+  ##############################################################################
+  ### Final analysis
+  ##############################################################################
 
-  ##############################################################################
-  ### 4) Final analysis
-  ##############################################################################
   # Estimation of the posterior of the difference
   effect_int <- post$final$posterior
 
   # Number of patients enrolled at trial stop
   N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
   }
-  #assigning stage trial stopped given no interim look
+  # assigning stage trial stopped given no interim look
   else{
     N_enrolled <- N_total
     stage_trial_stopped <- N_total
@@ -363,7 +352,6 @@ binomialBACT <- function(
   data_final <- data_interim %>%
     filter(id <= stage_trial_stopped,
            !loss_to_fu)
-
 
   # Compute the final MLE for the complete data using GLM function
   # MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
@@ -391,12 +379,10 @@ binomialBACT <- function(
                       a0                   = prior[1],
                       b0                   = prior[2])
 
-
   ### Format and output results
   effect       <- post$final$posterior        # Posterior effect size: test vs control or treatment itself
   N_treatment  <- sum(data_final$treatment)   # Total sample size analyzed - test group
   N_control    <- sum(!data_final$treatment)  # Total sample size analyzed - control group
-
 
   ## output
   results_list <- list(
@@ -426,7 +412,6 @@ binomialBACT <- function(
   results_list
 
 }
-
 
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines

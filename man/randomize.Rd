@@ -7,17 +7,19 @@
 randomize(block_size, randomization_ratio, .data = NULL)
 }
 \arguments{
-\item{block_size}{integer. Block size for the complete randomization in a block}
+\item{block_size}{integer. Block size for the complete randomization in a
+block.}
 
-\item{randomization_ratio}{vector. The randomization ratio control to treatment.}
+\item{randomization_ratio}{vector. The randomization ratio control to
+treatment.}
 
-\item{.data}{NULL. stores the randomization scheme function}
+\item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
 a list with randomization details (block size and ratio).
 }
 \description{
-Wrapper function for the randomization scheme in the trial
+Wrapper function for the randomization scheme in the trial.
 }
 \examples{
 randomize(block_size = 100, randomization_ratio = c(2, 3))

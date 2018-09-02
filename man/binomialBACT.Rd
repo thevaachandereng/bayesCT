@@ -2,7 +2,7 @@
 % Please edit documentation in R/binomialBACT.R
 \name{binomialBACT}
 \alias{binomialBACT}
-\title{Binomial counts for Bayesian Adaptive Trial}
+\title{Binomial counts for Bayesian Adaptive Trials}
 \usage{
 binomialBACT(p_treatment, p_control = NULL, y0_treatment = NULL,
   N0_treatment = NULL, y0_control = NULL, N0_control = NULL,
@@ -13,62 +13,65 @@ binomialBACT(p_treatment, p_control = NULL, y0_treatment = NULL,
   N_impute = 1000, number_mcmc = 1000)
 }
 \arguments{
-\item{p_treatment}{scalar. Proportion of an event under the treatment group.}
+\item{p_treatment}{scalar. Proportion of events under the treatment arm.}
 
-\item{p_control}{scalar. Proportion of an event under the contrl group.}
+\item{p_control}{scalar. Proportion of events under the control arm.}
 
-\item{y0_treatment}{scalar. Number of events for the historical treatment group.}
+\item{y0_treatment}{scalar. Number of events for the historical treatment
+arm.}
 
-\item{N0_treatment}{scalar. Sample size of the historical treatment group.}
+\item{N0_treatment}{scalar. Sample size of the historical treatment arm.}
 
-\item{y0_control}{scalar. Number of events for the historical control group.}
+\item{y0_control}{scalar. Number of events for the historical control arm.}
 
-\item{N0_control}{scalar. Sample size of the historical control group.}
+\item{N0_control}{scalar. Sample size of the historical control arm.}
 
-\item{discount_function}{character. Specify the discount function to use. Currently supports weibull,
-scaledweibull, and identity. The discount function scaledweibull scales the
-output of the Weibull CDF to have a max value of 1. The identity discount function
-uses the posterior probability directly as the discount weight. Default value is
-"identity".}
+\item{discount_function}{character. Specify the discount function to use.
+Currently supports the Weibull function
+(\code{discount_function="weibull"}), the scaled-Weibull function
+(\code{discount_function="scaledweibull"}), and the identity function
+(\code{discount_function="identity"}). The scaled-Weibull discount function
+scales the output of the Weibull CDF to have a max value of 1. The identity
+discount function uses the posterior probability directly as the discount
+weight. Default value is \code{"identity"}.}
 
-\item{N_total}{scalar. Total sample size}
+\item{N_total}{scalar. Total sample size.}
 
 \item{lambda}{vector. Lambda for different enrollment rates across times.}
 
 \item{lambda_time}{vector. Same size as lambda, denote times at lambda changes.}
 
-\item{interim_look}{vector. Sample size for interim looks,
-total size not included.}
+\item{interim_look}{vector. Sample size for interim looks. Note: the overall trial size should not be included.}
 
 \item{EndofStudy}{scalar. Length of the study.}
 
-\item{prior}{vector. Prior value of beta rate, beta(a0, b0). Default is set to c(1, 1).}
+\item{prior}{vector. Prior value of beta rate, beta(a0, b0).}
 
 \item{block}{scalar. Block size for randomization to be implemented.}
 
 \item{rand_ratio}{vector. Randomization ratio for control to treatment.
 Integer values mapping the size of the block.}
 
-\item{prop_loss_to_followup}{scalar. Proportion of loss in follow up.}
+\item{prop_loss_to_followup}{scalar. Proportion of subjects lost to follow-up.}
 
-\item{h0}{scalar. treshold for comparing two proportions. default at 0.}
+\item{h0}{scalar. Treshold for comparing two proportions. Default is \code{h0=0}.}
 
-\item{futility_prob}{scalar. Type 1 error rate.}
+\item{futility_prob}{scalar. Type I error rate.}
 
 \item{expected_success_prob}{scalar. Power of the study.}
 
 \item{prob_ha}{scalar. Probability of alternative hypothesis.}
 
-\item{N_impute}{scalar. Number of imputation for monte carlo simulation for missing data.}
+\item{N_impute}{scalar. Number of imputations for Monte Carlo simulation of missing data.}
 
-\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain in sampling posterior.}
+\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.}
 }
 \value{
 a list of output
 }
 \description{
-Simulation for binomial counts for Bayesian Adaptive trial with different inputs to
-             control for power, sample size, type 1 error rate, and etc.
+Simulation for binomial counts for Bayesian Adaptive trial with
+  different inputs to control for power, sample size, type 1 error rate, etc.
 }
 \examples{
 binomialBACT(p_control = 0.12, p_treatment = 0.10,
