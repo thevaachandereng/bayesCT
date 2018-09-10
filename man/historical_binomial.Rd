@@ -5,8 +5,8 @@
 \title{Historical data for binomial distribution}
 \usage{
 historical_binomial(y0_treatment = NULL, N0_treatment = NULL,
-  y0_control = NULL, N0_control = NULL, discount_function = "identity",
-  .data = NULL)
+  y0_control = NULL, N0_control = NULL,
+  discount_function = "identity", .data = NULL)
 }
 \arguments{
 \item{y0_treatment}{numeric. The proportion of event in the historical treatment group.}

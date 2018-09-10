@@ -340,6 +340,7 @@ binomialBACT <- function(
   # Number of patients enrolled at trial stop
   N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
   }
+
   # assigning stage trial stopped given no interim look
   else{
     N_enrolled <- N_total
