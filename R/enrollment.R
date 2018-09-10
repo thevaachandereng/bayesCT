@@ -23,7 +23,7 @@ enrollment <- function(param, N_total, time = NULL){
     stop("The sample size for enrollment needs to be greater than 0")
   }
 
-  if(if(length(param) > 1) {is.null(time) | length(param) != (length(time) + 1)}){
+  if(length(param) > 1  & (is.null(time) | (length(param) != (length(time) + 1)))){
     stop("The cutoff time for lambda is not correct")
   }
 
