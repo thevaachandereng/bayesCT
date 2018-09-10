@@ -108,6 +108,15 @@ randomization(N_total = 140, block = 6, allocation = c(2, 1))
 
 In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As $2+1 = 3$ is a multiple of the block size, this allocation is allowed.
 
+Complete randomization can be performed by setting the block size equal to the total sample size as illustrated in the example below. 
+```{r}
+randomization(N_total = 120, block = 120, allocation = c(2, 1))
+```
+
+
+
+
+
 
 # Binomial
 
