@@ -14,7 +14,7 @@
 #' @param EndofStudy scalar. Length of the study.
 #' @param prior vector. Prior value of beta rate, beta(a0, b0).
 #' @param block scalar. Block size for randomization to be implemented.
-#' @param rand_ratio vector. Randomization ratio for control to treatment.
+#' @param rand_ratio vector. Randomization allocation for control to treatment.
 #'                    Integer values mapping the size of the block.
 #' @param prop_loss_to_followup scalar. Proportion of subjects lost to follow-up.
 #' @param h0 scalar. Treshold for comparing two proportions. Default is \code{h0=0}.
@@ -74,7 +74,7 @@ normalBACT <- function(
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
 
   # simulating group and treatment group assignment
-  group <- randomization(N_total = N_total, block = block, scheme = rand_ratio)
+  group <- randomization(N_total = N_total, block = block, allocation = rand_ratio)
 
   # simulate binomial outcome
   sim <- rnorm(N_total, mean = group * mu_treatment + (1 - group) * mu_control,
