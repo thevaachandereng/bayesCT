@@ -67,7 +67,7 @@ impute <- function(no_of_impute, number_mcmc, .data = NULL){
 #'
 #' @param block_size integer. Block size for the complete randomization in a
 #'   block.
-#' @param randomization_ratio vector. The randomization ratio control to
+#' @param randomization_ratio vector. The randomization allocation for control to
 #'   treatment.
 #' @inheritParams study_details
 #'

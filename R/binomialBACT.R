@@ -97,7 +97,7 @@ binomialBACT <- function(
 
   # simulating group and treatment group assignment
   if(!is.null(p_control)){
-    group <- randomization(N_total = N_total, block = block, scheme = rand_ratio)
+    group <- randomization(N_total = N_total, block = block, allocation = rand_ratio)
   }
   else{
     group <- rep(1, N_total)

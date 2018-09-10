@@ -33,7 +33,7 @@ normalBACT(mu_control, sd_control, mu_treatment, sd_treatment, N_total,
 
 \item{block}{scalar. Block size for randomization to be implemented.}
 
-\item{rand_ratio}{vector. Randomization ratio for control to treatment.
+\item{rand_ratio}{vector. Randomization allocation for control to treatment.
 Integer values mapping the size of the block.}
 
 \item{prop_loss_to_followup}{scalar. Proportion of subjects lost to follow-up.}

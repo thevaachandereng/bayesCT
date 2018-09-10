@@ -10,7 +10,7 @@ randomize(block_size, randomization_ratio, .data = NULL)
 \item{block_size}{integer. Block size for the complete randomization in a
 block.}
 
-\item{randomization_ratio}{vector. The randomization ratio control to
+\item{randomization_ratio}{vector. The randomization allocation for control to
 treatment.}
 
 \item{.data}{NULL. This should not be changed by the user.}
