@@ -92,21 +92,21 @@ enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15))
 
 # Randomization scheme
 
-The randomization scheme is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization scheme is generally preferable. Block randomization schemes also allow for a different randomization ratio but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization scheme. 
+The randomization allocation is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization allocation is generally preferable. Block randomization allocation also allow for a different randomization ratio but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization allocation. 
 
 For instance,
 
 ```{r, eval = FALSE}
-randomization(N_total = 140, block = 7, scheme = c(2, 1))
+randomization(N_total = 140, block = 7, allocation = c(2, 1))
 ```
 
-will not work because the sum of the scheme is not a multiple of the block. 
+will not work because the sum of the allocation is not a multiple of the block. 
 
 ```{r}
-randomization(N_total = 140, block = 6, scheme = c(2, 1))
+randomization(N_total = 140, block = 6, allocation = c(2, 1))
 ```
 
-In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As $2+1 = 3$ is a multiple of the block size, this scheme is allowed.
+In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As $2+1 = 3$ is a multiple of the block size, this allocation is allowed.
 
 
 # Binomial
