@@ -17,7 +17,7 @@ enrollment(param, N_total, time = NULL)
 a vector of enrollment dates
 }
 \description{
-This function simulates enrollment dates using either poisson or binomial distribution
+This function simulates enrollment dates using either poisson distribution
 }
 \examples{
 enrollment(param = c(0.003, 0.7), 100, time = 10)
