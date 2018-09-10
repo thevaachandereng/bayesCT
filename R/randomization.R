@@ -19,16 +19,17 @@
 #' randomization(N_total = 100, block = 100, allocation = c(1, 1))
 #'
 #' @export randomization
+
 randomization <- function(N_total, block = 2, allocation = c(1, 1)) {
-  if (block %% 1 != 0 || block <= 0) {
+  if (any(block %% 1 != 0) | any(block <= 0)) {
     stop("'block' must be a non-negative integer")
   }
 
-  if (block %% sum(allocation) != 0) {
+  if (any(block %% sum(allocation) != 0)) {
     stop("The sum of 'allocation' must be a multiple of 'block'")
   }
 
-  if (N_total < block) {
+  if (N_total < sum(block)) {
     stop("The number of subjects must be at least the size of 'block'")
   }
 
@@ -38,17 +39,32 @@ randomization <- function(N_total, block = 2, allocation = c(1, 1)) {
 
   sampling <- NULL
 
-  while (length(sampling) < (N_total - block)) {
-    item <- rep(rep(0:1, times = allocation), each = block / sum(allocation))
-    sampling <- c(sampling,
-                  sample(x = item, size = block))
+  # creating different block sizes for multiple blocks
+  blocking <- rep(block, N_total %/% sum(block))
+
+  for(k in 1:length(block)){
+    if((sum(blocking) + block[k]) < N_total){
+     blocking <- c(blocking, block[k])
+     next_block <- block[k + 1]
+    }
+    else{
+      break
+    }
   }
 
+  # within each block, randomize with the correct allocation
+  for(m in 1:length(blocking)){
+    item <- rep(rep(0:1, times = allocation), each = blocking[m] / sum(allocation))
+    sampling <- c(sampling, sample(item))
+  }
+
+  # fill up the remainder of the allocation using next block
   if (N_total > length(sampling)) {
-    item <- rep(rep(0:1, times = allocation), each = block / sum(allocation))
+    item <- rep(rep(0:1, times = allocation), each = next_block / sum(allocation))
     sampling <- c(sampling,
                   sample(item, size = (N_total - length(sampling))))
   }
 
+  # return sampling
   return(sampling)
 }
