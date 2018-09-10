@@ -3,7 +3,7 @@
 #' @description Implements a randomization allocation for control and treatment arms with different randomization ratios and block sizes.
 #'
 #' @param N_total an integer value of total sample size for randomization allocation.
-#' @param block an integer value of the block size for randomization. Note that it needs to be a multiple of the sum of \code{allocation}.
+#' @param block a vector value of the block size for randomization. Note that it needs to be a multiple of the sum of \code{allocation}.
 #' @param allocation a numeric vector of the randomization allocation in the order \code{c(control, treatment)}.
 #'
 #' @return the randomization allocation with 0, 1 for control and treatment
@@ -42,6 +42,7 @@ randomization <- function(N_total, block = 2, allocation = c(1, 1)) {
   }
 
   sampling <- NULL
+  next_block <- NULL
 
   # creating different block sizes for multiple blocks
   blocking <- rep(block, N_total %/% sum(block))
@@ -54,6 +55,11 @@ randomization <- function(N_total, block = 2, allocation = c(1, 1)) {
     else{
       break
     }
+  }
+
+  # making sure the next block is assigned
+  if(is.null(next_block)){
+    next_block <- block[1]
   }
 
   # within each block, randomize with the correct allocation
