@@ -116,6 +116,8 @@ randomization(N_total = 120, block = 120, allocation = c(2, 1))
 
 
 
+
+
 # Binomial
 
 ```{r}
