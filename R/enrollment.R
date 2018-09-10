@@ -15,10 +15,22 @@
 #' @export enrollment
 #'
 enrollment <- function(param, N_total, time = NULL){
-  #checking each inputs
-  stopifnot(all(param > 0), N_total > 0,
-            if(length(param) > 1){!is.null(time)} else{is.null(time)},
-            if(length(param) > 1){length(param) == (length(time) + 1)} else{is.null(time)})
+  if(param <= 0){
+    stop("The lambda(s) for poisson enrollment rate should be non-negative")
+  }
+
+  if(N_total <= 0){
+    stop("The sample size for enrollment needs to be greater than 0")
+  }
+
+  if(if(length(param) > 1) {is.null(time) | length(param) == (length(time) + 1)}){
+    stop("The cutoff time for lambda is not correct")
+  }
+
+  if(length(param) == 1 & !is.null(time)){
+    warning("The time input is not used!")
+  }
+
   output <- NULL
   count <- 0
   # for constant lambda in poisson
