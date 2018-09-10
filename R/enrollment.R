@@ -15,7 +15,7 @@
 #' @export enrollment
 #'
 enrollment <- function(param, N_total, time = NULL){
-  if(param <= 0){
+  if(any(param <= 0)){
     stop("The lambda(s) for poisson enrollment rate should be non-negative")
   }
 
