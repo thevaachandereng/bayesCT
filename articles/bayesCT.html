@@ -81,15 +81,15 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Randomized control trials (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.</p>
-<p>Adaptive Bayesian trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial. Notably, Adaptive Bayesian trials:</p>
+<p>Randomized controlled trials (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.</p>
+<p>Adaptive Bayesian trials provide much more flexibility over conventional frequentist approaches in terms of the design and analysis of a clinical trial. Notably, adaptive Bayesian trials:</p>
 <ul>
 <li>can incorporate historical data, which helps reduce the sample size required;</li>
 <li>can be exploited for interim analyses of early stopping for success or futility;</li>
-<li>can be used in trials of multiple treatment arms (versus a single control), allowing for treatments not demonstrating success to be dropped; and</li>
+<li>can be used in trials with multiple treatment arms (versus a single control), allowing for treatments not demonstrating success to be dropped; and</li>
 <li>can be used to alter the randomization ratio to improve trial efficiency or even to increase trial recruitment.</li>
 </ul>
-<p>A fundamental requirement of an adaptive trial is the <em>a priori</em> evaluation of the operating characteristics. In a Bayesian adaptive trial, these are generally not of closed-form; hence, a simulation approach is required. Nonetheless, simulation of adaptive Bayesian trial designs are substantially more complex compared to the general frequentist approach. This package removes this obstacle and allows for simulation of adaptive Bayesian trials under a range of trial designs and outcome types.</p>
+<p>A fundamental requirement of an adaptive trial is the <em>a priori</em> and interim evaluation of the operating characteristics. In a adaptive trials, these are generally not of closed-form; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.</p>
 <p>If you use <code>bayesCT</code> in published research, please cite: <strong>TBA</strong>.</p>
 <p>If after reading through this vignette you have questions or problems using <code>bayesCT</code>, please post them to <a href="https://github.com/thevaachandereng/bayesCT/issues" class="uri">https://github.com/thevaachandereng/bayesCT/issues</a>. This will notify the package maintainers and benefit other users. Please note that comments and questions should <strong>not</strong> be emailed directly to the package authors.</p>
 </div>
@@ -105,7 +105,7 @@
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># or </span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_version">install_version</a></span>(<span class="st">"bayesCT"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
-<p>The second option is to download through GitHub:</p>
+<p>The second option is to download the most recent stable version through GitHub:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a></code></pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(bayesCT)</a></code></pre></div>
@@ -113,7 +113,7 @@
 <div id="recruitment" class="section level1">
 <h1 class="hasAnchor">
 <a href="#recruitment" class="anchor"></a>Recruitment</h1>
-<p>The recruitment of subjects is assumed to follow a Poisson process. Since subject recruitment in a trial is independent of one another, the <a href="https://en.wikipedia.org/wiki/Memorylessness">“memoryless property”</a> helps in the modeling of subject recruitment. However, we cannot assume a homogeneous Poisson process since subject recruitment varies over time. Thus, the <code><a href="http://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment()</a></code> function assumes a piecewise stationary Poisson process with a different <span class="math inline">\(\lambda\)</span> parameter over different time intervals. The function also omits an enrollment date since the first enrollment till it reaches the sample size capacity.</p>
+<p>The recruitment of subjects is assumed to follow a Poisson process. Since trial recruitment is independent, the <a href="https://en.wikipedia.org/wiki/Memorylessness">“memoryless property”</a> modeling of subject recruitment. However, we cannot assume a homogeneous Poisson process since subject recruitment varies over time. Thus, the <code><a href="http://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment()</a></code> function assumes a piecewise stationary Poisson process with different <span class="math inline">\(\lambda\)</span> parameters over different time intervals. The function also omits an enrollment date considering time zero as study initiation.</p>
 <p>For instance, if we have the following piecewise function of <span class="math inline">\(\lambda\)</span>, with <span class="math inline">\(t\)</span> representing the time interval,</p>
 <p><span class="math display">\[  \lambda = \left\{
 \begin{array}{ll}
@@ -123,31 +123,31 @@
       1.2 &amp; t \in [15, \infty) \\
 \end{array} 
 \right. \]</span></p>
-<p>then to simulate enrollment dates with a sample size (<code>N_total</code>) of 50, one would use</p>
+<p>then to simulate individual patient enrollment dates with a sample size (<code>N_total</code>) of 50, one would use</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment</a></span>(<span class="dt">param =</span> <span class="kw">c</span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  0  0  3  3  5  5  7  9  9  9 11 12 13 14 15 16 19 19 19 19 21 24</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 25 25 25 26 26 27 27 29 30 30 31 32 32 32 33 33 33 33 35 35 35 37 38</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 38 38 40 40</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  1  2  2  3  3  4  7  8  9 10 11 11 13 13 14 15 15 16 16 16 18 18</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 19 19 20 20 21 21 21 22 22 22 24 24 24 26 26 27 28 30 30 31 32 32 32</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 32 33 34 35</span></a></code></pre></div>
 </div>
 <div id="randomization-scheme" class="section level1">
 <h1 class="hasAnchor">
 <a href="#randomization-scheme" class="anchor"></a>Randomization scheme</h1>
-<p>The randomization allocation is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization allocation is generally preferable. Block randomization allocation also allow for a different randomization ratio but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization allocation.</p>
+<p>The randomization allocation is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization allocation is generally preferable. Block randomization allocation allows for different randomization ratios but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization allocation.</p>
 <p>For instance,</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">allocation =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p>will not work because the sum of the allocation is not a multiple of the block.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">allocation =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 1 0 0 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 1 0 0 1 1 0 0 1 0 0 1 0 1 0 0</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 1 1 0 0 0 0 0 1 0 0 1 0 0 0 1 0 0 1 1 0 0 0 0 1 1 0 1 0 0 0 1 0 0 0</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 1 0 1 0 0 0 0 1 0 1 0 0 0 0 0 1 0 1 1 1 0 0 0 0 1 1 0 0 0 0 0 0 1</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 0 1 0 0 1 0 0 1 0 0 0 0 0 1 1 0 1 0 1 0 0 0 1 0 0 0 1 1 0 0 1 0 0 0 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 1 0 0 1 0 0 1 1 0 0 0 0 0 1 0 1 0 0 0 0 0 1 0 1 0 0 0 1 0 1 0 0 1 1 0</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 1 0 0 0 1 1 1 0 0 0 0 0 1 0 0 0 1 0 0 1 0 1 0 1 0 1 0 0 0 0 0 1 0</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 0 1 0 0 1 0 1 0 0 0 0 1 0 1 0 0 1 0 0 1 1 0 0 0 1 0 0 0 0 1 0 0 1</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 0 1 0 1 0 0 0 0 1 0 0 0 1 0 1 0 0 1 0 0 1 0 0 0 1 1 0 0 0 0 0 1 1 1 0</span></a></code></pre></div>
 <p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As <span class="math inline">\(2+1 = 3\)</span> is a multiple of the block size, this allocation is allowed.</p>
 <p>Complete randomization can be performed by setting the block size equal to the total sample size as illustrated in the example below.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">120</span>, <span class="dt">block =</span> <span class="dv">120</span>, <span class="dt">allocation =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 0 0 1 0 1 0 1 1 0 0 1 0 0 0 0 1 1 0 0 0 1 0 0 0 1 0 1 0 0 0 1 0 1 0 0</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 0 1 0 1 0 1 0 0 1 0 0 0 1 0 0 1 1 1 0 0 0 1 0 0 0 1 1 1 0 1 1 0 0 1 0</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 0 0 0 1 0 1 1 1 0 0 1 1 0</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 0 1 0 1 0 1 1 1 0 0 1 0</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 0 0 1 0 0 1 0 0 0 1 0 1 0 0 1 0 1 0 0 1 1 0 0 0 0 0 1 0 1 0 0 0 0</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 0 0 1 1 0 0 1 1 0 1 0 0 0 1 1 0 0 1 0 0 1 1 0 0 0 1 1 0 1 1 1 0 1 0 0</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0</span></a></code></pre></div>
 </div>
 <div id="binomial" class="section level1">
 <h1 class="hasAnchor">
@@ -165,9 +165,7 @@
 <a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb9-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/BACTbinomial">BACTbinomial</a></span>()</a>
 <a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; [1] 210</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; [1] 240</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt; [1] 270</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt; [1] 300</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; [1] 210</span></a></code></pre></div>
 </div>
 <div id="normal" class="section level1">
 <h1 class="hasAnchor">
@@ -184,9 +182,7 @@
 <a class="sourceLine" id="cb10-10" data-line-number="10">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bayesCT/topics/BACTnormal">BACTnormal</a></span>()</a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt; [1] 210</span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; [1] 240</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; [1] 270</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; [1] 300</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; [1] 210</span></a></code></pre></div>
 </div>
   </div>
 
