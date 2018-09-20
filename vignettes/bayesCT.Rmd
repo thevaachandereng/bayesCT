@@ -17,19 +17,18 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 ```
 
 
-
 # Introduction
 
-Randomized control trials (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.
+Randomized controlled trials (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.
 
-Adaptive Bayesian trials provide much more flexibility over the conventional frequentist approach in terms of the design and analysis of a clinical trial. Notably, Adaptive Bayesian trials:
+Adaptive Bayesian trials provide much more flexibility over conventional frequentist approaches in terms of the design and analysis of a clinical trial. Notably, adaptive Bayesian trials:
 
 - can incorporate historical data, which helps reduce the sample size required;
 - can be exploited for interim analyses of early stopping for success or futility;
-- can be used in trials of multiple treatment arms (versus a single control), allowing for treatments not demonstrating success to be dropped; and
+- can be used in trials with multiple treatment arms (versus a single control), allowing for treatments not demonstrating success to be dropped; and
 - can be used to alter the randomization ratio to improve trial efficiency or even to increase trial recruitment.
 
-A fundamental requirement of an adaptive trial is the *a priori* evaluation of the operating characteristics. In a Bayesian adaptive trial, these are generally not of closed-form; hence, a simulation approach is required. Nonetheless, simulation of adaptive Bayesian trial designs are substantially more complex compared to the general frequentist approach. This package removes this obstacle and allows for simulation of adaptive Bayesian trials under a range of trial designs and outcome types.
+A fundamental requirement of an adaptive trial is the *a priori* and interim evaluation of the operating characteristics. In a adaptive trials, these are generally not of closed-form; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.
 
 If you use `bayesCT` in published research, please cite: **TBA**.
 
@@ -55,7 +54,7 @@ devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
 devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.r-project.org")
 ```
 
-The second option is to download through GitHub:
+The second option is to download the most recent stable version through GitHub:
 
 ```{r, message = FALSE}
 devtools::install_github("thevaachandereng/bayesCT")
@@ -70,7 +69,7 @@ library(bayesCT)
 
 # Recruitment
 
-The recruitment of subjects is assumed to follow a Poisson process. Since subject recruitment in a trial is independent of one another, the ["memoryless property"](https://en.wikipedia.org/wiki/Memorylessness) helps in the modeling of subject recruitment. However, we cannot assume a homogeneous Poisson process since subject recruitment varies over time. Thus, the `enrollment()` function assumes a piecewise stationary Poisson process with a different $\lambda$ parameter over different time intervals. The function also omits an enrollment date since the first enrollment till it reaches the sample size capacity. 
+The recruitment of subjects is assumed to follow a Poisson process. Since trial recruitment is independent, the ["memoryless property"](https://en.wikipedia.org/wiki/Memorylessness) modeling of subject recruitment. However, we cannot assume a homogeneous Poisson process since subject recruitment varies over time. Thus, the `enrollment()` function assumes a piecewise stationary Poisson process with different $\lambda$ parameters over different time intervals. The function also omits an enrollment date considering time zero as study initiation. 
 
 For instance, if we have the following piecewise function of $\lambda$, with $t$ representing the time interval,  
 
@@ -83,7 +82,7 @@ For instance, if we have the following piecewise function of $\lambda$, with $t$
 \end{array} 
 \right. \]
 
-then to simulate enrollment dates with a sample size (`N_total`) of 50, one would use
+then to simulate individual patient enrollment dates with a sample size (`N_total`) of 50, one would use
 
 ```{r}
 enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15))
@@ -92,7 +91,7 @@ enrollment(param = c(0.3, 0.7, 0.9, 1.2), 50, time = c(5, 10, 15))
 
 # Randomization scheme
 
-The randomization allocation is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization allocation is generally preferable. Block randomization allocation also allow for a different randomization ratio but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization allocation. 
+The randomization allocation is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization allocation is generally preferable. Block randomization allocation allows for different randomization ratios but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization allocation. 
 
 For instance,
 
