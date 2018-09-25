@@ -91,7 +91,7 @@ binomialBACT <- function(
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
 
   #checking if alternative is right
-  if(alternative =! "two-sided" | alternative == "greater" | alternative == "less"){
+  if(alternative != "two-sided" | alternative != "greater" | alternative != "less"){
     stop("The input for alternative is wrong!")
   }
 
