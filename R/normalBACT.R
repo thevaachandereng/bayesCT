@@ -16,6 +16,8 @@
 #' @param block scalar. Block size for randomization to be implemented.
 #' @param rand_ratio vector. Randomization allocation for control to treatment.
 #'                    Integer values mapping the size of the block.
+#' @param alternative character. The string specifying the alternative hypothesis, must be one
+#'        of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.
 #' @param prop_loss_to_followup scalar. Proportion of subjects lost to follow-up.
 #' @param h0 scalar. Treshold for comparing two proportions. Default is \code{h0=0}.
 #' @param futility_prob scalar. Type I error rate.
@@ -50,6 +52,7 @@ normalBACT <- function(
   prior                 = c(1, 1),
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
+  alternative           = "two-sided",  # the alternative hypothesis (either two-sided, greater, less)
   prop_loss_to_followup = 0.15,         # Proportion of loss in data
   h0                    = 0,            # Null hypothesis value
   futility_prob         = 0.05,         # Futility probability

@@ -8,9 +8,10 @@ binomialBACT(p_treatment, p_control = NULL, y0_treatment = NULL,
   N0_treatment = NULL, y0_control = NULL, N0_control = NULL,
   discount_function = "identity", N_total, lambda, lambda_time,
   interim_look = NULL, EndofStudy, prior = c(1, 1), block = 2,
-  rand_ratio = c(1, 1), prop_loss_to_followup = 0.1, h0 = 0,
-  futility_prob = 0.05, expected_success_prob = 0.9, prob_ha = 0.95,
-  N_impute = 1000, number_mcmc = 1000)
+  rand_ratio = c(1, 1), prop_loss_to_followup = 0.1,
+  alternative = "two-sided", h0 = 0, futility_prob = 0.05,
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 1000,
+  number_mcmc = 1000)
 }
 \arguments{
 \item{p_treatment}{scalar. Proportion of events under the treatment arm.}
@@ -53,6 +54,9 @@ weight. Default value is \code{"identity"}.}
 Integer values mapping the size of the block.}
 
 \item{prop_loss_to_followup}{scalar. Proportion of subjects lost to follow-up.}
+
+\item{alternative}{character. The string specifying the alternative hypothesis, must be one
+of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.}
 
 \item{h0}{scalar. Treshold for comparing two proportions. Default is \code{h0=0}.}
 

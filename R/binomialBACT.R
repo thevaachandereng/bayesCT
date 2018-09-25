@@ -52,6 +52,7 @@ binomialBACT <- function(
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
   prop_loss_to_followup = 0.10,         # Proportion of loss in data
+  alternative           = "two-sided",  # the alternative hypothesis (either two-sided, greater, less)
   h0                    = 0,            # Null hypothesis value
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
