@@ -256,8 +256,8 @@ binomialBACT <- function(
           success <- mean(effect_imp > h0)
         }
         else{
-          effect_imp <- post_imp$posterior_control$posterior - post_imp$posterior_treatment$posterior
-          success <- mean(effect_imp > h0)
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- mean(-effect_imp > h0)
         }
       }
 
@@ -333,15 +333,15 @@ binomialBACT <- function(
       if(!is.null(p_control)){
         if(alternative == "two-sided"){
           effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-          success <- max(c(mean(effect_imp + h0 > 0), mean(-effect_imp + h0 > 0)))
+          success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
         }
         else if(alternative == "greater"){
           effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-          success <- mean(effect_imp + h0 > 0)
+          success <- mean(effect_imp > h0)
         }
         else{
-          effect_imp <- post_imp$posterior_control$posterior - post_imp$posterior_treatment$posterior
-          success <- mean(effect_imp + h0 > 0)
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- mean(-effect_imp > h0)
         }
       }
 
@@ -402,7 +402,7 @@ binomialBACT <- function(
         effect_int <- post$posterior_treatment$posterior - post$posterior_control$posterior
       }
       else{
-        effect_int <- post$posterior_control$posterior - post$posterior_treatment$posterior
+        effect_int <- post$posterior_treatment$posterior - post$posterior_control$posterior
       }
     }
 
@@ -458,17 +458,29 @@ binomialBACT <- function(
   if(!is.null(p_control)){
     if(alternative == "two-sided"){
       effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
+      post_paa <- max(c(mean(effect < h0), mean(-effect < h0)))
     }
     else if(alternative == "greater"){
       effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
+      post_paa <- mean(effect < h0)
     }
     else{
-      effect <- post_final$posterior_control$posterior - post_final$posterior_treatment$posterior
+      effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
+      post_paa <- mean(-effect < h0)
     }
   }
 
   else{
     effect <- post_final$final$posterior
+    if(alternative == "two-sided"){
+      post_paa <- max(c(mean(effect - p_treatment > h0), mean(p_treatment - effect > h0)))
+    }
+    else if(alternative == "greater"){
+      post_paa <- mean(effect - p_treatment > h0)
+    }
+    else{
+      post_paa <- mean(p_treatment - effect > h0)
+    }
   }
 
 
@@ -478,25 +490,25 @@ binomialBACT <- function(
 
   ## output
   results_list <- list(
-    p_treatment                                = p_treatment,             # probability of treatment in binomial
-    p_control                                  = p_control,               # probability of control in binomial
+    p_treatment                                = p_treatment,              # probability of treatment in binomial
+    p_control                                  = p_control,                # probability of control in binomial
     prob_of_accepting_alternative              = prob_ha,
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
     N_complete                                 = N_treatment + N_control,
-    N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
-    N_max                                      = N_total, 				        # Total potential sample size
-    post_prob_accept_alternative               = mean(effect < h0),       # Posterior probability that alternative hypothesis is true
-    est_final                                  = mean(effect)             # Posterior Mean of treatment effect
-    #MLE_est                                    = MLE$coe[2],             # Treatment effect useing MLE
-    #MLE_est_interim                            = MLE_int$coe[2]          # Treatment effect useing MLE at interim analysis
+    N_enrolled                                 = N_enrolled,               # Total sample size enrolled when trial stopped
+    N_max                                      = N_total, 				         # Total potential sample size
+    post_prob_accept_alternative               = post_paa,        # Posterior probability that alternative hypothesis is true
+    est_final                                  = mean(effect)              # Posterior Mean of treatment effect
+    #MLE_est                                   = MLE$coe[2],               # Treatment effect useing MLE
+    #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect useing MLE at interim analysis
   )
 
   if(length(analysis_at_enrollnumber) > 1){
     results_list                            <- c(results_list,
-    est_interim                             = mean(effect_int),        # Posterior Mean of treatment effect at interim analysis
-    stop_futility                           = stop_futility,           # Did the trial stop for futility
-    stop_expected_success                   = stop_expected_success    # Did the trial stop for expected success
+    est_interim                             = mean(effect_int),           # Posterior Mean of treatment effect at interim analysis
+    stop_futility                           = stop_futility,              # Did the trial stop for futility
+    stop_expected_success                   = stop_expected_success       # Did the trial stop for expected success
     )
   }
 
