@@ -458,15 +458,15 @@ binomialBACT <- function(
   if(!is.null(p_control)){
     if(alternative == "two-sided"){
       effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
-      post_paa <- max(c(mean(effect < h0), mean(-effect < h0)))
+      post_paa <- max(c(mean(effect > h0), mean(-effect > h0)))
     }
     else if(alternative == "greater"){
       effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
-      post_paa <- mean(effect < h0)
+      post_paa <- mean(effect > h0)
     }
     else{
       effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
-      post_paa <- mean(-effect < h0)
+      post_paa <- mean(-effect > h0)
     }
   }
 
@@ -498,7 +498,7 @@ binomialBACT <- function(
     N_complete                                 = N_treatment + N_control,
     N_enrolled                                 = N_enrolled,               # Total sample size enrolled when trial stopped
     N_max                                      = N_total, 				         # Total potential sample size
-    post_prob_accept_alternative               = post_paa,        # Posterior probability that alternative hypothesis is true
+    post_prob_accept_alternative               = post_paa,                 # Posterior probability that alternative hypothesis is true
     est_final                                  = mean(effect)              # Posterior Mean of treatment effect
     #MLE_est                                   = MLE$coe[2],               # Treatment effect useing MLE
     #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect useing MLE at interim analysis
