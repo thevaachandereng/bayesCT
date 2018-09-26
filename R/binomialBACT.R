@@ -245,9 +245,36 @@ binomialBACT <- function(
 
       # estimation of the posterior effect for difference between test and
       # control - If expected success, add 1 to the counter
-      effect_imp <- post_imp$final$posterior
 
-      if(mean(effect_imp < h0) > prob_ha){
+      if(!is.null(p_control)){
+        if(alternative == "two-sided"){
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
+        }
+        else if(alternative == "greater"){
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- mean(effect_imp > h0)
+        }
+        else{
+          effect_imp <- post_imp$posterior_control$posterior - post_imp$posterior_treatment$posterior
+          success <- mean(effect_imp > h0)
+        }
+      }
+
+      else{
+        effect_imp <- post_imp$final$posterior
+        if(alternative == "two-sided"){
+          success <- max(c(mean(effect_imp - p_treatment > h0), mean(p_treatment - effect_imp > h0)))
+        }
+        else if(alternative == "greater"){
+          success <- mean(effect_imp - p_treatment > h0)
+        }
+        else{
+          success <- mean(p_treatment - effect_imp > h0)
+        }
+      }
+
+      if(success > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
 
@@ -303,10 +330,36 @@ binomialBACT <- function(
 
       # Estimation of the posterior effect for difference between test and
       # control
-      effect_imp <- post_imp$final$posterior
+      if(!is.null(p_control)){
+        if(alternative == "two-sided"){
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- max(c(mean(effect_imp + h0 > 0), mean(-effect_imp + h0 > 0)))
+        }
+        else if(alternative == "greater"){
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- mean(effect_imp + h0 > 0)
+        }
+        else{
+          effect_imp <- post_imp$posterior_control$posterior - post_imp$posterior_treatment$posterior
+          success <- mean(effect_imp + h0 > 0)
+        }
+      }
+
+      else{
+        effect_imp <- post_imp$final$posterior
+        if(alternative == "two-sided"){
+          success <- max(c(mean(effect_imp - p_treatment > h0), mean(p_treatment - effect_imp > h0)))
+        }
+        else if(alternative == "greater"){
+          success <- mean(effect_imp - p_treatment > h0)
+        }
+        else{
+          success <- mean(p_treatment - effect_imp > h0)
+        }
+      }
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if(mean(effect_imp < h0) > prob_ha){
+      if(success > prob_ha){
         futility_test <- futility_test + 1
       }
 
@@ -341,7 +394,21 @@ binomialBACT <- function(
   ##############################################################################
 
   # Estimation of the posterior of the difference
-  effect_int <- post$final$posterior
+    if(!is.null(p_control)){
+      if(alternative == "two-sided"){
+        effect_int <- post$posterior_treatment$posterior - post$posterior_control$posterior
+      }
+      else if(alternative == "greater"){
+        effect_int <- post$posterior_treatment$posterior - post$posterior_control$posterior
+      }
+      else{
+        effect_int <- post$posterior_control$posterior - post$posterior_treatment$posterior
+      }
+    }
+
+    else{
+      effect_int <- post$final$posterior
+    }
 
   # Number of patients enrolled at trial stop
   N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
@@ -373,23 +440,41 @@ binomialBACT <- function(
   }
 
   # Analyze complete data using discount funtion via binomial
-  post <- bdpbinomial(y_t                  = sum(data_final$Y[data_final$treatment == 1]),
-                      N_t                  = length(data_final$Y[data_final$treatment == 1]),
-                      y_c                  = y_c,
-                      N_c                  = N_c,
-                      y0_t                 = y0_treatment,
-                      N0_t                 = N0_treatment,
-                      y0_c                 = y0_control,
-                      N0_c                 = N0_control,
-                      number_mcmc          = number_mcmc,
-                      discount_function    = discount_function,
-                      a0                   = prior[1],
-                      b0                   = prior[2])
+  post_final <- bdpbinomial(y_t                  = sum(data_final$Y[data_final$treatment == 1]),
+                            N_t                  = length(data_final$Y[data_final$treatment == 1]),
+                            y_c                  = y_c,
+                            N_c                  = N_c,
+                            y0_t                 = y0_treatment,
+                            N0_t                 = N0_treatment,
+                            y0_c                 = y0_control,
+                            N0_c                 = N0_control,
+                            number_mcmc          = number_mcmc,
+                            discount_function    = discount_function,
+                            a0                   = prior[1],
+                            b0                   = prior[2])
 
   ### Format and output results
-  effect       <- post$final$posterior        # Posterior effect size: test vs control or treatment itself
-  N_treatment  <- sum(data_final$treatment)   # Total sample size analyzed - test group
-  N_control    <- sum(!data_final$treatment)  # Total sample size analyzed - control group
+  # Posterior effect size: test vs control or treatment itself
+  if(!is.null(p_control)){
+    if(alternative == "two-sided"){
+      effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
+    }
+    else if(alternative == "greater"){
+      effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
+    }
+    else{
+      effect <- post_final$posterior_control$posterior - post_final$posterior_treatment$posterior
+    }
+  }
+
+  else{
+    effect <- post_final$final$posterior
+  }
+
+
+
+  N_treatment  <- sum(data_final$treatment)         # Total sample size analyzed - test group
+  N_control    <- sum(!data_final$treatment)        # Total sample size analyzed - control group
 
   ## output
   results_list <- list(
