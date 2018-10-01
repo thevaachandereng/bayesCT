@@ -4,13 +4,13 @@
 \alias{binomial_outcome}
 \title{Proportion of an event in control and treatment}
 \usage{
-binomial_outcome(p_control_true = NULL, p_treatment_true = NULL,
+binomial_outcome(p_treatment_true = NULL, p_control_true = NULL,
   .data = NULL)
 }
 \arguments{
-\item{p_control_true}{numeric. The proportion of an event in the control group, 0 < $p_control$ < 1.}
-
 \item{p_treatment_true}{numeric. The proportion of an event in the treatment group, 0 < $p_treatment$ < 1.}
+
+\item{p_control_true}{numeric. The proportion of an event in the control group, 0 < $p_control$ < 1.}
 
 \item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }

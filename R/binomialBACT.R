@@ -3,8 +3,8 @@
 #' @description Simulation for binomial counts for Bayesian Adaptive trial with
 #'   different inputs to control for power, sample size, type 1 error rate, etc.
 #'
-#' @param p_control scalar. Proportion of events under the control arm.
 #' @param p_treatment scalar. Proportion of events under the treatment arm.
+#' @param p_control scalar. Proportion of events under the control arm.
 #' @param y0_treatment scalar. Number of events for the historical treatment
 #'   arm.
 #' @param N0_treatment scalar. Sample size of the historical treatment arm.
@@ -86,7 +86,7 @@ binomialBACT <- function(
             length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
             (prop_loss_to_followup >= 0 & prop_loss_to_followup < 0.75),
-            (h0 >= 0 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
+            (h0 >= -1 & h0 < 1), (futility_prob < 0.20 & futility_prob > 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
             (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
 
@@ -493,6 +493,7 @@ binomialBACT <- function(
     p_treatment                                = p_treatment,              # probability of treatment in binomial
     p_control                                  = p_control,                # probability of control in binomial
     prob_of_accepting_alternative              = prob_ha,
+    margin                                     = h0,                       # margin for error
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
     N_complete                                 = N_treatment + N_control,
@@ -527,17 +528,17 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @description Wrapper function for proportion of an event in control and treatment group with binomial outcome.
 #'
-#' @param p_control_true numeric. The proportion of an event in the control group, 0 < $p_control$ < 1.
 #' @param p_treatment_true numeric. The proportion of an event in the treatment group, 0 < $p_treatment$ < 1.
+#' @param p_control_true numeric. The proportion of an event in the control group, 0 < $p_control$ < 1.
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with proportion of control and treatment group.
 #'
 #' @examples binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
 #' @export binomial_outcome
-binomial_outcome <- function(p_control_true = NULL, p_treatment_true = NULL, .data = NULL){
-  .data$p_control    <- p_control_true
+binomial_outcome <- function(p_treatment_true= NULL, p_control_true = NULL, .data = NULL){
   .data$p_treatment  <- p_treatment_true
+  .data$p_control    <- p_control_true
   .data
 }
 
@@ -563,9 +564,9 @@ binomial_outcome <- function(p_control_true = NULL, p_treatment_true = NULL, .da
 #' @export historical_binomial
 historical_binomial <- function(y0_treatment       = NULL,
                                 N0_treatment       = NULL,
+                                discount_function  = "identity",
                                 y0_control         = NULL,
                                 N0_control         = NULL,
-                                discount_function  = "identity",
                                 .data              = NULL
                                 ){
   .data$y0_treatment       <- y0_treatment
