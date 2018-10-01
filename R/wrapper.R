@@ -18,7 +18,7 @@ study_details <- function(total_sample_size, study_period, interim_look, prop_lo
   .data$N_total <- total_sample_size
   .data$EndofStudy <- study_period
   .data$interim_look <- interim_look
-  .data$prop_loss_to_followup <- prop_loss_to_followuo
+  .data$prop_loss_to_followup <- prop_loss_to_followup
   .data
 }
 
