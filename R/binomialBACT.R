@@ -494,6 +494,7 @@ binomialBACT <- function(
     p_control                                  = p_control,                # probability of control in binomial
     prob_of_accepting_alternative              = prob_ha,
     margin                                     = h0,                       # margin for error
+    interim_look                               = interim_look,             # print interim looks
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
     N_complete                                 = N_treatment + N_control,
