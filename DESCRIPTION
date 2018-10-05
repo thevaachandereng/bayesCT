@@ -27,6 +27,7 @@ Imports: tidyr,
     dplyr,
     bayesDP,
     parallel,
+    purrr,
     msm,
     magrittr,
     devtools
