@@ -4,10 +4,12 @@
 \alias{BACTbinomial}
 \title{Complete binomial wrapper function}
 \usage{
-BACTbinomial(input, .data = NULL)
+BACTbinomial(input, no_of_sim = 1000, .data = NULL)
 }
 \arguments{
 \item{input}{list. Input function for all binomial_BACT.}
+
+\item{no_of_sim}{numeric. Number of simulations to run}
 
 \item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }

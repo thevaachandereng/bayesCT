@@ -585,19 +585,47 @@ historical_binomial <- function(y0_treatment       = NULL,
 #' @description Wrapper function for complete binomial bayesCT function to compute power and type 1 error.
 #'
 #' @param input list. Input function for all binomial_BACT.
+#' @param no_of_sim numeric. Number of simulations to run
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with results of the clinical outcome.
 #'
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom knitr kable
+#' @importFrom purrr map_dbl
 #' @importFrom bayesDP bdpbinomial
 #'
 #' @export BACTbinomial
 #'
-BACTbinomial <- function(input, .data = NULL){
-  .data <- do.call(binomialBACT, input)
-  .data
+BACTbinomial <- function(input, no_of_sim = 1000, .data = NULL){
+  results <- list()
+  for(i in 1:no_of_sim){
+    results[[i]] <- do.call(binomialBACT, input)
+  }
+  prob_ha <- results %>% map_dbl(c("post_prob_accept_alternative"))
+  N_stop <- results %>% map_dbl(c("N_enrolled"))
+  expect_success <- results %>% map_dbl(c("stop_expected_success"))
+
+  looks <- unique(sort(c(N_stop, results[[1]]$N_max)))
+  power <- rep(0, length(looks))
+  for(m in 1:(length(looks) - 1)){
+    if(m == 1){
+      power[1] <- mean((N_stop == looks[m] & expect_success == 1 &
+                          prob_ha > results[[1]]$prob_of_accepting_alternative))
+    }
+    else{
+      power[m] <- mean((N_stop == looks[m] &
+                        expect_success == 1 &
+                        prob_ha > results[[1]]$prob_of_accepting_alternative)) +
+                  power[m - 1]
+    }
+  }
+  power[length(looks)] <- mean((N_stop == looks[length(looks)] &
+                                prob_ha > results[[1]]$prob_of_accepting_alternative)) +
+                          power[length(looks) - 1]
+  power <- data.frame(interim_looks = looks, power = power) %>% kable(, digits = 5)
+  return(power)
 }
 
 
