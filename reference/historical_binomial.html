@@ -33,6 +33,8 @@
 <meta property="og:title" content="Historical data for binomial distribution — historical_binomial" />
 
 <meta property="og:description" content="Wrapper function for historical data from binomial outcome." />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,8 +114,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>historical_binomial</span>(<span class='kw'>y0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,20 +129,20 @@
       <td><p>numeric. The sample size for the historical treatment group.</p></td>
     </tr>
     <tr>
-      <th>y0_control</th>
-      <td><p>numeric. The proportion of event in the historical control group.</p></td>
-    </tr>
-    <tr>
-      <th>N0_control</th>
-      <td><p>numeric. The sample size for the historical control group.</p></td>
-    </tr>
-    <tr>
       <th>discount_function</th>
       <td><p>character. Specify the discount function to use. Currently supports weibull,
 scaledweibull, and identity. The discount function scaledweibull scales the
 output of the Weibull CDF to have a max value of 1. The identity discount function
 uses the posterior probability directly as the discount weight. Default value is
 "identity".</p></td>
+    </tr>
+    <tr>
+      <th>y0_control</th>
+      <td><p>numeric. The proportion of event in the historical control group.</p></td>
+    </tr>
+    <tr>
+      <th>N0_control</th>
+      <td><p>numeric. The sample size for the historical control group.</p></td>
     </tr>
     <tr>
       <th>.data</th>
