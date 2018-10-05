@@ -120,19 +120,25 @@ randomization(N_total = 120, block = 120, allocation = c(2, 1))
 # Binomial
 
 ```{r}
+
 value <- 
-  binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08) %>%
+  binomial_outcome(p_treatment_true = 0.08) %>%
   historical_binomial(y0_treatment = 5, N0_treatment = 55, 
-                      y0_control = 3, N0_control = 39, 
+                      y0_control = NULL, N0_control = NULL, 
                       discount_function = "identity") %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  study_details(total_sample_size = 300, study_period = 50, 
-                interim_look = c(210, 240, 270)) %>%
+  study_details(total_sample_size = 900, study_period = 50, 
+                interim_look = c(410, 440, 670),
+                prop_loss_to_followup = 0.10) %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>% 
-  randomize(block_size = 2, randomization_ratio = c(1, 1))%>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
-  BACTbinomial()
+  BACTbinomial(no_of_sim = 110)
+
+
+str(value)
+
 ```
+
 
 
 # Normal
@@ -143,7 +149,8 @@ value <-
                  sd_treatment_true = 1.4, sd_control_true = 1.9) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   study_details(total_sample_size = 300, study_period = 50, 
-                interim_look = c(210, 240, 270)) %>%
+                interim_look = c(210, 240, 270), 
+                prop_loss_to_followup = 0.10) %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
   randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, 
