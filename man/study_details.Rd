@@ -5,7 +5,8 @@
 \title{Details of the clinical study}
 \usage{
 study_details(total_sample_size, study_period, interim_look,
-  prop_loss_to_followup = 0.1, .data = NULL)
+  prop_loss_to_followup = 0.1, alternative = "two-sided",
+  .data = NULL)
 }
 \arguments{
 \item{total_sample_size}{integer. The number of sample size needed.}
@@ -15,6 +16,9 @@ study_details(total_sample_size, study_period, interim_look,
 \item{interim_look}{vector. Vector with interim looks.}
 
 \item{prop_loss_to_followup}{integer. The proportion of loss to follow up.}
+
+\item{alternative}{character. The string specifying the alternative hypothesis, must be one
+of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
