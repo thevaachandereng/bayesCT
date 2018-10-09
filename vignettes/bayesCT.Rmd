@@ -129,7 +129,7 @@ value <-
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   study_details(total_sample_size = 900, study_period = 50, 
                 interim_look = c(410, 440, 670),
-                prop_loss_to_followup = 0.10) %>%
+                prop_loss_to_followup = 0.10, alternative = "less") %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>% 
   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
   BACTbinomial(no_of_sim = 110)
@@ -144,18 +144,18 @@ str(value)
 # Normal
 
 ```{r}
-value <- 
-  normal_outcome(mu_control_true = 16, mu_treatment_true = 12, 
-                 sd_treatment_true = 1.4, sd_control_true = 1.9) %>%
-  enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  study_details(total_sample_size = 300, study_period = 50, 
-                interim_look = c(210, 240, 270), 
-                prop_loss_to_followup = 0.10) %>%
-  impute(no_of_impute = 25, number_mcmc = 1000) %>%
-  randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, 
-             expected_success_prob = 0.90) %>%
-  BACTnormal()
+# value <- 
+#   normal_outcome(mu_control_true = 16, mu_treatment_true = 12, 
+#                  sd_treatment_true = 1.4, sd_control_true = 1.9) %>%
+#   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
+#   study_details(total_sample_size = 300, study_period = 50, 
+#                 interim_look = c(210, 240, 270), 
+#                 prop_loss_to_followup = 0.10) %>%
+#   impute(no_of_impute = 25, number_mcmc = 1000) %>%
+#   randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
+#   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, 
+#              expected_success_prob = 0.90) %>%
+#   BACTnormal()
 ```
 
 
