@@ -10,7 +10,7 @@ bayesCT - Tool for Simulation in Adaptive Bayesian Clinical Trials <img src="man
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 
-**Authors**: Thevaa Chandereng, Graeme Hickey, Donald Musgrove, Tarek Haddad, Timothy Hanson and Theodore Lystig
+**Authors**: Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson and Theodore Lystig
 
 
 Overview

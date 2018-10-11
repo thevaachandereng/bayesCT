@@ -624,7 +624,7 @@ BACTbinomial <- function(input, no_of_sim = 1000, .data = NULL){
   power[length(looks)] <- mean((N_stop == looks[length(looks)] &
                                 prob_ha > results[[1]]$prob_of_accepting_alternative)) +
                           power[length(looks) - 1]
-  power <- data.frame(interim_looks = looks, power = power) %>% kable(, digits = 5)
+  power <- data.frame(interim_looks = looks, power = power)
   return(power)
 }
 
