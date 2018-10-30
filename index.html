@@ -73,7 +73,7 @@
 <a href="#bayesct---tool-for-simulation-in-adaptive-bayesian-clinical-trials" class="anchor"></a>bayesCT - Tool for Simulation in Adaptive Bayesian Clinical Trials <img src="reference/figures/logo.png" align="right" width="150" height="150">
 </h1></div>
 
-<p><strong>Authors</strong>: Thevaa Chandereng, Graeme Hickey, Donald Musgrove, Tarek Haddad, Timothy Hanson and Theodore Lystig</p>
+<p><strong>Authors</strong>: Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson and Theodore Lystig</p>
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
@@ -85,13 +85,13 @@
 <p>Prior to analyzing your data, the R package needs to be installed. The easiest way to install <code>bayesCT</code> is through CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"bayesCT"</span>)</a></code></pre></div>
 <p>There are other additional ways to download <code>bayesCT</code>. The first option is most useful if want to download a specific version of <code>bayesCT</code> (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT@vx.xx.x"</span>)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT@vx.xx.x"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># or </span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_version">install_version</a></span>(<span class="st">"bayesCT"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_version</a></span>(<span class="st">"bayesCT"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
 <p>The second option is to download through GitHub:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a></code></pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(bayesCT)</a></code></pre></div>
 </div>
