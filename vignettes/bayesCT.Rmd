@@ -114,15 +114,12 @@ randomization(N_total = 120, block = 120, allocation = c(2, 1))
 
 
 
-## Historical Data
-
-
 
 
 
 # Binomial
 
-```{r, eval=FALSE}
+```{r}
 
 value <- 
   binomial_outcome(p_treatment_true = 0.08) %>%
@@ -134,7 +131,7 @@ value <-
                 interim_look = c(410, 440, 670),
                 prop_loss_to_followup = 0.10, alternative = "less") %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>% 
-  hypothesis(delta = -0.01, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90) %>%
   BACTbinomial(no_of_sim = 110)
 
 
@@ -157,7 +154,7 @@ str(value)
 #   impute(no_of_impute = 25, number_mcmc = 1000) %>%
 #   randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
 #   hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, 
-#              expected_success_prob = 0.90, alternative = "less") %>%
+#              expected_success_prob = 0.90) %>%
 #   BACTnormal()
 ```
 
