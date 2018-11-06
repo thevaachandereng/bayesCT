@@ -12,10 +12,17 @@
 #' @param lambda_time vector. Same size as lambda, denote times at lambda changes.
 #' @param interim_look vector. Sample size for interim looks. Note: the overall trial size should not be included.
 #' @param EndofStudy scalar. Length of the study.
-#' @param prior vector. Prior value of beta rate, beta(a0, b0).
 #' @param block scalar. Block size for randomization to be implemented.
 #' @param rand_ratio vector. Randomization allocation for control to treatment.
 #'                    Integer values mapping the size of the block.
+#' @param discount_function character. Specify the discount function to use.
+#'   Currently supports the Weibull function
+#'   (\code{discount_function="weibull"}), the scaled-Weibull function
+#'   (\code{discount_function="scaledweibull"}), and the identity function
+#'   (\code{discount_function="identity"}). The scaled-Weibull discount function
+#'   scales the output of the Weibull CDF to have a max value of 1. The identity
+#'   discount function uses the posterior probability directly as the discount
+#'   weight. Default value is \code{"identity"}.
 #' @param alternative character. The string specifying the alternative hypothesis, must be one
 #'        of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.
 #' @param prop_loss_to_followup scalar. Proportion of subjects lost to follow-up.
@@ -25,6 +32,24 @@
 #' @param prob_ha scalar. Probability of alternative hypothesis.
 #' @param N_impute scalar. Number of imputations for Monte Carlo simulation of missing data.
 #' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.
+#' @param alpha_max scalar. Maximum weight the discount function can apply. Default is 1.
+#' For a two-arm trial, users may specify a vector of two values where the first value is used
+#' to weight the historical treatment group and the second value is used to weight the
+#' historical control group.
+#' @param fix_alpha logical. Fix alpha at alpha_max? Default value is FALSE.
+#' @param weibull_scale scalar. Scale parameter of the Weibull discount function used to
+#' compute alpha, the weight parameter of the historical data. Default value is 0.135.
+#' For a two-arm trial, users may specify a vector of two values where the first value is
+#' used to estimate the weight of the historical treatment group and the second value is
+#' used to estimate the weight of the historical control group. Not used when
+#' discount_function = "identity".
+#' @param weibull_shape scalar. Shape parameter of the Weibull discount function used to
+#' compute alpha, the weight parameter of the historical data. Default value is 3. For a
+#' two-arm trial, users may specify a vector of two values where the first value is used
+#' to estimate the weight of the historical treatment group and the second value is used
+#' to estimate the weight of the historical control group. Not used when
+#' discount_function = "identity".
+#'
 #'
 #' @return a list of output
 #'
@@ -49,7 +74,6 @@ normalBACT <- function(
   lambda_time,
   interim_look,
   EndofStudy,
-  prior                 = c(1, 1),
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
   alternative           = "two-sided",  # the alternative hypothesis (either two-sided, greater, less)
@@ -59,8 +83,12 @@ normalBACT <- function(
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
   N_impute              = 100,          # Number of imputation simulations for predictive distribution
-  number_mcmc           = 1000
-){
+  number_mcmc           = 1000,         # Number of posterior sampling
+  alpha_max             = 1,            # max weight on incorporating historical data
+  fix_alpha             = FALSE,        # fix alpha set weight of historical data to alpha_max
+  weibull_scale         = 0.135,        # weibull parameter
+  weibull_shape         = 3             # weibull parameter
+ ){
   # checking inputs
   stopifnot((mu_control > 0 & sd_control > 0), (mu_treatment > 0 & sd_treatment > 0),
             all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),

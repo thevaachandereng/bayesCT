@@ -2,7 +2,6 @@
 #'
 #' @description Simulation for binomial counts for Bayesian Adaptive trial with
 #'   different inputs to control for power, sample size, type 1 error rate, etc.
-#'
 #' @param p_treatment scalar. Proportion of events under the treatment arm.
 #' @param p_control scalar. Proportion of events under the control arm.
 #' @param y0_treatment scalar. Number of events for the historical treatment
@@ -10,14 +9,8 @@
 #' @param N0_treatment scalar. Sample size of the historical treatment arm.
 #' @param y0_control scalar. Number of events for the historical control arm.
 #' @param N0_control scalar. Sample size of the historical control arm.
-#' @param discount_function character. Specify the discount function to use.
-#'   Currently supports the Weibull function
-#'   (\code{discount_function="weibull"}), the scaled-Weibull function
-#'   (\code{discount_function="scaledweibull"}), and the identity function
-#'   (\code{discount_function="identity"}). The scaled-Weibull discount function
-#'   scales the output of the Weibull CDF to have a max value of 1. The identity
-#'   discount function uses the posterior probability directly as the discount
-#'   weight. Default value is \code{"identity"}.
+#' @param prior vector. Prior value of beta rate, beta(a0, b0). The default is
+#'   set to beta(1, 1).
 #' @inheritParams normalBACT
 #'
 #' @return a list of output
@@ -58,7 +51,11 @@ binomialBACT <- function(
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
   N_impute              = 1000,         # Number of imputation simulations for predictive distribution
-  number_mcmc           = 1000
+  number_mcmc           = 1000,         # Number of posterior sampling
+  alpha_max             = 1,            # max weight on incorporating historical data
+  fix_alpha             = FALSE,        # fix alpha set weight of historical data to alpha_max
+  weibull_scale         = 0.135,        # weibull parameter
+  weibull_shape         = 3             # weibull parameter
   ){
 
   # checking p_control
@@ -187,7 +184,11 @@ binomialBACT <- function(
                         discount_function      = discount_function,
                         number_mcmc            = number_mcmc,
                         a0                     = prior[1],
-                        b0                     = prior[2])
+                        b0                     = prior[2],
+                        alpha_max              = alpha_max,
+                        fix_alpha              = fix_alpha,
+                        weibull_scale          = weibull_scale,
+                        weibull_shape          = weibull_shape)
 
     # Imputation phase futility and expected success - initialize counters
     # for the current imputation phase
@@ -241,7 +242,11 @@ binomialBACT <- function(
                               discount_function      = discount_function,
                               number_mcmc            = number_mcmc,
                               a0                     = prior[1],
-                              b0                     = prior[2])
+                              b0                     = prior[2],
+                              alpha_max              = alpha_max,
+                              fix_alpha              = fix_alpha,
+                              weibull_scale          = weibull_scale,
+                              weibull_shape          = weibull_shape)
 
       # estimation of the posterior effect for difference between test and
       # control - If expected success, add 1 to the counter
@@ -326,7 +331,11 @@ binomialBACT <- function(
                               discount_function      = discount_function,
                               number_mcmc            = number_mcmc,
                               a0                     = prior[1],
-                              b0                     = prior[2])
+                              b0                     = prior[2],
+                              alpha_max              = alpha_max,
+                              fix_alpha              = fix_alpha,
+                              weibull_scale          = weibull_scale,
+                              weibull_shape          = weibull_shape)
 
       # Estimation of the posterior effect for difference between test and
       # control
@@ -451,7 +460,11 @@ binomialBACT <- function(
                             number_mcmc          = number_mcmc,
                             discount_function    = discount_function,
                             a0                   = prior[1],
-                            b0                   = prior[2])
+                            b0                   = prior[2],
+                            alpha_max              = alpha_max,
+                            fix_alpha              = fix_alpha,
+                            weibull_scale          = weibull_scale,
+                            weibull_shape          = weibull_shape)
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself
