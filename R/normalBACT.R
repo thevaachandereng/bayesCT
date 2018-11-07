@@ -76,6 +76,7 @@ normalBACT <- function(
   EndofStudy,
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
+  discount_function     = "identity",   # discount_function used in sampling
   alternative           = "two-sided",  # the alternative hypothesis (either two-sided, greater, less)
   prop_loss_to_followup = 0.15,         # Proportion of loss in data
   h0                    = 0,            # Null hypothesis value
@@ -164,17 +165,18 @@ normalBACT <- function(
     MLE_int <- lm(Y ~ treatment, data = data)
 
     # analyze data using discount funtion via normal
-    post <- bdpnormal(mu_t              = mean(data$Y[data$treatment == 1]),
-                      sigma_t           = sd(data$Y[data$treatment == 1]),
-                      N_t               = length(data$treatment == 1),
-                      mu_c              = mean(data$Y[data$treatment == 0]),
-                      sigma_c           = sd(data$Y[data$treatment == 0]),
-                      N_c               = length(data$treatment == 0),
-                      number_mcmc       = number_mcmc,
-                      alpha_max         = alpha_max,
-                      fix_alpha         = fix_alpha,
-                      weibull_scale     = weibull_scale,
-                      weibull_shape     = weibull_shape)
+    post <- bdpnormal(mu_t                = mean(data$Y[data$treatment == 1]),
+                      sigma_t             = sd(data$Y[data$treatment == 1]),
+                      N_t                 = length(data$treatment == 1),
+                      mu_c                = mean(data$Y[data$treatment == 0]),
+                      sigma_c             = sd(data$Y[data$treatment == 0]),
+                      N_c                 = length(data$treatment == 0),
+                      number_mcmc         = number_mcmc,
+                      discount_function   = discount_function,
+                      alpha_max           = alpha_max,
+                      fix_alpha           = fix_alpha,
+                      weibull_scale       = weibull_scale,
+                      weibull_shape       = weibull_shape)
 
     # Imputation phase futility and expected success - initialize counters
     # for the current imputation phase
@@ -213,6 +215,7 @@ normalBACT <- function(
                             sigma_c           = sd(data$Y[data$treatment == 0]),
                             N_c               = length(data$treatment == 0),
                             number_mcmc       = number_mcmc,
+                            discount_function = discount_function,
                             alpha_max         = alpha_max,
                             fix_alpha         = fix_alpha,
                             weibull_scale     = weibull_scale,
@@ -261,6 +264,7 @@ normalBACT <- function(
                             sigma_c             = sd(data$Y[data$treatment == 0]),
                             N_c                 = length(data$treatment == 0),
                             number_mcmc         = number_mcmc,
+                            discount_function   = discount_function,
                             alpha_max           = alpha_max,
                             fix_alpha           = fix_alpha,
                             weibull_scale       = weibull_scale,
@@ -331,6 +335,7 @@ normalBACT <- function(
                     mu_c                = mean(data_final$Y[data_final$treatment == 0]),
                     sigma_c             = sd(data_final$Y[data_final$treatment == 0]),
                     N_c                 = length(data_final$treatment == 0),
+                    discount_function   = discount_function,
                     number_mcmc         = number_mcmc,
                     alpha_max           = alpha_max,
                     fix_alpha           = fix_alpha,
