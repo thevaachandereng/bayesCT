@@ -164,13 +164,17 @@ normalBACT <- function(
     MLE_int <- lm(Y ~ treatment, data = data)
 
     # analyze data using discount funtion via normal
-    post <- bdpnormal(mu_t         = mean(data$Y[data$treatment == 1]),
-                      sigma_t      = sd(data$Y[data$treatment == 1]),
-                      N_t          = length(data$treatment == 1),
-                      mu_c         = mean(data$Y[data$treatment == 0]),
-                      sigma_c      = sd(data$Y[data$treatment == 0]),
-                      N_c          = length(data$treatment == 0),
-                      number_mcmc  = number_mcmc)
+    post <- bdpnormal(mu_t              = mean(data$Y[data$treatment == 1]),
+                      sigma_t           = sd(data$Y[data$treatment == 1]),
+                      N_t               = length(data$treatment == 1),
+                      mu_c              = mean(data$Y[data$treatment == 0]),
+                      sigma_c           = sd(data$Y[data$treatment == 0]),
+                      N_c               = length(data$treatment == 0),
+                      number_mcmc       = number_mcmc,
+                      alpha_max         = alpha_max,
+                      fix_alpha         = fix_alpha,
+                      weibull_scale     = weibull_scale,
+                      weibull_shape     = weibull_shape)
 
     # Imputation phase futility and expected success - initialize counters
     # for the current imputation phase
@@ -202,13 +206,17 @@ normalBACT <- function(
         filter(subject_enrolled)
 
       # analyze complete+imputed data using discount funtion via normal
-      post_imp <- bdpnormal(mu_t         = mean(data$Y[data$treatment == 1]),
-                            sigma_t      = sd(data$Y[data$treatment == 1]),
-                            N_t          = length(data$treatment == 1),
-                            mu_c         = mean(data$Y[data$treatment == 0]),
-                            sigma_c      = sd(data$Y[data$treatment == 0]),
-                            N_c          = length(data$treatment == 0),
-                            number_mcmc  = number_mcmc)
+      post_imp <- bdpnormal(mu_t              = mean(data$Y[data$treatment == 1]),
+                            sigma_t           = sd(data$Y[data$treatment == 1]),
+                            N_t               = length(data$treatment == 1),
+                            mu_c              = mean(data$Y[data$treatment == 0]),
+                            sigma_c           = sd(data$Y[data$treatment == 0]),
+                            N_c               = length(data$treatment == 0),
+                            number_mcmc       = number_mcmc,
+                            alpha_max         = alpha_max,
+                            fix_alpha         = fix_alpha,
+                            weibull_scale     = weibull_scale,
+                            weibull_shape     = weibull_shape)
 
 
       # Estimation of the posterior effect for difference between test and control
@@ -246,13 +254,17 @@ normalBACT <- function(
       data <- data_futility_impute
 
       # Analyze complete+imputed data using discount funtion via normal
-      post_imp <- bdpnormal(mu_t         = mean(data$Y[data$treatment == 1]),
-                            sigma_t      = sd(data$Y[data$treatment == 1]),
-                            N_t          = length(data$treatment == 1),
-                            mu_c         = mean(data$Y[data$treatment == 0]),
-                            sigma_c      = sd(data$Y[data$treatment == 0]),
-                            N_c          = length(data$treatment == 0),
-                            number_mcmc  = number_mcmc)
+      post_imp <- bdpnormal(mu_t                = mean(data$Y[data$treatment == 1]),
+                            sigma_t             = sd(data$Y[data$treatment == 1]),
+                            N_t                 = length(data$treatment == 1),
+                            mu_c                = mean(data$Y[data$treatment == 0]),
+                            sigma_c             = sd(data$Y[data$treatment == 0]),
+                            N_c                 = length(data$treatment == 0),
+                            number_mcmc         = number_mcmc,
+                            alpha_max           = alpha_max,
+                            fix_alpha           = fix_alpha,
+                            weibull_scale       = weibull_scale,
+                            weibull_shape       = weibull_shape)
 
       # Estimation of the posterior effect for difference between test and control
       post_imp_final <- post_imp$final$posterior
@@ -313,13 +325,17 @@ normalBACT <- function(
   MLE <- lm(Y ~ treatment, data = data_final)
 
   # Analyze complete data using discount funtion via binomial
-  post <- bdpnormal(mu_t         = mean(data_final$Y[data_final$treatment == 1]),
-                    sigma_t      = sd(data_final$Y[data_final$treatment == 1]),
-                    N_t          = length(data_final$treatment == 1),
-                    mu_c         = mean(data_final$Y[data_final$treatment == 0]),
-                    sigma_c      = sd(data_final$Y[data_final$treatment == 0]),
-                    N_c          = length(data_final$treatment == 0),
-                    number_mcmc  = number_mcmc)
+  post <- bdpnormal(mu_t                = mean(data_final$Y[data_final$treatment == 1]),
+                    sigma_t             = sd(data_final$Y[data_final$treatment == 1]),
+                    N_t                 = length(data_final$treatment == 1),
+                    mu_c                = mean(data_final$Y[data_final$treatment == 0]),
+                    sigma_c             = sd(data_final$Y[data_final$treatment == 0]),
+                    N_c                 = length(data_final$treatment == 0),
+                    number_mcmc         = number_mcmc,
+                    alpha_max           = alpha_max,
+                    fix_alpha           = fix_alpha,
+                    weibull_scale       = weibull_scale,
+                    weibull_shape       = weibull_shape)
 
 
   # Format and output results
