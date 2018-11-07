@@ -122,7 +122,8 @@
   <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>prop_loss_to_followup</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
   <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
+  <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>weibull_scale</span> <span class='kw'>=</span> <span class='fl'>0.135</span>, <span class='kw'>weibull_shape</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,7 +186,8 @@ weight. Default value is <code>"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>vector. Prior value of beta rate, beta(a0, b0).</p></td>
+      <td><p>vector. Prior value of beta rate, beta(a0, b0). The default is
+set to beta(1, 1).</p></td>
     </tr>
     <tr>
       <th>block</th>
@@ -228,6 +230,35 @@ of <code>"two.sided"</code> (default), <code>"greater"</code> or <code>"less"</c
     <tr>
       <th>number_mcmc</th>
       <td><p>scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.</p></td>
+    </tr>
+    <tr>
+      <th>alpha_max</th>
+      <td><p>scalar. Maximum weight the discount function can apply. Default is 1.
+For a two-arm trial, users may specify a vector of two values where the first value is used
+to weight the historical treatment group and the second value is used to weight the
+historical control group.</p></td>
+    </tr>
+    <tr>
+      <th>fix_alpha</th>
+      <td><p>logical. Fix alpha at alpha_max? Default value is FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>weibull_scale</th>
+      <td><p>scalar. Scale parameter of the Weibull discount function used to
+compute alpha, the weight parameter of the historical data. Default value is 0.135.
+For a two-arm trial, users may specify a vector of two values where the first value is
+used to estimate the weight of the historical treatment group and the second value is
+used to estimate the weight of the historical control group. Not used when
+discount_function = "identity".</p></td>
+    </tr>
+    <tr>
+      <th>weibull_shape</th>
+      <td><p>scalar. Shape parameter of the Weibull discount function used to
+compute alpha, the weight parameter of the historical data. Default value is 3. For a
+two-arm trial, users may specify a vector of two values where the first value is used
+to estimate the weight of the historical treatment group and the second value is used
+to estimate the weight of the historical control group. Not used when
+discount_function = "identity".</p></td>
     </tr>
     </table>
     

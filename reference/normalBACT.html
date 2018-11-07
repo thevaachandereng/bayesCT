@@ -116,11 +116,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>normalBACT</span>(<span class='no'>mu_control</span>, <span class='no'>sd_control</span>, <span class='no'>mu_treatment</span>, <span class='no'>sd_treatment</span>, <span class='no'>N_total</span>,
-  <span class='no'>lambda</span>, <span class='no'>lambda_time</span>, <span class='no'>interim_look</span>, <span class='no'>EndofStudy</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>),
-  <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>prop_loss_to_followup</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>)</pre>
+  <span class='no'>lambda</span>, <span class='no'>lambda_time</span>, <span class='no'>interim_look</span>, <span class='no'>EndofStudy</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>prop_loss_to_followup</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weibull_scale</span> <span class='kw'>=</span> <span class='fl'>0.135</span>, <span class='kw'>weibull_shape</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,10 +163,6 @@
       <td><p>scalar. Length of the study.</p></td>
     </tr>
     <tr>
-      <th>prior</th>
-      <td><p>vector. Prior value of beta rate, beta(a0, b0).</p></td>
-    </tr>
-    <tr>
       <th>block</th>
       <td><p>scalar. Block size for randomization to be implemented.</p></td>
     </tr>
@@ -173,6 +170,17 @@
       <th>rand_ratio</th>
       <td><p>vector. Randomization allocation for control to treatment.
 Integer values mapping the size of the block.</p></td>
+    </tr>
+    <tr>
+      <th>discount_function</th>
+      <td><p>character. Specify the discount function to use.
+Currently supports the Weibull function
+(<code>discount_function="weibull"</code>), the scaled-Weibull function
+(<code>discount_function="scaledweibull"</code>), and the identity function
+(<code>discount_function="identity"</code>). The scaled-Weibull discount function
+scales the output of the Weibull CDF to have a max value of 1. The identity
+discount function uses the posterior probability directly as the discount
+weight. Default value is <code>"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>alternative</th>
@@ -206,6 +214,35 @@ of <code>"two.sided"</code> (default), <code>"greater"</code> or <code>"less"</c
     <tr>
       <th>number_mcmc</th>
       <td><p>scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.</p></td>
+    </tr>
+    <tr>
+      <th>alpha_max</th>
+      <td><p>scalar. Maximum weight the discount function can apply. Default is 1.
+For a two-arm trial, users may specify a vector of two values where the first value is used
+to weight the historical treatment group and the second value is used to weight the
+historical control group.</p></td>
+    </tr>
+    <tr>
+      <th>fix_alpha</th>
+      <td><p>logical. Fix alpha at alpha_max? Default value is FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>weibull_scale</th>
+      <td><p>scalar. Scale parameter of the Weibull discount function used to
+compute alpha, the weight parameter of the historical data. Default value is 0.135.
+For a two-arm trial, users may specify a vector of two values where the first value is
+used to estimate the weight of the historical treatment group and the second value is
+used to estimate the weight of the historical control group. Not used when
+discount_function = "identity".</p></td>
+    </tr>
+    <tr>
+      <th>weibull_shape</th>
+      <td><p>scalar. Shape parameter of the Weibull discount function used to
+compute alpha, the weight parameter of the historical data. Default value is 3. For a
+two-arm trial, users may specify a vector of two values where the first value is used
+to estimate the weight of the historical treatment group and the second value is used
+to estimate the weight of the historical control group. Not used when
+discount_function = "identity".</p></td>
     </tr>
     </table>
     
