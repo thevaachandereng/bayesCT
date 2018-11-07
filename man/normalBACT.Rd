@@ -6,11 +6,11 @@
 \usage{
 normalBACT(mu_control, sd_control, mu_treatment, sd_treatment, N_total,
   lambda, lambda_time, interim_look, EndofStudy, block = 2,
-  rand_ratio = c(1, 1), alternative = "two-sided",
-  prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100,
-  number_mcmc = 1000, alpha_max = 1, fix_alpha = FALSE,
-  weibull_scale = 0.135, weibull_shape = 3)
+  rand_ratio = c(1, 1), discount_function = "identity",
+  alternative = "two-sided", prop_loss_to_followup = 0.15, h0 = 0,
+  futility_prob = 0.05, expected_success_prob = 0.9, prob_ha = 0.95,
+  N_impute = 100, number_mcmc = 1000, alpha_max = 1,
+  fix_alpha = FALSE, weibull_scale = 0.135, weibull_shape = 3)
 }
 \arguments{
 \item{mu_control}{scalar. Mean outcome in the control arm.}
@@ -35,6 +35,15 @@ normalBACT(mu_control, sd_control, mu_treatment, sd_treatment, N_total,
 
 \item{rand_ratio}{vector. Randomization allocation for control to treatment.
 Integer values mapping the size of the block.}
+
+\item{discount_function}{character. Specify the discount function to use.
+Currently supports the Weibull function
+(\code{discount_function="weibull"}), the scaled-Weibull function
+(\code{discount_function="scaledweibull"}), and the identity function
+(\code{discount_function="identity"}). The scaled-Weibull discount function
+scales the output of the Weibull CDF to have a max value of 1. The identity
+discount function uses the posterior probability directly as the discount
+weight. Default value is \code{"identity"}.}
 
 \item{alternative}{character. The string specifying the alternative hypothesis, must be one
 of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.}
@@ -73,15 +82,6 @@ two-arm trial, users may specify a vector of two values where the first value is
 to estimate the weight of the historical treatment group and the second value is used
 to estimate the weight of the historical control group. Not used when
 discount_function = "identity".}
-
-\item{discount_function}{character. Specify the discount function to use.
-Currently supports the Weibull function
-(\code{discount_function="weibull"}), the scaled-Weibull function
-(\code{discount_function="scaledweibull"}), and the identity function
-(\code{discount_function="identity"}). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is \code{"identity"}.}
 }
 \value{
 a list of output
