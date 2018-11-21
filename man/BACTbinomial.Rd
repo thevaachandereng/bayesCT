@@ -4,7 +4,7 @@
 \alias{BACTbinomial}
 \title{Complete binomial wrapper function}
 \usage{
-BACTbinomial(input, no_of_sim = 1000, .data = NULL)
+BACTbinomial(input, no_of_sim = 10000, .data = NULL)
 }
 \arguments{
 \item{input}{list. Input function for all binomial_BACT.}
