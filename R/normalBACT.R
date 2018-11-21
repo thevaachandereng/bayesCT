@@ -110,15 +110,25 @@ normalBACT <- function(
   # assignment of enrollment based on the enrollment function
   enrollment <- enrollment(param = lambda, N_total = N_total, time = lambda_time)
 
+
   # simulating group and treatment group assignment
-  group <- randomization(N_total = N_total, block = block, allocation = rand_ratio)
+  if(!is.null(mu_control)){
+    group <- randomization(N_total = N_total, block = block, allocation = rand_ratio)
+  }
+  else{
+    group <- rep(1, N_total)
+  }
 
-  # simulate binomial outcome
-  sim <- rnorm(N_total, mean = group * mu_treatment + (1 - group) * mu_control,
-               sd = group * sd_treatment + (1 - group) * sd_control)
-
-  # dividing treatment and control
-  control <- sim[group == 0]
+  # simulate normal outcome
+  if(!is.null(p_control)){
+    sim <- rnorm(N_total, mean = group * mu_treatment + (1 - group) * mu_control,
+                 sd = group * sd_treatment + (1 - group) * sd_control)
+    # dividing treatment and control
+    control <- sim[group == 0]
+  }
+  else{
+    sim <- rnorm(N_total, mean = mu_treatment, sd = sd_treatment)
+  }
   treatment <- sim[group == 1]
 
   # simulate loss to follow-up
@@ -139,7 +149,8 @@ normalBACT <- function(
   stop_futility         <- 0
   stop_expected_success <- 0
 
-  for(i in 1:(length(analysis_at_enrollnumber)-1) ){
+  if(length(analysis_at_enrollnumber) > 1){
+  for(i in 1:(length(analysis_at_enrollnumber)-1)){
 
     # Analysis at the `analysis_at_enrollnumber` look
     # Indicators for subject type:
@@ -162,15 +173,27 @@ normalBACT <- function(
              !subject_impute_success)
 
     # MLE of data at interim analysis
-    MLE_int <- lm(Y ~ treatment, data = data)
+    #MLE_int <- lm(Y ~ treatment, data = data)
+
+    # assigning input for control arm given it is a single or double arm
+    if(!is.null(mu_control)){
+      mu_c     <- mean(data$Y[data$treatment == 0])
+      sigma_c  <- sd(data$Y[data$treatment == 0])
+      N_c      <- length(data$treatment == 0)
+    }
+    else{
+      mu_c     <- NULL
+      sigma_c  <- NULL
+      N_c      <- NULL
+    }
 
     # analyze data using discount funtion via normal
     post <- bdpnormal(mu_t                = mean(data$Y[data$treatment == 1]),
                       sigma_t             = sd(data$Y[data$treatment == 1]),
                       N_t                 = length(data$treatment == 1),
-                      mu_c                = mean(data$Y[data$treatment == 0]),
-                      sigma_c             = sd(data$Y[data$treatment == 0]),
-                      N_c                 = length(data$treatment == 0),
+                      mu_c                = mu_c,
+                      sigma_c             = sigma_c,
+                      N_c                 = N_c,
                       number_mcmc         = number_mcmc,
                       discount_function   = discount_function,
                       alpha_max           = alpha_max,
@@ -207,13 +230,25 @@ normalBACT <- function(
       data <- data_success_impute %>%
         filter(subject_enrolled)
 
+      # assigning input for control arm given it is a single or double arm
+      if(!is.null(mu_control)){
+        mu_c     <- mean(data$Y[data$treatment == 0])
+        sigma_c  <- sd(data$Y[data$treatment == 0])
+        N_c      <- length(data$treatment == 0)
+      }
+      else{
+        mu_c     <- NULL
+        sigma_c  <- NULL
+        N_c      <- NULL
+      }
+
       # analyze complete+imputed data using discount funtion via normal
       post_imp <- bdpnormal(mu_t              = mean(data$Y[data$treatment == 1]),
                             sigma_t           = sd(data$Y[data$treatment == 1]),
                             N_t               = length(data$treatment == 1),
-                            mu_c              = mean(data$Y[data$treatment == 0]),
-                            sigma_c           = sd(data$Y[data$treatment == 0]),
-                            N_c               = length(data$treatment == 0),
+                            mu_c              = mu_c,
+                            sigma_c           = sigma_c,
+                            N_c               = N_c,
                             number_mcmc       = number_mcmc,
                             discount_function = discount_function,
                             alpha_max         = alpha_max,
@@ -224,8 +259,36 @@ normalBACT <- function(
 
       # Estimation of the posterior effect for difference between test and control
       # - If expected success, add 1 to the counter
-      post_imp_final <- post_imp$final$posterior
-      if(mean(post_imp_final < h0) > prob_ha){
+
+      if(!is.null(mu_control)){
+        if(alternative == "two-sided"){
+          effect_imp <- post_imp$posterior_treatment$posterior_mu - post_imp$posterior_control$posterior_mu
+          success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
+        }
+        else if(alternative == "greater"){
+          effect_imp <- post_imp$posterior_treatment$posterior_mu - post_imp$posterior_control$posterior_mu
+          success <- mean(effect_imp > h0)
+        }
+        else{
+          effect_imp <- post_imp$posterior_treatment$posterior_mu - post_imp$posterior_control$posterior_mu
+          success <- mean(-effect_imp > h0)
+        }
+      }
+
+      else{
+        effect_imp <- post_imp$final$posterior_mu
+        if(alternative == "two-sided"){
+          success <- max(c(mean(effect_imp - mu_treatment > h0), mean(mu_treatment - effect_imp > h0)))
+        }
+        else if(alternative == "greater"){
+          success <- mean(effect_imp - mu_treatment > h0)
+        }
+        else{
+          success <- mean(mu_treatment - effect_imp > h0)
+        }
+      }
+
+      if(success > prob_ha){
         expected_success_test <- expected_success_test + 1
       }
 
@@ -256,13 +319,25 @@ normalBACT <- function(
       # Create enrolled subject data frame for discount function analysis
       data <- data_futility_impute
 
+      # assigning input for control arm given it is a single or double arm
+      if(!is.null(mu_control)){
+        mu_c     <- mean(data$Y[data$treatment == 0])
+        sigma_c  <- sd(data$Y[data$treatment == 0])
+        N_c      <- length(data$treatment == 0)
+      }
+      else{
+        mu_c     <- NULL
+        sigma_c  <- NULL
+        N_c      <- NULL
+      }
+
       # Analyze complete+imputed data using discount funtion via normal
       post_imp <- bdpnormal(mu_t                = mean(data$Y[data$treatment == 1]),
                             sigma_t             = sd(data$Y[data$treatment == 1]),
                             N_t                 = length(data$treatment == 1),
-                            mu_c                = mean(data$Y[data$treatment == 0]),
-                            sigma_c             = sd(data$Y[data$treatment == 0]),
-                            N_c                 = length(data$treatment == 0),
+                            mu_c                = mu_c,
+                            sigma_c             = sigma_c,
+                            N_c                 = N_c,
                             number_mcmc         = number_mcmc,
                             discount_function   = discount_function,
                             alpha_max           = alpha_max,
@@ -270,17 +345,46 @@ normalBACT <- function(
                             weibull_scale       = weibull_scale,
                             weibull_shape       = weibull_shape)
 
-      # Estimation of the posterior effect for difference between test and control
-      post_imp_final <- post_imp$final$posterior
+
+      # Estimation of the posterior effect for difference between test and
+      # control
+
+      if(!is.null(mu_control)){
+        if(alternative == "two-sided"){
+          effect_imp <- post_imp$posterior_treatment$posterior_mu - post_imp$posterior_control$posterior_mu
+          success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
+        }
+        else if(alternative == "greater"){
+          effect_imp <- post_imp$posterior_treatment$posterior_mu - post_imp$posterior_control$posterior_mu
+          success <- mean(effect_imp > h0)
+        }
+        else{
+          effect_imp <- post_imp$posterior_treatment$posterior_mu - post_imp$posterior_control$posterior_mu
+          success <- mean(-effect_imp > h0)
+        }
+      }
+
+      else{
+        effect_imp <- post_imp$final$posterior_mu
+        if(alternative == "two-sided"){
+          success <- max(c(mean(effect_imp - mu_treatment > h0), mean(mu_treatment - effect_imp > h0)))
+        }
+        else if(alternative == "greater"){
+          success <- mean(effect_imp - mu_treatment > h0)
+        }
+        else{
+          success <- mean(mu_treatment - effect_imp > h0)
+        }
+      }
 
       # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if(mean(post_imp_final < h0) > prob_ha){
+      if(success > prob_ha){
         futility_test <- futility_test + 1
       }
 
     }
 
-    print(analysis_at_enrollnumber[i])
+    #print(analysis_at_enrollnumber[i])
 
     # Test if futility success criteria is met
     if(futility_test / N_impute < futility_prob){
@@ -308,15 +412,34 @@ normalBACT <- function(
   ##############################################################################
   ### Final analysis
   ##############################################################################
+    # Estimation of the posterior of the difference
+    if(!is.null(mu_control)){
+      if(alternative == "two-sided"){
+        effect_int <- post$posterior_treatment$posterior_mu - post$posterior_control$posterior_mu
+      }
+      else if(alternative == "greater"){
+        effect_int <- post$posterior_treatment$posterior_mu - post$posterior_control$posterior_mu
+      }
+      else{
+        effect_int <- post$posterior_treatment$posterior_mu - post$posterior_control$posterior_mu
+      }
+    }
 
-  # Estimation of the posterior of the difference
-  effect_int <- post$final$posterior
+    else{
+      effect_int <- post$final$posterior_mu
+    }
 
+    # Number of patients enrolled at trial stop
+    N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
+  }
 
-  # Number of patients enrolled at trial stop
-  N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
+  # assigning stage trial stopped given no interim look
+  else{
+    N_enrolled <- N_total
+    stage_trial_stopped <- N_total
+  }
 
-  print(N_enrolled)
+  #print(N_enrolled)
 
   # All patients that have made it to the end of study
   # - Subset out patients loss to follow-up
@@ -326,57 +449,102 @@ normalBACT <- function(
 
 
   # Compute the final MLE for the complete data using GLM function
-  MLE <- lm(Y ~ treatment, data = data_final)
+  # MLE <- lm(Y ~ treatment, data = data_final)
+
+  # assigning input for control arm given it is a single or double arm
+  if(!is.null(mu_control)){
+    mu_c     <- mean(data_final$Y[data$treatment == 0])
+    sigma_c  <- sd(data_final$Y[data$treatment == 0])
+    N_c      <- length(data_final$treatment == 0)
+  }
+  else{
+    mu_c     <- NULL
+    sigma_c  <- NULL
+    N_c      <- NULL
+  }
 
   # Analyze complete data using discount funtion via binomial
-  post <- bdpnormal(mu_t                = mean(data_final$Y[data_final$treatment == 1]),
-                    sigma_t             = sd(data_final$Y[data_final$treatment == 1]),
-                    N_t                 = length(data_final$treatment == 1),
-                    mu_c                = mean(data_final$Y[data_final$treatment == 0]),
-                    sigma_c             = sd(data_final$Y[data_final$treatment == 0]),
-                    N_c                 = length(data_final$treatment == 0),
-                    discount_function   = discount_function,
-                    number_mcmc         = number_mcmc,
-                    alpha_max           = alpha_max,
-                    fix_alpha           = fix_alpha,
-                    weibull_scale       = weibull_scale,
-                    weibull_shape       = weibull_shape)
+  post_final <- bdpnormal(mu_t                = mean(data_final$Y[data_final$treatment == 1]),
+                          sigma_t             = sd(data_final$Y[data_final$treatment == 1]),
+                          N_t                 = length(data_final$treatment == 1),
+                          mu_c                = mu_c,
+                          sigma_c             = sigma_c,
+                          N_c                 = N_c,
+                          discount_function   = discount_function,
+                          number_mcmc         = number_mcmc,
+                          alpha_max           = alpha_max,
+                          fix_alpha           = fix_alpha,
+                          weibull_scale       = weibull_scale,
+                          weibull_shape       = weibull_shape)
 
 
-  # Format and output results
-  effect        <- post$final$posterior       #Posterior effect size: test vs control
-  N_treatment   <- sum(data_final$treatment)  #Total sample size analyzed - test group
-  N_control     <- sum(!data_final$treatment) #Total sample size analyzed - control group
+  ### Format and output results
+  # Posterior effect size: test vs control or treatment itself
+  if(!is.null(mu_control)){
+    if(alternative == "two-sided"){
+      effect <- post_final$posterior_treatment$posterior_mu - post_final$posterior_control$posterior_mu
+      post_paa <- max(c(mean(effect > h0), mean(-effect > h0)))
+    }
+    else if(alternative == "greater"){
+      effect <- post_final$posterior_treatment$posterior_mu - post_final$posterior_control$posterior_mu
+      post_paa <- mean(effect > h0)
+    }
+    else{
+      effect <- post_final$posterior_treatment$posterior_mu - post_final$posterior_control$posterior_mu
+      post_paa <- mean(-effect > h0)
+    }
+  }
+
+  else{
+    effect <- post_final$final$posterior_mu
+    if(alternative == "two-sided"){
+      post_paa <- max(c(mean(effect - mu_treatment > h0), mean(mu_treatment - effect > h0)))
+    }
+    else if(alternative == "greater"){
+      post_paa <- mean(effect - mu_treatment > h0)
+    }
+    else{
+      post_paa <- mean(mu_treatment - effect > h0)
+    }
+  }
+
+  N_treatment  <- sum(data_final$treatment)         # Total sample size analyzed - test group
+  N_control    <- sum(!data_final$treatment)        # Total sample size analyzed - control group
 
 
   # output
   results_list <- list(
-    mu_treatment_true                          = mu_treatment,            # mean of treatment in normal
-    mu_control_true                            = mu_control,              # mean of control in normal
-    sd_treatment_true                          = sd_treatment,            # sd of treatment in normal
-    sd_control_true                            = sd_control,              # sd of control in normal
+    mu_treatment                               = mu_treatment,            # mean of treatment in normal
+    mu_control                                 = mu_control,              # mean of control in normal
+    sd_treatment                               = sd_treatment,            # sd of treatment in normal
+    sd_control                                 = sd_control,              # sd of control in normal
     prob_of_accepting_alternative              = prob_ha,
+    margin                                     = h0,                       # margin for error
+    alternative                                = alternative,              # alternative hypothesis
+    interim_look                               = interim_look,             # print interim looks
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
     N_complete                                 = N_treatment + N_control,
     N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
     N_max                                      = N_total, 				        # Total potential sample size
-    stop_futility                              = stop_futility,           # Did the trial stop for futility
-    stop_expected_success                      = stop_expected_success,   # Did the trial stop for expected success
-    post_prob_accept_alternative               = mean(effect < h0),       # Posterior probability that alternative hypothesis is true
-    est_final                                  = mean(effect),            # Posterior Mean of treatment effect
-    est_interim                                = mean(effect_int)         # Posterior Mean of treatment effect at interim analysis
+    post_prob_accept_alternative               = post_paa,                 # Posterior probability that alternative hypothesis is true
+    est_final                                  = mean(effect)              # Posterior Mean of treatment effect
     #MLE_est                                   = MLE$coe[2],              # Treatment effect useing MLE
     #MLE_est_interim                           = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
   )
+
+  #if there is an interim look
+  if(length(analysis_at_enrollnumber) > 1){
+    results_list                            <- c(results_list,
+    est_interim                             = mean(effect_int),           # Posterior Mean of treatment effect at interim analysis
+    stop_futility                           = stop_futility,              # Did the trial stop for futility
+    stop_expected_success                   = stop_expected_success)      # Did the trial stop for expected success
+    }
 
   # return results
   results_list
 
 }
-
-
-
 
 
 
@@ -390,10 +558,10 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @description Wrapper function for mean and standard deviation with normal outcome.
 #'
-#' @param mu_control_true numeric. The mean for the control group.
-#' @param sd_control_true numeric. The standard deviation for the control group.
-#' @param mu_treatment_true numeric. The mean for the treatment group.
-#' @param sd_treatment_true numeric. The standard deviation for the treatment group.
+#' @param mu_control numeric. The mean for the control group.
+#' @param sd_control numeric. The standard deviation for the control group.
+#' @param mu_treatment numeric. The mean for the treatment group.
+#' @param sd_treatment numeric. The standard deviation for the treatment group.
 #' @param data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with proportion of control and treatment group.
@@ -401,11 +569,12 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #' @examples normal_outcome(mu_control = 12, mu_treatment = 8, sd_treatment = 2.2, sd_control = 1.6)
 #' @export normal_outcome
 #'
-normal_outcome <- function(mu_control_true = NULL, sd_control_true = NULL, mu_treatment_true = NULL, sd_treatment_true = NULL, data = NULL){
-  data$mu_control <- mu_control_true
-  data$sd_control <- sd_control_true
-  data$mu_treatment <- mu_treatment_true
-  data$sd_treatment <- sd_treatment_true
+normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = NULL,
+                           sd_treatment = NULL, data = NULL){
+  data$mu_control <- mu_control
+  data$sd_control <- sd_control
+  data$mu_treatment <- mu_treatment
+  data$sd_treatment <- sd_treatment
   data
 }
 
@@ -460,8 +629,7 @@ historical_normal <- function(mu0_treatment       = NULL,
                               sd0_control         = NULL,
                               N0_control          = NULL,
                               discount_function   = "identity",
-                              .data               = NULL
-){
+                              .data               = NULL){
   .data$mu0_treatment       <- mu0_treatment
   .data$sd0_treatment       <- sd0_treatment
   .data$N0_treatment        <- N0_treatment
@@ -470,7 +638,7 @@ historical_normal <- function(mu0_treatment       = NULL,
   .data$N0_control          <- N0_control
   .data$discount_function   <- discount_function
   .data
-}
+  }
 
 
 

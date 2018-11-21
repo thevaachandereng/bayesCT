@@ -111,11 +111,11 @@ binomialBACT <- function(
     sim <- rbinom(N_total, 1, prob = group * p_treatment + (1 - group) * p_control)
     # dividing treatment and control
     control <- sim[group == 0]
-    treatment <- sim[group == 1]
   }
   else{
     sim <- rbinom(N_total, 1, p_treatment)
   }
+  treatment <- sim[group == 1]
 
   # simulate loss to follow-up
   n_loss_to_fu <- ceiling(prop_loss_to_followup * N_total)
@@ -374,7 +374,7 @@ binomialBACT <- function(
 
     }
 
-    print(analysis_at_enrollnumber[i])
+    # print(analysis_at_enrollnumber[i])
 
     # Test if futility success criteria is met
     if(futility_test / N_impute < futility_prob){
@@ -428,7 +428,6 @@ binomialBACT <- function(
     N_enrolled <- N_total
     stage_trial_stopped <- N_total
   }
-  print(N_enrolled)
 
   # All patients that have made it to the end of study
   # - Subset out patients loss to follow-up
@@ -507,6 +506,7 @@ binomialBACT <- function(
     p_control                                  = p_control,                # probability of control in binomial
     prob_of_accepting_alternative              = prob_ha,
     margin                                     = h0,                       # margin for error
+    alternative                                = alternative,              # alternative hypothesis
     interim_look                               = interim_look,             # print interim looks
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
@@ -523,8 +523,8 @@ binomialBACT <- function(
     results_list                            <- c(results_list,
     est_interim                             = mean(effect_int),           # Posterior Mean of treatment effect at interim analysis
     stop_futility                           = stop_futility,              # Did the trial stop for futility
-    stop_expected_success                   = stop_expected_success       # Did the trial stop for expected success
-    )
+    stop_expected_success                   = stop_expected_success)      # Did the trial stop for expected success
+
   }
 
   #return results
@@ -611,34 +611,50 @@ historical_binomial <- function(y0_treatment       = NULL,
 #'
 #' @export BACTbinomial
 #'
-BACTbinomial <- function(input, no_of_sim = 1000, .data = NULL){
-  results <- list()
-  for(i in 1:no_of_sim){
-    results[[i]] <- do.call(binomialBACT, input)
+BACTbinomial <- function(input, no_of_sim = 10000, .data = NULL){
+  output_power <- list()
+  output_type1 <- list()
+  input_t1 <- input
+  if(!is.null(input_t1$p_control)){
+    input_t1$p_treatment <- input_t1$p_control
   }
-  prob_ha <- results %>% map_dbl(c("post_prob_accept_alternative"))
-  N_stop <- results %>% map_dbl(c("N_enrolled"))
-  expect_success <- results %>% map_dbl(c("stop_expected_success"))
+  else{
+    input_t1$h0 <- 0
+  }
+  for(i in 1:no_of_sim){
+    output_power[[i]] <- do.call(binomialBACT, input)
+    output_type1[[i]] <- do.call(binomialBACT, input_t1)
+  }
+  prob_ha <- output_power %>% map_dbl(c("post_prob_accept_alternative"))
+  N_stop <- output_power %>% map_dbl(c("N_enrolled"))
+  expect_success <- output_power %>% map_dbl(c("stop_expected_success"))
 
-  looks <- unique(sort(c(N_stop, results[[1]]$N_max)))
+  looks <- unique(sort(c(N_stop, output_power[[1]]$N_max)))
   power <- rep(0, length(looks))
   for(m in 1:(length(looks) - 1)){
     if(m == 1){
       power[1] <- mean((N_stop == looks[m] & expect_success == 1 &
-                          prob_ha > results[[1]]$prob_of_accepting_alternative))
+                          prob_ha > output_power[[1]]$prob_of_accepting_alternative))
     }
     else{
       power[m] <- mean((N_stop == looks[m] &
                         expect_success == 1 &
-                        prob_ha > results[[1]]$prob_of_accepting_alternative)) +
+                        prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
                   power[m - 1]
     }
   }
   power[length(looks)] <- mean((N_stop == looks[length(looks)] &
-                                prob_ha > results[[1]]$prob_of_accepting_alternative)) +
+                                prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
                           power[length(looks) - 1]
+
   power <- data.frame(interim_looks = looks, power = power)
-  return(power)
+
+  prob_ha_t1 <- output_type1 %>% map_dbl(c("post_prob_accept_alternative"))
+  expect_success_t1 <- output_type1 %>% map_dbl(c("stop_expected_success"))
+
+  type1_error <- mean(prob_ha_t1 > output_power[[1]]$prob_of_accepting_alternative)
+
+  return(list(power = power, type1_error = type1_error))
 }
 
 
