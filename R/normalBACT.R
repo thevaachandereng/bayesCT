@@ -120,7 +120,7 @@ normalBACT <- function(
   }
 
   # simulate normal outcome
-  if(!is.null(p_control)){
+  if(!is.null(mu_control)){
     sim <- rnorm(N_total, mean = group * mu_treatment + (1 - group) * mu_control,
                  sd = group * sd_treatment + (1 - group) * sd_control)
     # dividing treatment and control
