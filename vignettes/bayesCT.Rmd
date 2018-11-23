@@ -56,7 +56,7 @@ devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.
 
 The second option is to download the most recent stable version through GitHub:
 
-```{r, message = FALSE}
+```{r, message = FALSE, prompt=FALSE}
 devtools::install_github("thevaachandereng/bayesCT")
 ```
 
