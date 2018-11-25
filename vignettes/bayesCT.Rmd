@@ -159,6 +159,16 @@ randomization(N_total = 120, block = 120, allocation = c(2, 1))
 <!-- ``` -->
 
 # Historical Data
+
+Since bayesian attitude is to bring all the data available to address the scientific question proposed. 
+Any particular trial conducted is unlikely to be the first trial conducted in a particular disease.
+Pilot studies are conducted in small sample size to obtain estimation of parameters for a clinical trial. 
+Besides pilot study, the control drug/treatment is usually experimented before with other drugs as control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease.
+Howeever, statisticians need to careful consider the inclusion and exclusion criterias in a trial before completely accepting a trial data to incorporate it in a new trial as an historical data. 
+
+
+
+
 ## Incorporating Historical Data Using Discount Function Approach
 
 
