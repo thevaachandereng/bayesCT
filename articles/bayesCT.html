@@ -111,9 +111,9 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;   </span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">   checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmpFZs4OX<span class="op">/</span>remotes32ec384edb82<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>e980d36<span class="op">/</span>DESCRIPTION’ ...</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">   checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>Rtmp0lVNvN<span class="op">/</span>remotes32e63d94e686<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>485b1f0<span class="op">/</span>DESCRIPTION’ ...</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">  </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">✔  checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmpFZs4OX<span class="op">/</span>remotes32ec384edb82<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>e980d36<span class="op">/</span>DESCRIPTION’</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">✔  checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>Rtmp0lVNvN<span class="op">/</span>remotes32e63d94e686<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>485b1f0<span class="op">/</span>DESCRIPTION’</a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8">  </a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">─  preparing ‘bayesCT’<span class="op">:</span></a>
@@ -153,9 +153,9 @@
 \right. \]</span></p>
 <p>then to simulate individual patient enrollment dates with a sample size (<code>N_total</code>) of 50, one would use</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment</a></span>(<span class="dt">param =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  1  1  1  2  2  3  3  5  6  8  8  8  9  9 10 11 11 11 13 13 14 15</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 15 16 17 17 18 18 21 22 22 22 24 25 26 26 28 28 31 32 33 39 39 40 41</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 42 42 50 50</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  3  8 10 11 13 13 15 16 16 17 18 19 20 20 20 21 23 23 23 25 25 25</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 26 29 29 30 30 31 32 32 33 33 33 35 35 36 37 37 38 39 39 40 40 41 44</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 44 46 46 46</span></a></code></pre></div>
 </div>
 <div id="randomization-scheme" class="section level1">
 <h1 class="hasAnchor">
@@ -165,17 +165,17 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p>will not work because the sum of the allocation is not a multiple of the block.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 1 1 0 0 0 0 1 0 0 0 0 1 0 1 0 1 0 0 0 0 0 1 0 1 0 0 1 1 0 0 0 1 0 0 0</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 1 0 0 0 1 0 1 0 0 0 1 1 0 1 0 0 1 0 0 1 0 0 0 0 1 1 0 1 0 0 0 0 0 0 1</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 0 1 1 1 0 0 0 0 1 0 1 0 0 0 1 0 1 0 0 0 1 0 0 0 1 0 1 0 1 0 0 0 0 1 1</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 0 0 0 0 0 0 1 0 1 0 0 0 1 1 0 0 1 0 0 1 0 0 1 0 1 0 0 0 0 0 0 1 1 0 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 0 0 1 0 1 1 0 0 0 0 1 0 0 1 0 0 0 0 0 1 1 0 0 0 0 0 1 1 0 0 1 1 0</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 1 1 0 0 0 0 1 0 1 0 0 0 0 0 1 1 0 0 1 0 0 1 0 0 1 1 0 0 0 0 0 0 0 1</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 0 1 1 0 0 0 0 1 0 0 1 0 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 0 0 0 0 0 0</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 1 1 0 0 1 0 0 0 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 0 0 0 1 1 0 0 1 0 0 0 0</span></a></code></pre></div>
 <p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As <span class="math inline">\(2+1 = 3\)</span> is a multiple of the block size, this allocation is allowed.</p>
 <p>Complete randomization can be performed by setting the block size equal to the total sample size as illustrated in the example below.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">120</span>, <span class="dt">block =</span> <span class="dv">120</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 1 0 1 0 0 0 0 1 0 0 1 0 0 0 0 1 0 1 1 1 0 1 0 0 0 0 1 0 0 0 0 1 1 0 0</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 1 0 0 0 0 1 1 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 1 0 0 1 0</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 0 1 0 1 1 0 0 0 1 1 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 1 0 0 0 1 1 0 1</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 0 1 1 0 1 0 1 1 0 0 1 0 0 0 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 0 0 1 0 1 1 1 1 1 0 0 1 1 1 1 0 0 1 0 0 0 1 0 0 1 0 0 1 1 0 1 1 1</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 0 0 0 0 0 1 1 0 0 0 1 0 1 0 0 0 0 1 0 0 0 0 1 0 1 0 0 1 0 0 0 0 0</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 0 1 1 1 0 0 0 0 0 0 1 0 0 1 1 0 0 1 0 0 0 1 0 1 1 0 0 0 0 0 0 0 0 1 0</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0</span></a></code></pre></div>
 <!-- # Binomial -->
 <!-- ```{r} -->
 <!-- value <-  -->
@@ -211,6 +211,7 @@
 <div id="historical-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#historical-data" class="anchor"></a>Historical Data</h1>
+<p>Since bayesian attitude is to bring all the data available to address the scientific question proposed. Any particular trial conducted is unlikely to be the first trial conducted in a particular disease. Pilot studies are conducted in small sample size to obtain estimation of parameters for a clinical trial. Besides pilot study, the control drug/treatment is usually experimented before with other drugs as control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease. Howeever, statisticians need to careful consider the inclusion and exclusion criterias in a trial before completely accepting a trial data to incorporate it in a new trial as an historical data.</p>
 <div id="incorporating-historical-data-using-discount-function-approach" class="section level2">
 <h2 class="hasAnchor">
 <a href="#incorporating-historical-data-using-discount-function-approach" class="anchor"></a>Incorporating Historical Data Using Discount Function Approach</h2>
