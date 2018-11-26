@@ -601,7 +601,7 @@ historical_binomial <- function(y0_treatment       = NULL,
 #' @param no_of_sim numeric. Number of simulations to run
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
-#' @return a list with results of the clinical outcome.
+#' @return a list with results of the simulation (power and type I error).
 #'
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
