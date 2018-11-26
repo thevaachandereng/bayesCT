@@ -14,7 +14,7 @@
   \item{complete}{1 for complete outcome, 0 for loss to follow up}
 }}
 \source{
-\link{thevaachandereng.github.io/bayesCT}
+\link{https://thevaachandereng.github.io/bayesCT/}
 }
 \usage{
 data(binomialdata)

@@ -586,6 +586,7 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 #'
 #' @param input list. Input function for all normalBACT.
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#' @param no_of_sim numeric. Number of simulations to run.
 #'
 #' @return a list with results of the simulation (power and type I error).
 #'
@@ -595,7 +596,7 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 #'
 #' @export BACTnormal
 #'
-BACTnormal <- function(input, .data = NULL){
+BACTnormal <- function(input, .data = NULL, no_of_sim = 100){
   output_power <- list()
   output_type1 <- list()
   input_t1 <- input
