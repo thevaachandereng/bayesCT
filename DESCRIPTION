@@ -11,6 +11,7 @@ Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu", role 
 Description: Simulation of bayesian adaptive clinical trial, incorporates power, early stopping, 
              futility analysis and optimal randomization ratio.
 LazyLoad: yes
+LazyData: true
 License: GPL-3
 NeedsCompilation: no
 URL: https://github.com/thevaachandereng/bayesCT/
