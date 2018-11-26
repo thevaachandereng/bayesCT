@@ -12,7 +12,7 @@ BACTnormal(input, .data = NULL)
 \item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
 \value{
-a list with results of the clinical outcome.
+a list with results of the simulation (power and type I error).
 }
 \description{
 Wrapper function for complete normal bayesCT function to compute power and type 1 error.

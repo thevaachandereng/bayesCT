@@ -587,7 +587,7 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 #' @param input list. Input function for all normalBACT.
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
-#' @return a list with results of the clinical outcome.
+#' @return a list with results of the simulation (power and type I error).
 #'
 #' @importFrom stats rnorm lm sd
 #' @importFrom dplyr mutate filter group_by bind_rows select n
@@ -596,8 +596,49 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 #' @export BACTnormal
 #'
 BACTnormal <- function(input, .data = NULL){
-  .data <- do.call(normalBACT, input)
-  .data
+  output_power <- list()
+  output_type1 <- list()
+  input_t1 <- input
+  if(!is.null(input_t1$mu_control)){
+    input_t1$mu_treatment <- input_t1$mu_control
+  }
+  else{
+    input_t1$h0 <- 0
+  }
+  for(i in 1:no_of_sim){
+    output_power[[i]] <- do.call(normalBACT, input)
+    output_type1[[i]] <- do.call(normalBACT, input_t1)
+  }
+  prob_ha <- output_power %>% map_dbl(c("post_prob_accept_alternative"))
+  N_stop <- output_power %>% map_dbl(c("N_enrolled"))
+  expect_success <- output_power %>% map_dbl(c("stop_expected_success"))
+
+  looks <- unique(sort(c(N_stop, output_power[[1]]$N_max)))
+  power <- rep(0, length(looks))
+  for(m in 1:(length(looks) - 1)){
+    if(m == 1){
+      power[1] <- mean((N_stop == looks[m] & expect_success == 1 &
+                          prob_ha > output_power[[1]]$prob_of_accepting_alternative))
+    }
+    else{
+      power[m] <- mean((N_stop == looks[m] &
+                          expect_success == 1 &
+                          prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
+        power[m - 1]
+    }
+  }
+  power[length(looks)] <- mean((N_stop == looks[length(looks)] &
+                                  prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
+    power[length(looks) - 1]
+
+  power <- data.frame(interim_looks = looks, power = power)
+
+  prob_ha_t1 <- output_type1 %>% map_dbl(c("post_prob_accept_alternative"))
+  expect_success_t1 <- output_type1 %>% map_dbl(c("stop_expected_success"))
+
+  type1_error <- mean(prob_ha_t1 > output_power[[1]]$prob_of_accepting_alternative)
+
+  return(list(power = power, type1_error = type1_error))
 }
 
 #' @title Historical data for normal distribution
