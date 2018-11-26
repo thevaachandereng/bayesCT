@@ -13,9 +13,6 @@
   for response (success or failure), 0 for no response}
   \item{complete}{1 for complete outcome, 0 for loss to follow up}
 }}
-\source{
-\link{https://thevaachandereng.github.io/bayesCT/}
-}
 \usage{
 data(binomialdata)
 }
