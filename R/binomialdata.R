@@ -9,8 +9,6 @@
 #'
 #' @usage data(binomialdata)
 #'
-#' @source \link{https://thevaachandereng.github.io/bayesCT/}
-#'
 #' @format A data frame with 300 rows and 4 variables:
 #' \describe{
 #'   \item{id}{Patient ID in the trial}
