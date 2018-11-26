@@ -175,8 +175,8 @@ Since bayesian attitude is to bring all the data available to address the scient
 Any particular trial conducted is unlikely to be the first trial conducted in a particular disease.
 Pilot studies are conducted in small sample size to obtain estimation of parameters for a clinical trial (clinically relevant effect size, guide sample size determination, recruitment rates). 
 Besides pilot study, the control drug/treatment is usually experimented before with other drugs as control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease.
-However, statisticians need to careful consider the inclusion and exclusion criterias in a trial before completely accepting a trial data to incorporate it in a new trial as an historical data. 
-
+However, statisticians need to careful consider the inclusion and exclusion criterias in a trial before completely accepting a trial data to incorporate it in a new trial as an historical data.
+The R package `bayesDP` is used as a computational engine for computing posteriors as well as integrating historical data.
 
 
 
@@ -185,10 +185,60 @@ However, statisticians need to careful consider the inclusion and exclusion crit
 There are multiple methods to incorporate historical data into a trial.
 In our implementation, historical data is integrated using the discount function approach. 
 The discount function approach treats historical data with increased skepticism compared to other approaches. 
-Other methods have several disadvantages such as non-negligible weighting of historical data in the presence of substantial disagreement with current data, negatively affecting the type I error, bias and mean squared error (MSE). 
+The limitations of previous dynamic borrowing approaches such as non-negligible weighting of historical data in the presence of substantial disagreement with current data, negatively affecting the type I error, bias and mean squared error (MSE). 
+The discount function approach 
+
+In the first estimation step, the historical data weight $\hat{\alpha}$ is estimated. In the case of a two-arm trial, where both treatment and control data are available, $\hat{\alpha}$ value is estimated separately for each of the treatment and control arms. Of course, historical treatment or historical control data must be present, otherwise $\hat{\alpha}$ is not estimated for the corresponding arm.
+
+Details on computation of $\hat\alpha$ is available on the vignette of R package `bayesDP`.
 
 
 
 
 
+# Stopping Early for Futility or Success
+
+Unlike the conventional clinical trials, adaptive bayesian clinical trials offer much more flexibility. 
+The trial can be stopped early for success or futility. 
+In our implementation for designing bayesian trials, we compute early success and futility upon imputing loss to follow up. 
+
+
+## Early Success
+
+For a double arm trial, the early success is specified as the equation below.
+
+\[
+P(\underbrace{\theta_T - \theta_C }_{\text{difference in posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) > \underbrace{\Delta}_{\text{Specified success rate}}
+\]
+
+
+If the proprotion of  mean of the treatment difference is greater than a specified margin (default = 0) is greater than the specified success rate, the trial stops for early success. The default specified success rate is set to 0.90 (default). However, the proportion of mean of the treatment difference is not taken as the final posterior estimate since the estimate is obtained from imputation of loss to follow up. 
+
+For a single arm, 
+
+\[
+P(\underbrace{\theta_T }_{\text{posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) > \underbrace{\Delta}_{\text{Specified success rate}}
+\]
+
+For a single arm, the estimation is done a little differently. More details shown in the simulation portion.  
+
+
+## Futility
+
+For a double arm trial, the early success is specified as the equation below.
+
+\[
+P(\underbrace{\theta_T - \theta_C }_{\text{difference in posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) < \underbrace{\omega}_{\text{Specified futility rate}}
+\]
+
+
+If the proprotion of  mean of the treatment difference is greater than a specified margin (default = 0) is less than the specified futility rate, the trial stops for futility. The default specified success rate is set to 0.10 (default). However, the proportion of mean of the treatment difference is not taken as the final posterior estimate since the estimate is obtained from imputation of loss to follow up. 
+
+For a single arm, 
+
+\[
+P(\underbrace{\theta_T }_{\text{posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) < \underbrace{\omega}_{\text{Specified futility rate}}
+\]
+
+For a single arm, the estimation is done a little differently. More details shown in the simulation portion.  
 
