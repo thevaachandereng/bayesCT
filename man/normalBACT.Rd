@@ -62,9 +62,9 @@ follow-up.}
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
 \code{h0=0}.}
 
-\item{futility_prob}{scalar. Overall Type I error rate.}
+\item{futility_prob}{scalar. Probability of stopping early for futility.}
 
-\item{expected_success_prob}{scalar. Overall study power.}
+\item{expected_success_prob}{scalar. Probability of stopping early for success.}
 
 \item{prob_ha}{scalar. Probability of alternative hypothesis.}
 

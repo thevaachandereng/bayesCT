@@ -38,8 +38,8 @@
 #'   follow-up.
 #' @param h0 scalar. Threshold for comparing two mean values. Default is
 #'   \code{h0=0}.
-#' @param futility_prob scalar. Overall Type I error rate.
-#' @param expected_success_prob scalar. Overall study power.
+#' @param futility_prob scalar. Probability of stopping early for futility.
+#' @param expected_success_prob scalar. Probability of stopping early for success.
 #' @param prob_ha scalar. Probability of alternative hypothesis.
 #' @param N_impute scalar. Number of imputations for Monte Carlo simulation of
 #'   missing data.
