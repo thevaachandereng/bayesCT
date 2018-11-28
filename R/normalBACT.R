@@ -1,57 +1,71 @@
 #' @title Normal distribution for Bayesian Adaptive Trials
 #'
-#' @description Simulation for normal distribution for Bayesian Adaptive trial with different inputs to
-#'              control for power, sample size, type I error rate, etc.
+#' @description Simulation of normally distributed data for Bayesian adaptive
+#'   trials with various inputs to control for power, sample size, type I error
+#'   rate, etc.
 #'
 #' @param mu_control scalar. Mean outcome in the control arm.
 #' @param sd_control scalar. Standard deviation of outcome in the control arm.
 #' @param mu_treatment scalar. Mean outcome in the treatment arm.
-#' @param sd_treatment scalar. Standard deviation of outcome in the treatment arm.
+#' @param sd_treatment scalar. Standard deviation of outcome in the treatment
+#'   arm.
 #' @param N_total scalar. Total sample size.
-#' @param lambda vector. Lambda for different enrollment rates across times.
-#' @param lambda_time vector. Same size as lambda, denote times at lambda changes.
-#' @param interim_look vector. Sample size for interim looks. Note: the overall trial size should not be included.
+#' @param lambda vector. Erollment rates across simulated enrollment times. See
+#'   \code{\link{enrollment}} for more details.
+#' @param lambda_time vector. Enrollment time(s) at which the enrollment rates
+#'   change. Must be same length as lambda. See \code{\link{enrollment}} for
+#'   more details.
+#' @param interim_look vector. Sample size for each interim look. Note: the
+#'   maximum sample size should not be included.
 #' @param EndofStudy scalar. Length of the study.
-#' @param block scalar. Block size for randomization to be implemented.
-#' @param rand_ratio vector. Randomization allocation for control to treatment.
-#'                    Integer values mapping the size of the block.
-#' @param discount_function character. Specify the discount function to use.
-#'   Currently supports the Weibull function
+#' @param block scalar. Block size for generating the randomization schedule.
+#' @param rand_ratio vector. Randomization allocation for the ratio of control
+#'   to treatment. Integer values mapping the size of the block. See
+#'   \code{\link{randomization}} for more details.
+#' @param discount_function character. If incorporating historical data, specify
+#'   the discount function. Currently supports the Weibull function
 #'   (\code{discount_function="weibull"}), the scaled-Weibull function
 #'   (\code{discount_function="scaledweibull"}), and the identity function
 #'   (\code{discount_function="identity"}). The scaled-Weibull discount function
 #'   scales the output of the Weibull CDF to have a max value of 1. The identity
 #'   discount function uses the posterior probability directly as the discount
-#'   weight. Default value is \code{"identity"}.
-#' @param alternative character. The string specifying the alternative hypothesis, must be one
-#'        of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.
-#' @param prop_loss_to_followup scalar. Proportion of subjects lost to follow-up.
-#' @param h0 scalar. Treshold for comparing two proportions. Default is \code{h0=0}.
-#' @param futility_prob scalar. Type I error rate.
-#' @param expected_success_prob scalar. Power of the study.
+#'   weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
+#'   more details.
+#' @param alternative character. The string specifying the alternative
+#'   hypothesis, must be one of \code{"two.sided"} (default), \code{"greater"}
+#'   or \code{"less"}.
+#' @param prop_loss_to_followup scalar. Overall oroportion of subjects lost to
+#'   follow-up.
+#' @param h0 scalar. Threshold for comparing two mean values. Default is
+#'   \code{h0=0}.
+#' @param futility_prob scalar. Overall Type I error rate.
+#' @param expected_success_prob scalar. Overall study power.
 #' @param prob_ha scalar. Probability of alternative hypothesis.
-#' @param N_impute scalar. Number of imputations for Monte Carlo simulation of missing data.
-#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.
-#' @param alpha_max scalar. Maximum weight the discount function can apply. Default is 1.
-#' For a two-arm trial, users may specify a vector of two values where the first value is used
-#' to weight the historical treatment group and the second value is used to weight the
-#' historical control group.
+#' @param N_impute scalar. Number of imputations for Monte Carlo simulation of
+#'   missing data.
+#' @param number_mcmc scalar. Number of Monte Carlo Markov Chain draws in
+#'   sampling posterior.
+#' @param alpha_max scalar. Maximum weight the discount function can apply.
+#'   Default is 1. For a two-arm trial, users may specify a vector of two values
+#'   where the first value is used to weight the historical treatment group and
+#'   the second value is used to weight the historical control group.
 #' @param fix_alpha logical. Fix alpha at alpha_max? Default value is FALSE.
-#' @param weibull_scale scalar. Scale parameter of the Weibull discount function used to
-#' compute alpha, the weight parameter of the historical data. Default value is 0.135.
-#' For a two-arm trial, users may specify a vector of two values where the first value is
-#' used to estimate the weight of the historical treatment group and the second value is
-#' used to estimate the weight of the historical control group. Not used when
-#' discount_function = "identity".
-#' @param weibull_shape scalar. Shape parameter of the Weibull discount function used to
-#' compute alpha, the weight parameter of the historical data. Default value is 3. For a
-#' two-arm trial, users may specify a vector of two values where the first value is used
-#' to estimate the weight of the historical treatment group and the second value is used
-#' to estimate the weight of the historical control group. Not used when
-#' discount_function = "identity".
+#' @param weibull_scale scalar. Scale parameter of the Weibull discount function
+#'   used to compute alpha, the weight parameter of the historical data. Default
+#'   value is 0.135. For a two-arm trial, users may specify a vector of two
+#'   values where the first value is used to estimate the weight of the
+#'   historical treatment group and the second value is used to estimate the
+#'   weight of the historical control group. Not used when discount_function =
+#'   "identity".
+#' @param weibull_shape scalar. Shape parameter of the Weibull discount function
+#'   used to compute alpha, the weight parameter of the historical data. Default
+#'   value is 3. For a two-arm trial, users may specify a vector of two values
+#'   where the first value is used to estimate the weight of the historical
+#'   treatment group and the second value is used to estimate the weight of the
+#'   historical control group. Not used when discount_function = "identity".
 #'
 #'
-#' @return a list of output
+#' @return List of outputs
 #'
 #' @examples
 #' normalBACT(mu_control = 10, mu_treatment = 8,
