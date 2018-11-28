@@ -157,14 +157,15 @@ arm.</p></td>
     </tr>
     <tr>
       <th>discount_function</th>
-      <td><p>character. Specify the discount function to use.
-Currently supports the Weibull function
+      <td><p>character. If incorporating historical data, specify
+the discount function. Currently supports the Weibull function
 (<code>discount_function="weibull"</code>), the scaled-Weibull function
 (<code>discount_function="scaledweibull"</code>), and the identity function
 (<code>discount_function="identity"</code>). The scaled-Weibull discount function
 scales the output of the Weibull CDF to have a max value of 1. The identity
 discount function uses the posterior probability directly as the discount
-weight. Default value is <code>"identity"</code>.</p></td>
+weight. Default value is <code>"identity"</code>. See <code>bdpnormal</code> for
+more details.</p></td>
     </tr>
     <tr>
       <th>N_total</th>
@@ -172,15 +173,19 @@ weight. Default value is <code>"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>lambda</th>
-      <td><p>vector. Lambda for different enrollment rates across times.</p></td>
+      <td><p>vector. Erollment rates across simulated enrollment times. See
+<code>enrollment</code> for more details.</p></td>
     </tr>
     <tr>
       <th>lambda_time</th>
-      <td><p>vector. Same size as lambda, denote times at lambda changes.</p></td>
+      <td><p>vector. Enrollment time(s) at which the enrollment rates
+change. Must be same length as lambda. See <code>enrollment</code> for
+more details.</p></td>
     </tr>
     <tr>
       <th>interim_look</th>
-      <td><p>vector. Sample size for interim looks. Note: the overall trial size should not be included.</p></td>
+      <td><p>vector. Sample size for each interim look. Note: the
+maximum sample size should not be included.</p></td>
     </tr>
     <tr>
       <th>EndofStudy</th>
@@ -193,33 +198,37 @@ set to beta(1, 1).</p></td>
     </tr>
     <tr>
       <th>block</th>
-      <td><p>scalar. Block size for randomization to be implemented.</p></td>
+      <td><p>scalar. Block size for generating the randomization schedule.</p></td>
     </tr>
     <tr>
       <th>rand_ratio</th>
-      <td><p>vector. Randomization allocation for control to treatment.
-Integer values mapping the size of the block.</p></td>
+      <td><p>vector. Randomization allocation for the ratio of control
+to treatment. Integer values mapping the size of the block. See
+<code>randomization</code> for more details.</p></td>
     </tr>
     <tr>
       <th>prop_loss_to_followup</th>
-      <td><p>scalar. Proportion of subjects lost to follow-up.</p></td>
+      <td><p>scalar. Overall oroportion of subjects lost to
+follow-up.</p></td>
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>character. The string specifying the alternative hypothesis, must be one
-of <code>"two.sided"</code> (default), <code>"greater"</code> or <code>"less"</code>.</p></td>
+      <td><p>character. The string specifying the alternative
+hypothesis, must be one of <code>"two.sided"</code> (default), <code>"greater"</code>
+or <code>"less"</code>.</p></td>
     </tr>
     <tr>
       <th>h0</th>
-      <td><p>scalar. Treshold for comparing two proportions. Default is <code>h0=0</code>.</p></td>
+      <td><p>scalar. Threshold for comparing two mean values. Default is
+<code>h0=0</code>.</p></td>
     </tr>
     <tr>
       <th>futility_prob</th>
-      <td><p>scalar. Type I error rate.</p></td>
+      <td><p>scalar. Probability of stopping early for futility.</p></td>
     </tr>
     <tr>
       <th>expected_success_prob</th>
-      <td><p>scalar. Power of the study.</p></td>
+      <td><p>scalar. Probability of stopping early for success.</p></td>
     </tr>
     <tr>
       <th>prob_ha</th>
@@ -227,18 +236,20 @@ of <code>"two.sided"</code> (default), <code>"greater"</code> or <code>"less"</c
     </tr>
     <tr>
       <th>N_impute</th>
-      <td><p>scalar. Number of imputations for Monte Carlo simulation of missing data.</p></td>
+      <td><p>scalar. Number of imputations for Monte Carlo simulation of
+missing data.</p></td>
     </tr>
     <tr>
       <th>number_mcmc</th>
-      <td><p>scalar. Number of Monte Carlo Markov Chain draws in sampling posterior.</p></td>
+      <td><p>scalar. Number of Monte Carlo Markov Chain draws in
+sampling posterior.</p></td>
     </tr>
     <tr>
       <th>alpha_max</th>
-      <td><p>scalar. Maximum weight the discount function can apply. Default is 1.
-For a two-arm trial, users may specify a vector of two values where the first value is used
-to weight the historical treatment group and the second value is used to weight the
-historical control group.</p></td>
+      <td><p>scalar. Maximum weight the discount function can apply.
+Default is 1. For a two-arm trial, users may specify a vector of two values
+where the first value is used to weight the historical treatment group and
+the second value is used to weight the historical control group.</p></td>
     </tr>
     <tr>
       <th>fix_alpha</th>
@@ -246,21 +257,22 @@ historical control group.</p></td>
     </tr>
     <tr>
       <th>weibull_scale</th>
-      <td><p>scalar. Scale parameter of the Weibull discount function used to
-compute alpha, the weight parameter of the historical data. Default value is 0.135.
-For a two-arm trial, users may specify a vector of two values where the first value is
-used to estimate the weight of the historical treatment group and the second value is
-used to estimate the weight of the historical control group. Not used when
-discount_function = "identity".</p></td>
+      <td><p>scalar. Scale parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 0.135. For a two-arm trial, users may specify a vector of two
+values where the first value is used to estimate the weight of the
+historical treatment group and the second value is used to estimate the
+weight of the historical control group. Not used when discount_function =
+"identity".</p></td>
     </tr>
     <tr>
       <th>weibull_shape</th>
-      <td><p>scalar. Shape parameter of the Weibull discount function used to
-compute alpha, the weight parameter of the historical data. Default value is 3. For a
-two-arm trial, users may specify a vector of two values where the first value is used
-to estimate the weight of the historical treatment group and the second value is used
-to estimate the weight of the historical control group. Not used when
-discount_function = "identity".</p></td>
+      <td><p>scalar. Shape parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 3. For a two-arm trial, users may specify a vector of two values
+where the first value is used to estimate the weight of the historical
+treatment group and the second value is used to estimate the weight of the
+historical control group. Not used when discount_function = "identity".</p></td>
     </tr>
     </table>
     
