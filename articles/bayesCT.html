@@ -111,9 +111,9 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;   </span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">   checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmpUcB6Y4<span class="op">/</span>remotes37592a5a6cfc<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>194c539<span class="op">/</span>DESCRIPTION’ ...</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">   checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>Rtmpi8eMPe<span class="op">/</span>remotes3624d493128<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>e934e9f<span class="op">/</span>DESCRIPTION’ ...</a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">  </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">✔  checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmpUcB6Y4<span class="op">/</span>remotes37592a5a6cfc<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>194c539<span class="op">/</span>DESCRIPTION’</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">✔  checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>Rtmpi8eMPe<span class="op">/</span>remotes3624d493128<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>e934e9f<span class="op">/</span>DESCRIPTION’</a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8">  </a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">─  preparing ‘bayesCT’<span class="op">:</span></a>
@@ -154,9 +154,9 @@
 \right. \]</span></p>
 <p>then to simulate individual patient enrollment dates with a sample size (<code>N_total</code>) of 50, one would use</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment</a></span>(<span class="dt">param =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  3  3  4  5  7  9  9 11 12 12 12 12 13 13 13 15 15 17 17 18 18 18</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 18 19 23 23 23 24 24 25 25 26 27 28 28 29 30 30 31 32 32 34 35 36 38</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 39 41 41 42</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  0  2  2  6  8  8  8  8 10 12 12 12 13 13 16 16 17 18 18 19 21 21</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 24 24 25 25 25 26 26 27 29 30 30 30 31 31 31 32 33 34 34 34 34 34 38</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 39 39 40 41</span></a></code></pre></div>
 </div>
 <div id="randomization-scheme" class="section level1">
 <h1 class="hasAnchor">
@@ -166,17 +166,17 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p>will not work because the sum of the allocation is not a multiple of the block.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 1 0 0 0 1 0 0 1 0 0 0 1 1 0 0 0 0 0 1 0 0 1 0 1 0 0 1 0 0 0 1 0 0</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 1 0 0 0 1 1 0 1 1 0 0 0 0 0 1 0 0 1 0 1 0 1 0 0 0 0 0 0 1 0 1 0 0 1 1</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 0 0 0 0 0 1 0 1 0 1 0 0 1 0 1 0 0 1 0 0 0 0 1 0 0 1 0 0 1 1 0 0 0 0 0</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 1 1 0 1 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 0 0 0 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 0 0 1 0 0 1 0 1 0 0 0 1 0 0 1 0 1 0 1 0 0 0 0 0 1 0 1 0 0 1 0 0 1</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 0 0 1 0 1 1 0 0 0 0 1 0 0 0 0 1 1 0 0 1 0 0 1 1 0 1 0 0 0 0 1 0 0</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 1 0 1 0 0 0 0 0 1 0 1 0 0 1 0 0 0 1 0 1 1 0 0 0 0 1 0 0 1 0 0 1 0</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 0 1 0 0 0 0 1 0 1 0 0 0 1 1 0 0 0 0 0 1 1 0 0 0 1 1 0 0 0 1 0 1 0 1 0</span></a></code></pre></div>
 <p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As <span class="math inline">\(2+1 = 3\)</span> is a multiple of the block size, this allocation is allowed.</p>
 <p>Complete randomization can be performed by setting the block size equal to the total sample size as illustrated in the example below.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">120</span>, <span class="dt">block =</span> <span class="dv">120</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 1 1 1 0 0 1 1 1 0 1 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0 1 0 1 0 0 0 0 0</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 1 0 0 0 1 0 1 1 1 0 1 0</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 0 0 0 1 0 1 1 0 0 0 0 0 0 0 1 0 0 0 1 1 0 1 1 0 0 0 0 1 1 0 1 0 1 0 1</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 1 1 0 0 1 0 0 0 0 1 0 0 0 0 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 0 0 0 1 1 1 1 1 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 1 1 1 0 0 1</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 1 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 0 0 0 0 0 1 0 0 0 0</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 0 1 0 0 1 1 0 1 1 0 1 1 1 0 1 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0 1 0 0 1 0</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 1 1 0 0 0 1 1 0 1 0 0 0 0 0 0</span></a></code></pre></div>
 <!-- # Binomial -->
 <!-- ```{r} -->
 <!-- value <-  -->
@@ -212,7 +212,7 @@
 <div id="historical-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#historical-data" class="anchor"></a>Historical Data</h1>
-<p>Since bayesian attitude is to bring all the data available to address the scientific question proposed. Any particular trial conducted is unlikely to be the first trial conducted in a particular disease. Pilot studies are conducted in small sample size to obtain estimation of parameters for a clinical trial (clinically relevant effect size, guide sample size determination, recruitment rates). Besides pilot study, the control drug/treatment is usually experimented before with other drugs as control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease. However, statisticians need to careful consider the inclusion and exclusion criterias in a trial before completely accepting a trial data to incorporate it in a new trial as an historical data. The R package <code>bayesDP</code> is used as a computational engine for computing posteriors as well as integrating historical data.</p>
+<p>Bayesian attitude is to bring all the data available to address the scientific question proposed. Any particular trial conducted is unlikely to be the first trial conducted in a particular disease. Pilot studies are conducted in small sample size to obtain an estimation of parameters for a clinical trial (clinically relevant effect size, guide sample size determination, recruitment rates). Besides pilot study, the control drug/treatment is usually experimented before with other drugs as a control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease. However, statisticians need to carefully consider the inclusion and exclusion criteria in a trial before completely accepting an old trial data to incorporate it in a new trial as a historical data. The R package <code>bayesDP</code> is used as a computational engine for computing posteriors as well as integrating historical data.</p>
 <div id="incorporating-historical-data-using-discount-function-approach" class="section level2">
 <h2 class="hasAnchor">
 <a href="#incorporating-historical-data-using-discount-function-approach" class="anchor"></a>Incorporating Historical Data Using Discount Function Approach</h2>
@@ -221,37 +221,25 @@
 <p>Details on computation of <span class="math inline">\(\hat\alpha\)</span> is available on the vignette of R package <code>bayesDP</code>.</p>
 </div>
 </div>
-<div id="stopping-early-for-futility-or-success" class="section level1">
+<div id="early-stopping-for-futility-or-success" class="section level1">
 <h1 class="hasAnchor">
-<a href="#stopping-early-for-futility-or-success" class="anchor"></a>Stopping Early for Futility or Success</h1>
-<p>Unlike the conventional clinical trials, adaptive bayesian clinical trials offer much more flexibility. The trial can be stopped early for success or futility. In our implementation for designing bayesian trials, we compute early success and futility upon imputing loss to follow up.</p>
-<div id="early-success" class="section level2">
+<a href="#early-stopping-for-futility-or-success" class="anchor"></a>Early Stopping for Futility or Success</h1>
+<p>Unlike the conventional clinical trials, adaptive Bayesian clinical trials offer much more flexibility. The trial can be stopped early for success or futility. In our implementation for designing bayesian trials, we compute early success and futility upon imputing loss to follow up. However, the final estimation of posterior is done with only complete data.</p>
+<div id="success" class="section level2">
 <h2 class="hasAnchor">
-<a href="#early-success" class="anchor"></a>Early Success</h2>
-<p>For a double arm trial, the early success is specified as the equation below.</p>
-<p><span class="math display">\[
-P(\underbrace{\theta_T - \theta_C }_{\text{difference in posterior mean}} &gt; \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) &gt; \underbrace{\Delta}_{\text{Specified success rate}}
-\]</span></p>
-<p>If the proprotion of mean of the treatment difference is greater than a specified margin (default = 0) is greater than the specified success rate, the trial stops for early success. The default specified success rate is set to 0.90 (default). However, the proportion of mean of the treatment difference is not taken as the final posterior estimate since the estimate is obtained from imputation of loss to follow up.</p>
-<p>For a single arm,</p>
-<p><span class="math display">\[
-P(\underbrace{\theta_T }_{\text{posterior mean}} &gt; \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) &gt; \underbrace{\Delta}_{\text{Specified success rate}}
-\]</span></p>
-<p>For a single arm, the estimation is done a little differently. More details shown in the simulation portion.</p>
+<a href="#success" class="anchor"></a>Success</h2>
+<p>The early stopping for success is specified as the equation below.</p>
+<p><span class="math display">\[P(\theta_T - \theta_C &gt; \delta| y, y_0, \alpha) &gt; \Delta,\]</span></p>
+<p>where <span class="math inline">\(\theta_T\)</span> and <span class="math inline">\(\theta_C\)</span> are posterior means of treatment and control group respectively, <span class="math inline">\(\delta\)</span> margin picked (important in non-inferiority design), <span class="math inline">\(y\)</span> and <span class="math inline">\(y_0\)</span> the current and historical data, <span class="math inline">\(\alpha\)</span> the weight of historical data and <span class="math inline">\(\Delta\)</span> the specified criteria for a trial to stop for success.</p>
+<p>If the proportion of mean of the treatment difference is greater than a specified margin (default = 0) is greater than the specified success rate, the trial stops for early success. The specified success rate is set to 0.90 (default).</p>
 </div>
 <div id="futility" class="section level2">
 <h2 class="hasAnchor">
 <a href="#futility" class="anchor"></a>Futility</h2>
-<p>For a double arm trial, the early success is specified as the equation below.</p>
-<p><span class="math display">\[
-P(\underbrace{\theta_T - \theta_C }_{\text{difference in posterior mean}} &gt; \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) &lt; \underbrace{\omega}_{\text{Specified futility rate}}
-\]</span></p>
-<p>If the proprotion of mean of the treatment difference is greater than a specified margin (default = 0) is less than the specified futility rate, the trial stops for futility. The default specified success rate is set to 0.10 (default). However, the proportion of mean of the treatment difference is not taken as the final posterior estimate since the estimate is obtained from imputation of loss to follow up.</p>
-<p>For a single arm,</p>
-<p><span class="math display">\[
-P(\underbrace{\theta_T }_{\text{posterior mean}} &gt; \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) &lt; \underbrace{\omega}_{\text{Specified futility rate}}
-\]</span></p>
-<p>For a single arm, the estimation is done a little differently. More details shown in the simulation portion.</p>
+<p>The early stopping for futility is specified as the equation below.</p>
+<p><span class="math display">\[P(\theta_T - \theta_C &gt; \delta| y, y_0, \alpha) &lt; \omega,\]</span></p>
+<p>where the <span class="math inline">\(\omega\)</span> is the specified criteria for a trial to stop for futility.</p>
+<p>If the proportion of mean of the treatment difference is greater than a specified margin (default = 0) is less than the specified futility rate, the trial stops for futility. The specified futility rate is set to 0.10 (default).</p>
 </div>
 </div>
   </div>
@@ -271,8 +259,8 @@ P(\underbrace{\theta_T }_{\text{posterior mean}} &gt; \underbrace{\delta}_{\text
       </ul>
 </li>
       <li>
-<a href="#stopping-early-for-futility-or-success">Stopping Early for Futility or Success</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#early-success">Early Success</a></li>
+<a href="#early-stopping-for-futility-or-success">Early Stopping for Futility or Success</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#success">Success</a></li>
       <li><a href="#futility">Futility</a></li>
       </ul>
 </li>
