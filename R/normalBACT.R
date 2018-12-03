@@ -91,7 +91,7 @@ normalBACT <- function(
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
   discount_function     = "identity",   # discount_function used in sampling
-  alternative           = "two-sided",  # the alternative hypothesis (either two-sided, greater, less)
+  alternative           = "greater",  # the alternative hypothesis (either two-sided, greater, less)
   prop_loss_to_followup = 0.15,         # Proportion of loss in data
   h0                    = 0,            # Null hypothesis value
   futility_prob         = 0.05,         # Futility probability
