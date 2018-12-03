@@ -171,11 +171,11 @@ randomization(N_total = 120, block = 120, allocation = c(2, 1))
 
 # Historical Data
 
-Since bayesian attitude is to bring all the data available to address the scientific question proposed. 
+Bayesian attitude is to bring all the data available to address the scientific question proposed. 
 Any particular trial conducted is unlikely to be the first trial conducted in a particular disease.
-Pilot studies are conducted in small sample size to obtain estimation of parameters for a clinical trial (clinically relevant effect size, guide sample size determination, recruitment rates). 
-Besides pilot study, the control drug/treatment is usually experimented before with other drugs as control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease.
-However, statisticians need to careful consider the inclusion and exclusion criterias in a trial before completely accepting a trial data to incorporate it in a new trial as an historical data.
+Pilot studies are conducted in small sample size to obtain an estimation of parameters for a clinical trial (clinically relevant effect size, guide sample size determination, recruitment rates). 
+Besides pilot study, the control drug/treatment is usually experimented before with other drugs as a control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease.
+However, statisticians need to carefully consider the inclusion and exclusion criteria in a trial before completely accepting an old trial data to incorporate it in a new trial as a historical data.
 The R package `bayesDP` is used as a computational engine for computing posteriors as well as integrating historical data.
 
 
@@ -195,50 +195,34 @@ Details on computation of $\hat\alpha$ is available on the vignette of R package
 
 
 
+# Early Stopping for Futility or Success
 
-# Stopping Early for Futility or Success
-
-Unlike the conventional clinical trials, adaptive bayesian clinical trials offer much more flexibility. 
+Unlike the conventional clinical trials, adaptive Bayesian clinical trials offer much more flexibility. 
 The trial can be stopped early for success or futility. 
 In our implementation for designing bayesian trials, we compute early success and futility upon imputing loss to follow up. 
+However, the final estimation of posterior is done with only complete data. 
+
+## Success
+
+The early stopping for success is specified as the equation below.
 
 
-## Early Success
+$$P(\theta_T - \theta_C > \delta| y, y_0, \alpha) > \Delta,$$
 
-For a double arm trial, the early success is specified as the equation below.
+where $\theta_T$ and $\theta_C$ are posterior means of treatment and control group respectively, $\delta$ margin picked (important in non-inferiority design), $y$ and $y_0$ the current and historical data, $\alpha$ the weight of historical data and $\Delta$ the specified criteria for a trial to stop for success. 
 
-\[
-P(\underbrace{\theta_T - \theta_C }_{\text{difference in posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) > \underbrace{\Delta}_{\text{Specified success rate}}
-\]
-
-
-If the proprotion of  mean of the treatment difference is greater than a specified margin (default = 0) is greater than the specified success rate, the trial stops for early success. The default specified success rate is set to 0.90 (default). However, the proportion of mean of the treatment difference is not taken as the final posterior estimate since the estimate is obtained from imputation of loss to follow up. 
-
-For a single arm, 
-
-\[
-P(\underbrace{\theta_T }_{\text{posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) > \underbrace{\Delta}_{\text{Specified success rate}}
-\]
-
-For a single arm, the estimation is done a little differently. More details shown in the simulation portion.  
-
+If the proportion of  mean of the treatment difference is greater than a specified margin (default = 0) is greater than the specified success rate, the trial stops for early success. The specified success rate is set to 0.90 (default).
 
 ## Futility
 
-For a double arm trial, the early success is specified as the equation below.
-
-\[
-P(\underbrace{\theta_T - \theta_C }_{\text{difference in posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) < \underbrace{\omega}_{\text{Specified futility rate}}
-\]
+The early stopping for futility is specified as the equation below.
 
 
-If the proprotion of  mean of the treatment difference is greater than a specified margin (default = 0) is less than the specified futility rate, the trial stops for futility. The default specified success rate is set to 0.10 (default). However, the proportion of mean of the treatment difference is not taken as the final posterior estimate since the estimate is obtained from imputation of loss to follow up. 
+$$P(\theta_T - \theta_C > \delta| y, y_0, \alpha) < \omega,$$
 
-For a single arm, 
+where the $\omega$ is the specified criteria for a trial to stop for futility. 
 
-\[
-P(\underbrace{\theta_T }_{\text{posterior mean}} > \underbrace{\delta}_{\text{margin}}| y, y_0, \alpha) < \underbrace{\omega}_{\text{Specified futility rate}}
-\]
 
-For a single arm, the estimation is done a little differently. More details shown in the simulation portion.  
+If the proportion of  mean of the treatment difference is greater than a specified margin (default = 0) is less than the specified futility rate, the trial stops for futility. The specified futility rate is set to 0.10 (default).
+
 
