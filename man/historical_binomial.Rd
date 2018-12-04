@@ -6,7 +6,8 @@
 \usage{
 historical_binomial(y0_treatment = NULL, N0_treatment = NULL,
   discount_function = "identity", y0_control = NULL,
-  N0_control = NULL, .data = NULL)
+  N0_control = NULL, alpha_max = 1, fix_alpha = FALSE,
+  weibull_scale = 0.135, weibull_shape = 3, .data = NULL)
 }
 \arguments{
 \item{y0_treatment}{numeric. The proportion of event in the historical treatment group.}
@@ -22,6 +23,28 @@ uses the posterior probability directly as the discount weight. Default value is
 \item{y0_control}{numeric. The proportion of event in the historical control group.}
 
 \item{N0_control}{numeric. The sample size for the historical control group.}
+
+\item{alpha_max}{scalar. Maximum weight the discount function can apply.
+Default is 1. For a two-arm trial, users may specify a vector of two values
+where the first value is used to weight the historical treatment group and
+the second value is used to weight the historical control group.}
+
+\item{fix_alpha}{logical. Fix alpha at alpha_max? Default value is FALSE.}
+
+\item{weibull_scale}{scalar. Scale parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 0.135. For a two-arm trial, users may specify a vector of two
+values where the first value is used to estimate the weight of the
+historical treatment group and the second value is used to estimate the
+weight of the historical control group. Not used when discount_function =
+"identity".}
+
+\item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 3. For a two-arm trial, users may specify a vector of two values
+where the first value is used to estimate the weight of the historical
+treatment group and the second value is used to estimate the weight of the
+historical control group. Not used when discount_function = "identity".}
 
 \item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
