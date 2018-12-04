@@ -563,14 +563,32 @@ binomial_outcome <- function(p_treatment_true= NULL, p_control_true = NULL, .dat
 #'
 #' @param y0_treatment numeric. The proportion of event in the historical treatment group.
 #' @param N0_treatment numeric. The sample size for the historical treatment group.
-#' @param y0_control numeric. The proportion of event in the historical control group.
-#' @param N0_control numeric. The sample size for the historical control group.
-#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #' @param discount_function character. Specify the discount function to use. Currently supports weibull,
 #'                          scaledweibull, and identity. The discount function scaledweibull scales the
 #'                          output of the Weibull CDF to have a max value of 1. The identity discount function
 #'                          uses the posterior probability directly as the discount weight. Default value is
 #'                          "identity".
+#' @param y0_control numeric. The proportion of event in the historical control group.
+#' @param N0_control numeric. The sample size for the historical control group.
+#' @param alpha_max scalar. Maximum weight the discount function can apply.
+#'   Default is 1. For a two-arm trial, users may specify a vector of two values
+#'   where the first value is used to weight the historical treatment group and
+#'   the second value is used to weight the historical control group.
+#' @param fix_alpha logical. Fix alpha at alpha_max? Default value is FALSE.
+#' @param weibull_scale scalar. Scale parameter of the Weibull discount function
+#'   used to compute alpha, the weight parameter of the historical data. Default
+#'   value is 0.135. For a two-arm trial, users may specify a vector of two
+#'   values where the first value is used to estimate the weight of the
+#'   historical treatment group and the second value is used to estimate the
+#'   weight of the historical control group. Not used when discount_function =
+#'   "identity".
+#' @param weibull_shape scalar. Shape parameter of the Weibull discount function
+#'   used to compute alpha, the weight parameter of the historical data. Default
+#'   value is 3. For a two-arm trial, users may specify a vector of two values
+#'   where the first value is used to estimate the weight of the historical
+#'   treatment group and the second value is used to estimate the weight of the
+#'   historical control group. Not used when discount_function = "identity".
+#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with historical data for control and treatment group with the discount function.
 #'
@@ -581,6 +599,10 @@ historical_binomial <- function(y0_treatment       = NULL,
                                 discount_function  = "identity",
                                 y0_control         = NULL,
                                 N0_control         = NULL,
+                                alpha_max          = 1,            # max weight on incorporating historical data
+                                fix_alpha          = FALSE,        # fix alpha set weight of historical data to alpha_max
+                                weibull_scale      = 0.135,        # weibull parameter
+                                weibull_shape      = 3,             # weibull parameter
                                 .data              = NULL
                                 ){
   .data$y0_treatment       <- y0_treatment
@@ -588,6 +610,10 @@ historical_binomial <- function(y0_treatment       = NULL,
   .data$y0_control         <- y0_control
   .data$N0_control         <- N0_control
   .data$discount_function  <- discount_function
+  .data$alpha_max          <- alpha_max
+  .data$fix_alpha          <- fix_alpha
+  .data$weibull_scale      <- weibull_scale
+  .data$weibull_shape      <- weibull_shape
   .data
 }
 
