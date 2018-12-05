@@ -551,8 +551,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #' @examples binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
 #' @export binomial_outcome
 binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL){
-  .data$p_treatment  <- p_treatment_true
-  .data$p_control    <- p_control_true
+  .data$p_treatment  <- p_treatment
+  .data$p_control    <- p_control
   .data
 }
 
