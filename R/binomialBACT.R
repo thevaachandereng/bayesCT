@@ -548,7 +548,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #'
 #' @return a list with proportion of control and treatment group.
 #'
-#' @examples binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
+#' @examples binomial_outcome(p_control = 0.12, p_treatment = 0.08)
 #' @export binomial_outcome
 binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL){
   .data$p_treatment  <- p_treatment
@@ -592,7 +592,11 @@ binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL)
 #'
 #' @return a list with historical data for control and treatment group with the discount function.
 #'
-#' @examples historical_binomial(y0_treatment = 5, N0_treatment = 10, y0_control = 15, N0_control = 23)
+#' @examples
+#' historical_binomial(y0_treatment = 5, N0_treatment = 10, y0_control = 15, N0_control = 23)
+#' historical_binomial(y0_treatment = 5, N0_treatment = 10, y0_control = 15, N0_control = 23,
+#'                      discount_function = "weibull", alpha_max = 1, fix_alpha = FALSE,
+#'                      weibull_scale = 0.135, weibull_shape = 3)
 #' @export historical_binomial
 historical_binomial <- function(y0_treatment       = NULL,
                                 N0_treatment       = NULL,

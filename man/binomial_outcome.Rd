@@ -20,5 +20,5 @@ a list with proportion of control and treatment group.
 Wrapper function for proportion of an event in control and treatment group with binomial outcome.
 }
 \examples{
-binomial_outcome(p_control_true = 0.12, p_treatment_true = 0.08)
+binomial_outcome(p_control = 0.12, p_treatment = 0.08)
 }
