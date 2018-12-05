@@ -23,11 +23,33 @@ historical_normal(mu0_treatment = NULL, sd0_treatment = NULL,
 
 \item{N0_control}{numeric. umber of observations of the historical control group.}
 
-\item{discount_function}{character. Specify the discount function to use. Currently supports weibull,
-scaledweibull, and identity. The discount function scaledweibull scales the
+\item{discount_function}{character. Specify the discount function to use. Currently supports
+weibull, scaledweibull, and identity. The discount function scaledweibull scales the
 output of the Weibull CDF to have a max value of 1. The identity discount function
 uses the posterior probability directly as the discount weight. Default value is
 "identity".}
+
+\item{alpha_max}{scalar. Maximum weight the discount function can apply.
+Default is 1. For a two-arm trial, users may specify a vector of two values
+where the first value is used to weight the historical treatment group and
+the second value is used to weight the historical control group.}
+
+\item{fix_alpha}{logical. Fix alpha at alpha_max? Default value is FALSE.}
+
+\item{weibull_scale}{scalar. Scale parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 0.135. For a two-arm trial, users may specify a vector of two
+values where the first value is used to estimate the weight of the
+historical treatment group and the second value is used to estimate the
+weight of the historical control group. Not used when discount_function =
+"identity".}
+
+\item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 3. For a two-arm trial, users may specify a vector of two values
+where the first value is used to estimate the weight of the historical
+treatment group and the second value is used to estimate the weight of the
+historical control group. Not used when discount_function = "identity".}
 
 \item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
