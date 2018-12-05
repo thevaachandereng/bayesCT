@@ -10,7 +10,7 @@ beta_prior(prior = c(1, 1), .data = NULL)
 \item{prior}{vector. Prior value of beta rate, \code{beta(a0, b0)}. The default is
 set to \code{beta(1, 1)}.}
 
-\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. stores the beta prior rate, please do not fill it in.}
 }
 \value{
 a list with vector of beta rate for the beta prior for treatment and control group.
