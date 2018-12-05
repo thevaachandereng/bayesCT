@@ -685,6 +685,10 @@ historical_normal <- function(mu0_treatment       = NULL,
                               sd0_control         = NULL,
                               N0_control          = NULL,
                               discount_function   = "identity",
+                              alpha_max           = 1,            # max weight on incorporating historical data
+                              fix_alpha           = FALSE,        # fix alpha set weight of historical data to alpha_max
+                              weibull_scale       = 0.135,        # weibull parameter
+                              weibull_shape       = 3,             # weibull parameter
                               .data               = NULL){
   .data$mu0_treatment       <- mu0_treatment
   .data$sd0_treatment       <- sd0_treatment
@@ -693,6 +697,10 @@ historical_normal <- function(mu0_treatment       = NULL,
   .data$sd0_control         <- sd0_control
   .data$N0_control          <- N0_control
   .data$discount_function   <- discount_function
+  .data$alpha_max          <- alpha_max
+  .data$fix_alpha          <- fix_alpha
+  .data$weibull_scale      <- weibull_scale
+  .data$weibull_shape      <- weibull_shape
   .data
   }
 
