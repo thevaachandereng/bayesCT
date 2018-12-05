@@ -694,12 +694,12 @@ BACTbinomial <- function(input, no_of_sim = 10000, .data = NULL){
 #'
 #' @param prior vector. Prior value of beta rate, \code{beta(a0, b0)}. The default is
 #'   set to \code{beta(1, 1)}.
-#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
+#' @param .data NULL. stores the beta prior rate, please do not fill it in.
 #'
 #' @return a list with vector of beta rate for the beta prior for treatment and control group.
 #'
 #' @examples beta_prior(prior = c(1, 1))
-#' @export binomial_outcome
+#' @export beta_prior
 beta_prior <- function(prior = c(1, 1), .data = NULL){
   .data$prior  <- prior
   .data

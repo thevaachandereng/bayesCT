@@ -3,6 +3,7 @@
 export("%>%")
 export(BACTbinomial)
 export(BACTnormal)
+export(beta_prior)
 export(binomialBACT)
 export(binomial_outcome)
 export(enrollment)
