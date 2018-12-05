@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • bayesCT</title>
+<title>Beta prior for for control and treatment group — beta_prior • bayesCT</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Beta prior for for control and treatment group — beta_prior" />
+
+<meta property="og:description" content="Wrapper function for beta prior beta(a0, b0)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -50,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -100,144 +102,55 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Beta prior for for control and treatment group</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/binomialBACT.R'><code>R/binomialBACT.R</code></a></small>
+    <div class="hidden name"><code>beta_prior.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Wrapper function for beta prior <code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta(a0, b0)</a></code>.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="BACTbinomial.html">BACTbinomial()</a></code> </p>
-        </td>
-        <td><p>Complete binomial wrapper function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="BACTnormal.html">BACTnormal()</a></code> </p>
-        </td>
-        <td><p>Complete normal wrapper function</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="beta_prior.html">beta_prior()</a></code> </p>
-        </td>
-        <td><p>Beta prior for for control and treatment group</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="binomialBACT.html">binomialBACT()</a></code> </p>
-        </td>
-        <td><p>Binomial counts for Bayesian Adaptive Trials</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="binomial_outcome.html">binomial_outcome()</a></code> </p>
-        </td>
-        <td><p>Proportion of an event in control and treatment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="binomialdata.html">binomialdata</a></code> </p>
-        </td>
-        <td><p>Binomial dataset for analyzing adaptive Bayesian trials</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enrollment.html">enrollment()</a></code> </p>
-        </td>
-        <td><p>Simulating enrollment dates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enrollment_rate.html">enrollment_rate()</a></code> </p>
-        </td>
-        <td><p>Enrollment rate wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="historical_binomial.html">historical_binomial()</a></code> </p>
-        </td>
-        <td><p>Historical data for binomial distribution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="historical_normal.html">historical_normal()</a></code> </p>
-        </td>
-        <td><p>Historical data for normal distribution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hypothesis.html">hypothesis()</a></code> </p>
-        </td>
-        <td><p>Hypothesis wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="impute.html">impute()</a></code> </p>
-        </td>
-        <td><p>Imputation wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="normalBACT.html">normalBACT()</a></code> </p>
-        </td>
-        <td><p>Normal distribution for Bayesian Adaptive Trials</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="normal_outcome.html">normal_outcome()</a></code> </p>
-        </td>
-        <td><p>Parameters for treatment and control in normal case</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="normaldata.html">normaldata</a></code> </p>
-        </td>
-        <td><p>Gaussian dataset for analyzing adaptive Bayesian trials</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="randomization.html">randomization()</a></code> </p>
-        </td>
-        <td><p>Randomization allocation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="randomize.html">randomize()</a></code> </p>
-        </td>
-        <td><p>Randomization scheme wrapper</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="study_details.html">study_details()</a></code> </p>
-        </td>
-        <td><p>Details of the clinical study</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>beta_prior</span>(<span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>prior</th>
+      <td><p>vector. Prior value of beta rate, <code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta(a0, b0)</a></code>. The default is
+set to <code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta(1, 1)</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>.data</th>
+      <td><p>NULL. stores the proportion of control and treatment, please do not fill it in.</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>a list with vector of beta rate for the beta prior for treatment and control group.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>beta_prior</span>(<span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; $prior
+#&gt; [1] 1 1
+#&gt; </div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
