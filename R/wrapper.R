@@ -9,7 +9,7 @@
 #' @param study_period integer. The length of the study.
 #' @param interim_look vector. Vector with interim looks.
 #' @param alternative character. The string specifying the alternative hypothesis, must be one
-#'        of \code{"two.sided"} (default), \code{"greater"} or \code{"less"}.
+#'        of \code{"greater"} (default), \code{"less"} or \code{"two.sided"}.
 #' @param .data NULL. This should not be changed by the user.
 #'
 #' @return a list with sample size, length of the study, interim looks and proportion loss to follow up
@@ -17,7 +17,7 @@
 #' @examples study_details(total_sample_size = 300, study_period = 50, interim_look = c(210, 240, 270))
 #' @export study_details
 study_details <- function(total_sample_size, study_period, interim_look,
-                          prop_loss_to_followup = 0.10, alternative = "two-sided", .data = NULL){
+                          prop_loss_to_followup = 0.10, alternative = "greater", .data = NULL){
   .data$N_total <- total_sample_size
   .data$EndofStudy <- study_period
   .data$interim_look <- interim_look
