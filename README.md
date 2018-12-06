@@ -15,7 +15,7 @@ bayesCT - Tool for Simulation in Adaptive Bayesian Clinical Trials <img src="man
 
 Overview
 --------
-`bayesCT` is a R package for simulation of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial. The time-to-event data will be added shortly. The `bayesCT` package website is available [here](https://thevaachandereng.github.io/bayesCT/). Please note this package is still under development. 
+`bayesCT` is a R package for simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial. The time-to-event data will be added shortly. The `bayesCT` package website is available [here](https://thevaachandereng.github.io/bayesCT/). Please note this package is still under development. 
 
 
 Installation

@@ -33,6 +33,8 @@ Adaptive Bayesian trials provide much more flexibility over conventional frequen
 
 A fundamental requirement of an adaptive trial is the *a priori* and interim evaluation of the operating characteristics. In a adaptive trials, these are generally not of closed-form; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.
 
+`bayesCT` is a R package for simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial. The time-to-event data will be added shortly. The package allows incorporation of historical data and permits interim analyses of early stopping for futility or success. The `bayesCT` package website is available [here](https://thevaachandereng.github.io/bayesCT/). Please note this package is still under development. 
+
 If you use `bayesCT` in published research, please cite: **TBA**.
 
 If after reading through this vignette you have questions or problems using `bayesCT`, please post them to https://github.com/thevaachandereng/bayesCT/issues. This will notify the package maintainers and benefit other users. Please note that comments and questions should **not** be emailed directly to the package authors.
