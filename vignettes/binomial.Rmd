@@ -1,0 +1,52 @@
+---
+title: "bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials"
+author: "Thevaa Chandereng, Graeme Hickey, Donald Musgrove, Tarek Haddad, Timothy Hanson, Theodore Lystig"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{bayesian trial:binomial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+```
+
+```{r}
+library(bayesCT)
+```
+
+
+
+
+# Binomial
+
+```{r}
+
+value <-
+  binomial_outcome(p_treatment = 0.08) %>%
+  historical_binomial(y0_treatment = 5, N0_treatment = 55,
+                      discount_function = "identity", 
+                      y0_control = NULL, N0_control = NULL, 
+                      alpha_max = 1, fix_alpha = FALSE, 
+                       weibull_scale = 0.135, weibull_shape = 3) %>%
+  beta_prior(prior = c(1, 1)) %>%
+  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>%
+  enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
+  study_details(total_sample_size = 900, study_period = 50,
+                interim_look = c(410, 440, 670),
+                prop_loss_to_followup = 0.10, alternative = "less") %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>%
+  hypothesis(delta = -0.03, futility_prob = 0.05, prob_ha = 0.95, 
+             expected_success_prob = 0.90) %>%
+  BACTbinomial(no_of_sim = 10)
+
+
+str(value)
+
+```
+
