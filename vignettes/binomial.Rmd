@@ -1,11 +1,11 @@
 ---
-title: "bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials"
+title: "Binomial Outcome"
 author: "Thevaa Chandereng, Graeme Hickey, Donald Musgrove, Tarek Haddad, Timothy Hanson, Theodore Lystig"
 output: 
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{bayesian trial:binomial}
+  %\VignetteIndexEntry{bayesCT:binomial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   \usepackage[utf8]{inputenc}
@@ -14,6 +14,7 @@ vignette: >
 
 ```{r setup, echo=FALSE, results="hide"}
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+set.seed(28999)
 ```
 
 ```{r}
