@@ -610,7 +610,7 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 #'
 #' @export BACTnormal
 #'
-BACTnormal <- function(input, .data = NULL, no_of_sim = 100){
+BACTnormal <- function(input, no_of_sim = 100, .data = NULL){
   output_power <- list()
   output_type1 <- list()
   input_t1 <- input
@@ -720,7 +720,7 @@ historical_normal <- function(mu0_treatment       = NULL,
   .data$weibull_scale      <- weibull_scale
   .data$weibull_shape      <- weibull_shape
   .data
-  }
+}
 
 
 
