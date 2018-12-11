@@ -740,8 +740,10 @@ binomial_analysis <- function(
   expected_success_prob = 0.90,
   prior                 = c(1, 1),
   discount_function     = "identity",
-  fix_alpha             = TRUE,
-  alpha_max             = 1
+  fix_alpha             = FALSE,
+  alpha_max             = 1,
+  weibull_scale         = 0.135,
+  weibull_shape         = 3
 ){
   #reading the data
   data_total <- data
@@ -1012,7 +1014,7 @@ BACTbinomial_analysis <- function(input, .data = NULL){
 #' @examples data_binomial(data = binomialdata)
 #' @export data_binomial
 data_binomial <- function(data, .data = NULL){
-  .data$data <- data
+  .data$data <- data.frame(data)
   .data
 }
 

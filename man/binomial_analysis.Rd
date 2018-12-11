@@ -9,7 +9,8 @@ binomial_analysis(data = data, y0_treatment = NULL,
   alternative = "greater", N_impute = 100, h0 = 0,
   number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
   expected_success_prob = 0.9, prior = c(1, 1),
-  discount_function = "identity", fix_alpha = TRUE, alpha_max = 1)
+  discount_function = "identity", fix_alpha = FALSE, alpha_max = 1,
+  weibull_scale = 0.135, weibull_shape = 3)
 }
 \arguments{
 \item{data}{data frame. A data frame which provides patient id, treatment group, outcome
@@ -63,6 +64,21 @@ more details.}
 Default is 1. For a two-arm trial, users may specify a vector of two values
 where the first value is used to weight the historical treatment group and
 the second value is used to weight the historical control group.}
+
+\item{weibull_scale}{scalar. Scale parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 0.135. For a two-arm trial, users may specify a vector of two
+values where the first value is used to estimate the weight of the
+historical treatment group and the second value is used to estimate the
+weight of the historical control group. Not used when discount_function =
+"identity".}
+
+\item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 3. For a two-arm trial, users may specify a vector of two values
+where the first value is used to estimate the weight of the historical
+treatment group and the second value is used to estimate the weight of the
+historical control group. Not used when discount_function = "identity".}
 }
 \value{
 a list of output for the bayesian trial for binomial count.
