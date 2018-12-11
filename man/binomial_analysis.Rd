@@ -4,25 +4,17 @@
 \alias{binomial_analysis}
 \title{Analyzing bayesian trial for binomial counts}
 \usage{
-binomial_analysis(file = file, header = TRUE, sep = ",",
-  y0_treatment = y0_treatment, N0_treatment = N0_treatment,
-  y0_control = y0_control, N0_control = N0_control,
-  alternative = "greater", N_impute = 100, number_mcmc = 10000,
-  prob_ha = 0.95, futility_prob = 0.1, expected_success_prob = 0.9,
-  prior = c(1, 1), discount_function = "identity", fix_alpha = TRUE,
-  alpha_max = 1)
+binomial_analysis(data = data, y0_treatment = y0_treatment,
+  N0_treatment = N0_treatment, y0_control = y0_control,
+  N0_control = N0_control, alternative = "greater", N_impute = 100,
+  number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
+  expected_success_prob = 0.9, prior = c(1, 1),
+  discount_function = "identity", fix_alpha = TRUE, alpha_max = 1)
 }
 \arguments{
-\item{file}{data frame. A data frame which provides patient id, treatment group, outcome
+\item{data}{data frame. A data frame which provides patient id, treatment group, outcome
 of the treatment and complete columns. An example file is available at
 \code{data(binomialdata)}.}
-
-\item{header}{logical. A logical value indicating whether the file contains the names of
-the variables as its first line. Default is set to TRUE.}
-
-\item{sep}{character. The field separator character. Values on each line of the file are
-separated by this character. If sep = "" (the default for read.table) the separator is
-‘white space’, that is one or more spaces, tabs, newlines or carriage returns.}
 
 \item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
 

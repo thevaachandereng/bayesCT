@@ -711,14 +711,9 @@ beta_prior <- function(prior = c(1, 1), .data = NULL){
 #' @description Simulation for binomial counts for Bayesian Adaptive trial with
 #'  different inputs to control for power, sample size, type 1 error rate, etc.
 #'
-#' @param file data frame. A data frame which provides patient id, treatment group, outcome
+#' @param data data frame. A data frame which provides patient id, treatment group, outcome
 #'    of the treatment and complete columns. An example file is available at
 #'    \code{data(binomialdata)}.
-#' @param header logical. A logical value indicating whether the file contains the names of
-#'    the variables as its first line. Default is set to TRUE.
-#' @param sep character. The field separator character. Values on each line of the file are
-#'   separated by this character. If sep = "" (the default for read.table) the separator is
-#'   ‘white space’, that is one or more spaces, tabs, newlines or carriage returns.
 #' @inheritParams normalBACT
 #'
 #' @importFrom stats rbinom glm
@@ -730,9 +725,7 @@ beta_prior <- function(prior = c(1, 1), .data = NULL){
 #' @export binomial_analysis
 
 binomial_analysis <- function(
-  file                  = file,
-  header                = TRUE,
-  sep                   = ",",
+  data                  = data,
   y0_treatment          = y0_treatment,
   N0_treatment          = N0_treatment,
   y0_control            = y0_control,
@@ -749,7 +742,7 @@ binomial_analysis <- function(
   alpha_max             = 1
 ){
   #reading the data
-  data_total <- read(file, header, sep)
+  data_total <- data
 
   data_interim <- data_total %>%
     mutate(futility = complete == 0)
