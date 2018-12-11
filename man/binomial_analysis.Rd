@@ -4,12 +4,12 @@
 \alias{binomial_analysis}
 \title{Analyzing bayesian trial for binomial counts}
 \usage{
-binomial_analysis(data = data, y0_treatment = y0_treatment,
-  N0_treatment = N0_treatment, y0_control = y0_control,
-  N0_control = N0_control, alternative = "greater", N_impute = 100,
-  number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
-  expected_success_prob = 0.9, prior = c(1, 1),
-  discount_function = "identity", fix_alpha = TRUE, alpha_max = 1)
+binomial_analysis(data = data, y0_treatment = NULL,
+  N0_treatment = NULL, y0_control = NULL, N0_control = NULL,
+  alternative = "greater", N_impute = 100, number_mcmc = 10000,
+  prob_ha = 0.95, futility_prob = 0.1, expected_success_prob = 0.9,
+  prior = c(1, 1), discount_function = "identity", fix_alpha = TRUE,
+  alpha_max = 1)
 }
 \arguments{
 \item{data}{data frame. A data frame which provides patient id, treatment group, outcome

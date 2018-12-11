@@ -726,10 +726,10 @@ beta_prior <- function(prior = c(1, 1), .data = NULL){
 
 binomial_analysis <- function(
   data                  = data,
-  y0_treatment          = y0_treatment,
-  N0_treatment          = N0_treatment,
-  y0_control            = y0_control,
-  N0_control            = N0_control,
+  y0_treatment          = NULL,
+  N0_treatment          = NULL,
+  y0_control            = NULL,
+  N0_control            = NULL,
   alternative           = "greater",
   N_impute              = 100,
   number_mcmc           = 10000,
@@ -968,6 +968,8 @@ binomial_analysis <- function(
     #MLE_est                                   = MLE$coe[2],               # Treatment effect useing MLE
     #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect useing MLE at interim analysis
   )
+
+  results_list
 
 }
 
