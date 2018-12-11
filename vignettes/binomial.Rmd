@@ -1,6 +1,6 @@
 ---
 title: "Binomial Outcome"
-author: "Thevaa Chandereng, Graeme Hickey, Donald Musgrove, Tarek Haddad, Timothy Hanson, Theodore Lystig"
+author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
 output: 
   rmarkdown::html_vignette:
     toc: true
