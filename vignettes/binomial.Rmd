@@ -51,3 +51,26 @@ str(value)
 
 ```
 
+
+
+```{r}
+data(binomialdata)
+
+value1 <-
+  data_binomial(data = binomialdata) %>%
+  historical_binomial(y0_treatment = 5, N0_treatment = 55,
+                      y0_control = NULL, N0_control = NULL,
+                      discount_function = "identity", 
+                      alpha_max = 1, fix_alpha = FALSE, 
+                      weibull_scale = 0.135, weibull_shape = 3) %>%
+  beta_prior(prior = c(1, 1)) %>%
+  impute(no_of_impute = 100, number_mcmc = 10000) %>%
+  hypothesis(delta = 0.02, futility_prob = 0.05, prob_ha = 0.95, 
+             expected_success_prob = 0.90) %>%
+  BACTbinomial_analysis()
+
+
+str(value1)
+
+```
+
