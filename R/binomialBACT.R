@@ -790,6 +790,7 @@ binomial_analysis <- function(
   # assigning stop_futility and expected success
   stop_futility         <- 0
   stop_expected_success <- 0
+  expected_success_test <- 0
 
   for(i in 1:N_impute){
     data_control_success_impute <- data_interim %>%
@@ -956,8 +957,6 @@ binomial_analysis <- function(
 
   ## output
   results_list <- list(
-    p_treatment                                = prop$p_outcome[2],                  # probability of treatment in binomial
-    p_control                                  = prop$p_outcome[1],                  # probability of control in binomial
     prob_of_accepting_alternative              = prob_ha,
     margin                                     = h0,                       # margin for error
     alternative                                = alternative,              # alternative hypothesis
