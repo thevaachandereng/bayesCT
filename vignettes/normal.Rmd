@@ -1,0 +1,45 @@
+---
+title: "Normal Outcome"
+author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{bayesCT:normal}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+set.seed(28999)
+```
+
+```{r}
+library(bayesCT)
+```
+
+
+```{r}
+value <-
+  normal_outcome(mu_control = 16, mu_treatment = 13,
+                 sd_treatment = 1.4, sd_control = 1.9) %>%
+  historical_normal(mu0_treatment = 13, sd0_treatment = 2, N0_treatment = 100,
+                    mu0_control = 12, sd0_control = 3, N0_control = 120, 
+                    discount_function = "weibull", alpha_max = F, fix_alpha = 1,
+                    weibull_scale = 0.135, weibull_shape = 3) %>%
+  enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
+  study_details(total_sample_size = 300, study_period = 50,
+                interim_look = c(210, 240, 270),
+                prop_loss_to_followup = 0.10, alternative = "less") %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>%
+  randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95,
+             expected_success_prob = 0.90) %>%
+  BACTnormal(no_of_sim = 5)
+
+
+str(value)
+```
