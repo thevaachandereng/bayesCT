@@ -718,7 +718,7 @@ beta_prior <- function(prior = c(1, 1), .data = NULL){
 #' @inheritParams binomialBACT
 #'
 #' @importFrom stats rbinom glm
-#' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpbinomial
 #'
 #' @return a list of output for the bayesian trial for binomial count.
