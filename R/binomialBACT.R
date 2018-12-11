@@ -715,6 +715,7 @@ beta_prior <- function(prior = c(1, 1), .data = NULL){
 #'    of the treatment and complete columns. An example file is available at
 #'    \code{data(binomialdata)}.
 #' @inheritParams normalBACT
+#' @inheritParams binomialBACT
 #'
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
@@ -973,4 +974,44 @@ binomial_analysis <- function(
 
 }
 
+
+
+#' @title Binomial analysis wrapper function
+#'
+#' @description Wrapper function for binomial bayesCT function to analyze bayesian trials.
+#'
+#' @param input list. Input function for all binomial_analysis.
+#' @param .data NULL. stores the binomial analysis details, please do not fill it in.
+#'
+#' @return a list with results of the analysis of bayesian trial.
+#'
+#' @importFrom stats rbinom glm
+#' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom bayesDP bdpbinomial
+#'
+#' @export BACTbinomial_analysis
+#'
+
+BACTbinomial_analysis <- function(input, .data = NULL){
+  do.call(binomial_analysis, input)
+}
+
+
+#' @title Data file for binomial analysis
+#'
+#' @description Wrapper function for data file in binomial analysis.
+#'
+#' @param data data frame. A data frame which provides patient id, treatment group, outcome
+#'    of the treatment and complete columns. An example file is available at
+#'    \code{data(binomialdata)}.
+#' @param .data NULL. stores the binomial data for analysis, please do not fill it in.
+#'
+#' @return a list with binomial data file to be analyzed.
+#'
+#' @examples data_binomial(data = binomialdata)
+#' @export data_binomial
+data_binomial <- function(data, .data = NULL){
+  .data$data <- data
+  .data
+}
 
