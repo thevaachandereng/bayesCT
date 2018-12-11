@@ -16,7 +16,12 @@ binomial_analysis(data = data, y0_treatment = NULL,
 of the treatment and complete columns. An example file is available at
 \code{data(binomialdata)}.}
 
+\item{y0_treatment}{scalar. Number of events for the historical treatment
+arm.}
+
 \item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
+
+\item{y0_control}{scalar. Number of events for the historical control arm.}
 
 \item{N0_control}{scalar. Number of observations of the historical control group.}
 
@@ -35,6 +40,9 @@ sampling posterior.}
 \item{futility_prob}{scalar. Probability of stopping early for futility.}
 
 \item{expected_success_prob}{scalar. Probability of stopping early for success.}
+
+\item{prior}{vector. Prior value of beta rate, beta(a0, b0). The default is
+set to beta(1, 1).}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
