@@ -204,12 +204,12 @@ normalBACT <- function(
     # assigning input for control arm given it is a single or double arm
     if(!is.null(mu_control)){
       mu_c     <- mean(data$Y[data$treatment == 0])
-      sigma_c  <- sd(data$Y[data$treatment == 0])
+      sd_c  <- sd(data$Y[data$treatment == 0])
       N_c      <- length(data$treatment == 0)
     }
     else{
       mu_c     <- NULL
-      sigma_c  <- NULL
+      sd_c  <- NULL
       N_c      <- NULL
     }
 
@@ -218,7 +218,7 @@ normalBACT <- function(
                       sigma_t             = sd(data$Y[data$treatment == 1]),
                       N_t                 = length(data$treatment == 1),
                       mu_c                = mu_c,
-                      sigma_c             = sigma_c,
+                      sigma_c             = sd_c,
                       N_c                 = N_c,
                       mu0_t               = mu0_treatment,
                       sigma0_t            = sd0_treatment,
@@ -265,12 +265,12 @@ normalBACT <- function(
       # assigning input for control arm given it is a single or double arm
       if(!is.null(mu_control)){
         mu_c     <- mean(data$Y[data$treatment == 0])
-        sigma_c  <- sd(data$Y[data$treatment == 0])
+        sd_c     <- sd(data$Y[data$treatment == 0])
         N_c      <- length(data$treatment == 0)
       }
       else{
         mu_c     <- NULL
-        sigma_c  <- NULL
+        sd_c     <- NULL
         N_c      <- NULL
       }
 
@@ -279,14 +279,14 @@ normalBACT <- function(
                             sigma_t           = sd(data$Y[data$treatment == 1]),
                             N_t               = length(data$treatment == 1),
                             mu_c              = mu_c,
-                            sigma_c           = sigma_c,
+                            sigma_c           = sd_c,
                             N_c               = N_c,
-                            mu0_t               = mu0_treatment,
-                            sigma0_t            = sd0_treatment,
-                            N0_t                = N0_treatment,
-                            mu0_c               = mu0_control,
-                            sigma0_c            = sd0_control,
-                            N0_c                = N0_control,
+                            mu0_t             = mu0_treatment,
+                            sigma0_t          = sd0_treatment,
+                            N0_t              = N0_treatment,
+                            mu0_c             = mu0_control,
+                            sigma0_c          = sd0_control,
+                            N0_c              = N0_control,
                             number_mcmc       = number_mcmc,
                             discount_function = discount_function,
                             alpha_max         = alpha_max,
@@ -360,12 +360,12 @@ normalBACT <- function(
       # assigning input for control arm given it is a single or double arm
       if(!is.null(mu_control)){
         mu_c     <- mean(data$Y[data$treatment == 0])
-        sigma_c  <- sd(data$Y[data$treatment == 0])
+        sd_c     <- sd(data$Y[data$treatment == 0])
         N_c      <- length(data$treatment == 0)
       }
       else{
         mu_c     <- NULL
-        sigma_c  <- NULL
+        sd_c     <- NULL
         N_c      <- NULL
       }
 
@@ -374,7 +374,7 @@ normalBACT <- function(
                             sigma_t             = sd(data$Y[data$treatment == 1]),
                             N_t                 = length(data$treatment == 1),
                             mu_c                = mu_c,
-                            sigma_c             = sigma_c,
+                            sigma_c             = sd_c,
                             N_c                 = N_c,
                             mu0_t               = mu0_treatment,
                             sigma0_t            = sd0_treatment,
@@ -498,12 +498,12 @@ normalBACT <- function(
   # assigning input for control arm given it is a single or double arm
   if(!is.null(mu_control)){
     mu_c     <- mean(data_final$Y[data$treatment == 0])
-    sigma_c  <- sd(data_final$Y[data$treatment == 0])
+    sd_c     <- sd(data_final$Y[data$treatment == 0])
     N_c      <- length(data_final$treatment == 0)
   }
   else{
     mu_c     <- NULL
-    sigma_c  <- NULL
+    sd_c     <- NULL
     N_c      <- NULL
   }
 
@@ -512,7 +512,7 @@ normalBACT <- function(
                           sigma_t             = sd(data_final$Y[data_final$treatment == 1]),
                           N_t                 = length(data_final$treatment == 1),
                           mu_c                = mu_c,
-                          sigma_c             = sigma_c,
+                          sigma_c             = sd_c,
                           N_c                 = N_c,
                           mu0_t               = mu0_treatment,
                           sigma0_t            = sd0_treatment,

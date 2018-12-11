@@ -980,7 +980,7 @@ binomial_analysis <- function(
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "outcome_impute", "id",
                                                         "futility", "treatment",
                                                         "subject_impute_success",
-                                                        "subject_impute_futility"))
+                                                        "subject_impute_futility", "p_outcome"))
 
 
 
