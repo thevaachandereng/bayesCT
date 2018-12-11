@@ -137,7 +137,8 @@
   <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>),
-  <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>weibull_scale</span> <span class='kw'>=</span> <span class='fl'>0.135</span>, <span class='kw'>weibull_shape</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,6 +226,25 @@ more details.</p></td>
 Default is 1. For a two-arm trial, users may specify a vector of two values
 where the first value is used to weight the historical treatment group and
 the second value is used to weight the historical control group.</p></td>
+    </tr>
+    <tr>
+      <th>weibull_scale</th>
+      <td><p>scalar. Scale parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 0.135. For a two-arm trial, users may specify a vector of two
+values where the first value is used to estimate the weight of the
+historical treatment group and the second value is used to estimate the
+weight of the historical control group. Not used when discount_function =
+"identity".</p></td>
+    </tr>
+    <tr>
+      <th>weibull_shape</th>
+      <td><p>scalar. Shape parameter of the Weibull discount function
+used to compute alpha, the weight parameter of the historical data. Default
+value is 3. For a two-arm trial, users may specify a vector of two values
+where the first value is used to estimate the weight of the historical
+treatment group and the second value is used to estimate the weight of the
+historical control group. Not used when discount_function = "identity".</p></td>
     </tr>
     </table>
     
