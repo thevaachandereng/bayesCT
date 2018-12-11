@@ -4,23 +4,38 @@
 \alias{normalBACT}
 \title{Normal distribution for Bayesian Adaptive Trials}
 \usage{
-normalBACT(mu_control, sd_control, mu_treatment, sd_treatment, N_total,
-  lambda, lambda_time, interim_look, EndofStudy, block = 2,
-  rand_ratio = c(1, 1), discount_function = "identity",
-  alternative = "greater", prop_loss_to_followup = 0.15, h0 = 0,
-  futility_prob = 0.05, expected_success_prob = 0.9, prob_ha = 0.95,
-  N_impute = 100, number_mcmc = 1000, alpha_max = 1,
-  fix_alpha = FALSE, weibull_scale = 0.135, weibull_shape = 3)
+normalBACT(mu_treatment, sd_treatment, mu_control = NULL,
+  sd_control = NULL, mu0_treatment = NULL, sd0_treatment = NULL,
+  N0_treatment = NULL, mu0_control = NULL, sd0_control = NULL,
+  N0_control = NULL, N_total, lambda, lambda_time, interim_look,
+  EndofStudy, block = 2, rand_ratio = c(1, 1),
+  discount_function = "identity", alternative = "greater",
+  prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100,
+  number_mcmc = 1000, alpha_max = 1, fix_alpha = FALSE,
+  weibull_scale = 0.135, weibull_shape = 3)
 }
 \arguments{
-\item{mu_control}{scalar. Mean outcome in the control arm.}
-
-\item{sd_control}{scalar. Standard deviation of outcome in the control arm.}
-
 \item{mu_treatment}{scalar. Mean outcome in the treatment arm.}
 
-\item{sd_treatment}{scalar. Standard deviation of outcome in the treatment
+\item{sd_treatment}{scalar. Standard deviation of outcome in the treatment}
+
+\item{mu_control}{scalar. Mean outcome in the control arm.}
+
+\item{sd_control}{scalar. Standard deviation of outcome in the control arm.
 arm.}
+
+\item{mu0_treatment}{scalar. Mean of the historical treatment group.}
+
+\item{sd0_treatment}{scalar. Standard deviation of the historical treatment group.}
+
+\item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
+
+\item{mu0_control}{scalar. Mean of the historical control group.}
+
+\item{sd0_control}{scalar. Standard deviation of the historical control group.}
+
+\item{N0_control}{scalar. Number of observations of the historical control group.}
 
 \item{N_total}{scalar. Total sample size.}
 

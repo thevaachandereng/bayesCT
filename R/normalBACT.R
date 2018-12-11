@@ -4,11 +4,17 @@
 #'   trials with various inputs to control for power, sample size, type I error
 #'   rate, etc.
 #'
-#' @param mu_control scalar. Mean outcome in the control arm.
-#' @param sd_control scalar. Standard deviation of outcome in the control arm.
 #' @param mu_treatment scalar. Mean outcome in the treatment arm.
 #' @param sd_treatment scalar. Standard deviation of outcome in the treatment
+#' @param mu_control scalar. Mean outcome in the control arm.
+#' @param sd_control scalar. Standard deviation of outcome in the control arm.
 #'   arm.
+#' @param mu0_treatment scalar. Mean of the historical treatment group.
+#' @param sd0_treatment scalar. Standard deviation of the historical treatment group.
+#' @param N0_treatment scalar. Number of observations of the historical treatment group.
+#' @param mu0_control scalar. Mean of the historical control group.
+#' @param sd0_control scalar. Standard deviation of the historical control group.
+#' @param N0_control scalar. Number of observations of the historical control group.
 #' @param N_total scalar. Total sample size.
 #' @param lambda vector. Erollment rates across simulated enrollment times. See
 #'   \code{\link{enrollment}} for more details.
@@ -79,10 +85,16 @@
 #' @importFrom bayesDP bdpnormal
 #' @export normalBACT
 normalBACT <- function(
-  mu_control,
-  sd_control,
   mu_treatment,
   sd_treatment,
+  mu_control            = NULL,
+  sd_control            = NULL,
+  mu0_treatment         = NULL,
+  sd0_treatment         = NULL,
+  N0_treatment          = NULL,
+  mu0_control           = NULL,
+  sd0_control           = NULL,
+  N0_control            = NULL,
   N_total,
   lambda,
   lambda_time,
@@ -208,6 +220,12 @@ normalBACT <- function(
                       mu_c                = mu_c,
                       sigma_c             = sigma_c,
                       N_c                 = N_c,
+                      mu0_t               = mu0_treatment,
+                      sigma0_t            = sd0_treatment,
+                      N0_t                = N0_treatment,
+                      mu0_c               = mu0_control,
+                      sigma0_c            = sd0_control,
+                      N0_c                = N0_control,
                       number_mcmc         = number_mcmc,
                       discount_function   = discount_function,
                       alpha_max           = alpha_max,
@@ -263,6 +281,12 @@ normalBACT <- function(
                             mu_c              = mu_c,
                             sigma_c           = sigma_c,
                             N_c               = N_c,
+                            mu0_t               = mu0_treatment,
+                            sigma0_t            = sd0_treatment,
+                            N0_t                = N0_treatment,
+                            mu0_c               = mu0_control,
+                            sigma0_c            = sd0_control,
+                            N0_c                = N0_control,
                             number_mcmc       = number_mcmc,
                             discount_function = discount_function,
                             alpha_max         = alpha_max,
@@ -352,6 +376,12 @@ normalBACT <- function(
                             mu_c                = mu_c,
                             sigma_c             = sigma_c,
                             N_c                 = N_c,
+                            mu0_t               = mu0_treatment,
+                            sigma0_t            = sd0_treatment,
+                            N0_t                = N0_treatment,
+                            mu0_c               = mu0_control,
+                            sigma0_c            = sd0_control,
+                            N0_c                = N0_control,
                             number_mcmc         = number_mcmc,
                             discount_function   = discount_function,
                             alpha_max           = alpha_max,
@@ -484,6 +514,12 @@ normalBACT <- function(
                           mu_c                = mu_c,
                           sigma_c             = sigma_c,
                           N_c                 = N_c,
+                          mu0_t               = mu0_treatment,
+                          sigma0_t            = sd0_treatment,
+                          N0_t                = N0_treatment,
+                          mu0_c               = mu0_control,
+                          sigma0_c            = sd0_control,
+                          N0_c                = N0_control,
                           discount_function   = discount_function,
                           number_mcmc         = number_mcmc,
                           alpha_max           = alpha_max,
