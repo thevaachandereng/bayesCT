@@ -116,14 +116,14 @@
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/impute">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>, <span class="dt">number_mcmc =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="fl">-0.03</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_ha =</span> <span class="fl">0.95</span>, </a>
 <a class="sourceLine" id="cb2-17" data-line-number="17">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/BACTbinomial">BACTbinomial</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/BACTbinomial">BACTbinomial</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value)</a>
 <a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; List of 2</span></a>
 <a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;  $ power      :'data.frame': 3 obs. of  2 variables:</span></a>
 <a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt;   ..$ interim_looks: num [1:3] 410 670 900</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt;   ..$ power        : num [1:3] 0.5 0.7 0.8</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt;   ..$ power        : num [1:3] 0.6 0.8 1</span></a>
 <a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt;  $ type1_error: num 0</span></a></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(binomialdata)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
@@ -150,8 +150,8 @@
 <a class="sourceLine" id="cb3-23" data-line-number="23"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
 <a class="sourceLine" id="cb3-24" data-line-number="24"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb3-25" data-line-number="25"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.978</span></a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt;  $ est_final                    : num 0.12</span></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.98</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="co">#&gt;  $ est_final                    : num 0.121</span></a>
 <a class="sourceLine" id="cb3-28" data-line-number="28"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
 <a class="sourceLine" id="cb3-29" data-line-number="29"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 </div>
