@@ -952,8 +952,8 @@ binomial_analysis <- function(
 
   ## output
   results_list <- list(
-    p_treatment                                = prop[2],                  # probability of treatment in binomial
-    p_control                                  = prop[1],                  # probability of control in binomial
+    p_treatment                                = prop$p_outcome[2],                  # probability of treatment in binomial
+    p_control                                  = prop$p_outcome[1],                  # probability of control in binomial
     prob_of_accepting_alternative              = prob_ha,
     margin                                     = h0,                       # margin for error
     alternative                                = alternative,              # alternative hypothesis
