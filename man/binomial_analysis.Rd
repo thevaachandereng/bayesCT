@@ -6,10 +6,10 @@
 \usage{
 binomial_analysis(data = data, y0_treatment = NULL,
   N0_treatment = NULL, y0_control = NULL, N0_control = NULL,
-  alternative = "greater", N_impute = 100, number_mcmc = 10000,
-  prob_ha = 0.95, futility_prob = 0.1, expected_success_prob = 0.9,
-  prior = c(1, 1), discount_function = "identity", fix_alpha = TRUE,
-  alpha_max = 1)
+  alternative = "greater", N_impute = 100, h0 = 0,
+  number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
+  expected_success_prob = 0.9, prior = c(1, 1),
+  discount_function = "identity", fix_alpha = TRUE, alpha_max = 1)
 }
 \arguments{
 \item{data}{data frame. A data frame which provides patient id, treatment group, outcome
@@ -31,6 +31,9 @@ hypothesis, must be one of \code{"greater"}, \code{"less"} or
 
 \item{N_impute}{scalar. Number of imputations for Monte Carlo simulation of
 missing data.}
+
+\item{h0}{scalar. Threshold for comparing two mean values. Default is
+\code{h0=0}.}
 
 \item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
 sampling posterior.}

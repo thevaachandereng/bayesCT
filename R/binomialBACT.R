@@ -733,6 +733,7 @@ binomial_analysis <- function(
   N0_control            = NULL,
   alternative           = "greater",
   N_impute              = 100,
+  h0                    = 0,
   number_mcmc           = 10000,
   prob_ha               = 0.95,
   futility_prob         = 0.10,
