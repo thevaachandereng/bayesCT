@@ -146,16 +146,33 @@ The discount function approach treats historical data with increased skepticism 
 The limitations of previous dynamic borrowing approaches such as non-negligible weighting of historical data in the presence of substantial disagreement with current data, negatively affecting the type I error, bias and mean squared error (MSE). 
 The discount function approach 
 
+Throughout this vignette, posterior distributions are denoted by q(), likelihood functions by L(), prior distributions by $\pi()$, and the discount function by W(). Historical data is denoted by a zero subscript.
+The updated prior using the discount function approach 
+$$\pi(\theta | y_0, \alpha) \quad \propto  \quad L( \theta| y_0) ^{\alpha}  \quad \pi(\theta), $$ 
+where $\theta$ is the parameter of interest, $y_0$ is the historical data and $\alpha$ is the historical data weight. 
+
+The posterior using the discount function approach
+
+$$q(\theta|y, y_0, \alpha)  \quad \propto  \quad L(\theta|y) \quad \pi(\theta | y_0, \alpha),  $$
+where $y$ is the current data and $\theta$ is the parameter of interest.
+
+Estimation of $\alpha$ consists of two parts. The first part is the measure $p(\theta, \theta_0)$ based on the agreement between the current and historical data. The second part is the discount function $W(p)$. 
 
 
+To properly allow for uncertainty, we construct an intermediate comparison parameter like a Wald statistic.
+For each posterior draw of $\theta_0$ and $\theta$, we compute the agreement measure $p$ as
+$$p = 2(1- \Phi(Z)),$$
+$$Z = |h(\theta_0) - h(\theta)| (\sqrt{\tau_0^2 + \tau^2})^{-1},$$
 
+where $\Phi$ is the standard normal CDF, $h$ is a (potential) transformation of interest, and $\tau_0^2$  and $\tau^2$ are variance estimates of $h(\theta_0)$ and $h(\theta)$, respectively. Importantly, as the historical data and the current data are disjoint and independent, there is no covariance term to consider in the construction of the agreement measure. The historical data is weighted heavily if the similarity between the historical data and current data is high. 
 
-In the first estimation step, the historical data weight $\hat{\alpha}$ is estimated. In the case of a two-arm trial, where both treatment and control data are available, $\hat{\alpha}$ value is estimated separately for each of the treatment and control arms. Of course, historical treatment or historical control data must be present, otherwise $\hat{\alpha}$ is not estimated for the corresponding arm.
-
-Details on computation of $\hat\alpha$ is available on the vignette of R package `bayesDP`.
-
-
-
+The three discount function used to obtain $\alpha_0$ are directly taken from Haddad et al. (2017). 
+First, the identity discount function (default) sets the discount weight $\hat{\alpha}=p$.
+Second, the Weibull CDF has two user-specified parameters associated with it, the shape and scale. 
+The default shape is 3 and the default scale is 0.135, each of which are controlled by the function inputs Weibull shape and Weibull scale, respectively. 
+The form of the Weibull CDF is $W(p) = 1 - \exp{- (p/w_{scale})^{w_{shape}}}.$
+The third discount function option is the Scaled Weibull CDF. The Scaled Weibull CDF is the Weibull CDF divided by the value of the Weibull CDF evaluated at 1, i.e., $W^{\ast}(p) = W(p)/W(1).$
+Similar to the Weibull CDF, the Scaled Weibull CDF has two user-specified parameters associated with it, the shape and scale, again controlled by the function inputs Weibull shape and Weibull scale, respectively.
 
 # Early Stopping for Futility or Success
 
