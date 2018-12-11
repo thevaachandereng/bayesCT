@@ -4,14 +4,14 @@
 \alias{BACTnormal}
 \title{Complete normal wrapper function}
 \usage{
-BACTnormal(input, .data = NULL, no_of_sim = 100)
+BACTnormal(input, no_of_sim = 100, .data = NULL)
 }
 \arguments{
 \item{input}{list. Input function for all normalBACT.}
 
-\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
-
 \item{no_of_sim}{numeric. Number of simulations to run.}
+
+\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }
 \value{
 a list with results of the simulation (power and type I error).
