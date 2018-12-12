@@ -5,7 +5,7 @@
 \title{Hypothesis wrapper}
 \usage{
 hypothesis(delta, futility_prob, prob_ha, expected_success_prob,
-  .data = NULL)
+  alternative = "greater", .data = NULL)
 }
 \arguments{
 \item{delta}{numeric. Threshold set for margin in null hypothesis.}
@@ -16,6 +16,10 @@ hypothesis(delta, futility_prob, prob_ha, expected_success_prob,
 hypothesis.}
 
 \item{expected_success_prob}{numeric. Probability of expected success.}
+
+\item{alternative}{character. The string specifying the alternative hypothesis,
+must be one of \code{"greater"} (default), \code{"less"} or
+\code{"two.sided"}.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
@@ -28,6 +32,8 @@ a list with information of hypothesis testing (threshold, futility
 Wrapper function for the hypothesis in the trial.
 }
 \examples{
-hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)
-hypothesis(delta= 0.2, futility_prob = 0.1, prob_ha = 0.975, expected_success_prob = 0.80)
+hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95,
+           expected_success_prob = 0.90, alternative = "greater")
+hypothesis(delta= 0.2, futility_prob = 0.1, prob_ha = 0.975,
+           expected_success_prob = 0.80, alternative = "less")
 }

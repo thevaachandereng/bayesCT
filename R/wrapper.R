@@ -8,8 +8,6 @@
 #' @param prop_loss_to_followup integer. The proportion of loss to follow up.
 #' @param study_period integer. The length of the study.
 #' @param interim_look vector. Vector with interim looks.
-#' @param alternative character. The string specifying the alternative hypothesis, must be one
-#'        of \code{"greater"} (default), \code{"less"} or \code{"two.sided"}.
 #' @param .data NULL. This should not be changed by the user.
 #'
 #' @return a list with sample size, length of the study, interim looks and proportion loss to follow up
@@ -17,12 +15,11 @@
 #' @examples study_details(total_sample_size = 300, study_period = 50, interim_look = c(210, 240, 270))
 #' @export study_details
 study_details <- function(total_sample_size, study_period, interim_look,
-                          prop_loss_to_followup = 0.10, alternative = "greater", .data = NULL){
+                          prop_loss_to_followup = 0.10, .data = NULL){
   .data$N_total <- total_sample_size
   .data$EndofStudy <- study_period
   .data$interim_look <- interim_look
   .data$prop_loss_to_followup <- prop_loss_to_followup
-  .data$alternative <- alternative
   .data
 }
 
@@ -99,6 +96,9 @@ randomize <- function(block_size, randomization_ratio, .data = NULL){
 #' @param prob_ha numeric. Posterior probability of accepting alternative
 #'   hypothesis.
 #' @param expected_success_prob numeric. Probability of expected success.
+#' @param alternative character. The string specifying the alternative hypothesis,
+#'        must be one of \code{"greater"} (default), \code{"less"} or
+#'        \code{"two.sided"}.
 #' @inheritParams study_details
 #'
 #' @return a list with information of hypothesis testing (threshold, futility
@@ -106,14 +106,17 @@ randomize <- function(block_size, randomization_ratio, .data = NULL){
 #'   expected success).
 #'
 #' @examples
-#' hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)
-#' hypothesis(delta= 0.2, futility_prob = 0.1, prob_ha = 0.975, expected_success_prob = 0.80)
+#' hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95,
+#'            expected_success_prob = 0.90, alternative = "greater")
+#' hypothesis(delta= 0.2, futility_prob = 0.1, prob_ha = 0.975,
+#'            expected_success_prob = 0.80, alternative = "less")
 #' @export hypothesis
-hypothesis <- function(delta, futility_prob, prob_ha, expected_success_prob, .data = NULL){
+hypothesis <- function(delta, futility_prob, prob_ha, expected_success_prob, alternative = "greater", .data = NULL){
   .data$h0                     <- delta
   .data$futility_prob          <- futility_prob
   .data$prob_ha                <- prob_ha
   .data$expected_success_prob  <- expected_success_prob
+  .data$alternative            <- alternative
   .data
 }
 
