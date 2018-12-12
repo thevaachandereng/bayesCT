@@ -4,7 +4,7 @@
 \alias{binomial_analysis}
 \title{Analyzing bayesian trial for binomial counts}
 \usage{
-binomial_analysis(data = data, y0_treatment = NULL,
+binomial_analysis(data = NULL, y0_treatment = NULL,
   N0_treatment = NULL, y0_control = NULL, N0_control = NULL,
   alternative = "greater", N_impute = 100, h0 = 0,
   number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
@@ -84,6 +84,7 @@ historical control group. Not used when discount_function = "identity".}
 a list of output for the bayesian trial for binomial count.
 }
 \description{
-Simulation for binomial counts for Bayesian Adaptive trial with
- different inputs to control for power, sample size, type 1 error rate, etc.
+Function to analyze bayesian trial for binomial count data
+ which allows early stopping and incorporation of historical data using
+ the discount function approach
 }

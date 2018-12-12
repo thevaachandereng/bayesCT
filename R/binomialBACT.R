@@ -708,8 +708,9 @@ beta_prior <- function(prior = c(1, 1), .data = NULL){
 
 #' @title Analyzing bayesian trial for binomial counts
 #'
-#' @description Simulation for binomial counts for Bayesian Adaptive trial with
-#'  different inputs to control for power, sample size, type 1 error rate, etc.
+#' @description Function to analyze bayesian trial for binomial count data
+#'  which allows early stopping and incorporation of historical data using
+#'  the discount function approach
 #'
 #' @param data data frame. A data frame which provides patient id, treatment group, outcome
 #'    of the treatment and complete columns. An example file is available at
@@ -726,7 +727,7 @@ beta_prior <- function(prior = c(1, 1), .data = NULL){
 #' @export binomial_analysis
 
 binomial_analysis <- function(
-  data                  = data,
+  data                  = NULL,
   y0_treatment          = NULL,
   N0_treatment          = NULL,
   y0_control            = NULL,
