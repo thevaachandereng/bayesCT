@@ -1039,5 +1039,53 @@ normal_analysis <- function(
 
 
 
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "outcome_impute", "id",
+                                                        "futility", "treatment",
+                                                        "subject_impute_success", "p_outcome"))
+
+
+
+#' @title Normal data analysis wrapper function
+#'
+#' @description Wrapper function for normal bayesCT function to analyze bayesian trials.
+#'
+#' @param input list. Input function for all normal_analysis variables.
+#' @param .data NULL. stores the normal analysis details, please do not fill it in.
+#'
+#' @return a list with results of the analysis of bayesian trial.
+#'
+#' @importFrom stats rnorm lm
+#' @importFrom dplyr mutate filter group_by bind_rows select n
+#' @importFrom bayesDP bdpnormal
+#'
+#' @export BACTnormal_analysis
+#'
+
+BACTnormal_analysis <- function(input, .data = NULL){
+  do.call(normal_analysis, input)
+}
+
+
+#' @title Data file for normal analysis
+#'
+#' @description Wrapper function for data file in normal analysis.
+#'
+#' @param data data frame. A data frame which provides patient id, treatment group, outcome
+#'    of the treatment and complete columns. An example file is available at
+#'    \code{data(normaldata)}.
+#' @param .data NULL. stores the normal data for analysis, please do not fill it in.
+#'
+#' @return a list with normal data file to be analyzed.
+#'
+#' @examples data_normal(data = normaldata)
+#' @export data_normal
+data_normal <- function(data, .data = NULL){
+  .data$data <- data.frame(data)
+  .data
+}
+
+
+
 
 
