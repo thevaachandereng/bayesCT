@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Analyzing bayesian trial for binomial counts — binomial_analysis • bayesCT</title>
+<title>Analyzing bayesian trial for normal mean data — normal_analysis • bayesCT</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Analyzing bayesian trial for binomial counts — binomial_analysis" />
+<meta property="og:title" content="Analyzing bayesian trial for normal mean data — normal_analysis" />
 
-<meta property="og:description" content="Function to analyze bayesian trial for binomial count data
+<meta property="og:description" content="Function to analyze bayesian trial for normal mean data
  which allows early stopping and incorporation of historical data using
  the discount function approach" />
 
@@ -121,24 +121,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Analyzing bayesian trial for binomial counts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/binomialBACT.R'><code>R/binomialBACT.R</code></a></small>
-    <div class="hidden name"><code>binomial_analysis.Rd</code></div>
+    <h1>Analyzing bayesian trial for normal mean data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/normalBACT.R'><code>R/normalBACT.R</code></a></small>
+    <div class="hidden name"><code>normal_analysis.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to analyze bayesian trial for binomial count data
+    <p>Function to analyze bayesian trial for normal mean data
  which allows early stopping and incorporation of historical data using
  the discount function approach</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>binomial_analysis</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>),
+    <pre class="usage"><span class='fu'>normal_analysis</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mu0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sd0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mu0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>sd0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>,
+  <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>weibull_scale</span> <span class='kw'>=</span> <span class='fl'>0.135</span>, <span class='kw'>weibull_shape</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
@@ -149,20 +149,27 @@
       <th>data</th>
       <td><p>data frame. A data frame which provides patient id, treatment group, outcome
 of the treatment and complete columns. An example file is available at
-<code><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data(binomialdata)</a></code>.</p></td>
+<code><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data(normaldata)</a></code>.</p></td>
     </tr>
     <tr>
-      <th>y0_treatment</th>
-      <td><p>scalar. Number of events for the historical treatment
-arm.</p></td>
+      <th>mu0_treatment</th>
+      <td><p>scalar. Mean of the historical treatment group.</p></td>
+    </tr>
+    <tr>
+      <th>sd0_treatment</th>
+      <td><p>scalar. Standard deviation of the historical treatment group.</p></td>
     </tr>
     <tr>
       <th>N0_treatment</th>
       <td><p>scalar. Number of observations of the historical treatment group.</p></td>
     </tr>
     <tr>
-      <th>y0_control</th>
-      <td><p>scalar. Number of events for the historical control arm.</p></td>
+      <th>mu0_control</th>
+      <td><p>scalar. Mean of the historical control group.</p></td>
+    </tr>
+    <tr>
+      <th>sd0_control</th>
+      <td><p>scalar. Standard deviation of the historical control group.</p></td>
     </tr>
     <tr>
       <th>N0_control</th>
@@ -200,11 +207,6 @@ sampling posterior.</p></td>
     <tr>
       <th>expected_success_prob</th>
       <td><p>scalar. Probability of stopping early for success.</p></td>
-    </tr>
-    <tr>
-      <th>prior</th>
-      <td><p>vector. Prior value of beta rate, beta(a0, b0). The default is
-set to beta(1, 1).</p></td>
     </tr>
     <tr>
       <th>discount_function</th>
@@ -252,7 +254,7 @@ historical control group. Not used when discount_function = "identity".</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list of output for the bayesian trial for binomial count.</p>
+    <p>a list of output for the bayesian trial for normal mean.</p>
     
 
   </div>
