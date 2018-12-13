@@ -98,26 +98,25 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>Randomized controlled trials (RCT) are the gold standard of clinical studies of medical and pharmaceutical devices. In an RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application has been based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.</p>
-<p>Adaptive Bayesian trials provide much more flexibility over conventional frequentist approaches in terms of the design and analysis of a clinical trial. Notably, adaptive Bayesian trials:</p>
+<p>Randomized controlled trials (RCT) are the gold standard of pharmaceutical and medical device clinical studies. In a two-armed RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment/drug to a current treatment/drug (control). The majority of research in the design of RCTs and their application is based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.</p>
+<p>Adaptive Bayesian trials provide added flexibility compared to conventional frequentist approaches in terms of the design and analysis of a clinical trial. Notably, adaptive Bayesian trials can:</p>
 <ul>
-<li>can incorporate historical data, which helps reduce the sample size required;</li>
-<li>can be exploited for interim analyses of early stopping for success or futility;</li>
-<li>can be used in trials with multiple treatment arms (versus a single control), allowing for treatments not demonstrating success to be dropped; and</li>
-<li>can be used to alter the randomization ratio to improve trial efficiency or even to increase trial recruitment.</li>
+<li>Incorporate historical data, helping to reduce the sample size</li>
+<li>Easily carry out interim analyses to facilitate stopping early for success or futility</li>
+<li>Work with multiple treatment arms (versus a single control), allowing for dropping of demonstrably unsuccessful treatments</li>
+<li>Alter the randomization ratio (e.g., treatment to control ratio) to improve trial efficiency or even to increase trial recruitment</li>
 </ul>
-<p>A fundamental requirement of an adaptive trial is the <em>a priori</em> and interim evaluation of the operating characteristics. In a adaptive trials, these are generally not of closed-form; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.</p>
-<p><code>bayesCT</code> is a R package for simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial. The time-to-event data will be added shortly. The package allows incorporation of historical data and permits interim analyses of early stopping for futility or success. Please note this package is still under development.</p>
+<p>A fundamental requirement of an adaptive trial is the <em>a priori</em> and interim evaluation of the operating characteristics. In adaptive trials, these operating characteristics generally do not have a closed-form; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this complexity obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.</p>
+<p><code>bayesCT</code> is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian and binomial data types, with time-to-event data to follow soon. The package allows the (optional) incorporation of historical data and permits interim analyses of early stopping for futility or success. Please note this package is still under development.</p>
 <p>If you use <code>bayesCT</code> in published research, please cite: <strong>TBA</strong>.</p>
-<p>If after reading through this vignette you have questions or problems using <code>bayesCT</code>, please post them to <a href="https://github.com/thevaachandereng/bayesCT/issues" class="uri">https://github.com/thevaachandereng/bayesCT/issues</a>. This will notify the package maintainers and benefit other users. Please note that comments and questions should <strong>not</strong> be emailed directly to the package authors.</p>
+<p>If after reading through this vignette you have questions or problems using <code>bayesCT</code>, please post them to <a href="https://github.com/thevaachandereng/bayesCT/issues" class="uri">https://github.com/thevaachandereng/bayesCT/issues</a>. This will notify the package maintainers and we can work to address the issue(s). Please note that comments and questions should <strong>not</strong> be emailed directly to the package authors.</p>
 </div>
 <div id="running-bayesct" class="section level1">
 <h1 class="hasAnchor">
 <a href="#running-bayesct" class="anchor"></a>Running bayesCT</h1>
-<p>Prior to analyzing your data, the R package needs to be installed.</p>
-<p>The easiest way to install <code>bayesCT</code> is through CRAN:</p>
+<p>Prior to analyzing your data, the R package needs to be installed. The easiest way to install <code>bayesCT</code> is through CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"bayesCT"</span>)</a></code></pre></div>
-<p>There are additional ways to download <code>bayesCT</code>. The first option is most useful if want to download a specific version of <code>bayesCT</code> (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
+<p>There are additional ways to download <code>bayesCT</code>. The first option is most useful for downloading a specific version of <code>bayesCT</code> (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT@vx.xx.x"</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># or </span></a>
@@ -128,9 +127,9 @@
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="ot">FALSE</span> Downloading GitHub repo thevaachandereng<span class="op">/</span>bayesCT<span class="op">@</span>master</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="ot">FALSE</span> </a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="ot">FALSE</span>   </a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">   checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmpxLP7C2<span class="op">/</span>remotes33ff7659ced5<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>b52daa3<span class="op">/</span>DESCRIPTION’ ...</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">   checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>Rtmppzl4N7<span class="op">/</span>remotes335556113532<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>969f195<span class="op">/</span>DESCRIPTION’ ...</a>
 <a class="sourceLine" id="cb3-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">✔  checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmpxLP7C2<span class="op">/</span>remotes33ff7659ced5<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>b52daa3<span class="op">/</span>DESCRIPTION’</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">✔  checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>Rtmppzl4N7<span class="op">/</span>remotes335556113532<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>969f195<span class="op">/</span>DESCRIPTION’</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="ot">FALSE</span> </a>
 <a class="sourceLine" id="cb3-9" data-line-number="9">  </a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">─  preparing ‘bayesCT’<span class="op">:</span></a>
@@ -161,9 +160,9 @@
 <div id="recruitment" class="section level1">
 <h1 class="hasAnchor">
 <a href="#recruitment" class="anchor"></a>Recruitment</h1>
-<p>The recruitment of subjects is assumed to follow a Poisson process. Since trial recruitment is independent, the <a href="https://en.wikipedia.org/wiki/Memorylessness">“memoryless property”</a> modeling of subject recruitment. However, we cannot assume a homogeneous Poisson process since subject recruitment varies over time. Thus, the <code><a href="https://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment()</a></code> function assumes a piecewise stationary Poisson process with different <span class="math inline">\(\lambda\)</span> parameters over different time intervals. The function also omits an enrollment date considering time zero as study initiation.</p>
-<p>For instance, if we have the following piecewise function of <span class="math inline">\(\lambda\)</span>, with <span class="math inline">\(t\)</span> representing the time interval,</p>
-<p><span class="math display">\[  \lambda = \left\{
+<p>The trial subject recruitment rate is assumed to follow a Poisson process. Since trial recruitment is independent, the <a href="https://en.wikipedia.org/wiki/Memorylessness">“memoryless property”</a> modeling of subject recruitment is used. However, we typically do not assume a homogeneous Poisson process since subject recruitment varies over time.</p>
+<p>The <code><a href="https://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment()</a></code> function is used to specify subject enrollment into the trial. The function assumes a piecewise stationary Poisson process with the ability to specify different enrollment rates, i.e., the Poisson rates, at different time intervals. The first trial enrollment is assumed to occur at time zero.</p>
+<p>To illustrate, suppose we use a piecewise function to specify the change in enrollment rate over time: <span class="math display">\[  \lambda = \left\{
 \begin{array}{ll}
       0.3 &amp; t \in [0, 5) \\
       0.7 &amp; t \in [5, 10) \\
@@ -171,68 +170,51 @@
       1.2 &amp; t \in [15, \infty) \\
 \end{array} 
 \right. \]</span></p>
-<p>then to simulate individual patient enrollment dates with a sample size (<code>N_total</code>) of 50, one would use</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment</a></span>(<span class="dt">param =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  1  2  2 11 11 13 14 15 15 16 18 19 19 24 24 25 25 25 26 27 28 28</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 29 29 29 29 30 31 33 34 36 37 37 39 40 40 45 46 46 47 48 48 52 52 52</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 55 57 58 58</span></a></code></pre></div>
+<p>Then, to simulate individual patient enrollment dates with a sample size (<code>N_total</code>) of 50, we use</p>
+<pre><code>#&gt;  [1]  0  1  2  2 11 11 13 14 15 15 16 18 19 19 24 24 25 25 25 26 27 28 28
+#&gt; [24] 29 29 29 29 30 31 33 34 36 37 37 39 40 40 45 46 46 47 48 48 52 52 52
+#&gt; [47] 55 57 58 58</code></pre>
 </div>
 <div id="randomization-scheme" class="section level1">
 <h1 class="hasAnchor">
 <a href="#randomization-scheme" class="anchor"></a>Randomization scheme</h1>
-<p>The randomization allocation is important component in the design of an RCT. Complete randomization is not always ideal due to the chance of drawing a large block of a single treatment arm, which can impact the time to enrollment completion. Therefore, a block randomization allocation is generally preferable. Block randomization allocation allows for different randomization ratios but they must be in integer form. In addition, the block size should also be an integer that is divisible by the sum of randomization allocation.</p>
-<p>For instance,</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<p>The randomization allocation is an important aspect of the design of an RCT. Complete randomization may not always be ideal due to the chance of drawing a large block of a single treatment arm, potentially impacting the time to enrollment completion. Therefore, a block randomization allocation may be preferable.</p>
+<p>In <code>bayeCT</code>, the block randomization allocation specification allows for different randomization ratios, but they must be given in integer form. Additionally, the block size should be an integer that is divisible by the sum of the randomization allocation. For example,</p>
 <p>will not work because the sum of the allocation is not a multiple of the block.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 0 0 0 1 0 0 0 1 1 0 1 1 0 0 0 0 0 0 1 1 0 0 1 0 1 0 0 0 0 1 0 1 0</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 1 1 0 0 0 0 0 0 1 1 0 0 0 1 0 0</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 0 1 1 0 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 1 0 0 1 1 0 0 1 0 0 1 0 0</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 0 1 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 0 1 1 0 0 0 0 1 0 1 0 0 1 0 0 1 0 0</span></a></code></pre></div>
-<p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. As <span class="math inline">\(2+1 = 3\)</span> is a multiple of the block size, this allocation is allowed.</p>
-<p>Complete randomization can be performed by setting the block size equal to the total sample size as illustrated in the example below.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">120</span>, <span class="dt">block =</span> <span class="dv">120</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 0 0 0 0 0 1 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0 1 0 1 0 0 1 0 1 0 1 0 0 0 1</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 1 0 0 0 0 0 1 0 1 0 0 1 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 1 0 0 1 0 0 1 0 1 0 1 0 0 1 0 1 1 1 0 0 1 0 1 0 0 0 0 1 1 0 0 1 0</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 1 0 0 1 0 1 0 0 1 0 1 0 0 0 0</span></a></code></pre></div>
+<pre><code>#&gt;   [1] 0 1 0 0 0 1 0 0 0 1 1 0 1 1 0 0 0 0 0 0 1 1 0 0 1 0 1 0 0 0 0 1 0 1 0
+#&gt;  [36] 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 1 1 0 0 0 0 0 0 1 1 0 0 0 1 0 0
+#&gt;  [71] 0 1 1 0 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 1 0 0 1 1 0 0 1 0 0 1 0 0
+#&gt; [106] 0 1 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 0 1 1 0 0 0 0 1 0 1 0 0 1 0 0 1 0 0</code></pre>
+<p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. Since <span class="math inline">\(2+1 = 3\)</span> is a multiple of the block size of 6, this allocation is valid.</p>
+<p>Complete randomization can be performed by setting the block size equal to the total sample size:</p>
+<pre><code>#&gt;   [1] 0 0 0 0 0 1 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0 1 0 1 0 0 1 0 1 0 1 0 0 0 1
+#&gt;  [36] 1 0 0 0 0 0 1 0 1 0 0 1 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0
+#&gt;  [71] 1 0 1 0 0 1 0 0 1 0 1 0 1 0 0 1 0 1 1 1 0 0 1 0 1 0 0 0 0 1 1 0 0 1 0
+#&gt; [106] 1 0 0 1 0 1 0 0 1 0 1 0 0 0 0</code></pre>
 </div>
-<div id="historical-data" class="section level1">
+<div id="incorporation-of-historical-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#historical-data" class="anchor"></a>Historical Data</h1>
-<p>Bayesian attitude is to bring all the data available to address the scientific question proposed. Any particular trial conducted is unlikely to be the first trial conducted in a particular disease. Pilot studies are conducted in small sample size to obtain an estimation of parameters for a clinical trial (clinically relevant effect size, guide sample size determination, recruitment rates). Besides pilot study, the control drug/treatment is usually experimented before with other drugs as a control/experimental drug before being accepted as a standard drug/treatment to treat a specific disease. However, statisticians need to carefully consider the inclusion and exclusion criteria in a trial before completely accepting an old trial data to incorporate it in a new trial as a historical data. The R package <code>bayesDP</code> is used as a computational engine for computing posteriors as well as integrating historical data.</p>
-<div id="incorporating-historical-data-using-discount-function-approach" class="section level2">
-<h2 class="hasAnchor">
-<a href="#incorporating-historical-data-using-discount-function-approach" class="anchor"></a>Incorporating Historical Data Using Discount Function Approach</h2>
-<p>There are multiple methods to incorporate historical data into a trial. In our implementation, historical data is integrated using the discount function approach. The discount function approach treats historical data with increased skepticism compared to other approaches. The limitations of previous dynamic borrowing approaches such as non-negligible weighting of historical data in the presence of substantial disagreement with current data, negatively affecting the type I error, bias and mean squared error (MSE). The discount function approach</p>
-<p>Throughout this vignette, posterior distributions are denoted by q(), likelihood functions by L(), prior distributions by <span class="math inline">\(\pi()\)</span>, and the discount function by W(). Historical data is denoted by a zero subscript. The updated prior using the discount function approach <span class="math display">\[\pi(\theta | y_0, \alpha) \quad \propto  \quad L( \theta| y_0) ^{\alpha}  \quad \pi(\theta), \]</span> where <span class="math inline">\(\theta\)</span> is the parameter of interest, <span class="math inline">\(y_0\)</span> is the historical data and <span class="math inline">\(\alpha\)</span> is the historical data weight.</p>
-<p>The posterior using the discount function approach</p>
-<p><span class="math display">\[q(\theta|y, y_0, \alpha)  \quad \propto  \quad L(\theta|y) \quad \pi(\theta | y_0, \alpha),  \]</span> where <span class="math inline">\(y\)</span> is the current data and <span class="math inline">\(\theta\)</span> is the parameter of interest.</p>
-<p>Estimation of <span class="math inline">\(\alpha\)</span> consists of two parts. The first part is the measure <span class="math inline">\(p(\theta, \theta_0)\)</span> based on the agreement between the current and historical data. The second part is the discount function <span class="math inline">\(W(p)\)</span>.</p>
-<p>To properly allow for uncertainty, we construct an intermediate comparison parameter like a Wald statistic. For each posterior draw of <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(\theta\)</span>, we compute the agreement measure <span class="math inline">\(p\)</span> as <span class="math display">\[p = 2(1- \Phi(Z)),\]</span> <span class="math display">\[Z = |h(\theta_0) - h(\theta)| (\sqrt{\tau_0^2 + \tau^2})^{-1},\]</span></p>
-<p>where <span class="math inline">\(\Phi\)</span> is the standard normal CDF, <span class="math inline">\(h\)</span> is a (potential) transformation of interest, and <span class="math inline">\(\tau_0^2\)</span> and <span class="math inline">\(\tau^2\)</span> are variance estimates of <span class="math inline">\(h(\theta_0)\)</span> and <span class="math inline">\(h(\theta)\)</span>, respectively. Importantly, as the historical data and the current data are disjoint and independent, there is no covariance term to consider in the construction of the agreement measure. The historical data is weighted heavily if the similarity between the historical data and current data is high.</p>
-<p>The three discount function used to obtain <span class="math inline">\(\alpha_0\)</span> are directly taken from Haddad et al. (2017). First, the identity discount function (default) sets the discount weight <span class="math inline">\(\hat{\alpha}=p\)</span>. Second, the Weibull CDF has two user-specified parameters associated with it, the shape and scale. The default shape is 3 and the default scale is 0.135, each of which are controlled by the function inputs Weibull shape and Weibull scale, respectively. The form of the Weibull CDF is <span class="math inline">\(W(p) = 1 - \exp{- (p/w_{scale})^{w_{shape}}}.\)</span> The third discount function option is the Scaled Weibull CDF. The Scaled Weibull CDF is the Weibull CDF divided by the value of the Weibull CDF evaluated at 1, i.e., <span class="math inline">\(W^{\ast}(p) = W(p)/W(1).\)</span> Similar to the Weibull CDF, the Scaled Weibull CDF has two user-specified parameters associated with it, the shape and scale, again controlled by the function inputs Weibull shape and Weibull scale, respectively.</p>
-</div>
+<a href="#incorporation-of-historical-data" class="anchor"></a>Incorporation of historical Data</h1>
+<p>The Bayesian attitude is to use all available data to address the scientific question under consideration. Most clinical trials are not conducted in a vacuum. Often, pilot studies are conducted in small sample sizes to obtain an estimate of parameters for a clinical trial, e.g., clinically relevant effect size, sample size determination, recruitment rates, etc. Besides pilot studies, the control and/or treatment are usually studied in early phase lab or bench settings. However, clinical trialists need to carefully consider the inclusion and exclusion criteria of historical data in a trial. The R package <code>bayesDP</code> is used as a computational engine for incorporating historical data into a trial design.</p>
+<p>The vignettes presented in the <code>bayesDP</code> package are a rich resource for unstanding the discount function approach and its implementation. Interested readers can refer to the vignettes avaialable at <a href="https://cran.r-project.org/web/packages/bayesDP/" class="uri">https://cran.r-project.org/web/packages/bayesDP/</a>.</p>
 </div>
 <div id="early-stopping-for-futility-or-success" class="section level1">
 <h1 class="hasAnchor">
 <a href="#early-stopping-for-futility-or-success" class="anchor"></a>Early Stopping for Futility or Success</h1>
-<p>Unlike the conventional clinical trials, adaptive Bayesian clinical trials offer much more flexibility. The trial can be stopped early for success or futility. In our implementation for designing bayesian trials, we compute early success and futility upon imputing loss to follow up. However, the final estimation of posterior is done with only complete data.</p>
+<p>With adaptive Bayesian trials, the trial can be stopped early for success or futility. In <code>bayesCT</code>, early success is achieved if the “probability of sucess” exceeds a pre-specified threshold. Likewise, futility occurs if the “probability of futility” is below a pre-specified threshold. In both cases, the probabilities are computed by imputing subjects that may be loss to follow-up. However, final posterior estimation uses complete data only.</p>
 <div id="success" class="section level2">
 <h2 class="hasAnchor">
 <a href="#success" class="anchor"></a>Success</h2>
-<p>The early stopping for success is specified as the equation below.</p>
-<p><span class="math display">\[P(\theta_T - \theta_C &gt; \delta| y, y_0, \alpha) &gt; \Delta,\]</span></p>
-<p>where <span class="math inline">\(\theta_T\)</span> and <span class="math inline">\(\theta_C\)</span> are posterior means of treatment and control group respectively, <span class="math inline">\(\delta\)</span> margin picked (important in non-inferiority design), <span class="math inline">\(y\)</span> and <span class="math inline">\(y_0\)</span> the current and historical data, <span class="math inline">\(\alpha\)</span> the weight of historical data and <span class="math inline">\(\Delta\)</span> the specified criteria for a trial to stop for success.</p>
-<p>If the proportion of mean of the treatment difference is greater than a specified margin (default = 0) is greater than the specified success rate, the trial stops for early success. The specified success rate is set to 0.90 (default).</p>
+<p>The probability of stopping early for success is specified as</p>
+<p><span class="math display">\[Pr(\theta_T - \theta_C &gt; \delta| y, y_0) &gt; \Delta,\]</span></p>
+<p>where <span class="math inline">\(\theta_T\)</span> and <span class="math inline">\(\theta_C\)</span> are the posterior means of the treatment and control groups, respectively, <span class="math inline">\(\delta\)</span> is the difference margin (important in non-inferiority design), <span class="math inline">\(y\)</span> and <span class="math inline">\(y_0\)</span> are the current and historical data, respectively, and <span class="math inline">\(\Delta\)</span> is the specified success criteria. If this probability exceeds <span class="math inline">\(\Delta\)</span>, the trial will stop enrollment for early success. The default success probability is 0.90. If stopping early for success is not desired, the probability can be set to 1.</p>
 </div>
 <div id="futility" class="section level2">
 <h2 class="hasAnchor">
 <a href="#futility" class="anchor"></a>Futility</h2>
-<p>The early stopping for futility is specified as the equation below.</p>
-<p><span class="math display">\[P(\theta_T - \theta_C &gt; \delta| y, y_0, \alpha) &lt; \omega,\]</span></p>
-<p>where the <span class="math inline">\(\omega\)</span> is the specified criteria for a trial to stop for futility.</p>
-<p>If the proportion of mean of the treatment difference is greater than a specified margin (default = 0) is less than the specified futility rate, the trial stops for futility. The specified futility rate is set to 0.10 (default).</p>
+<p>The probability of stopping for futility is specified as</p>
+<p><span class="math display">\[Pr(\theta_T - \theta_C &gt; \delta| y, y_0) &lt; \omega,\]</span></p>
+<p>where <span class="math inline">\(\omega\)</span> is the specified futility criteria. Now, if this probability is below <span class="math inline">\(\omega\)</span>, the trial will stop enrollment for futility. The default futility rate is set to 0.10. If stopping early for futility is not desired, the probability can be set to 0.</p>
 </div>
 </div>
   </div>
@@ -246,11 +228,7 @@
       <li><a href="#running-bayesct">Running bayesCT</a></li>
       <li><a href="#recruitment">Recruitment</a></li>
       <li><a href="#randomization-scheme">Randomization scheme</a></li>
-      <li>
-<a href="#historical-data">Historical Data</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#incorporating-historical-data-using-discount-function-approach">Incorporating Historical Data Using Discount Function Approach</a></li>
-      </ul>
-</li>
+      <li><a href="#incorporation-of-historical-data">Incorporation of historical Data</a></li>
       <li>
 <a href="#early-stopping-for-futility-or-success">Early Stopping for Futility or Success</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#success">Success</a></li>
