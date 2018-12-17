@@ -655,13 +655,14 @@ BACTbinomial <- function(input, no_of_sim = 10000, .data = NULL){
     output_power[[i]] <- do.call(binomialBACT, input)
     output_type1[[i]] <- do.call(binomialBACT, input_t1)
   }
+
   prob_ha <- output_power %>% map_dbl(c("post_prob_accept_alternative"))
   N_stop <- output_power %>% map_dbl(c("N_enrolled"))
   expect_success <- output_power %>% map_dbl(c("stop_expected_success"))
   stop_fail <- output_power %>% map_dbl(c("stop_futility"))
   est_final <- output_power %>% map_dbl(c("est_final"))
 
-  looks <- unique(sort(c(N_stop, output_power[[1]]$N_max)))
+  looks <- unique(sort(c(output_power[[1]]$interim_look, output_power[[1]]$N_max)))
   power <- rep(0, length(looks))
   for(m in 1:(length(looks) - 1)){
     if(m == 1){

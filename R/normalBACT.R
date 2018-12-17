@@ -666,7 +666,7 @@ BACTnormal <- function(input, no_of_sim = 100, .data = NULL){
   stop_fail <- output_power %>% map_dbl(c("stop_futility"))
   est_final <- output_power %>% map_dbl(c("est_final"))
 
-  looks <- unique(sort(c(N_stop, output_power[[1]]$N_max)))
+  looks <- unique(sort(c(output_power[[1]]$interim_look, output_power[[1]]$N_max)))
   power <- rep(0, length(looks))
   for(m in 1:(length(looks) - 1)){
     if(m == 1){
