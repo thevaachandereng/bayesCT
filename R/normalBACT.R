@@ -97,8 +97,8 @@ normalBACT <- function(
   N0_control            = NULL,
   N_total,
   lambda,
-  lambda_time,
-  interim_look,
+  lambda_time           = NULL,
+  interim_look          = NULL,
   EndofStudy,
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
@@ -497,8 +497,8 @@ normalBACT <- function(
 
   # assigning input for control arm given it is a single or double arm
   if(!is.null(mu_control)){
-    mu_c     <- mean(data_final$Y[data$treatment == 0])
-    sd_c     <- sd(data_final$Y[data$treatment == 0])
+    mu_c     <- mean(data_final$Y[data_final$treatment == 0])
+    sd_c     <- sd(data_final$Y[data_final$treatment == 0])
     N_c      <- length(data_final$treatment == 0)
   }
   else{
@@ -663,6 +663,8 @@ BACTnormal <- function(input, no_of_sim = 100, .data = NULL){
   prob_ha <- output_power %>% map_dbl(c("post_prob_accept_alternative"))
   N_stop <- output_power %>% map_dbl(c("N_enrolled"))
   expect_success <- output_power %>% map_dbl(c("stop_expected_success"))
+  stop_fail <- output_power %>% map_dbl(c("stop_futility"))
+  est_final <- output_power %>% map_dbl(c("est_final"))
 
   looks <- unique(sort(c(N_stop, output_power[[1]]$N_max)))
   power <- rep(0, length(looks))
@@ -689,7 +691,13 @@ BACTnormal <- function(input, no_of_sim = 100, .data = NULL){
 
   type1_error <- mean(prob_ha_t1 > output_power[[1]]$prob_of_accepting_alternative)
 
-  return(list(power = power, type1_error = type1_error))
+  return(list(power                         = power,
+              type1_error                   = type1_error,
+              est_final                     = est_final,
+              post_prob_accept_alternative  = prob_ha,
+              N_enrolled                    = N_stop,
+              stop_expect_success           = expect_success,
+              stop_futility                 = stop_fail))
 }
 
 #' @title Historical data for normal distribution
