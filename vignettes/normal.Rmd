@@ -38,7 +38,7 @@ value <-
   randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
-  BACTnormal(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 
 str(value)

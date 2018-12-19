@@ -44,7 +44,7 @@ value <-
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
   hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95, 
              expected_success_prob = 0.90, alternative = "less") %>%
-  BACTbinomial(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 
 str(value)
