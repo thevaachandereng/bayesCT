@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Binomial analysis wrapper function — BACTbinomial_analysis • bayesCT</title>
+<title>Simulation wrapper for binomial and normal. — simulate • bayesCT</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Binomial analysis wrapper function — BACTbinomial_analysis" />
+<meta property="og:title" content="Simulation wrapper for binomial and normal. — simulate" />
 
-<meta property="og:description" content="Wrapper function for binomial bayesCT function to analyze bayesian trials." />
+<meta property="og:description" content="Wrapper function for complete binomial and normal function to compute power and type 1 error." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -119,35 +119,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Binomial analysis wrapper function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/binomial.R'><code>R/binomial.R</code></a></small>
-    <div class="hidden name"><code>BACTbinomial_analysis.Rd</code></div>
+    <h1>Simulation wrapper for binomial and normal.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/simulate.R'><code>R/simulate.R</code></a></small>
+    <div class="hidden name"><code>simulate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Wrapper function for binomial bayesCT function to analyze bayesian trials.</p>
+    <p>Wrapper function for complete binomial and normal function to compute power and type 1 error.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>BACTbinomial_analysis</span>(<span class='no'>input</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/simulate'>simulate</a></span>(<span class='no'>input</span>, <span class='kw'>no_of_sim</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>input</th>
-      <td><p>list. Input function for all binomial_analysis.</p></td>
+      <td><p>list. Input function for all inputs in binomial and normal .</p></td>
+    </tr>
+    <tr>
+      <th>no_of_sim</th>
+      <td><p>numeric. Number of simulations to run</p></td>
     </tr>
     <tr>
       <th>.data</th>
-      <td><p>NULL. stores the binomial analysis details, please do not fill it in.</p></td>
+      <td><p>NULL. stores the proportion of control and treatment, please do not fill it in.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with results of the analysis of bayesian trial.</p>
+    <p>a list with results of the simulation (power and type I error).</p>
     
 
   </div>

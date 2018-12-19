@@ -95,7 +95,12 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayesCT)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayesCT)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; Attaching package: 'bayesCT'</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; The following object is masked from 'package:stats':</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">#&gt;     simulate</span></a></code></pre></div>
 <div id="binomial" class="section level1">
 <h1 class="hasAnchor">
 <a href="#binomial" class="anchor"></a>Binomial</h1>
@@ -116,7 +121,7 @@
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/impute">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>, <span class="dt">number_mcmc =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/hypothesis">hypothesis</a></span>(<span class="dt">delta =</span> <span class="fl">-0.03</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>, </a>
 <a class="sourceLine" id="cb2-17" data-line-number="17">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/BACTbinomial">BACTbinomial</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb2-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value)</a>
