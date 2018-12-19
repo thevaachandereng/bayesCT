@@ -130,15 +130,20 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>beta_prior</span>(<span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>beta_prior</span>(<span class='kw'>a0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>prior</th>
-      <td><p>vector. Prior value of beta rate, <code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta(a0, b0)</a></code>. The default is
-set to <code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta(1, 1)</a></code>.</p></td>
+      <th>a0</th>
+      <td><p>numeric. The first shape paramater in the beta distribution
+(<code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta(a0, b0)</a></code>).</p></td>
+    </tr>
+    <tr>
+      <th>b0</th>
+      <td><p>numeric. The second shape paramater in the beta distribution
+(<code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta(a0, b0)</a></code>).</p></td>
     </tr>
     <tr>
       <th>.data</th>
@@ -152,7 +157,7 @@ set to <code><a href='https://www.rdocumentation.org/packages/base/topics/Specia
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>beta_prior</span>(<span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; $prior
+    <pre class="examples"><div class='input'><span class='fu'>beta_prior</span>(<span class='kw'>a0</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b0</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; $prior
 #&gt; [1] 1 1
 #&gt; </div></pre>
   </div>
