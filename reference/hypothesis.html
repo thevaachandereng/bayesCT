@@ -130,7 +130,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>hypothesis</span>(<span class='no'>delta</span>, <span class='no'>futility_prob</span>, <span class='no'>prob_ha</span>, <span class='no'>expected_success_prob</span>,
+    <pre class="usage"><span class='fu'>hypothesis</span>(<span class='no'>delta</span>, <span class='no'>futility_prob</span>, <span class='no'>prob_accept_ha</span>, <span class='no'>expected_success_prob</span>,
   <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -145,7 +145,7 @@
       <td><p>numeric. Probability of futility.</p></td>
     </tr>
     <tr>
-      <th>prob_ha</th>
+      <th>prob_accept_ha</th>
       <td><p>numeric. Posterior probability of accepting alternative
 hypothesis.</p></td>
     </tr>
@@ -168,12 +168,12 @@ must be one of <code>"greater"</code> (default), <code>"less"</code> or
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a list with information of hypothesis testing (threshold, futility
-  probability, probability of alternative hypothesis, and probability of
+  probability, probability of accepting the alternative hypothesis, and probability of
   expected success).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>hypothesis</span>(<span class='kw'>delta</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+    <pre class="examples"><div class='input'><span class='fu'>hypothesis</span>(<span class='kw'>delta</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>prob_accept_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
            <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.90</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>)</div><div class='output co'>#&gt; $h0
 #&gt; [1] 0
 #&gt; 
@@ -188,7 +188,7 @@ must be one of <code>"greater"</code> (default), <code>"less"</code> or
 #&gt; 
 #&gt; $alternative
 #&gt; [1] "greater"
-#&gt; </div><div class='input'><span class='fu'>hypothesis</span>(<span class='kw'>delta</span><span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.975</span>,
+#&gt; </div><div class='input'><span class='fu'>hypothesis</span>(<span class='kw'>delta</span><span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>prob_accept_ha</span> <span class='kw'>=</span> <span class='fl'>0.975</span>,
            <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.80</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>)</div><div class='output co'>#&gt; $h0
 #&gt; [1] 0.2
 #&gt; 
