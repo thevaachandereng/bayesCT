@@ -35,7 +35,7 @@ value <-
                       y0_control = NULL, N0_control = NULL, 
                       alpha_max = 1, fix_alpha = FALSE, 
                        weibull_scale = 0.135, weibull_shape = 3) %>%
-  beta_prior(prior = c(1, 1)) %>%
+  beta_prior(a0 = 1, b0 = 1) %>%
   randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   study_details(total_sample_size = 900, study_period = 50,
@@ -63,7 +63,7 @@ value1 <-
                       discount_function = "identity", 
                       alpha_max = 1, fix_alpha = FALSE, 
                       weibull_scale = 0.135, weibull_shape = 3) %>%
-  beta_prior(prior = c(1, 1)) %>%
+  beta_prior(a0 = 1, b0 = 1) %>%
   impute(no_of_impute = 100, number_mcmc = 10000) %>%
   hypothesis(delta = 0.02, futility_prob = 0.05, prob_ha = 0.95, 
              expected_success_prob = 0.90, alternative = "greater") %>%

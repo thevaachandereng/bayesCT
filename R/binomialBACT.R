@@ -701,16 +701,18 @@ BACTbinomial <- function(input, no_of_sim = 10000, .data = NULL){
 #'
 #' @description Wrapper function for beta prior \code{beta(a0, b0)}.
 #'
-#' @param prior vector. Prior value of beta rate, \code{beta(a0, b0)}. The default is
-#'   set to \code{beta(1, 1)}.
+#' @param a0 numeric. The first shape paramater in the beta distribution
+#'   (\code{beta(a0, b0)}).
+#' @param b0 numeric. The second shape paramater in the beta distribution
+#'   (\code{beta(a0, b0)}).
 #' @param .data NULL. stores the beta prior rate, please do not fill it in.
 #'
 #' @return a list with vector of beta rate for the beta prior for treatment and control group.
 #'
-#' @examples beta_prior(prior = c(1, 1))
+#' @examples beta_prior(a0 = 1, b0 = 1)
 #' @export beta_prior
-beta_prior <- function(prior = c(1, 1), .data = NULL){
-  .data$prior  <- prior
+beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
+  .data$prior  <- c(a0, b0)
   .data
 }
 

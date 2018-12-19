@@ -4,11 +4,14 @@
 \alias{beta_prior}
 \title{Beta prior for for control and treatment group}
 \usage{
-beta_prior(prior = c(1, 1), .data = NULL)
+beta_prior(a0 = 1, b0 = 1, .data = NULL)
 }
 \arguments{
-\item{prior}{vector. Prior value of beta rate, \code{beta(a0, b0)}. The default is
-set to \code{beta(1, 1)}.}
+\item{a0}{numeric. The first shape paramater in the beta distribution
+(\code{beta(a0, b0)}).}
+
+\item{b0}{numeric. The second shape paramater in the beta distribution
+(\code{beta(a0, b0)}).}
 
 \item{.data}{NULL. stores the beta prior rate, please do not fill it in.}
 }
@@ -19,5 +22,5 @@ a list with vector of beta rate for the beta prior for treatment and control gro
 Wrapper function for beta prior \code{beta(a0, b0)}.
 }
 \examples{
-beta_prior(prior = c(1, 1))
+beta_prior(a0 = 1, b0 = 1)
 }
