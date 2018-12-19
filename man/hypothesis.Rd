@@ -4,7 +4,7 @@
 \alias{hypothesis}
 \title{Hypothesis wrapper}
 \usage{
-hypothesis(delta, futility_prob, prob_ha, expected_success_prob,
+hypothesis(delta, futility_prob, prob_accept_ha, expected_success_prob,
   alternative = "greater", .data = NULL)
 }
 \arguments{
@@ -12,7 +12,7 @@ hypothesis(delta, futility_prob, prob_ha, expected_success_prob,
 
 \item{futility_prob}{numeric. Probability of futility.}
 
-\item{prob_ha}{numeric. Posterior probability of accepting alternative
+\item{prob_accept_ha}{numeric. Posterior probability of accepting alternative
 hypothesis.}
 
 \item{expected_success_prob}{numeric. Probability of expected success.}
@@ -25,15 +25,15 @@ must be one of \code{"greater"} (default), \code{"less"} or
 }
 \value{
 a list with information of hypothesis testing (threshold, futility
-  probability, probability of alternative hypothesis, and probability of
+  probability, probability of accepting the alternative hypothesis, and probability of
   expected success).
 }
 \description{
 Wrapper function for the hypothesis in the trial.
 }
 \examples{
-hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95,
+hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
            expected_success_prob = 0.90, alternative = "greater")
-hypothesis(delta= 0.2, futility_prob = 0.1, prob_ha = 0.975,
+hypothesis(delta= 0.2, futility_prob = 0.1, prob_accept_ha = 0.975,
            expected_success_prob = 0.80, alternative = "less")
 }

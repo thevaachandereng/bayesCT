@@ -93,7 +93,7 @@ randomize <- function(block_size, randomization_ratio, .data = NULL){
 #'
 #' @param delta numeric. Threshold set for margin in null hypothesis.
 #' @param futility_prob numeric. Probability of futility.
-#' @param prob_ha numeric. Posterior probability of accepting alternative
+#' @param prob_accept_ha numeric. Posterior probability of accepting alternative
 #'   hypothesis.
 #' @param expected_success_prob numeric. Probability of expected success.
 #' @param alternative character. The string specifying the alternative hypothesis,
@@ -102,19 +102,19 @@ randomize <- function(block_size, randomization_ratio, .data = NULL){
 #' @inheritParams study_details
 #'
 #' @return a list with information of hypothesis testing (threshold, futility
-#'   probability, probability of alternative hypothesis, and probability of
+#'   probability, probability of accepting the alternative hypothesis, and probability of
 #'   expected success).
 #'
 #' @examples
-#' hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95,
+#' hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
 #'            expected_success_prob = 0.90, alternative = "greater")
-#' hypothesis(delta= 0.2, futility_prob = 0.1, prob_ha = 0.975,
+#' hypothesis(delta= 0.2, futility_prob = 0.1, prob_accept_ha = 0.975,
 #'            expected_success_prob = 0.80, alternative = "less")
 #' @export hypothesis
-hypothesis <- function(delta, futility_prob, prob_ha, expected_success_prob, alternative = "greater", .data = NULL){
+hypothesis <- function(delta, futility_prob, prob_accept_ha, expected_success_prob, alternative = "greater", .data = NULL){
   .data$h0                     <- delta
   .data$futility_prob          <- futility_prob
-  .data$prob_ha                <- prob_ha
+  .data$prob_ha                <- prob_accept_ha
   .data$expected_success_prob  <- expected_success_prob
   .data$alternative            <- alternative
   .data

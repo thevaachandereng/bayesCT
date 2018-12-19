@@ -36,7 +36,7 @@ value <-
                 prop_loss_to_followup = 0.10) %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
   randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95,
+  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
   BACTnormal(no_of_sim = 5)
 
@@ -55,7 +55,7 @@ value1 <-
                     discount_function = "weibull", alpha_max = F, fix_alpha = 1,
                     weibull_scale = 0.135, weibull_shape = 3) %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95,
+  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
   BACTnormal_analysis()
 
