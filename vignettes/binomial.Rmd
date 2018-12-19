@@ -17,9 +17,20 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 set.seed(28999)
 ```
 
-```{r}
+```{r, echo = FALSE, message = FALSE}
 library(bayesCT)
 ```
+
+
+# Introduction
+
+The purpose of this vignette is to introduce how to simulate and analyze an adaptive bayesian clinical trial for binomial outcomes. 
+The simulation section compromise of the design of the trial itself which provides a type I error rate and power at each interim look. 
+We use the beta-binomial conjugate for the estimation of posterior probabilities. 
+The historical data is used as an informative prior and we use `bayesDP` as an engine to incorporate the historical data. 
+The default model uses a non-informative prior of $Beta(a = 1, b = 1)$ with/wothout the incorporation of historical data.
+
+
 
 
 

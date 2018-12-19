@@ -17,7 +17,7 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 set.seed(28999)
 ```
 
-```{r}
+```{r, message = FALSE, echo = FALSE}
 library(bayesCT)
 ```
 
