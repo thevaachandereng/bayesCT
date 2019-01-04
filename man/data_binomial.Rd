@@ -4,12 +4,18 @@
 \alias{data_binomial}
 \title{Data file for binomial analysis}
 \usage{
-data_binomial(data, .data = NULL)
+data_binomial(treatment, outcome, complete, .data = NULL)
 }
 \arguments{
-\item{data}{data frame. A data frame which provides patient id, treatment group, outcome
-of the treatment and complete columns. An example file is available at
-\code{data(binomialdata)}.}
+\item{treatment}{vector. treatment assignment for patients, 1 for treatment group and
+0 for control group}
+
+\item{outcome}{vector. binomial outcome of the trial, 1 for response (success or
+failure), 0 for no response.}
+
+\item{complete}{vector. similar length as treatment and outcome variable,
+1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+the dataset is assumed to be complete.}
 
 \item{.data}{NULL. stores the binomial data for analysis, please do not fill it in.}
 }
@@ -20,5 +26,5 @@ a list with binomial data file to be analyzed.
 Wrapper function for data file in binomial analysis.
 }
 \examples{
-data_binomial(data = binomialdata)
+data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
 }

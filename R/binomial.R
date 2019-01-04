@@ -75,7 +75,7 @@ binomialBACT <- function(
 
   # checking interim_look
   if(!is.null(interim_look)){
-    stopifnot(all(N_total  > interim_look))
+    stopifnot(all(N_total > interim_look))
   }
 
   # checking other inputs
@@ -431,7 +431,7 @@ binomialBACT <- function(
 
   # All patients that have made it to the end of study
   # - Subset out patients loss to follow-up
-  data_final <- data_interim %>%
+  data_final <- data_total %>%
     filter(id <= stage_trial_stopped,
            !loss_to_fu)
 
@@ -622,81 +622,6 @@ historical_binomial <- function(y0_treatment       = NULL,
 }
 
 
-
-#' @title Complete binomial wrapper function
-#'
-#' @description Wrapper function for complete binomial bayesCT function to compute power and type 1 error.
-#'
-#' @param input list. Input function for all binomial_BACT.
-#' @param no_of_sim numeric. Number of simulations to run
-#' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
-#'
-#' @return a list with results of the simulation (power and type I error).
-#'
-#' @importFrom stats rbinom glm
-#' @importFrom dplyr mutate filter group_by bind_rows select n
-#' @importFrom knitr kable
-#' @importFrom purrr map_dbl
-#' @importFrom bayesDP bdpbinomial
-#'
-#' @export BACTbinomial
-#'
-BACTbinomial <- function(input, no_of_sim = 10000, .data = NULL){
-  output_power <- list()
-  output_type1 <- list()
-  input_t1 <- input
-  if(!is.null(input_t1$p_control)){
-    input_t1$p_treatment <- input_t1$p_control
-  }
-  else{
-    input_t1$h0 <- 0
-  }
-  for(i in 1:no_of_sim){
-    output_power[[i]] <- do.call(binomialBACT, input)
-    output_type1[[i]] <- do.call(binomialBACT, input_t1)
-  }
-
-  prob_ha <- output_power %>% map_dbl(c("post_prob_accept_alternative"))
-  N_stop <- output_power %>% map_dbl(c("N_enrolled"))
-  expect_success <- output_power %>% map_dbl(c("stop_expected_success"))
-  stop_fail <- output_power %>% map_dbl(c("stop_futility"))
-  est_final <- output_power %>% map_dbl(c("est_final"))
-
-  looks <- unique(sort(c(output_power[[1]]$interim_look, output_power[[1]]$N_max)))
-  power <- rep(0, length(looks))
-  for(m in 1:(length(looks) - 1)){
-    if(m == 1){
-      power[1] <- mean((N_stop == looks[m] & expect_success == 1 &
-                          prob_ha > output_power[[1]]$prob_of_accepting_alternative))
-    }
-    else{
-      power[m] <- mean((N_stop == looks[m] &
-                        expect_success == 1 &
-                        prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
-                  power[m - 1]
-    }
-  }
-  power[length(looks)] <- mean((N_stop == looks[length(looks)] &
-                                prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
-                          power[length(looks) - 1]
-
-  power <- data.frame(interim_looks = looks, power = power)
-
-  prob_ha_t1 <- output_type1 %>% map_dbl(c("post_prob_accept_alternative"))
-  expect_success_t1 <- output_type1 %>% map_dbl(c("stop_expected_success"))
-
-  type1_error <- mean(prob_ha_t1 > output_power[[1]]$prob_of_accepting_alternative)
-
-  return(list(power                         = power,
-              type1_error                   = type1_error,
-              est_final                     = est_final,
-              post_prob_accept_alternative  = prob_ha,
-              N_enrolled                    = N_stop,
-              stop_expect_success           = expect_success,
-              stop_futility                 = stop_fail))
-}
-
-
 #' @title Beta prior for for control and treatment group
 #'
 #' @description Wrapper function for beta prior \code{beta(a0, b0)}.
@@ -723,9 +648,13 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
 #'  which allows early stopping and incorporation of historical data using
 #'  the discount function approach
 #'
-#' @param data data frame. A data frame which provides patient id, treatment group, outcome
-#'    of the treatment and complete columns. An example file is available at
-#'    \code{data(binomialdata)}.
+#' @param treatment vector. treatment assignment for patients, 1 for treatment group and
+#'    0 for control group
+#' @param outcome vector. binomial outcome of the trial, 1 for response (success or
+#'    failure), 0 for no response.
+#' @param complete vector. similar length as treatment and outcome variable,
+#'    1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+#'    the dataset is assumed to be complete.
 #' @inheritParams normalBACT
 #' @inheritParams binomialBACT
 #'
@@ -738,7 +667,9 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
 #' @export binomial_analysis
 
 binomial_analysis <- function(
-  data                  = NULL,
+  treatment,
+  outcome,
+  complete              = NULL,
   y0_treatment          = NULL,
   N0_treatment          = NULL,
   y0_control            = NULL,
@@ -757,8 +688,14 @@ binomial_analysis <- function(
   weibull_scale         = 0.135,
   weibull_shape         = 3
 ){
+
+  #if complete is NULL, assume the data is complete
+  if(is.null(complete)){
+   complete <- rep(1, length(outcome))
+  }
+
   #reading the data
-  data_total <- data
+  data_total <- cbind(treatment, outcome, complete)
 
   data_interim <- data_total %>%
     mutate(futility = complete == 0)
@@ -1021,17 +958,17 @@ BACTbinomial_analysis <- function(input, .data = NULL){
 #'
 #' @description Wrapper function for data file in binomial analysis.
 #'
-#' @param data data frame. A data frame which provides patient id, treatment group, outcome
-#'    of the treatment and complete columns. An example file is available at
-#'    \code{data(binomialdata)}.
+#' @inheritParams binomial_analysis
 #' @param .data NULL. stores the binomial data for analysis, please do not fill it in.
 #'
 #' @return a list with binomial data file to be analyzed.
 #'
-#' @examples data_binomial(data = binomialdata)
+#' @examples data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
 #' @export data_binomial
-data_binomial <- function(data, .data = NULL){
-  .data$data <- data.frame(data)
+data_binomial <- function(treatment, outcome, complete, .data = NULL){
+  .data$treatment <- treatment
+  .data$outcome   <- outcome
+  .data$complete  <- complete
   .data
 }
 
