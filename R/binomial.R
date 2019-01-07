@@ -697,10 +697,10 @@ binomial_analysis <- function(
   }
 
   #reading the data
-  data_total <- cbind(treatment, outcome, complete)
+  data_total <- data.frame(cbind(treatment, outcome, complete))
 
   data_interim <- data_total %>%
-    mutate(futility = complete == 0)
+    mutate(futility = (complete == 0))
 
   data <- data_interim %>%
     filter(!futility)
