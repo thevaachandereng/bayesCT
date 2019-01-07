@@ -37,7 +37,7 @@ binomialBACT <- function(
   N0_control            = NULL,
   discount_function     = "identity",
   N_total,
-  lambda,
+  lambda                = 0.3,
   lambda_time           = NULL,
   interim_look          = NULL,
   EndofStudy,

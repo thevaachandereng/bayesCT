@@ -7,7 +7,7 @@
 normalBACT(mu_treatment, sd_treatment, mu_control = NULL,
   sd_control = NULL, mu0_treatment = NULL, sd0_treatment = NULL,
   N0_treatment = NULL, mu0_control = NULL, sd0_control = NULL,
-  N0_control = NULL, N_total, lambda, lambda_time = NULL,
+  N0_control = NULL, N_total, lambda = 0.3, lambda_time = NULL,
   interim_look = NULL, EndofStudy, block = 2, rand_ratio = c(1, 1),
   discount_function = "identity", alternative = "greater",
   prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,

@@ -96,7 +96,7 @@ normalBACT <- function(
   sd0_control           = NULL,
   N0_control            = NULL,
   N_total,
-  lambda,
+  lambda                = 0.3,
   lambda_time           = NULL,
   interim_look          = NULL,
   EndofStudy,
