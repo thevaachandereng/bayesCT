@@ -40,25 +40,88 @@ value <-
    enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
    study_details(total_sample_size = 900, study_period = 50,
                  interim_look = NULL,
-                 prop_loss_to_followup = 0.10) %>%
-   simulate(no_of_sim = 10)
+                 prop_loss_to_followup = 0.10) 
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+  
  
- str(value)
+str(output)
 ```
 
 
 
 
 ```{r}
-value <-
-  binomial_outcome(p_treatment = 0.08) %>%
-  enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
+value <- value %>%
   study_details(total_sample_size = 900, study_period = 50,
                 interim_look = c(410, 440, 670),
-                prop_loss_to_followup = 0.10) %>%
-  simulate(no_of_sim = 2)
+                prop_loss_to_followup = 0.10) 
 
-str(value)
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+
+```{r}
+value <- value %>% 
+   hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95, 
+             expected_success_prob = 0.90, alternative = "less")
+ 
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+
+
+```{r}
+value <- value %>% 
+  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1))
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+
+
+```{r}
+value <- value %>% 
+  impute(no_of_impute = 25, number_mcmc = 1000)
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+```{r}
+value <- value %>% 
+  beta_prior(a0 = 5, b0 = 5)
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+```{r}
+value <- value %>% 
+  historical_binomial(y0_treatment = 5, N0_treatment = 55,
+                      discount_function = "identity", 
+                      y0_control = NULL, N0_control = NULL, 
+                      alpha_max = 1, fix_alpha = FALSE, 
+                       weibull_scale = 0.135, weibull_shape = 3)
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
 ```
 
 
@@ -75,7 +138,7 @@ value <-
              expected_success_prob = 0.90, alternative = "less") %>%
   randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
-  beta_prior(a0 = 1, b0 = 1) %>%
+  beta_prior(a0 = 5, b0 = 5) %>%
   historical_binomial(y0_treatment = 5, N0_treatment = 55,
                       discount_function = "identity", 
                       y0_control = NULL, N0_control = NULL, 
