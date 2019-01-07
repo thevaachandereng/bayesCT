@@ -21,7 +21,15 @@ set.seed(28999)
 library(bayesCT)
 ```
 
+# Introduction
 
+The purpose of this vignette is to introduce how to simulate and analyze an adaptive bayesian clinical trial for normal outcomes. 
+The simulation section compromise of the design of the trial itself which provides a type I error rate and power at each interim look. 
+We use the normal-normal conjugate for the estimation of posterior probabilities. 
+The historical data is used as an informative prior and we use `bayesDP` as an engine to incorporate the historical data. 
+
+
+# Design
 
 
 ```{r}
@@ -46,19 +54,60 @@ value <-
 str(value)
 ```
 
+# Analysis
 
 ```{r}
 data(normaldata)
 
+head(normaldata)
+```
+
+
+
+```{r}
 value1 <-
   data_normal(data = normaldata) %>%
+  analysis(type = "normal")
+
+str(value1)
+```
+
+
+```{r}
+value1 <-
+  data_normal(data = normaldata) %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
+             expected_success_prob = 0.90, alternative = "less") %>%
+  analysis(type = "normal")
+
+str(value1)
+  
+```
+
+
+```{r}
+value1 <-
+  data_normal(data = normaldata) %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
+             expected_success_prob = 0.90, alternative = "less") %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>%
+  analysis(type = "normal")
+
+str(value1)
+```
+
+
+```{r}
+
+value1 <-
+  data_normal(data = normaldata) %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
+             expected_success_prob = 0.90, alternative = "less") %>%
+  impute(no_of_impute = 25, number_mcmc = 1000) %>%
   historical_normal(mu0_treatment = 13, sd0_treatment = 2, N0_treatment = 100,
                     mu0_control = 12, sd0_control = 3, N0_control = 120, 
                     discount_function = "weibull", alpha_max = F, fix_alpha = 1,
                     weibull_scale = 0.135, weibull_shape = 3) %>%
-  impute(no_of_impute = 25, number_mcmc = 1000) %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-             expected_success_prob = 0.90, alternative = "less") %>%
   analysis(type = "normal")
 
 
