@@ -1054,26 +1054,6 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "
 
 
 
-#' @title Normal data analysis wrapper function
-#'
-#' @description Wrapper function for normal bayesCT function to analyze bayesian trials.
-#'
-#' @param input list. Input function for all normal_analysis variables.
-#' @param .data NULL. stores the normal analysis details, please do not fill it in.
-#'
-#' @return a list with results of the analysis of bayesian trial.
-#'
-#' @importFrom stats rnorm lm
-#' @importFrom dplyr mutate filter group_by bind_rows select n
-#' @importFrom bayesDP bdpnormal
-#'
-#' @export BACTnormal_analysis
-#'
-
-BACTnormal_analysis <- function(input, .data = NULL){
-  do.call(normal_analysis, input)
-}
-
 
 #' @title Data file for normal analysis
 #'

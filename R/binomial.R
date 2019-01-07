@@ -935,26 +935,6 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "
 
 
 
-#' @title Binomial analysis wrapper function
-#'
-#' @description Wrapper function for binomial bayesCT function to analyze bayesian trials.
-#'
-#' @param input list. Input function for all binomial_analysis.
-#' @param .data NULL. stores the binomial analysis details, please do not fill it in.
-#'
-#' @return a list with results of the analysis of bayesian trial.
-#'
-#' @importFrom stats rbinom glm
-#' @importFrom dplyr mutate filter group_by bind_rows select n
-#' @importFrom bayesDP bdpbinomial
-#'
-#' @export BACTbinomial_analysis
-#'
-
-BACTbinomial_analysis <- function(input, .data = NULL){
-  do.call(binomial_analysis, input)
-}
-
 
 #' @title Data file for binomial analysis
 #'
