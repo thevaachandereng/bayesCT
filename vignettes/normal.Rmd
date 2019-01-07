@@ -22,6 +22,8 @@ library(bayesCT)
 ```
 
 
+
+
 ```{r}
 value <-
   normal_outcome(mu_control = 16, mu_treatment = 13,
@@ -57,7 +59,7 @@ value1 <-
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
-  BACTnormal_analysis()
+  analysis(type = "normal")
 
 
 str(value1)

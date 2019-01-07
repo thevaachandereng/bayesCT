@@ -103,7 +103,7 @@ value1 <-
   data_binomial(treatment = binomialdata$treatment, 
                 outcome   = binomialdata$outcome, 
                 complete  = binomialdata$complete) %>%
-  BACTbinomial_analysis()
+  analysis(type = "binomial")
 
 str(value1)
 ```
@@ -116,7 +116,7 @@ value1 <-
                 outcome   = binomialdata$outcome, 
                 complete  = binomialdata$complete) %>%
   hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater") %>%
-  BACTbinomial_analysis()
+  analysis(type = "binomial")
 
 str(value1)
 ```
@@ -130,7 +130,7 @@ value1 <-
                 complete  = binomialdata$complete) %>%
   hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater") %>%
   impute(no_of_impute = 50, number_mcmc = 10000) %>%
-  BACTbinomial_analysis()
+  analysis(type = "binomial")
 
 str(value1)
 ```
@@ -144,7 +144,7 @@ value1 <-
   hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater") %>%
   impute(no_of_impute = 50, number_mcmc = 1000) %>%
   beta_prior(a0 = 1, b0 = 1) %>%
-  BACTbinomial_analysis()
+  analysis(type = "binomial")
 
 str(value1)
 ```
@@ -164,7 +164,7 @@ value1 <-
                       discount_function = "identity", 
                       alpha_max = 1, fix_alpha = FALSE, 
                       weibull_scale = 0.135, weibull_shape = 3) %>%
-  BACTbinomial_analysis()
+  analysis(type = "binomial")
  
 str(value1)
 
