@@ -29,9 +29,26 @@ The simulation section compromise of the design of the trial itself which provid
 We use the beta-binomial conjugate for the estimation of posterior probabilities. 
 The historical data is used as an informative prior and we use `bayesDP` as an engine to incorporate the historical data. 
 The default model uses a non-informative prior of $Beta(a = 1, b = 1)$ with/without the incorporation of historical data.
+Instead of using traditional R function, we use pipes to input our parameters. 
+
+
+# Wrapper Function for Design and Analysis
+
+**binomial outcome**: The binomial outcome is a wrapper function for the simulation. The binomial outcome has two input **p_treatment** and **p_control**. **p_treatment** is a required input where the proportion of events for a single-arm or double-arm trials are specified for the treatment arm, where $0 < p_{treatment} < 1$. **p_control** is set to NULL as default for single-arm trials. However, for two-arm trials **p_control** input specifies the proportion of events for the control arm, where $0 < p_{control} < 1$. 
+
+
+**study_details**: The study_details is a wrapper function for the simulation. The **study_details** function takes four input (**total_sample_size**, **study_period**, **interim_look** and **prop_loss_to_followup**). The **total_sample_size** input determines the number of sample size required to run the simulation. The **study_period** input determines the length of the study. Since interim look at x is done when the x^{th} patient is enrolled, the length of study is important for imputation purpose. The **interim_look** function allows a vector of numeric value, where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please look at the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The interim_look values need to be smaller than the sample_size value. Loss to follow up is not peculiar in a clinical trial setting, the **prop_loss_to_followup** input allows to set the proportion of loss to follow up. The default value is set to 0.10. The **prop_loss_to_followup** needs to be between 0 and 1.  
+
+
+**enrollment_rate**: The enrollment rate is a wrapper function for the simulation. The **enrollment_rate** function takes two input (**lambda**, **time**) unlike the **enrollment** function. The **lambda** input is similar to **param** input in the **enrollment** function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). The **time** input works similarly to the **time** input in the **enrollment** function where **time** input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html).  
+
+
+**hypothesis**:
+
 
 
 # Design
+
 
 
 ```{r}
