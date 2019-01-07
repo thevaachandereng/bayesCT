@@ -56,21 +56,29 @@ simulate <- function(input, no_of_sim = 10000, .data = NULL){
 
   looks <- unique(sort(c(output_power[[1]]$interim_look, output_power[[1]]$N_max)))
   power <- rep(0, length(looks))
-  for(m in 1:(length(looks) - 1)){
-    if(m == 1){
-      power[1] <- mean((N_stop == looks[m] & expect_success == 1 &
-                          prob_ha > output_power[[1]]$prob_of_accepting_alternative))
+  if(length(looks) > 1){
+    for(m in 1:(length(looks) - 1)){
+      if(m == 1){
+        power[1] <- mean((N_stop == looks[m] & expect_success == 1 &
+                            prob_ha > output_power[[1]]$prob_of_accepting_alternative))
+      }
+      else{
+        power[m] <- mean((N_stop == looks[m] &
+                            expect_success == 1 &
+                            prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
+          power[m - 1]
+      }
     }
-    else{
-      power[m] <- mean((N_stop == looks[m] &
-                          expect_success == 1 &
-                          prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
-        power[m - 1]
-    }
+    power[length(looks)] <- mean((N_stop == looks[length(looks)] &
+                                    prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
+      power[length(looks) - 1]
   }
-  power[length(looks)] <- mean((N_stop == looks[length(looks)] &
-                                  prob_ha > output_power[[1]]$prob_of_accepting_alternative)) +
-    power[length(looks) - 1]
+  else{
+    power[length(looks)] <- mean((N_stop == looks[length(looks)] &
+                                    prob_ha > output_power[[1]]$prob_of_accepting_alternative))
+
+  }
+
 
   power <- data.frame(interim_looks = looks, power = power)
 
