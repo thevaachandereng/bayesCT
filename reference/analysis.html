@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Binomial analysis wrapper function — BACTbinomial_analysis • bayesCT</title>
+<title>Analysis wrapper function — analysis • bayesCT</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Binomial analysis wrapper function — BACTbinomial_analysis" />
+<meta property="og:title" content="Analysis wrapper function — analysis" />
 
-<meta property="og:description" content="Wrapper function for binomial bayesCT function to analyze bayesian trials." />
+<meta property="og:description" content="Wrapper function to analyze bayesian trials." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -119,29 +119,34 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Binomial analysis wrapper function</h1>
-    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/binomial.R'><code>R/binomial.R</code></a></small>
-    <div class="hidden name"><code>BACTbinomial_analysis.Rd</code></div>
+    <h1>Analysis wrapper function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/analysis.R'><code>R/analysis.R</code></a></small>
+    <div class="hidden name"><code>analysis.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Wrapper function for binomial bayesCT function to analyze bayesian trials.</p>
+    <p>Wrapper function to analyze bayesian trials.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>BACTbinomial_analysis</span>(<span class='no'>input</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>analysis</span>(<span class='no'>input</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>input</th>
-      <td><p>list. Input function for all binomial_analysis.</p></td>
+      <td><p>list. Input function for all the analysis.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>character. Type of analysis to be ran (binomial (default),
+normal. etc.).</p></td>
     </tr>
     <tr>
       <th>.data</th>
-      <td><p>NULL. stores the binomial analysis details, please do not fill it in.</p></td>
+      <td><p>NULL. stores the all the details, please do not fill it in.</p></td>
     </tr>
     </table>
     
