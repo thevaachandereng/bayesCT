@@ -21,7 +21,7 @@ analysis <- function(input, type = "binomial", .data = NULL){
     do.call(binomial_analysis, input)
   }
 
-  if(type == "normal"){
+  else if(type == "normal"){
     do.call(normal_analysis, input)
   }
 
