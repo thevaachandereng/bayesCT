@@ -516,16 +516,16 @@ binomialBACT <- function(
     N_enrolled                                 = N_enrolled,               # Total sample size enrolled when trial stopped
     N_max                                      = N_total, 				         # Total potential sample size
     post_prob_accept_alternative               = post_paa,                 # Posterior probability that alternative hypothesis is true
-    est_final                                  = mean(effect)              # Posterior Mean of treatment effect
+    est_final                                  = mean(effect),             # Posterior Mean of treatment effect
+    stop_futility                              = stop_futility,            # Did the trial stop for futility
+    stop_expected_success                      = stop_expected_success     # Did the trial stop for expected success
     #MLE_est                                   = MLE$coe[2],               # Treatment effect useing MLE
     #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect useing MLE at interim analysis
   )
 
   if(length(analysis_at_enrollnumber) > 1){
     results_list                            <- c(results_list,
-    est_interim                             = mean(effect_int),           # Posterior Mean of treatment effect at interim analysis
-    stop_futility                           = stop_futility,              # Did the trial stop for futility
-    stop_expected_success                   = stop_expected_success)      # Did the trial stop for expected success
+    est_interim                             = mean(effect_int))           # Posterior Mean of treatment effect at interim analysis
 
   }
 
