@@ -109,7 +109,7 @@ normalBACT <- function(
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 100,          # Number of imputation simulations for predictive distribution
+  N_impute              = 10,          # Number of imputation simulations for predictive distribution
   number_mcmc           = 1000,         # Number of posterior sampling
   alpha_max             = 1,            # max weight on incorporating historical data
   fix_alpha             = FALSE,        # fix alpha set weight of historical data to alpha_max

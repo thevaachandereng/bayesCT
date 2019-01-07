@@ -11,7 +11,7 @@ normalBACT(mu_treatment, sd_treatment, mu_control = NULL,
   interim_look = NULL, EndofStudy, block = 2, rand_ratio = c(1, 1),
   discount_function = "identity", alternative = "greater",
   prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 100,
+  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 10,
   number_mcmc = 1000, alpha_max = 1, fix_alpha = FALSE,
   weibull_scale = 0.135, weibull_shape = 3)
 }
