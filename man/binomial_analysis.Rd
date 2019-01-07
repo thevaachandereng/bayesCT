@@ -6,7 +6,7 @@
 \usage{
 binomial_analysis(treatment, outcome, complete = NULL,
   y0_treatment = NULL, N0_treatment = NULL, y0_control = NULL,
-  N0_control = NULL, alternative = "greater", N_impute = 100,
+  N0_control = NULL, alternative = "greater", N_impute = 10,
   h0 = 0, number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
   expected_success_prob = 0.9, prior = c(1, 1),
   discount_function = "identity", fix_alpha = FALSE, alpha_max = 1,
