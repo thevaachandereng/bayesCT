@@ -972,7 +972,7 @@ normal_analysis <- function(
     #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect useing MLE at interim analysis
   )
 
-  results_list
+  return(results_list)
 
 }
 
