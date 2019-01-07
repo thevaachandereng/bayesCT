@@ -311,7 +311,18 @@
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb11-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb11-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt;  NULL</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  $ margin                       : num 0</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.994</span></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">value1 &lt;-</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
@@ -320,7 +331,18 @@
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;  NULL</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.983</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num 0.123</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">value1 &lt;-</a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
 <a class="sourceLine" id="cb13-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
@@ -330,7 +352,18 @@
 <a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  NULL</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.982</span></a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">value1 &lt;-</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
@@ -341,7 +374,18 @@
 <a class="sourceLine" id="cb14-8" data-line-number="8"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb14-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;  NULL</span></a></code></pre></div>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.979</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt;  $ est_final                    : num 0.122</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">value1 &lt;-</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
@@ -357,7 +401,18 @@
 <a class="sourceLine" id="cb15-13" data-line-number="13"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
 <a class="sourceLine" id="cb15-14" data-line-number="14"> </a>
 <a class="sourceLine" id="cb15-15" data-line-number="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt;  NULL</span></a></code></pre></div>
+<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.965</span></a>
+<a class="sourceLine" id="cb15-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num 0.109</span></a>
+<a class="sourceLine" id="cb15-26" data-line-number="26"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb15-27" data-line-number="27"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
 </div>
   </div>
 
