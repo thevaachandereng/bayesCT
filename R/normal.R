@@ -479,8 +479,10 @@ normalBACT <- function(
 
   # assigning stage trial stopped given no interim look
   else{
-    N_enrolled <- N_total
-    stage_trial_stopped <- N_total
+    N_enrolled            <- N_total
+    stage_trial_stopped   <- N_total
+    stop_futility         <- 0
+    stop_expected_success <- 0
   }
 
   #print(N_enrolled)
@@ -564,10 +566,10 @@ normalBACT <- function(
 
   # output
   results_list <- list(
-    mu_treatment                               = mu_treatment,            # mean of treatment in normal
-    mu_control                                 = mu_control,              # mean of control in normal
-    sd_treatment                               = sd_treatment,            # sd of treatment in normal
-    sd_control                                 = sd_control,              # sd of control in normal
+    mu_treatment                               = mu_treatment,             # mean of treatment in normal
+    mu_control                                 = mu_control,               # mean of control in normal
+    sd_treatment                               = sd_treatment,             # sd of treatment in normal
+    sd_control                                 = sd_control,               # sd of control in normal
     prob_of_accepting_alternative              = prob_ha,
     margin                                     = h0,                       # margin for error
     alternative                                = alternative,              # alternative hypothesis
@@ -575,20 +577,20 @@ normalBACT <- function(
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
     N_complete                                 = N_treatment + N_control,
-    N_enrolled                                 = N_enrolled,              # Total sample size enrolled when trial stopped
-    N_max                                      = N_total, 				        # Total potential sample size
+    N_enrolled                                 = N_enrolled,               # Total sample size enrolled when trial stopped
+    N_max                                      = N_total, 				         # Total potential sample size
     post_prob_accept_alternative               = post_paa,                 # Posterior probability that alternative hypothesis is true
-    est_final                                  = mean(effect)              # Posterior Mean of treatment effect
-    #MLE_est                                   = MLE$coe[2],              # Treatment effect useing MLE
-    #MLE_est_interim                           = MLE_int$coe[2]           # Treatment effect useing MLE at interim analysis
+    est_final                                  = mean(effect),             # Posterior Mean of treatment effect
+    stop_futility                              = stop_futility,            # Did the trial stop for futility
+    stop_expected_success                      = stop_expected_success     # Did the trial stop for expected success
+    #MLE_est                                   = MLE$coe[2],               # Treatment effect useing MLE
+    #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect useing MLE at interim analysis
   )
 
   #if there is an interim look
   if(length(analysis_at_enrollnumber) > 1){
     results_list                            <- c(results_list,
-    est_interim                             = mean(effect_int),           # Posterior Mean of treatment effect at interim analysis
-    stop_futility                           = stop_futility,              # Did the trial stop for futility
-    stop_expected_success                   = stop_expected_success)      # Did the trial stop for expected success
+    est_interim                             = mean(effect_int))           # Posterior Mean of treatment effect at interim analysis
     }
 
   # return results
