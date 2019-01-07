@@ -95,6 +95,14 @@
 
     
     
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p>The purpose of this vignette is to introduce how to simulate and analyze an adaptive bayesian clinical trial for normal outcomes. The simulation section compromise of the design of the trial itself which provides a type I error rate and power at each interim look. We use the normal-normal conjugate for the estimation of posterior probabilities. The historical data is used as an informative prior and we use <code>bayesDP</code> as an engine to incorporate the historical data.</p>
+</div>
+<div id="design" class="section level1">
+<h1 class="hasAnchor">
+<a href="#design" class="anchor"></a>Design</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">value &lt;-</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="st">  </span><span class="kw">normal_outcome</span>(<span class="dt">mu_control =</span> <span class="dv">16</span>, <span class="dt">mu_treatment =</span> <span class="dv">13</span>,</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">                 <span class="dt">sd_treatment =</span> <span class="fl">1.4</span>, <span class="dt">sd_control =</span> <span class="fl">1.9</span>) <span class="op">%&gt;%</span></a>
@@ -124,36 +132,115 @@
 <a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co">#&gt;  $ N_enrolled                  : num [1:5] 210 210 210 210 210</span></a>
 <a class="sourceLine" id="cb1-28" data-line-number="28"><span class="co">#&gt;  $ stop_expect_success         : num [1:5] 1 1 1 1 1</span></a>
 <a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co">#&gt;  $ stop_futility               : num [1:5] 0 0 0 0 0</span></a></code></pre></div>
+</div>
+<div id="analysis" class="section level1">
+<h1 class="hasAnchor">
+<a href="#analysis" class="anchor"></a>Analysis</h1>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(normaldata)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">value1 &lt;-</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw">data_normal</span>(<span class="dt">data =</span> normaldata) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw">historical_normal</span>(<span class="dt">mu0_treatment =</span> <span class="dv">13</span>, <span class="dt">sd0_treatment =</span> <span class="dv">2</span>, <span class="dt">N0_treatment =</span> <span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">                    <span class="dt">mu0_control =</span> <span class="dv">12</span>, <span class="dt">sd0_control =</span> <span class="dv">3</span>, <span class="dt">N0_control =</span> <span class="dv">120</span>, </a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">                    <span class="dt">discount_function =</span> <span class="st">"weibull"</span>, <span class="dt">alpha_max =</span> F, <span class="dt">fix_alpha =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">                    <span class="dt">weibull_scale =</span> <span class="fl">0.135</span>, <span class="dt">weibull_shape =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>, <span class="dt">number_mcmc =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; List of 11</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt;  $ margin                       : num 0</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt;  $ alternative                  : chr "less"</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt;  $ N_treatment                  : num 139</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt;  $ N_control                    : int 127</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt;  $ N_complete                   : num 266</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 1</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num -3.07</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(normaldata)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt;         id treatment   outcome complete</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; 1 Patient1         1 13.702191        1</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; 2 Patient2         1 11.925518        1</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; 3 Patient3         1 10.586943        1</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; 4 Patient4         1 10.450031        1</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; 5 Patient5         1  7.154615        1</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; 6 Patient6         1  8.874396        0</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">value1 &lt;-</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">data_normal</span>(<span class="dt">data =</span> normaldata) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;  $ margin                       : num 0</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;  $ N_treatment                  : num 139</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;  $ N_control                    : int 127</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt;  $ N_complete                   : num 266</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.141</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt;  $ est_final                    : num -3.05</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;  $ stop_futility                : num 1</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">value1 &lt;-</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">data_normal</span>(<span class="dt">data =</span> normaldata) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;  $ margin                       : num 0</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;  $ alternative                  : chr "less"</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  $ N_treatment                  : num 139</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  $ N_control                    : int 127</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;  $ N_complete                   : num 266</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.861</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt;  $ est_final                    : num -3.1</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt;  $ stop_futility                : num 1</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">value1 &lt;-</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">data_normal</span>(<span class="dt">data =</span> normaldata) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>, <span class="dt">number_mcmc =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;  $ margin                       : num 0</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;  $ alternative                  : chr "less"</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;  $ N_treatment                  : num 139</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;  $ N_control                    : int 127</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;  $ N_complete                   : num 266</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.857</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num -3.03</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt;  $ stop_futility                : num 1</span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">value1 &lt;-</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">data_normal</span>(<span class="dt">data =</span> normaldata) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="dv">0</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>, <span class="dt">number_mcmc =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">historical_normal</span>(<span class="dt">mu0_treatment =</span> <span class="dv">13</span>, <span class="dt">sd0_treatment =</span> <span class="dv">2</span>, <span class="dt">N0_treatment =</span> <span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">                    <span class="dt">mu0_control =</span> <span class="dv">12</span>, <span class="dt">sd0_control =</span> <span class="dv">3</span>, <span class="dt">N0_control =</span> <span class="dv">120</span>, </a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">                    <span class="dt">discount_function =</span> <span class="st">"weibull"</span>, <span class="dt">alpha_max =</span> F, <span class="dt">fix_alpha =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">                    <span class="dt">weibull_scale =</span> <span class="fl">0.135</span>, <span class="dt">weibull_shape =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&gt;  $ margin                       : num 0</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="co">#&gt;  $ alternative                  : chr "less"</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="co">#&gt;  $ N_treatment                  : num 139</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="co">#&gt;  $ N_control                    : int 127</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt;  $ N_complete                   : num 266</span></a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co">#&gt;  $ post_prob_accept_alternative : num 1</span></a>
+<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co">#&gt;  $ est_final                    : num -3.07</span></a>
+<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#introduction">Introduction</a></li>
+      <li><a href="#design">Design</a></li>
+      <li><a href="#analysis">Analysis</a></li>
+      </ul>
+</div>
       </div>
 
 </div>
