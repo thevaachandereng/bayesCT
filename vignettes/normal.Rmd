@@ -29,6 +29,23 @@ We use the normal-normal conjugate for the estimation of posterior probabilities
 The historical data is used as an informative prior and we use `bayesDP` as an engine to incorporate the historical data. 
 
 
+# Wrapper Function for Design and Analysis
+
+**normal_outcome**: The normal outcome is a wrapper function for the simulation. The normal outcome has four input (**mu_treatment**, **mu_control**, **sd_treatment**, **sd_control**). **mu_treatment** and **sd_treatment** are required inputs where the mean and standard deviation outcome for a single-arm or double-arm trials are specified for the treatment arm, where $ sd_{treatment} > 0$. **mu_control** and **sd_control** are set to NULL as default for single-arm trials. However, for two-arm trials **mu_control** and **sd_control** inputs specify the mean and standard deviation outcome for the control arm, where $sd_{control} > 0$. 
+
+
+**study_details**: The study details is a wrapper function for the simulation. The **study_details** function takes four input (**total_sample_size**, **study_period**, **interim_look** and **prop_loss_to_followup**). The **total_sample_size** input determines the number of sample size required to run the simulation. The **study_period** input determines the length of the study. Since interim look at x is done when the x^{th} patient is enrolled, the length of study is important for imputation purpose. The **interim_look** function allows a vector of numeric value, where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please look at the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The interim_look values need to be smaller than the sample_size value. Loss to follow up is not peculiar in a clinical trial setting, the **prop_loss_to_followup** input allows to set the proportion of loss to follow up. The default value is set to 0.10. The **prop_loss_to_followup** needs to be between 0 and 1.  
+
+
+**enrollment_rate**: The enrollment rate is a wrapper function for the simulation. The **enrollment_rate** function takes two input (**lambda**, **time**) unlike the **enrollment** function. The **lambda** input is similar to **param** input in the **enrollment** function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). The **time** input works similarly to the **time** input in the **enrollment** function where **time** input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html).  
+
+
+**hypothesis**: The hypothesis is a wrapper function for both simulation and analysis. The **hypothesis** wrapper takes five different inputs (**delta**, **prob_accept_ha**, **futility_prob**, **expected_success_prob** and **alternative**). The **delta** input determines the threshold difference for treatment and control group or the threshold for single-arm trial (the default is set to 0). For non-inferiority trial, the difference needs to be < 0.  The input **prob_accept_ha** controls the probability of accepting the alternative hypothesis. The default is set to 0.95. The **futility_prob** input controls the futility rate $\omega$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. The **expected_success_prob** input controls the early success rate $\Delta$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.90. To prevent the trial for stopping for early success, set the **expected_success_prob** to 1. For more details on the criteria of early stopping for success or futility, please see the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The **alternative** input takes a character string specifying the alternative hypothesis, must be one of "two.sided" (default), "greater" or "less".
+
+
+
+
+
 # Design
 
 
@@ -36,10 +53,57 @@ The historical data is used as an informative prior and we use `bayesDP` as an e
 value <-
   normal_outcome(mu_control = 16, mu_treatment = 13,
                  sd_treatment = 1.4, sd_control = 1.9) %>%
-  historical_normal(mu0_treatment = 13, sd0_treatment = 2, N0_treatment = 100,
-                    mu0_control = 12, sd0_control = 3, N0_control = 120, 
-                    discount_function = "weibull", alpha_max = F, fix_alpha = 1,
-                    weibull_scale = 0.135, weibull_shape = 3) %>%
+  study_details(total_sample_size = 300, study_period = 50,
+                interim_look = c(210, 240, 270),
+                prop_loss_to_followup = 0.10)
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+```
+
+```{r}
+value <- value %>%
+  enrollment_rate(lambda = c(0.3, 1), time = 25) 
+  
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+```
+
+```{r}
+value <- value %>%
+  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
+             expected_success_prob = 0.90, alternative = "less")
+  
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+```
+
+```{r}
+value <- value %>%
+  impute(no_of_impute = 25, number_mcmc = 1000)
+  
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+```
+
+
+```{r}
+value <- value %>%
+  randomize(block_size = 2, randomization_ratio = c(1, 1))
+  
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+```
+
+
+```{r}
+value <-
+  normal_outcome(mu_control = 16, mu_treatment = 13,
+                 sd_treatment = 1.4, sd_control = 1.9) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   study_details(total_sample_size = 300, study_period = 50,
                 interim_look = c(210, 240, 270),
