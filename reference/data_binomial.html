@@ -130,16 +130,26 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>data_binomial</span>(<span class='no'>data</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>data_binomial</span>(<span class='no'>treatment</span>, <span class='no'>outcome</span>, <span class='no'>complete</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data frame. A data frame which provides patient id, treatment group, outcome
-of the treatment and complete columns. An example file is available at
-<code><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data(binomialdata)</a></code>.</p></td>
+      <th>treatment</th>
+      <td><p>vector. treatment assignment for patients, 1 for treatment group and
+0 for control group</p></td>
+    </tr>
+    <tr>
+      <th>outcome</th>
+      <td><p>vector. binomial outcome of the trial, 1 for response (success or
+failure), 0 for no response.</p></td>
+    </tr>
+    <tr>
+      <th>complete</th>
+      <td><p>vector. similar length as treatment and outcome variable,
+1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+the dataset is assumed to be complete.</p></td>
     </tr>
     <tr>
       <th>.data</th>
@@ -153,308 +163,14 @@ of the treatment and complete columns. An example file is available at
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>data_binomial</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>binomialdata</span>)</div><div class='output co'>#&gt; $data
-#&gt;             id treatment outcome complete
-#&gt; 1     Patient1         1       0        0
-#&gt; 2     Patient2         0       0        1
-#&gt; 3     Patient3         1       0        1
-#&gt; 4     Patient4         0       0        1
-#&gt; 5     Patient5         0       1        1
-#&gt; 6     Patient6         0       0        1
-#&gt; 7     Patient7         0       0        1
-#&gt; 8     Patient8         0       1        1
-#&gt; 9     Patient9         1       1        1
-#&gt; 10   Patient10         1       0        1
-#&gt; 11   Patient11         1       0        1
-#&gt; 12   Patient12         0       0        1
-#&gt; 13   Patient13         0       0        1
-#&gt; 14   Patient14         0       0        1
-#&gt; 15   Patient15         0       0        1
-#&gt; 16   Patient16         1       0        1
-#&gt; 17   Patient17         0       0        1
-#&gt; 18   Patient18         1       1        1
-#&gt; 19   Patient19         0       0        1
-#&gt; 20   Patient20         0       0        1
-#&gt; 21   Patient21         0       0        1
-#&gt; 22   Patient22         1       1        0
-#&gt; 23   Patient23         1       0        1
-#&gt; 24   Patient24         1       0        1
-#&gt; 25   Patient25         0       0        1
-#&gt; 26   Patient26         1       1        1
-#&gt; 27   Patient27         0       0        1
-#&gt; 28   Patient28         1       0        1
-#&gt; 29   Patient29         0       1        1
-#&gt; 30   Patient30         0       0        1
-#&gt; 31   Patient31         0       0        1
-#&gt; 32   Patient32         1       0        1
-#&gt; 33   Patient33         1       0        1
-#&gt; 34   Patient34         1       1        1
-#&gt; 35   Patient35         1       0        1
-#&gt; 36   Patient36         0       0        1
-#&gt; 37   Patient37         0       0        1
-#&gt; 38   Patient38         0       0        1
-#&gt; 39   Patient39         1       0        1
-#&gt; 40   Patient40         1       0        1
-#&gt; 41   Patient41         0       0        1
-#&gt; 42   Patient42         1       1        1
-#&gt; 43   Patient43         1       0        1
-#&gt; 44   Patient44         0       1        1
-#&gt; 45   Patient45         1       0        1
-#&gt; 46   Patient46         0       0        1
-#&gt; 47   Patient47         1       1        1
-#&gt; 48   Patient48         0       0        0
-#&gt; 49   Patient49         0       0        1
-#&gt; 50   Patient50         1       0        1
-#&gt; 51   Patient51         1       0        1
-#&gt; 52   Patient52         1       0        1
-#&gt; 53   Patient53         1       0        1
-#&gt; 54   Patient54         1       1        1
-#&gt; 55   Patient55         0       0        1
-#&gt; 56   Patient56         1       0        0
-#&gt; 57   Patient57         1       0        1
-#&gt; 58   Patient58         0       0        1
-#&gt; 59   Patient59         1       0        1
-#&gt; 60   Patient60         0       0        1
-#&gt; 61   Patient61         1       1        1
-#&gt; 62   Patient62         0       1        1
-#&gt; 63   Patient63         1       1        1
-#&gt; 64   Patient64         0       0        1
-#&gt; 65   Patient65         0       0        0
-#&gt; 66   Patient66         0       0        0
-#&gt; 67   Patient67         0       0        0
-#&gt; 68   Patient68         0       0        0
-#&gt; 69   Patient69         0       0        1
-#&gt; 70   Patient70         0       0        1
-#&gt; 71   Patient71         0       0        0
-#&gt; 72   Patient72         1       0        1
-#&gt; 73   Patient73         1       0        1
-#&gt; 74   Patient74         0       0        1
-#&gt; 75   Patient75         1       0        1
-#&gt; 76   Patient76         1       0        1
-#&gt; 77   Patient77         0       0        1
-#&gt; 78   Patient78         1       1        0
-#&gt; 79   Patient79         0       0        1
-#&gt; 80   Patient80         0       0        1
-#&gt; 81   Patient81         1       0        1
-#&gt; 82   Patient82         0       0        0
-#&gt; 83   Patient83         1       1        1
-#&gt; 84   Patient84         0       0        1
-#&gt; 85   Patient85         0       0        0
-#&gt; 86   Patient86         0       0        1
-#&gt; 87   Patient87         0       0        1
-#&gt; 88   Patient88         0       0        1
-#&gt; 89   Patient89         1       1        1
-#&gt; 90   Patient90         1       1        1
-#&gt; 91   Patient91         0       0        1
-#&gt; 92   Patient92         1       0        1
-#&gt; 93   Patient93         0       1        1
-#&gt; 94   Patient94         0       0        1
-#&gt; 95   Patient95         0       0        0
-#&gt; 96   Patient96         0       0        1
-#&gt; 97   Patient97         0       0        1
-#&gt; 98   Patient98         0       1        1
-#&gt; 99   Patient99         1       0        1
-#&gt; 100 Patient100         0       0        1
-#&gt; 101 Patient101         1       1        0
-#&gt; 102 Patient102         1       0        1
-#&gt; 103 Patient103         1       0        1
-#&gt; 104 Patient104         0       0        1
-#&gt; 105 Patient105         0       0        1
-#&gt; 106 Patient106         0       0        0
-#&gt; 107 Patient107         1       0        1
-#&gt; 108 Patient108         0       0        1
-#&gt; 109 Patient109         1       0        1
-#&gt; 110 Patient110         1       0        1
-#&gt; 111 Patient111         1       1        1
-#&gt; 112 Patient112         1       0        1
-#&gt; 113 Patient113         1       0        1
-#&gt; 114 Patient114         1       0        1
-#&gt; 115 Patient115         1       0        1
-#&gt; 116 Patient116         1       1        0
-#&gt; 117 Patient117         1       0        1
-#&gt; 118 Patient118         1       0        1
-#&gt; 119 Patient119         0       0        1
-#&gt; 120 Patient120         0       0        1
-#&gt; 121 Patient121         0       0        1
-#&gt; 122 Patient122         0       0        1
-#&gt; 123 Patient123         0       0        0
-#&gt; 124 Patient124         1       1        1
-#&gt; 125 Patient125         0       0        1
-#&gt; 126 Patient126         1       0        1
-#&gt; 127 Patient127         1       0        1
-#&gt; 128 Patient128         0       0        0
-#&gt; 129 Patient129         0       0        1
-#&gt; 130 Patient130         1       1        1
-#&gt; 131 Patient131         0       0        1
-#&gt; 132 Patient132         0       0        1
-#&gt; 133 Patient133         1       0        0
-#&gt; 134 Patient134         1       0        1
-#&gt; 135 Patient135         0       0        1
-#&gt; 136 Patient136         0       0        0
-#&gt; 137 Patient137         0       0        1
-#&gt; 138 Patient138         0       0        1
-#&gt; 139 Patient139         0       0        1
-#&gt; 140 Patient140         1       0        1
-#&gt; 141 Patient141         0       0        1
-#&gt; 142 Patient142         1       0        1
-#&gt; 143 Patient143         1       0        1
-#&gt; 144 Patient144         1       1        1
-#&gt; 145 Patient145         1       0        1
-#&gt; 146 Patient146         1       0        1
-#&gt; 147 Patient147         0       0        1
-#&gt; 148 Patient148         0       0        1
-#&gt; 149 Patient149         1       0        1
-#&gt; 150 Patient150         1       0        1
-#&gt; 151 Patient151         1       1        1
-#&gt; 152 Patient152         0       0        1
-#&gt; 153 Patient153         0       1        1
-#&gt; 154 Patient154         1       1        1
-#&gt; 155 Patient155         1       0        0
-#&gt; 156 Patient156         1       0        1
-#&gt; 157 Patient157         0       1        1
-#&gt; 158 Patient158         0       1        0
-#&gt; 159 Patient159         0       0        1
-#&gt; 160 Patient160         1       0        1
-#&gt; 161 Patient161         0       0        1
-#&gt; 162 Patient162         0       0        1
-#&gt; 163 Patient163         1       0        1
-#&gt; 164 Patient164         1       0        1
-#&gt; 165 Patient165         1       1        1
-#&gt; 166 Patient166         0       1        1
-#&gt; 167 Patient167         0       0        1
-#&gt; 168 Patient168         0       0        0
-#&gt; 169 Patient169         1       1        1
-#&gt; 170 Patient170         0       0        1
-#&gt; 171 Patient171         0       0        1
-#&gt; 172 Patient172         0       0        1
-#&gt; 173 Patient173         0       0        1
-#&gt; 174 Patient174         0       0        1
-#&gt; 175 Patient175         0       1        1
-#&gt; 176 Patient176         0       1        1
-#&gt; 177 Patient177         0       0        0
-#&gt; 178 Patient178         0       0        1
-#&gt; 179 Patient179         0       0        1
-#&gt; 180 Patient180         0       0        1
-#&gt; 181 Patient181         0       0        1
-#&gt; 182 Patient182         1       1        1
-#&gt; 183 Patient183         0       0        1
-#&gt; 184 Patient184         1       0        1
-#&gt; 185 Patient185         1       0        1
-#&gt; 186 Patient186         0       0        1
-#&gt; 187 Patient187         1       1        1
-#&gt; 188 Patient188         0       0        1
-#&gt; 189 Patient189         0       0        1
-#&gt; 190 Patient190         0       1        1
-#&gt; 191 Patient191         1       0        1
-#&gt; 192 Patient192         0       0        0
-#&gt; 193 Patient193         0       0        0
-#&gt; 194 Patient194         1       0        1
-#&gt; 195 Patient195         1       0        1
-#&gt; 196 Patient196         0       0        1
-#&gt; 197 Patient197         1       1        1
-#&gt; 198 Patient198         1       0        1
-#&gt; 199 Patient199         1       1        1
-#&gt; 200 Patient200         1       0        0
-#&gt; 201 Patient201         1       0        1
-#&gt; 202 Patient202         0       0        1
-#&gt; 203 Patient203         0       0        1
-#&gt; 204 Patient204         1       0        1
-#&gt; 205 Patient205         0       1        1
-#&gt; 206 Patient206         0       1        1
-#&gt; 207 Patient207         1       0        1
-#&gt; 208 Patient208         1       0        1
-#&gt; 209 Patient209         1       0        1
-#&gt; 210 Patient210         1       1        0
-#&gt; 211 Patient211         1       0        1
-#&gt; 212 Patient212         1       0        1
-#&gt; 213 Patient213         0       0        0
-#&gt; 214 Patient214         1       0        0
-#&gt; 215 Patient215         0       0        1
-#&gt; 216 Patient216         1       1        1
-#&gt; 217 Patient217         0       1        1
-#&gt; 218 Patient218         1       1        0
-#&gt; 219 Patient219         1       0        1
-#&gt; 220 Patient220         1       0        1
-#&gt; 221 Patient221         0       0        1
-#&gt; 222 Patient222         0       0        1
-#&gt; 223 Patient223         0       0        1
-#&gt; 224 Patient224         1       0        1
-#&gt; 225 Patient225         1       0        1
-#&gt; 226 Patient226         0       0        1
-#&gt; 227 Patient227         1       0        1
-#&gt; 228 Patient228         1       0        1
-#&gt; 229 Patient229         0       0        1
-#&gt; 230 Patient230         0       1        1
-#&gt; 231 Patient231         1       0        1
-#&gt; 232 Patient232         0       1        1
-#&gt; 233 Patient233         1       1        1
-#&gt; 234 Patient234         1       0        1
-#&gt; 235 Patient235         0       0        1
-#&gt; 236 Patient236         0       0        1
-#&gt; 237 Patient237         0       0        1
-#&gt; 238 Patient238         1       0        1
-#&gt; 239 Patient239         0       0        1
-#&gt; 240 Patient240         1       0        1
-#&gt; 241 Patient241         1       0        1
-#&gt; 242 Patient242         1       1        1
-#&gt; 243 Patient243         0       0        1
-#&gt; 244 Patient244         0       0        1
-#&gt; 245 Patient245         0       0        1
-#&gt; 246 Patient246         1       0        1
-#&gt; 247 Patient247         1       0        1
-#&gt; 248 Patient248         0       0        1
-#&gt; 249 Patient249         0       0        1
-#&gt; 250 Patient250         0       0        1
-#&gt; 251 Patient251         0       0        1
-#&gt; 252 Patient252         1       0        1
-#&gt; 253 Patient253         0       0        1
-#&gt; 254 Patient254         1       0        1
-#&gt; 255 Patient255         1       1        1
-#&gt; 256 Patient256         0       0        1
-#&gt; 257 Patient257         1       0        1
-#&gt; 258 Patient258         1       0        1
-#&gt; 259 Patient259         1       1        1
-#&gt; 260 Patient260         0       0        1
-#&gt; 261 Patient261         0       0        1
-#&gt; 262 Patient262         0       0        1
-#&gt; 263 Patient263         0       0        1
-#&gt; 264 Patient264         0       0        1
-#&gt; 265 Patient265         0       0        0
-#&gt; 266 Patient266         0       0        1
-#&gt; 267 Patient267         1       0        1
-#&gt; 268 Patient268         0       1        1
-#&gt; 269 Patient269         0       0        1
-#&gt; 270 Patient270         1       0        1
-#&gt; 271 Patient271         0       0        1
-#&gt; 272 Patient272         0       0        0
-#&gt; 273 Patient273         1       1        1
-#&gt; 274 Patient274         1       0        0
-#&gt; 275 Patient275         1       1        1
-#&gt; 276 Patient276         1       0        1
-#&gt; 277 Patient277         0       0        0
-#&gt; 278 Patient278         0       0        1
-#&gt; 279 Patient279         0       0        0
-#&gt; 280 Patient280         0       0        1
-#&gt; 281 Patient281         0       0        1
-#&gt; 282 Patient282         1       1        1
-#&gt; 283 Patient283         1       0        0
-#&gt; 284 Patient284         1       0        1
-#&gt; 285 Patient285         1       0        1
-#&gt; 286 Patient286         0       0        1
-#&gt; 287 Patient287         1       0        1
-#&gt; 288 Patient288         0       0        1
-#&gt; 289 Patient289         0       0        1
-#&gt; 290 Patient290         1       0        0
-#&gt; 291 Patient291         1       0        1
-#&gt; 292 Patient292         0       0        1
-#&gt; 293 Patient293         1       1        1
-#&gt; 294 Patient294         1       0        1
-#&gt; 295 Patient295         0       0        1
-#&gt; 296 Patient296         0       0        1
-#&gt; 297 Patient297         1       0        1
-#&gt; 298 Patient298         0       0        1
-#&gt; 299 Patient299         0       0        1
-#&gt; 300 Patient300         1       0        1
+    <pre class="examples"><div class='input'><span class='fu'>data_binomial</span>(<span class='kw'>treatment</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>complete</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; $treatment
+#&gt; [1] 0 1
+#&gt; 
+#&gt; $outcome
+#&gt; [1] 1 1
+#&gt; 
+#&gt; $complete
+#&gt; [1] 1 1
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
