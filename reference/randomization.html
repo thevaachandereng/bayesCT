@@ -156,21 +156,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Implementing treatment allocation for control to treatment with 1:1.5 randomization ratio</span>
-<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt;   [1] 0 1 0 1 1 1 0 1 1 0 1 1 0 1 0 0 1 0 1 1 0 0 1 1 1 1 1 1 0 0 1 1 1 0 0 1 1
-#&gt;  [38] 0 1 0 1 0 1 0 1 0 0 1 1 1 1 1 0 0 1 0 1 0 1 1 0 1 1 1 0 1 0 1 1 0 1 1 0 0
-#&gt;  [75] 1 1 1 1 0 0 1 0 1 0 1 1 0 0 1 1 1 1 0 1 0 0 1 1 1 0</div><div class='input'>
+<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt;   [1] 0 1 1 1 0 1 1 0 0 1 0 1 1 1 0 1 0 0 1 1 0 1 0 1 1 0 1 0 1 1 1 1 1 0 0 1 1
+#&gt;  [38] 0 0 1 0 0 1 1 1 0 1 0 1 1 1 0 1 0 1 1 1 0 1 0 1 1 0 1 0 0 1 0 1 1 1 0 0 1
+#&gt;  [75] 1 0 1 0 1 1 1 1 0 1 0 0 0 1 1 1 0 1 1 1 0 1 1 1 0 0</div><div class='input'>
 <span class='co'># Treatment allocation with 2:1 for control to treatment</span>
-<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>70</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;  [1] 1 0 1 0 0 0 1 0 0 1 0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 0 0 0 0 0 1 0 1 1 0 0 0 0
-#&gt; [39] 1 0 0 0 0 1 1 0 0 1 1 0 0 1 0 0 0 1 1 0 1 0 0 0 0 0 0 1 0 1 0 0</div><div class='input'>
+<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>70</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>9</span>, <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;  [1] 1 0 0 0 1 0 0 1 0 0 1 1 0 1 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 1 1 1 0 0 0 1
+#&gt; [39] 0 1 1 0 0 0 0 0 0 0 1 0 1 0 0 1 0 0 0 0 0 1 0 1 1 0 0 1 0 0 1 1</div><div class='input'>
 <span class='co'># Treatment allocation for control to treatment with 1:2 for control to treatment with</span>
 <span class='co'># multiple block sizes c(3, 9, 6)</span>
-<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>9</span>, <span class='fl'>6</span>), <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt;   [1] 1 1 0 1 1 1 1 0 1 1 0 0 1 1 1 0 0 1 1 1 0 1 1 0 0 1 0 1 1 1 0 1 0 1 1 1 1
-#&gt;  [38] 0 1 1 1 0 0 1 0 1 1 1 1 1 0 0 1 1 0 1 1 0 1 1 1 0 1 0 1 1 0 0 1 1 1 1 1 0
-#&gt;  [75] 1 1 0 0 1 1 1 1 0 1 1 1 1 1 0 0 0 1 1 0 1 1 1 0 0 1</div><div class='input'>
+<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>9</span>, <span class='fl'>6</span>), <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt;   [1] 1 1 0 1 0 1 1 1 1 0 0 1 1 0 1 1 0 1 1 0 1 1 0 1 0 0 1 1 1 1 0 0 1 1 1 1 1
+#&gt;  [38] 0 1 1 1 1 0 0 0 1 1 1 0 1 0 1 1 1 1 0 1 1 1 0 1 1 0 1 0 1 1 1 0 0 1 1 1 0
+#&gt;  [75] 1 0 1 1 1 0 1 0 1 1 1 1 1 1 0 0 0 1 1 1 1 0 1 1 0 0</div><div class='input'>
 <span class='co'># For complete randomization set the N_total to block size</span>
-<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;   [1] 0 0 0 1 1 1 1 0 0 1 1 1 0 0 1 1 0 1 0 1 1 0 1 0 0 1 1 0 1 0 1 1 1 1 1 0 1
-#&gt;  [38] 0 1 0 0 0 1 0 1 0 1 0 0 1 1 0 1 1 0 0 0 0 0 0 0 0 0 0 1 1 0 1 1 1 1 1 0 1
-#&gt;  [75] 0 0 1 1 1 0 1 0 1 0 0 1 1 1 0 0 0 1 0 0 1 1 0 0 0 1</div><div class='input'>
+<span class='fu'>randomization</span>(<span class='kw'>N_total</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>allocation</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt;   [1] 1 1 1 1 1 1 1 0 0 1 0 0 0 0 1 1 1 0 0 0 0 0 1 1 1 1 0 1 0 0 1 0 1 0 0 0 0
+#&gt;  [38] 0 0 0 1 0 0 1 1 0 0 0 1 0 1 0 1 1 0 1 1 1 1 0 1 1 0 1 1 0 0 0 0 1 0 1 1 1
+#&gt;  [75] 0 1 1 0 0 1 0 0 1 0 0 1 0 0 0 0 1 1 1 0 1 1 1 0 1 1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

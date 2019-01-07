@@ -141,7 +141,7 @@
   <span class='kw'>interim_look</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>EndofStudy</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>rand_ratio</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>),
   <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>,
   <span class='kw'>prop_loss_to_followup</span> <span class='kw'>=</span> <span class='fl'>0.15</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>10</span>,
   <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>weibull_scale</span> <span class='kw'>=</span> <span class='fl'>0.135</span>, <span class='kw'>weibull_shape</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
@@ -355,10 +355,10 @@ historical control group. Not used when discount_function = "identity".</p></td>
 #&gt; [1] 300
 #&gt; 
 #&gt; $post_prob_accept_alternative
-#&gt; [1] 0.089
+#&gt; [1] 0.092
 #&gt; 
 #&gt; $est_final
-#&gt; [1] -1.965136
+#&gt; [1] -1.978938
 #&gt; 
 #&gt; $stop_futility
 #&gt; [1] 1
