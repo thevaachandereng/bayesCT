@@ -425,8 +425,10 @@ binomialBACT <- function(
 
   # assigning stage trial stopped given no interim look
   else{
-    N_enrolled <- N_total
-    stage_trial_stopped <- N_total
+    N_enrolled            <- N_total
+    stage_trial_stopped   <- N_total
+    stop_futility         <- 0
+    stop_expected_success <- 0
   }
 
   # All patients that have made it to the end of study
