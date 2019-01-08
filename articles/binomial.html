@@ -103,10 +103,13 @@
 <div id="wrapper-function-for-design-and-analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#wrapper-function-for-design-and-analysis" class="anchor"></a>Wrapper Function for Design and Analysis</h1>
-<p><strong>binomial_outcome</strong>: The binomial outcome is a wrapper function for the simulation. The binomial outcome has two input <strong>p_treatment</strong> and <strong>p_control</strong>. <strong>p_treatment</strong> is a required input where the proportion of events for a single-arm or double-arm trials are specified for the treatment arm, where <span class="math inline">\(0 &lt; p_{treatment} &lt; 1\)</span>. <strong>p_control</strong> is set to NULL as default for single-arm trials. However, for two-arm trials <strong>p_control</strong> input specifies the proportion of events for the control arm, where <span class="math inline">\(0 &lt; p_{control} &lt; 1\)</span>.</p>
-<p><strong>study_details</strong>: The study details is a wrapper function for the simulation. The <strong>study_details</strong> function takes four input (<strong>total_sample_size</strong>, <strong>study_period</strong>, <strong>interim_look</strong> and <strong>prop_loss_to_followup</strong>). The <strong>total_sample_size</strong> input determines the number of sample size required to run the simulation. The <strong>study_period</strong> input determines the length of the study. Since interim look at x is done when the x^{th} patient is enrolled, the length of study is important for imputation purpose. The <strong>interim_look</strong> function allows a vector of numeric value, where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please look at the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The interim_look values need to be smaller than the sample_size value. Loss to follow up is not peculiar in a clinical trial setting, the <strong>prop_loss_to_followup</strong> input allows to set the proportion of loss to follow up. The default value is set to 0.10. The <strong>prop_loss_to_followup</strong> needs to be between 0 and 1.</p>
-<p><strong>enrollment_rate</strong>: The enrollment rate is a wrapper function for the simulation. The <strong>enrollment_rate</strong> function takes two input (<strong>lambda</strong>, <strong>time</strong>) unlike the <strong>enrollment</strong> function. The <strong>lambda</strong> input is similar to <strong>param</strong> input in the <strong>enrollment</strong> function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). The <strong>time</strong> input works similarly to the <strong>time</strong> input in the <strong>enrollment</strong> function where <strong>time</strong> input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>.</p>
-<p><strong>hypothesis</strong>: The hypothesis is a wrapper function for both simulation and analysis. The <strong>hypothesis</strong> wrapper takes five different inputs (<strong>delta</strong>, <strong>prob_accept_ha</strong>, <strong>futility_prob</strong>, <strong>expected_success_prob</strong> and <strong>alternative</strong>). The <strong>delta</strong> input determines the threshold difference for treatment and control group or the threshold for single-arm trial (the default is set to 0). For non-inferiority trial, the difference needs to be &lt; 0. The input <strong>prob_accept_ha</strong> controls the probability of accepting the alternative hypothesis. The default is set to 0.95. The <strong>futility_prob</strong> input controls the futility rate <span class="math inline">\(\omega\)</span> in the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The default is set to 0.10. To prevent the trial for stopping for futility, set the <strong>futility_prob</strong> to 0. The <strong>expected_success_prob</strong> input controls the early success rate <span class="math inline">\(\Delta\)</span> in the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The default is set to 0.90. To prevent the trial for stopping for early success, set the <strong>expected_success_prob</strong> to 1. For more details on the criteria of early stopping for success or futility, please see the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The <strong>alternative</strong> input takes a character string specifying the alternative hypothesis, must be one of “two.sided” (default), “greater” or “less”.</p>
+<ul>
+<li><p><strong>binomial_outcome</strong>: The binomial outcome is a wrapper function for the simulation. The binomial outcome has two input <strong>p_treatment</strong> and <strong>p_control</strong>. <strong>p_treatment</strong> is a required input where the proportion of events for a single-arm or double-arm trials are specified for the treatment arm, where <span class="math inline">\(0 &lt; p_{treatment} &lt; 1\)</span>. <strong>p_control</strong> is set to NULL as default for single-arm trials. However, for two-arm trials <strong>p_control</strong> input specifies the proportion of events for the control arm, where <span class="math inline">\(0 &lt; p_{control} &lt; 1\)</span>.</p></li>
+<li><p><strong>study_details</strong>: The study details is a wrapper function for the simulation. The <strong>study_details</strong> function takes four input (<strong>total_sample_size</strong>, <strong>study_period</strong>, <strong>interim_look</strong> and <strong>prop_loss_to_followup</strong>). The <strong>total_sample_size</strong> input determines the number of sample size required to run the simulation. The <strong>study_period</strong> input determines the length of the study. Since interim look at x is done when the x^{th} patient is enrolled, the length of study is important for imputation purpose. The <strong>interim_look</strong> function allows a vector of numeric value, where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please look at the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The interim_look values need to be smaller than the sample_size value. Loss to follow up is not peculiar in a clinical trial setting, the <strong>prop_loss_to_followup</strong> input allows to set the proportion of loss to follow up. The default value is set to 0.10. The <strong>prop_loss_to_followup</strong> needs to be between 0 and 1.</p></li>
+<li><p><strong>enrollment_rate</strong>: The enrollment rate is a wrapper function for the simulation. The <strong>enrollment_rate</strong> function takes two input (<strong>lambda</strong>, <strong>time</strong>) unlike the <strong>enrollment</strong> function. The <strong>lambda</strong> input is similar to <strong>param</strong> input in the <strong>enrollment</strong> function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). The <strong>time</strong> input works similarly to the <strong>time</strong> input in the <strong>enrollment</strong> function where <strong>time</strong> input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>.</p></li>
+<li><p><strong>hypothesis</strong>: The hypothesis is a wrapper function for both simulation and analysis. The <strong>hypothesis</strong> wrapper takes five different inputs (<strong>delta</strong>, <strong>prob_accept_ha</strong>, <strong>futility_prob</strong>, <strong>expected_success_prob</strong> and <strong>alternative</strong>). The <strong>delta</strong> input determines the threshold difference for treatment and control group or the threshold for single-arm trial (the default is set to 0). For non-inferiority trial, the difference needs to be &lt; 0. The input <strong>prob_accept_ha</strong> controls the probability of accepting the alternative hypothesis. The default is set to 0.95. The <strong>futility_prob</strong> input controls the futility rate <span class="math inline">\(\omega\)</span> in the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The default is set to 0.10. To prevent the trial for stopping for futility, set the <strong>futility_prob</strong> to 0. The <strong>expected_success_prob</strong> input controls the early success rate <span class="math inline">\(\Delta\)</span> in the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The default is set to 0.90. To prevent the trial for stopping for early success, set the <strong>expected_success_prob</strong> to 1. For more details on the criteria of early stopping for success or futility, please see the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The <strong>alternative</strong> input takes a character string specifying the alternative hypothesis, must be one of “greater”(default), “less” or “two-sided”.</p></li>
+<li><p><strong>randomize</strong>: The randomize is a wrapper function for the simulation. The <strong>randomize</strong> function takes two input (<strong>block_size</strong> and <strong>randomization_ratio</strong>). The <strong>block_size</strong> input controls the The enrollment rate is a wrapper function for the simulation. The <strong>enrollment_rate</strong> function takes two input (<strong>lambda</strong>, <strong>time</strong>) unlike the <strong>enrollment</strong> function. The <strong>lambda</strong> input is similar to <strong>param</strong> input in the <strong>enrollment</strong> function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). The <strong>time</strong> input works similarly to the <strong>time</strong> input in the <strong>enrollment</strong> function where <strong>time</strong> input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>.</p></li>
+</ul>
 </div>
 <div id="design" class="section level1">
 <h1 class="hasAnchor">
@@ -304,115 +307,136 @@
 <a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; 4 Patient4         0       0        1</span></a>
 <a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; 5 Patient5         0       1        1</span></a>
 <a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt; 6 Patient6         0       0        1</span></a></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">value1 &lt;-</a>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">input &lt;-</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; List of 11</span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;  $ margin                       : num 0</span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.994</span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
-<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">value1 &lt;-</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="fl">0.02</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,                                       <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"greater"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; List of 11</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.983</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num 0.123</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">value1 &lt;-</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="fl">0.02</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,                                       <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"greater"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">50</span>, <span class="dt">number_mcmc =</span> <span class="dv">10000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt; List of 11</span></a>
-<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
-<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
-<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
-<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
-<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
-<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
-<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.982</span></a>
-<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
-<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
-<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">value1 &lt;-</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="fl">0.02</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,                                       <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"greater"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">50</span>, <span class="dt">number_mcmc =</span> <span class="dv">1000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="st">  </span><span class="kw">beta_prior</span>(<span class="dt">a0 =</span> <span class="dv">1</span>, <span class="dt">b0 =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; List of 11</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.979</span></a>
-<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt;  $ est_final                    : num 0.122</span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
-<a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">value1 &lt;-</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="fl">0.02</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,                                       <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"greater"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">50</span>, <span class="dt">number_mcmc =</span> <span class="dv">10000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="st">  </span><span class="kw">beta_prior</span>(<span class="dt">a0 =</span> <span class="dv">5</span>, <span class="dt">b0 =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="st">  </span><span class="kw">historical_binomial</span>(<span class="dt">y0_treatment =</span> <span class="dv">5</span>, <span class="dt">N0_treatment =</span> <span class="dv">55</span>,</a>
-<a class="sourceLine" id="cb15-9" data-line-number="9">                      <span class="dt">y0_control =</span> <span class="ot">NULL</span>, <span class="dt">N0_control =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb15-10" data-line-number="10">                      <span class="dt">discount_function =</span> <span class="st">"identity"</span>, </a>
-<a class="sourceLine" id="cb15-11" data-line-number="11">                      <span class="dt">alpha_max =</span> <span class="dv">1</span>, <span class="dt">fix_alpha =</span> <span class="ot">FALSE</span>, </a>
-<a class="sourceLine" id="cb15-12" data-line-number="12">                      <span class="dt">weibull_scale =</span> <span class="fl">0.135</span>, <span class="dt">weibull_shape =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb15-14" data-line-number="14"> </a>
-<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value1)</a>
-<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; List of 11</span></a>
-<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
-<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
-<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
-<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
-<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
-<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
-<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.965</span></a>
-<a class="sourceLine" id="cb15-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num 0.109</span></a>
-<a class="sourceLine" id="cb15-26" data-line-number="26"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
-<a class="sourceLine" id="cb15-27" data-line-number="27"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) </a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">out &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt;  $ margin                       : num 0</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.994</span></a>
+<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
+<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">input &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="fl">0.02</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,                                       <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"greater"</span>)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">out &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.983</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  $ est_final                    : num 0.123</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">input &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">50</span>, <span class="dt">number_mcmc =</span> <span class="dv">10000</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">out &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.982</span></a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">input &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">beta_prior</span>(<span class="dt">a0 =</span> <span class="dv">3</span>, <span class="dt">b0 =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">  </a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">out &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.982</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num 0.121</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">input &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">historical_binomial</span>(<span class="dt">y0_treatment =</span> <span class="dv">5</span>, <span class="dt">N0_treatment =</span> <span class="dv">55</span>,</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">                      <span class="dt">y0_control =</span> <span class="ot">NULL</span>, <span class="dt">N0_control =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">                      <span class="dt">discount_function =</span> <span class="st">"weibull"</span>, </a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">                      <span class="dt">alpha_max =</span> <span class="dv">1</span>, <span class="dt">fix_alpha =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">                      <span class="dt">weibull_scale =</span> <span class="fl">0.135</span>, <span class="dt">weibull_shape =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">out &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.956</span></a>
+<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt;  $ est_final                    : num 0.108</span></a>
+<a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">ouut &lt;-</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">data_binomial</span>(<span class="dt">treatment =</span> binomialdata<span class="op">$</span>treatment, </a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">                <span class="dt">outcome   =</span> binomialdata<span class="op">$</span>outcome, </a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="fl">0.02</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,                                       <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"greater"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">50</span>, <span class="dt">number_mcmc =</span> <span class="dv">10000</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="st">  </span><span class="kw">beta_prior</span>(<span class="dt">a0 =</span> <span class="dv">5</span>, <span class="dt">b0 =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="st">  </span><span class="kw">historical_binomial</span>(<span class="dt">y0_treatment =</span> <span class="dv">5</span>, <span class="dt">N0_treatment =</span> <span class="dv">55</span>,</a>
+<a class="sourceLine" id="cb16-9" data-line-number="9">                      <span class="dt">y0_control =</span> <span class="ot">NULL</span>, <span class="dt">N0_control =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">                      <span class="dt">discount_function =</span> <span class="st">"identity"</span>, </a>
+<a class="sourceLine" id="cb16-11" data-line-number="11">                      <span class="dt">alpha_max =</span> <span class="dv">1</span>, <span class="dt">fix_alpha =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb16-12" data-line-number="12">                      <span class="dt">weibull_scale =</span> <span class="fl">0.135</span>, <span class="dt">weibull_shape =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
+<a class="sourceLine" id="cb16-14" data-line-number="14"> </a>
+<a class="sourceLine" id="cb16-15" data-line-number="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
+<a class="sourceLine" id="cb16-16" data-line-number="16"><span class="co">#&gt; List of 11</span></a>
+<a class="sourceLine" id="cb16-17" data-line-number="17"><span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span></a>
+<a class="sourceLine" id="cb16-18" data-line-number="18"><span class="co">#&gt;  $ margin                       : num 0.02</span></a>
+<a class="sourceLine" id="cb16-19" data-line-number="19"><span class="co">#&gt;  $ alternative                  : chr "greater"</span></a>
+<a class="sourceLine" id="cb16-20" data-line-number="20"><span class="co">#&gt;  $ N_treatment                  : num 125</span></a>
+<a class="sourceLine" id="cb16-21" data-line-number="21"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
+<a class="sourceLine" id="cb16-22" data-line-number="22"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
+<a class="sourceLine" id="cb16-23" data-line-number="23"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
+<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.956</span></a>
+<a class="sourceLine" id="cb16-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num 0.108</span></a>
+<a class="sourceLine" id="cb16-26" data-line-number="26"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
+<a class="sourceLine" id="cb16-27" data-line-number="27"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
 </div>
   </div>
 
