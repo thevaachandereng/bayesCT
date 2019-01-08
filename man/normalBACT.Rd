@@ -68,7 +68,7 @@ weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
 more details.}
 
 \item{alternative}{character. The string specifying the alternative
-hypothesis, must be one of \code{"greater"}, \code{"less"} or
+hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 \code{"two.sided"}.}
 
 \item{prop_loss_to_followup}{scalar. Overall oroportion of subjects lost to

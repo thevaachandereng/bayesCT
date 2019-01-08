@@ -30,7 +30,7 @@ of the treatment and complete columns. An example file is available at
 \item{N0_control}{scalar. Number of observations of the historical control group.}
 
 \item{alternative}{character. The string specifying the alternative
-hypothesis, must be one of \code{"greater"}, \code{"less"} or
+hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 \code{"two.sided"}.}
 
 \item{N_impute}{scalar. Number of imputations for Monte Carlo simulation of

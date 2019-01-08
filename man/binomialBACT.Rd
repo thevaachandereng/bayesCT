@@ -65,7 +65,7 @@ to treatment. Integer values mapping the size of the block. See
 follow-up.}
 
 \item{alternative}{character. The string specifying the alternative
-hypothesis, must be one of \code{"greater"}, \code{"less"} or
+hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 \code{"two.sided"}.}
 
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
