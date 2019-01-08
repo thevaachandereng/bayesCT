@@ -47,10 +47,10 @@ Instead of using traditional R function, we use pipes to input our parameters.
 
 
 - **randomize**: The randomize is a wrapper function for the simulation. The **randomize**
- function takes two input (**block_size** and **randomization_ratio**). The **block_size** input controls the 
-The enrollment rate is a wrapper function for the simulation. The **enrollment_rate** function takes two input (**lambda**, **time**) unlike the **enrollment** function. The **lambda** input is similar to **param** input in the **enrollment** function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). The **time** input works similarly to the **time** input in the **enrollment** function where **time** input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html).  
+ function takes two input (**block_size** and **randomization_ratio**). The **block_size** input controls the size of each block to randomize. The **randomization_ratio** is a vector of length 2 which determine the ratio for control to treatment. For more details, please look at the randomization section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html).  
 
 
+- **impute**: The impute is a wrapper function for simulation and analysis. The **impute** function takes two input (**no_of_impute**, **number_mcmc**). The **no_of_impute** determines the number of imputation done for loss to follow-up to stop for early success and number of imputation done for loss to follow-up and patients not enrolled (only in simulation scenario) for loss to follow-up for futility. The default is set to 10 to generate the vignette quickly. However, the general rule of thumb for implementation of adaptive trials would be to set **no_of_impute** to 10,000. A Monte Carlo estimation approach is used to estimate the posterior probability, requiring several samples from the posterior distributions. The **number_mcmc** controls the number of Monte Carlo estimation with default set to 10000.  
 
 # Design
 
