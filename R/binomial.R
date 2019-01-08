@@ -51,7 +51,7 @@ binomialBACT <- function(
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
   N_impute              = 10,         # Number of imputation simulations for predictive distribution
-  number_mcmc           = 1000,         # Number of posterior sampling
+  number_mcmc           = 10000,         # Number of posterior sampling
   alpha_max             = 1,            # max weight on incorporating historical data
   fix_alpha             = FALSE,        # fix alpha set weight of historical data to alpha_max
   weibull_scale         = 0.135,        # weibull parameter
