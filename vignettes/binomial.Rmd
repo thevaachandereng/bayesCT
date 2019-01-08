@@ -34,6 +34,8 @@ Instead of using traditional R function, we use pipes to input our parameters.
 
 # Wrapper Function for Design and Analysis
 
+Unlike traditional R function, the R package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below with details on the arguments for the simulation and analysis. 
+
 **binomial_outcome**: The binomial outcome is a wrapper function for the simulation. The binomial outcome has two input **p_treatment** and **p_control**. 
 
 - **p_treatment** is a required input where the proportion of events for a single-arm or double-arm trials are specified for the treatment arm, where $0 < p_{treatment} < 1$. 
@@ -69,7 +71,7 @@ Instead of using traditional R function, we use pipes to input our parameters.
 
 - **expected_success_prob** input controls the early success rate $\Delta$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.90. To prevent the trial for stopping for early success, set the **expected_success_prob** to 1. For more details on the criteria of early stopping for success or futility, please see the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The -
 
-- **alternative** input takes a character string specifying the alternative hypothesis, must be one of "greater"(default), "less" or "two-sided".
+- **alternative** input takes a character string specifying the alternative hypothesis, must be one of "greater" $p_{treatment} > p_{control}$ (default), "less" $p_{treatment} < p_{control}$ or "two-sided" $p_{treatment} \neq p_{control}$.
 
 
 **randomize**: The randomize is a wrapper function for the simulation. The **randomize**
