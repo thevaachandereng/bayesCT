@@ -134,22 +134,32 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>normal_analysis</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mu0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sd0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mu0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>sd0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>,
-  <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>, <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>weibull_scale</span> <span class='kw'>=</span> <span class='fl'>0.135</span>, <span class='kw'>weibull_shape</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
+    <pre class="usage"><span class='fu'>normal_analysis</span>(<span class='no'>treatment</span>, <span class='no'>outcome</span>, <span class='kw'>complete</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mu0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sd0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mu0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sd0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"greater"</span>, <span class='kw'>N_impute</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>h0</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>number_mcmc</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>prob_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>discount_function</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
+  <span class='kw'>fix_alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>alpha_max</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>weibull_scale</span> <span class='kw'>=</span> <span class='fl'>0.135</span>,
+  <span class='kw'>weibull_shape</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>data frame. A data frame which provides patient id, treatment group, outcome
-of the treatment and complete columns. An example file is available at
-<code><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data(normaldata)</a></code>.</p></td>
+      <th>treatment</th>
+      <td><p>vector. treatment assignment for patients, 1 for treatment group and
+0 for control group</p></td>
+    </tr>
+    <tr>
+      <th>outcome</th>
+      <td><p>vector. normal outcome of the trial.</p></td>
+    </tr>
+    <tr>
+      <th>complete</th>
+      <td><p>vector. similar length as treatment and outcome variable,
+1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+the dataset is assumed to be complete.</p></td>
     </tr>
     <tr>
       <th>mu0_treatment</th>
