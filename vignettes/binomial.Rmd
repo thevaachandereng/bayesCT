@@ -94,7 +94,7 @@ Instead of using traditional R function, we use pipes to input our parameters.
 - **b_0** regulates the shape value $\beta$ in the beta distribution. The default value of **b_0** is 1. To completely avoid using non-informative prior, users can set **b_0** to 0. 
 
 
-**historical_binomial**: The historical binomial wrapper function allows incorporation of historical data using discount function in the analysis and simulation. For more details on the method and computation, please look at the [bayesDP binomial vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html). 
+**historical_binomial**: The historical binomial wrapper function allows incorporation of historical data using discount function in the analysis and simulation. This wrapper is only used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please look at the [bayesDP binomial vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html). 
 Historical binomial takes 9 inputs.
 
 - **y0_treatment**: The number of events in the historical treatment group.

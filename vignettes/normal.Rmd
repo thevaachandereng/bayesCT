@@ -84,7 +84,7 @@ The historical data is used as an informative prior and we use `bayesDP` as an e
 - A Monte Carlo estimation approach is used to estimate the posterior probability, requiring several samples from the posterior distributions. The **number_mcmc** controls the number of Monte Carlo estimation with default set to 10000.  
 
 
-**historical_normal**: The historical normal wrapper function allows incorporation of historical data using discount function in the analysis and simulation. For more details on the method and computation, please look at the [bayesDP normal vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html). 
+**historical_normal**: The historical normal wrapper function allows incorporation of historical data using discount function in the analysis and simulation. This wrapper is only used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please look at the [bayesDP normal vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html). 
 Historical binomial takes 9 inputs.
 
 - **mu0_treatment**: Mean of the historical treatment group.
