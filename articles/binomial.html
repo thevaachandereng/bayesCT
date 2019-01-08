@@ -143,7 +143,7 @@
 <li><p><strong>a_0</strong> regulates the shape value <span class="math inline">\(\alpha\)</span> in the beta distribution. The default value of <strong>a_0</strong> is 1. To completely avoid using non-informative prior, users can set <strong>a_0</strong> to 0.</p></li>
 <li><p><strong>b_0</strong> regulates the shape value <span class="math inline">\(\beta\)</span> in the beta distribution. The default value of <strong>b_0</strong> is 1. To completely avoid using non-informative prior, users can set <strong>b_0</strong> to 0.</p></li>
 </ul>
-<p><strong>historical_binomial</strong>: The historical binomial wrapper function allows incorporation of historical data using discount function in the analysis and simulation. For more details on the method and computation, please look at the <a href="https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html">bayesDP binomial vignette</a>. Historical binomial takes 9 inputs.</p>
+<p><strong>historical_binomial</strong>: The historical binomial wrapper function allows incorporation of historical data using discount function in the analysis and simulation. This wrapper is only used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please look at the <a href="https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html">bayesDP binomial vignette</a>. Historical binomial takes 9 inputs.</p>
 <ul>
 <li><p><strong>y0_treatment</strong>: The number of events in the historical treatment group.</p></li>
 <li><p><strong>N0_treatment</strong>: The sample size for the historical treatment group.</p></li>
