@@ -224,7 +224,9 @@ head(normaldata)
 
 ```{r}
 value1 <-
-  data_normal(data = normaldata) %>%
+  data_normal(treatment = normaldata$treatment, 
+              outcome   = normaldata$outcome, 
+              complete  = normaldata$complete) %>%
   analysis(type = "normal")
 
 str(value1)
@@ -233,7 +235,9 @@ str(value1)
 
 ```{r}
 value1 <-
-  data_normal(data = normaldata) %>%
+  data_normal(treatment = normaldata$treatment, 
+              outcome   = normaldata$outcome, 
+              complete  = normaldata$complete) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
   analysis(type = "normal")
@@ -245,7 +249,9 @@ str(value1)
 
 ```{r}
 value1 <-
-  data_normal(data = normaldata) %>%
+  data_normal(treatment = normaldata$treatment, 
+              outcome   = normaldata$outcome, 
+              complete  = normaldata$complete) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
@@ -258,7 +264,9 @@ str(value1)
 ```{r}
 
 value1 <-
-  data_normal(data = normaldata) %>%
+  data_normal(treatment = normaldata$treatment, 
+              outcome   = normaldata$outcome, 
+              complete  = normaldata$complete) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>%

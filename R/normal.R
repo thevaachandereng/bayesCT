@@ -704,10 +704,13 @@ historical_normal <- function(mu0_treatment       = NULL,
 #'  which allows early stopping and incorporation of historical data using
 #'  the discount function approach
 #'
-#' @param data data frame. A data frame which provides patient id, treatment group, outcome
-#'    of the treatment and complete columns. An example file is available at
-#'    \code{data(normaldata)}.
 #' @inheritParams normalBACT
+#' @param treatment vector. treatment assignment for patients, 1 for treatment group and
+#'    0 for control group
+#' @param outcome vector. normal outcome of the trial.
+#' @param complete vector. similar length as treatment and outcome variable,
+#'    1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+#'    the dataset is assumed to be complete.
 #'
 #' @importFrom stats rnorm lm
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
@@ -718,7 +721,9 @@ historical_normal <- function(mu0_treatment       = NULL,
 #' @export normal_analysis
 
 normal_analysis <- function(
-  data                  = NULL,
+  treatment,
+  outcome,
+  complete              = NULL,
   mu0_treatment         = NULL,
   sd0_treatment         = NULL,
   N0_treatment          = NULL,
@@ -738,11 +743,17 @@ normal_analysis <- function(
   weibull_scale         = 0.135,
   weibull_shape         = 3
 ){
-  #reading the data
-  data_total <- data
+
+  #if complete is NULL, assume the data is complete
+  if(is.null(complete)){
+    complete <- rep(1, length(outcome))
+  }
+
+  ##reading the data
+  data_total <- data.frame(cbind(treatment, outcome, complete))
 
   data_interim <- data_total %>%
-    mutate(futility = complete == 0)
+    mutate(futility = (complete == 0))
 
   data <- data_interim %>%
     filter(!futility)
@@ -990,17 +1001,21 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "
 #'
 #' @description Wrapper function for data file in normal analysis.
 #'
-#' @param data data frame. A data frame which provides patient id, treatment group, outcome
-#'    of the treatment and complete columns. An example file is available at
-#'    \code{data(normaldata)}.
+#' @param treatment vector. treatment assignment for patients, 1 for treatment group and
+#'    0 for control group
+#' @param outcome vector. normal outcome of the trial.
+#' @param complete vector. similar length as treatment and outcome variable,
+#'    1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+#'    the dataset is assumed to be complete.
 #' @param .data NULL. stores the normal data for analysis, please do not fill it in.
 #'
 #' @return a list with normal data file to be analyzed.
 #'
-#' @examples data_normal(data = normaldata)
 #' @export data_normal
-data_normal <- function(data, .data = NULL){
-  .data$data <- data.frame(data)
+data_normal <- function(treatment, outcome, complete, .data = NULL){
+  .data$treatment <- treatment
+  .data$outcome   <- outcome
+  .data$complete  <- complete
   .data
 }
 

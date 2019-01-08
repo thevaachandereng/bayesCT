@@ -4,12 +4,17 @@
 \alias{data_normal}
 \title{Data file for normal analysis}
 \usage{
-data_normal(data, .data = NULL)
+data_normal(treatment, outcome, complete, .data = NULL)
 }
 \arguments{
-\item{data}{data frame. A data frame which provides patient id, treatment group, outcome
-of the treatment and complete columns. An example file is available at
-\code{data(normaldata)}.}
+\item{treatment}{vector. treatment assignment for patients, 1 for treatment group and
+0 for control group}
+
+\item{outcome}{vector. normal outcome of the trial.}
+
+\item{complete}{vector. similar length as treatment and outcome variable,
+1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+the dataset is assumed to be complete.}
 
 \item{.data}{NULL. stores the normal data for analysis, please do not fill it in.}
 }
@@ -18,7 +23,4 @@ a list with normal data file to be analyzed.
 }
 \description{
 Wrapper function for data file in normal analysis.
-}
-\examples{
-data_normal(data = normaldata)
 }
