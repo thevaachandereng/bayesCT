@@ -153,6 +153,12 @@
 <li><p><strong>weibull_scale</strong>: Scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when discount_function = “identity”.</p></li>
 <li><p><strong>weibull_shape</strong>: Shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when discount_function = “identity”.</p></li>
 </ul>
+<p><strong>data_normal</strong>: The data normal is a wrapper function for inputting data for analysis of bayesian trial with normal outcome. The <strong>data_normal</strong> takes three input (<strong>treatment</strong>, <strong>outcome</strong> and <strong>complete</strong>).</p>
+<ul>
+<li><p><strong>treatment</strong>: treatment assignment for patients in the trial, 1 for treatment group and 0 for control group.</p></li>
+<li><p><strong>outcome</strong>: normal outcome of the trial. The length of the vector is the same size as the treatment variable.</p></li>
+<li><p><strong>complete</strong>: similar length as treatment and outcome variable, 1 for complete outcome, 0 for loss to follow up. If complete is 0, the outcome of the patient is ignored. If complete is not provided, the dataset is assumed to be complete.</p></li>
+</ul>
 </div>
 <div id="design" class="section level1">
 <h1 class="hasAnchor">
