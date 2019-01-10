@@ -118,7 +118,7 @@ Historical binomial takes 9 inputs.
 - **weibull_shape**: Shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when discount_function = "identity".
 
 
-**data_binomial**: The data binomial is a wrapper function for inputting data for analysis of bayesian trial. The **data_binomial** takes three input (**treatment**, **outcome** and **complete**).
+**data_binomial**: The data binomial is a wrapper function for inputting data for analysis of bayesian trial with binomial outcome. The **data_binomial** takes three input (**treatment**, **outcome** and **complete**).
 
 - **treatment**: treatment assignment for patients in the trial, 1 for treatment group and 0 for control group. 
 
