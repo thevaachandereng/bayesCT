@@ -376,17 +376,17 @@ binomialBACT <- function(
 
     # print(analysis_at_enrollnumber[i])
 
-    # Test if futility success criteria is met
-    if(futility_test / N_impute < futility_prob){
-      stop_futility       <- 1
-      stage_trial_stopped <- analysis_at_enrollnumber[i]
-      break
-    }
-
     # Test if expected success criteria met
     if(expected_success_test / N_impute > expected_success_prob ){
       stop_expected_success <- 1
       stage_trial_stopped   <- analysis_at_enrollnumber[i]
+      break
+    }
+
+    # Test if futility success criteria is met
+    if(futility_test / N_impute < futility_prob){
+      stop_futility       <- 1
+      stage_trial_stopped <- analysis_at_enrollnumber[i]
       break
     }
 
