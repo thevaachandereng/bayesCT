@@ -29,11 +29,6 @@ We use the normal-normal conjugate for the estimation of posterior probabilities
 The historical data is used as an informative prior and we use `bayesDP` as an engine to incorporate the historical data. 
 
 
-## Estimation of Treatment Difference 
-
-
-
-
 # Wrapper Function for Design and Analysis
 
 Unlike traditional R function, the R package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below with details on the arguments for the simulation and analysis. 
