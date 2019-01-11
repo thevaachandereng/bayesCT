@@ -1,6 +1,8 @@
 ---
 title: "Binomial Outcome"
 author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
+header-includes:
+   - \usepackage{amsmath}
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -30,6 +32,24 @@ We use the beta-binomial conjugate for the estimation of posterior probabilities
 The historical data is used as an informative prior and we use `bayesDP` as an engine to incorporate the historical data. 
 The default model uses a non-informative prior of $Beta(a = 1, b = 1)$ with/without the incorporation of historical data.
 Instead of using traditional R function, we use pipes to input our parameters. 
+
+# Estimation of Treatment Difference 
+
+Let $y$ and $N$ denote the number of events and sample size. 
+Let $a_0$ and $b_00$ denote the rate parameters of a Beta distribution.
+Then, the posterior distribution of the event rates under vague (flat) priors is
+
+$$ \tilde{\theta}\mid y,N \; \sim \;  \mathcal{B}eta\left(y+a_0,\,N-y+b_0 \right).$$
+When historical data is present, then $y_0$ and $N_0$ denote the number of events and sample size of the historical data. 
+The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. 
+For more details on computation of $\hat{\alpha}$, please refer to the vignette of binomial counts avaialable at [https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html).
+The posterior distribution of the event rates with historical data incorporated under vague (flat) priors is 
+
+$$\theta \mid y,N, y_0, N_0 \; \sim \; \mathcal{B}eta\left(y+y_0\hat{\alpha}+a_0,\, N-y+\hat{\alpha}(N_0-y_0)+b_0 \right).$$
+
+Since there is no closed-form solution for difference in beta distribution ( $\mathcal{B}eta(\alpha_1, \beta_1)$ - $\mathcal{B}eta(\alpha_2, \beta_2)$), we use Monte Carlo estimation of the posteriors of treatment and control group to compute the difference. 
+
+The estimation of treatment difference $\tilde{\theta_T} - \tilde{\theta_C}$, where $\theta_T$ is the posterior of the treatment group and $\theta_C$ is the posterior of the control group.
 
 
 # Wrapper Function for Design and Analysis
@@ -131,229 +151,229 @@ Historical binomial takes 9 inputs.
 
 
 
-```{r}
-value <-
-   binomial_outcome(p_treatment = 0.08) %>%
-   study_details(total_sample_size = 900, study_period = 50,
-                 interim_look = NULL,
-                 prop_loss_to_followup = 0.10) 
+<!-- ```{r} -->
+<!-- value <- -->
+<!--    binomial_outcome(p_treatment = 0.08) %>% -->
+<!--    study_details(total_sample_size = 900, study_period = 50, -->
+<!--                  interim_look = NULL, -->
+<!--                  prop_loss_to_followup = 0.10)  -->
 
-output <- value %>%
-            simulate(no_of_sim = 10)
-  
- 
-str(output)
-```
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
 
+<!-- str(output) -->
+<!-- ``` -->
 
 
-```{r}
-value <- value %>%
-  study_details(total_sample_size = 900, study_period = 50,
-                interim_look = c(410, 440, 670),
-                prop_loss_to_followup = 0.10) 
 
-output <- value %>%
-            simulate(no_of_sim = 10)
 
-str(output)
-```
+<!-- ```{r} -->
+<!-- value <- value %>% -->
+<!--   study_details(total_sample_size = 900, study_period = 50, -->
+<!--                 interim_look = c(410, 440, 670), -->
+<!--                 prop_loss_to_followup = 0.10)  -->
 
-```{r}
-value <- value %>%
-  enrollment_rate(lambda = c(0.3, 1), time = 25) 
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
+<!-- str(output) -->
+<!-- ``` -->
 
-output <- value %>%
-            simulate(no_of_sim = 10)
+<!-- ```{r} -->
+<!-- value <- value %>% -->
+<!--   enrollment_rate(lambda = c(0.3, 1), time = 25)  -->
 
-str(output)
-```
 
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
+<!-- str(output) -->
+<!-- ``` -->
 
 
-```{r}
-value <- value %>% 
-   hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95, 
-             expected_success_prob = 0.90, alternative = "less")
- 
-output <- value %>%
-            simulate(no_of_sim = 10)
 
-str(output)
-```
 
+<!-- ```{r} -->
+<!-- value <- value %>%  -->
+<!--    hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95,  -->
+<!--              expected_success_prob = 0.90, alternative = "less") -->
 
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
-```{r}
-value <- value %>% 
-  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1))
+<!-- str(output) -->
+<!-- ``` -->
 
-output <- value %>%
-            simulate(no_of_sim = 10)
 
-str(output)
-```
 
+<!-- ```{r} -->
+<!-- value <- value %>%  -->
+<!--   randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) -->
 
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
-```{r}
-value <- value %>% 
-  impute(no_of_impute = 25, number_mcmc = 1000)
+<!-- str(output) -->
+<!-- ``` -->
 
-output <- value %>%
-            simulate(no_of_sim = 10)
 
-str(output)
-```
 
-```{r}
-value <- value %>% 
-  beta_prior(a0 = 5, b0 = 5)
+<!-- ```{r} -->
+<!-- value <- value %>%  -->
+<!--   impute(no_of_impute = 25, number_mcmc = 1000) -->
 
-output <- value %>%
-            simulate(no_of_sim = 10)
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
-str(output)
-```
+<!-- str(output) -->
+<!-- ``` -->
 
-```{r}
-value <- value %>% 
-  historical_binomial(y0_treatment = 5, N0_treatment = 55,
-                      discount_function = "identity", 
-                      y0_control = NULL, N0_control = NULL, 
-                      alpha_max = 1, fix_alpha = FALSE, 
-                       weibull_scale = 0.135, weibull_shape = 3)
+<!-- ```{r} -->
+<!-- value <- value %>%  -->
+<!--   beta_prior(a0 = 5, b0 = 5) -->
 
-output <- value %>%
-            simulate(no_of_sim = 10)
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
-str(output)
-```
+<!-- str(output) -->
+<!-- ``` -->
 
+<!-- ```{r} -->
+<!-- value <- value %>%  -->
+<!--   historical_binomial(y0_treatment = 5, N0_treatment = 55, -->
+<!--                       discount_function = "identity",  -->
+<!--                       y0_control = NULL, N0_control = NULL,  -->
+<!--                       alpha_max = 1, fix_alpha = FALSE,  -->
+<!--                        weibull_scale = 0.135, weibull_shape = 3) -->
 
+<!-- output <- value %>% -->
+<!--             simulate(no_of_sim = 10) -->
 
-```{r}
+<!-- str(output) -->
+<!-- ``` -->
 
-value <-
-  binomial_outcome(p_treatment = 0.08) %>%
-  enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
-  study_details(total_sample_size = 900, study_period = 50,
-                interim_look = c(410, 440, 670),
-                prop_loss_to_followup = 0.10) %>%
-  hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95, 
-             expected_success_prob = 0.90, alternative = "less") %>%
-  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>%
-  impute(no_of_impute = 25, number_mcmc = 1000) %>%
-  beta_prior(a0 = 5, b0 = 5) %>%
-  historical_binomial(y0_treatment = 5, N0_treatment = 55,
-                      discount_function = "identity", 
-                      y0_control = NULL, N0_control = NULL, 
-                      alpha_max = 1, fix_alpha = FALSE, 
-                       weibull_scale = 0.135, weibull_shape = 3) %>%
-  simulate(no_of_sim = 5)
 
 
-str(value)
+<!-- ```{r} -->
 
-```
+<!-- value <- -->
+<!--   binomial_outcome(p_treatment = 0.08) %>% -->
+<!--   enrollment_rate(lambda = c(0.3, 1), time = 25) %>% -->
+<!--   study_details(total_sample_size = 900, study_period = 50, -->
+<!--                 interim_look = c(410, 440, 670), -->
+<!--                 prop_loss_to_followup = 0.10) %>% -->
+<!--   hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95,  -->
+<!--              expected_success_prob = 0.90, alternative = "less") %>% -->
+<!--   randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>% -->
+<!--   impute(no_of_impute = 25, number_mcmc = 1000) %>% -->
+<!--   beta_prior(a0 = 5, b0 = 5) %>% -->
+<!--   historical_binomial(y0_treatment = 5, N0_treatment = 55, -->
+<!--                       discount_function = "identity",  -->
+<!--                       y0_control = NULL, N0_control = NULL,  -->
+<!--                       alpha_max = 1, fix_alpha = FALSE,  -->
+<!--                        weibull_scale = 0.135, weibull_shape = 3) %>% -->
+<!--   simulate(no_of_sim = 5) -->
 
 
-# Analysis
+<!-- str(value) -->
 
-```{r}
-data(binomialdata)
- 
-head(binomialdata)
-```
+<!-- ``` -->
 
 
-```{r}
-input <-
-  data_binomial(treatment = binomialdata$treatment, 
-                outcome   = binomialdata$outcome, 
-                complete  = binomialdata$complete) 
+<!-- # Analysis -->
 
-out <- input %>%
-  analysis(type = "binomial")
+<!-- ```{r} -->
+<!-- data(binomialdata) -->
 
-str(out)
-```
+<!-- head(binomialdata) -->
+<!-- ``` -->
 
 
+<!-- ```{r} -->
+<!-- input <- -->
+<!--   data_binomial(treatment = binomialdata$treatment,  -->
+<!--                 outcome   = binomialdata$outcome,  -->
+<!--                 complete  = binomialdata$complete)  -->
 
-```{r}
-input <- input %>%
-  hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater")
-  
-out <- input %>%
-  analysis(type = "binomial")
+<!-- out <- input %>% -->
+<!--   analysis(type = "binomial") -->
 
-str(out)
-```
+<!-- str(out) -->
+<!-- ``` -->
 
 
 
-```{r}
+<!-- ```{r} -->
+<!-- input <- input %>% -->
+<!--   hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater") -->
 
-input <- input %>%
-  impute(no_of_impute = 50, number_mcmc = 10000)
-  
-out <- input %>%
-  analysis(type = "binomial")
+<!-- out <- input %>% -->
+<!--   analysis(type = "binomial") -->
 
-str(out)
-```
+<!-- str(out) -->
+<!-- ``` -->
 
 
-```{r}
 
-input <- input %>%
-  beta_prior(a0 = 3, b0 = 3)
-  
-out <- input %>%
-  analysis(type = "binomial")
+<!-- ```{r} -->
 
-str(out)
+<!-- input <- input %>% -->
+<!--   impute(no_of_impute = 50, number_mcmc = 10000) -->
 
-```
+<!-- out <- input %>% -->
+<!--   analysis(type = "binomial") -->
 
+<!-- str(out) -->
+<!-- ``` -->
 
-```{r}
-input <- input %>%
-  historical_binomial(y0_treatment = 5, N0_treatment = 55,
-                      y0_control = NULL, N0_control = NULL,
-                      discount_function = "weibull", 
-                      alpha_max = 1, fix_alpha = FALSE, 
-                      weibull_scale = 0.135, weibull_shape = 3)
-  
-out <- input %>%
-  analysis(type = "binomial")
 
-str(out)
+<!-- ```{r} -->
 
-```
+<!-- input <- input %>% -->
+<!--   beta_prior(a0 = 3, b0 = 3) -->
 
+<!-- out <- input %>% -->
+<!--   analysis(type = "binomial") -->
 
+<!-- str(out) -->
 
-```{r}
-ouut <-
-  data_binomial(treatment = binomialdata$treatment, 
-                outcome   = binomialdata$outcome, 
-                complete  = binomialdata$complete) %>%
-  hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater") %>%
-  impute(no_of_impute = 50, number_mcmc = 10000) %>%
-  beta_prior(a0 = 5, b0 = 5) %>%
-  historical_binomial(y0_treatment = 5, N0_treatment = 55,
-                      y0_control = NULL, N0_control = NULL,
-                      discount_function = "identity", 
-                      alpha_max = 1, fix_alpha = FALSE, 
-                      weibull_scale = 0.135, weibull_shape = 3) %>%
-  analysis(type = "binomial")
- 
-str(out)
+<!-- ``` -->
 
-```
+
+<!-- ```{r} -->
+<!-- input <- input %>% -->
+<!--   historical_binomial(y0_treatment = 5, N0_treatment = 55, -->
+<!--                       y0_control = NULL, N0_control = NULL, -->
+<!--                       discount_function = "weibull",  -->
+<!--                       alpha_max = 1, fix_alpha = FALSE,  -->
+<!--                       weibull_scale = 0.135, weibull_shape = 3) -->
+
+<!-- out <- input %>% -->
+<!--   analysis(type = "binomial") -->
+
+<!-- str(out) -->
+
+<!-- ``` -->
+
+
+
+<!-- ```{r} -->
+<!-- ouut <- -->
+<!--   data_binomial(treatment = binomialdata$treatment,  -->
+<!--                 outcome   = binomialdata$outcome,  -->
+<!--                 complete  = binomialdata$complete) %>% -->
+<!--   hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater") %>% -->
+<!--   impute(no_of_impute = 50, number_mcmc = 10000) %>% -->
+<!--   beta_prior(a0 = 5, b0 = 5) %>% -->
+<!--   historical_binomial(y0_treatment = 5, N0_treatment = 55, -->
+<!--                       y0_control = NULL, N0_control = NULL, -->
+<!--                       discount_function = "identity",  -->
+<!--                       alpha_max = 1, fix_alpha = FALSE,  -->
+<!--                       weibull_scale = 0.135, weibull_shape = 3) %>% -->
+<!--   analysis(type = "binomial") -->
+
+<!-- str(out) -->
+
+<!-- ``` -->
 
