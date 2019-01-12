@@ -1,6 +1,6 @@
 Package: bayesCT
 Type: Package
-Title: An R Package for Simulation in Adaptive Bayesian Clinical Trials (bayesCT)
+Title: An R Package for Simulation and Analysis of Adaptive Bayesian Clinical Trials (bayesCT)
 Version: 1.0.0
 Authors@R: c(person(given = "Thevaa", family = "Chandereng", role = c("aut", "cre", "cph"), 
              email = "chandereng@wisc.edu", comment = c(ORCID = "0000-0003-4078-9176")), 
@@ -9,8 +9,8 @@ Authors@R: c(person(given = "Thevaa", family = "Chandereng", role = c("aut", "cr
 	           person("Graeme", "Hickey", email = "graeme.l.hickey@medtronic.com", role = c("aut", "cph")), 
              person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com", role = c("aut", "cph")),
              person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com", role = c("aut", "cph")))
-Description: Simulation of bayesian adaptive clinical trial, incorporates power, early stopping, 
-             futility analysis and optimal randomization ratio.
+Description: Simulation and analysis of bayesian adaptive clinical trial, incorporates historical 
+      data and allows early stopping for futility or early success. 
 LazyLoad: yes
 License: GPL-3
 NeedsCompilation: no

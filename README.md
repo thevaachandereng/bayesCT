@@ -1,4 +1,4 @@
-bayesCT - Tool for Simulation in Adaptive Bayesian Clinical Trials <img src="man/figures/logo.png" align="right" width="150" height="150" />
+bayesCT - Tool for Simulation and Analysis of Adaptive Bayesian Clinical Trials <img src="man/figures/logo.png" align="right" width="150" height="150" />
 ===============================================================================
 
 
