@@ -348,6 +348,7 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt;  $ N_enrolled                  : num [1:10] 900 600 600 900 600 600 900 800 600 800</span></a>
 <a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;  $ stop_expect_success         : num [1:10] 0 1 1 0 1 1 0 1 1 1</span></a>
 <a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;  $ stop_futility               : num [1:10] 0 0 0 0 0 0 0 0 0 0</span></a></code></pre></div>
+<p>Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. The pipe function connects all input together.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">value &lt;-</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">binomial_outcome</span>(<span class="dt">p_treatment =</span> <span class="fl">0.08</span>) <span class="op">%&gt;%</span></a>
@@ -365,20 +366,20 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb9-15" data-line-number="15">                      <span class="dt">y0_control =</span> <span class="ot">NULL</span>, <span class="dt">N0_control =</span> <span class="ot">NULL</span>,</a>
 <a class="sourceLine" id="cb9-16" data-line-number="16">                      <span class="dt">alpha_max =</span> <span class="dv">1</span>, <span class="dt">fix_alpha =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb9-17" data-line-number="17">                       <span class="dt">weibull_scale =</span> <span class="fl">0.135</span>, <span class="dt">weibull_shape =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb9-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb9-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb9-21" data-line-number="21"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value)</a>
 <a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt; List of 7</span></a>
 <a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span></a>
 <a class="sourceLine" id="cb9-24" data-line-number="24"><span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span></a>
-<a class="sourceLine" id="cb9-25" data-line-number="25"><span class="co">#&gt;   ..$ power        : num [1:4] 0.4 0.4 0.6 0.8</span></a>
+<a class="sourceLine" id="cb9-25" data-line-number="25"><span class="co">#&gt;   ..$ power        : num [1:4] 0.4 0.6 0.7 0.9</span></a>
 <a class="sourceLine" id="cb9-26" data-line-number="26"><span class="co">#&gt;  $ type1_error                 : num 0</span></a>
-<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="co">#&gt;  $ est_final                   : num [1:5] 0.1062 0.0808 0.0745 0.0866 0.0928</span></a>
-<a class="sourceLine" id="cb9-28" data-line-number="28"><span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.64 0.988 0.996 0.979 0.954</span></a>
-<a class="sourceLine" id="cb9-29" data-line-number="29"><span class="co">#&gt;  $ N_enrolled                  : num [1:5] 800 600 600 800 900</span></a>
-<a class="sourceLine" id="cb9-30" data-line-number="30"><span class="co">#&gt;  $ stop_expect_success         : num [1:5] 0 1 1 1 0</span></a>
-<a class="sourceLine" id="cb9-31" data-line-number="31"><span class="co">#&gt;  $ stop_futility               : num [1:5] 1 0 0 0 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="co">#&gt;  $ est_final                   : num [1:10] 0.1062 0.0808 0.0745 0.0866 0.0928 ...</span></a>
+<a class="sourceLine" id="cb9-28" data-line-number="28"><span class="co">#&gt;  $ post_prob_accept_alternative: num [1:10] 0.64 0.988 0.996 0.979 0.954 0.958 0.988 0.996 0.964 0.983</span></a>
+<a class="sourceLine" id="cb9-29" data-line-number="29"><span class="co">#&gt;  $ N_enrolled                  : num [1:10] 800 600 600 800 900 700 600 700 600 900</span></a>
+<a class="sourceLine" id="cb9-30" data-line-number="30"><span class="co">#&gt;  $ stop_expect_success         : num [1:10] 0 1 1 1 0 1 1 1 1 0</span></a>
+<a class="sourceLine" id="cb9-31" data-line-number="31"><span class="co">#&gt;  $ stop_futility               : num [1:10] 1 0 0 0 0 0 0 0 0 0</span></a></code></pre></div>
 </div>
 </div>
 <div id="analysis" class="section level1">
@@ -411,8 +412,8 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
 <a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.996</span></a>
-<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.994</span></a>
+<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;  $ est_final                    : num 0.125</span></a>
 <a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
 <a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">input &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
@@ -431,9 +432,9 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
 <a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.983</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt;  $ est_final                    : num 0.123</span></a>
 <a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2">input &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">50</span>, <span class="dt">number_mcmc =</span> <span class="dv">10000</span>)</a>
@@ -450,7 +451,7 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
 <a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.982</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.985</span></a>
 <a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num 0.124</span></a>
 <a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
 <a class="sourceLine" id="cb13-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
@@ -470,8 +471,8 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
 <a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.979</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num 0.12</span></a>
+<a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.981</span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt;  $ est_final                    : num 0.122</span></a>
 <a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
 <a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 1</span></a></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">input &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
@@ -493,8 +494,8 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
 <a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.956</span></a>
-<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt;  $ est_final                    : num 0.108</span></a>
+<a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.958</span></a>
+<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt;  $ est_final                    : num 0.109</span></a>
 <a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
 <a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">ouut &lt;-</a>
@@ -520,8 +521,8 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb16-21" data-line-number="21"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
 <a class="sourceLine" id="cb16-22" data-line-number="22"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb16-23" data-line-number="23"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.956</span></a>
-<a class="sourceLine" id="cb16-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num 0.108</span></a>
+<a class="sourceLine" id="cb16-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.958</span></a>
+<a class="sourceLine" id="cb16-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num 0.109</span></a>
 <a class="sourceLine" id="cb16-26" data-line-number="26"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
 <a class="sourceLine" id="cb16-27" data-line-number="27"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
 </div>
