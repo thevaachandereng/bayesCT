@@ -83,7 +83,7 @@ Unlike traditional R function, the R package depends on pipe inputs with differe
  
  - **block_size** input controls the size of each block to randomize. 
  
-- **randomization_ratio** is a vector of length 2 which determine the ratio for control to treatment. For more details, please look at the randomization section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme).  
+- **randomization_ratio** is a vector of length 2 which determine the ratio for control to treatment. For more details, please look at the randomization section on the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme).  
 
 
 **impute**: The impute is a wrapper function for simulation and analysis. The **impute** function takes two input (**no_of_impute**, **number_mcmc**). 
