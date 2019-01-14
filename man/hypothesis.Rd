@@ -4,16 +4,17 @@
 \alias{hypothesis}
 \title{Hypothesis wrapper}
 \usage{
-hypothesis(delta, futility_prob, prob_accept_ha, expected_success_prob,
-  alternative = "greater", .data = NULL)
+hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
+  expected_success_prob = 0.9, alternative = "greater", .data = NULL)
 }
 \arguments{
-\item{delta}{numeric. Threshold set for margin in null hypothesis.}
+\item{delta}{numeric. Threshold set for margin in null hypothesis. The default
+is set to 0.}
 
-\item{futility_prob}{numeric. Probability of futility.}
+\item{futility_prob}{numeric. Probability of futility. The default is 0.05.}
 
 \item{prob_accept_ha}{numeric. Posterior probability of accepting alternative
-hypothesis.}
+hypothesis. The default is 0.95.}
 
 \item{expected_success_prob}{numeric. Probability of expected success.}
 

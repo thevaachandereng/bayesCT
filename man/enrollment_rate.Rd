@@ -4,7 +4,7 @@
 \alias{enrollment_rate}
 \title{Enrollment rate wrapper}
 \usage{
-enrollment_rate(lambda = NULL, time = NULL, .data = NULL)
+enrollment_rate(lambda = 0.3, time = NULL, .data = NULL)
 }
 \arguments{
 \item{lambda}{vector. Vector with different enrollment rate parameters.}

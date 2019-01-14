@@ -4,7 +4,7 @@
 \alias{study_details}
 \title{Details of the clinical study}
 \usage{
-study_details(total_sample_size, study_period, interim_look,
+study_details(total_sample_size, study_period, interim_look = NULL,
   prop_loss_to_followup = 0.1, .data = NULL)
 }
 \arguments{

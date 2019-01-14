@@ -4,7 +4,7 @@
 \alias{impute}
 \title{Imputation wrapper}
 \usage{
-impute(no_of_impute, number_mcmc, .data = NULL)
+impute(no_of_impute = 10000, number_mcmc = 10000, .data = NULL)
 }
 \arguments{
 \item{no_of_impute}{integer. Number of Monte Carlo imputation for missing
