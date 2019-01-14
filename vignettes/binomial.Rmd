@@ -45,11 +45,11 @@ The weight of the historical data included in the study design and analysis is d
 For more details on computation of $\hat{\alpha}$, please refer to the vignette of binomial counts avaialable at [https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html).
 The posterior distribution of the event rates with historical data incorporated under vague (flat) priors is 
 
-$$\theta \mid y,N, y_0, N_0 \; \sim \; \mathcal{B}eta\left(y+y_0\hat{\alpha}+a_0,\, N-y+\hat{\alpha}(N_0-y_0)+b_0 \right).$$
+$$\tilde{\theta} \mid y,N, y_0, N_0 \; \sim \; \mathcal{B}eta\left(y+y_0\hat{\alpha}+a_0,\, N-y+\hat{\alpha}(N_0-y_0)+b_0 \right).$$
 
-Since there is no closed-form solution for difference in beta distribution ( $\mathcal{B}eta(\alpha_1, \beta_1)$ - $\mathcal{B}eta(\alpha_2, \beta_2)$), we use Monte Carlo estimation of the posteriors of treatment and control group to compute the difference. 
+Since there is no closed-form solution for difference in beta distribution ( $\mathcal{B}eta(\alpha_1, \beta_1)$ - $\mathcal{B}eta(\alpha_2, \beta_2)$), we use Monte Carlo estimation of the posteriors of treatment and control group to compute the effect of treatment difference. 
 
-The estimation of treatment difference $\tilde{\theta_T} - \tilde{\theta_C}$, where $\theta_T$ is the posterior of the treatment group and $\theta_C$ is the posterior of the control group.
+The estimation of proportion of treatment difference $\tilde{\theta_T} - \tilde{\theta_C}$, where $\theta_T$ is the posterior of the event rates in the treatment group and $\theta_C$ is the posterior of the event rates in the control group.
 
 
 # Wrapper Function for Design and Analysis
@@ -147,40 +147,74 @@ Historical binomial takes 9 inputs.
 - **complete**: similar length as treatment and outcome variable, 1 for complete outcome, 0 for loss to follow up. If complete is 0, the outcome of the patient is ignored. If complete is not provided, the dataset is assumed to be complete.
 
 
-# Design
+# Design of Adaptive Trials
+
+We will discuss the design of adaptive trial using bayesCT in the following section. 
+We illustrate an example for one-arm trial and two-arm trial using the wrapper functions described above. 
 
 
+## One-arm Trial
 
-```{r}
+In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events described as follows, 
+$$H_0: \theta_{treatment} \geq 0.08 \qquad \theta_{treatment} < 0.08.$$
+
+**study_details** and **binomial_outcome** are the most important wrapper function for the design of adaptive trials using bayesCT (since there is no default set).
+
+The binomial events are simulated using a rate of 0.08. 
+The total sample size is 900 with a study length of 50 days. 
+A 10% loss to follow up are induced to the simulated data at random.
+Based on this input, the adaptive trials are simulated 10 times to obtain the following output. 
+For the purpose of reproducing the vignette quickly, we reduce the number of simulation to 10. 
+The general rule of thumb for number of simulation used in clinical trials is 10,000.
+**Note: The inputs used are picked for illustration purpose.**
+
+```{r opcbinomial}
 value <-
    binomial_outcome(p_treatment = 0.08) %>%
    study_details(total_sample_size = 900, study_period = 50,
                  interim_look = NULL,
                  prop_loss_to_followup = 0.10)
 
+# simulating 10 times
 output <- value %>%
             simulate(no_of_sim = 10)
 
-
+# structure of the simulation output
 str(output)
 ```
 
+To allow for early stopping for success or futility, we add interim look to the design where the trial is stopped at the enrollment of 600th, 700th and 800th patient. 
+Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
 
 
-
-```{r}
+```{r opcinterimlook}
+# adding interim look
 value <- value %>%
   study_details(total_sample_size = 900, study_period = 50,
-                interim_look = c(410, 440, 670),
+                interim_look = c(600, 700, 800),
                 prop_loss_to_followup = 0.10)
 
+# simulating 10 times
 output <- value %>%
             simulate(no_of_sim = 10)
 
+# structure of the simulation output
 str(output)
 ```
+The enrollment of patients in the trial is assumed to be a Poisson process.
+The default enrollment rate is assumed to enroll 0.3 patients per day. 
+However, in this simulation we introduce a step-wise Poisson process with lambda as follows
 
-```{r}
+\[  \lambda = \left\{
+\begin{array}{ll}
+      0.3 & t \in [0, 25) \\
+      1 & t \in [25, \infty) \\
+\end{array} 
+\right. \]
+The following enrollment rate is added to the simulation and the trial is simulated for 10 times. 
+
+
+```{r opcenrollment}
 value <- value %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25)
 
@@ -194,7 +228,7 @@ str(output)
 
 
 
-```{r}
+```{r opchypo}
 value <- value %>%
    hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less")
@@ -207,7 +241,7 @@ str(output)
 
 
 
-```{r}
+```{r opcrand}
 value <- value %>%
   randomize(block_size = c(4, 6), randomization_ratio = c(1, 1))
 
@@ -219,7 +253,7 @@ str(output)
 
 
 
-```{r}
+```{r opcimpute}
 value <- value %>%
   impute(no_of_impute = 25, number_mcmc = 1000)
 
@@ -229,7 +263,7 @@ output <- value %>%
 str(output)
 ```
 
-```{r}
+```{r opcprior}
 value <- value %>%
   beta_prior(a0 = 5, b0 = 5)
 
@@ -239,7 +273,7 @@ output <- value %>%
 str(output)
 ```
 
-```{r}
+```{r opchist}
 value <- value %>%
   historical_binomial(y0_treatment = 5, N0_treatment = 55,
                       discount_function = "identity",
@@ -255,13 +289,13 @@ str(output)
 
 
 
-```{r}
+```{r opcoverall}
 
 value <-
   binomial_outcome(p_treatment = 0.08) %>%
   enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   study_details(total_sample_size = 900, study_period = 50,
-                interim_look = c(410, 440, 670),
+                interim_look = c(600, 700, 800),
                 prop_loss_to_followup = 0.10) %>%
   hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
