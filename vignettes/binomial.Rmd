@@ -156,7 +156,7 @@ We illustrate an example for one-arm trial and two-arm trial using the wrapper f
 ## One-arm Trial
 
 In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events described as follows, 
-$$H_0: \theta_{treatment} \geq 0.08 \qquad \theta_{treatment} < 0.08.$$
+$$H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} < 0.08.$$
 
 **study_details** and **binomial_outcome** are the most important wrapper function for the design of adaptive trials using bayesCT (since there is no default set).
 
@@ -341,18 +341,156 @@ str(value)
 ```
 
 
+## Two-arm trial
+
+In this section, we will illustrate how to perform the design of a two-arm trial without incorporating historical data. 
+The example will compute the type 1, power and other outputs for a superiority trial as indicated below, 
+$$H_0: \theta_{treatment} - \theta_{control} \leq 0 \qquad H_A: \theta_{treatment} - \theta_{control} > 0.$$
+
+The binomial events are simulated using a rate of 0.15 for the treatment group and 0.12 for the control group. 
+The total sample size is 400 with a study length of 30 days. 
+A 15% loss to follow up are induced to the simulated data at random.
+Based on this input, the adaptive trials are simulated 10 times to obtain the following output. 
+We simulated the trials for 10 times and the input and ouput are included below.
+
+```{r twoarmbinomial}
+value <-
+   binomial_outcome(p_treatment = 0.15, p_control = 0.12) %>%
+   study_details(total_sample_size = 400, study_period = 30,
+                 interim_look = NULL,
+                 prop_loss_to_followup = 0.15)
+
+# simulating 10 times
+output <- value %>%
+            simulate(no_of_sim = 10)
+# structure of the simulation output
+str(output)
+```
+
+To allow for early stopping for success or futility, we add interim look to the design where the trial is stopped at the enrollment of 350th patient. 
+Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
+
+
+```{r twoarminterimlook}
+# adding interim look
+value <- value %>%
+  study_details(total_sample_size = 400, study_period = 30,
+                interim_look = 350,
+                prop_loss_to_followup = 0.15)
+
+# simulating 10 times
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+# structure of the simulation output
+str(output)
+```
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
+The margin of treatment difference $\delta$ is set to 0 since we are designing a superiority trial. 
+The futility probability is set at 0.10 and the expected success probability for early stopping is set at 1 (it does not stop early for expected success) with the final probability of accepting the alternative set at 0.975. 
+The alternative is set to "greater" due to the alternative hypothesis function above.  
+The trial is simulated again 10 times to obtain the output. 
+
+
+```{r twoarmhypo}
+value <- value %>%
+   hypothesis(delta = 0, futility_prob = 0.10, prob_accept_ha = 0.975,
+             expected_success_prob = 1, alternative = "greater")
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+The enrollment of patients in the trial is assumed to be a Poisson process.
+The enrollment rate in this trial is assumed to be 0.5 patients per day. 
+The randomization ratio is 1:1.25 with a block size of 9. 
+The trial is simulated 10 times using the enrollment rate and randomization scheme. 
+
+```{r twoarmrandenroll}
+value <- value %>%
+  enrollment_rate(lambda = 0.5, time = NULL)
+  randomize(block_size = 9, randomization_ratio = c(4, 5))
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+The simulation is done for 20 times to impute the loss to follow up data and the posterior are sampled for 5000 (number_mcmc) to obtain an estimate for the posterior value.
+The trial is simulated for 10 times to obtain the output. 
+
+```{r twoarmimpute}
+value <- value %>%
+  impute(no_of_impute = 20, number_mcmc = 5000)
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+The default non-informative beta prior used in the simulation is $\mathcal{B}eta(1, 1)$.
+In our simulation of the trial, we decided to not use non-informative prior in the design  ($\mathcal{B}eta(0,0)$).
+This is implemented using beta_prior wrapper function. 
+The trial is simulated for 10 times to obtain the output. 
+
+```{r twoarmprior}
+value <- value %>%
+  beta_prior(a0 = 0, b0 = 0)
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
+The pipe function connects all input together and finally the simulation is done for 10 times to obtain the results. 
+
+
+```{r twoarmoverall}
+
+value <-
+   binomial_outcome(p_treatment = 0.15, p_control = 0.12) %>%
+   study_details(total_sample_size = 400, study_period = 30,
+                 interim_look = 350,
+                 prop_loss_to_followup = 0.15) %>%
+  hypothesis(delta = 0, futility_prob = 0.10, prob_accept_ha = 0.975,
+             expected_success_prob = 1, alternative = "greater") %>%
+  randomize(block_size = 9, randomization_ratio = c(4, 5)) %>%
+  impute(no_of_impute = 20, number_mcmc = 5000) %>%
+  beta_prior(a0 = 0, b0 = 0) %>%
+  simulate(no_of_sim = 10)
+
+
+str(value)
+
+```
+
+
 # Analysis
 
+In this section, we will demonstrate how to run adaptive bayesian trial using **bayesCT**. 
+A sample dataset is provided in the package. 
+The dataset **binomialdata** contains the results of 300 patients with binomial outcome, treatment group and loss to follow up.
 
-
-```{r}
+```{r data}
 data(binomialdata)
 
 head(binomialdata)
 ```
 
 
-```{r}
+The minimum input needed to run an adaptive bayesian trial is the data itself. 
+The **data_binomial** input allows the input of the data. 
+The treatment group (0 for control, 1 for treatment) and outcome input are essential for the analysis. 
+However, if the complete input is not provided, the function assumes the outcome data is complete. 
+The data is analyzed using the input below. 
+
+```{r analysisdata}
 input <-
   data_binomial(treatment = binomialdata$treatment,
                 outcome   = binomialdata$outcome,
@@ -364,9 +502,14 @@ out <- input %>%
 str(out)
 ```
 
+The trials is analyzed for the following hypothesis
+$$H_0:\theta_{treatment} - \theta_{control} <= 0.02 \quad H_A: \theta_{treatment} - \theta_{control} > 0.02$$
+The delta and alternative used to analyze the trial is 0.02 and "greater" respectively. 
+The probability if accepting alternative is 0.95, the probability of stopping for futility is 0.05 and the probability of stopping for success is 0.90. 
+The trial is reanalyzed with this input. 
 
 
-```{r}
+```{r analysishypo}
 input <- input %>%
   hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater")
 
@@ -377,8 +520,10 @@ str(out)
 ```
 
 
+The simulation is done for 50 times to impute the loss to follow up data and the posterior are sampled for 1000 (number_mcmc) to obtain an estimate for the posterior value.
+The trial is reanalyzed again. 
 
-```{r}
+```{r analysisimpute}
 
 input <- input %>%
   impute(no_of_impute = 50, number_mcmc = 10000)
@@ -389,8 +534,11 @@ out <- input %>%
 str(out)
 ```
 
+In our analysis, we decided to use $\mathcal{B}eta(3,3)$ as a non-informative prior. 
+This non-informative beta prior is implemented using beta_prior wrapper function. 
+The trial is analyzed again with this additional input. 
 
-```{r}
+```{r analysisprior}
 
 input <- input %>%
   beta_prior(a0 = 3, b0 = 3)
@@ -403,9 +551,14 @@ str(out)
 ```
 
 
-```{r}
+Finally, we incorporated historical data using the wrapper function **historical_binomial**. 
+In our analysis, we only incorporate historical data for the treatment group. 
+The historical data is incorporated for the treatment group using the discount function approach and weibull discount fucntion with scale of 0.135 and shape parameter of 3, there were 12 historical events from a historical sample size of 100.
+For more details on the method and computation of historical data, please look at the [bayesDP binomial vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html). 
+
+```{r analysishist}
 input <- input %>%
-  historical_binomial(y0_treatment = 5, N0_treatment = 55,
+  historical_binomial(y0_treatment = 12, N0_treatment = 100,
                       y0_control = NULL, N0_control = NULL,
                       discount_function = "weibull",
                       alpha_max = 1, fix_alpha = FALSE,
@@ -419,9 +572,12 @@ str(out)
 ```
 
 
+Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
+The pipe function connects all input together and the analysis is done again.  
 
-```{r}
-ouut <-
+
+```{r analysisall}
+out <-
   data_binomial(treatment = binomialdata$treatment,
                 outcome   = binomialdata$outcome,
                 complete  = binomialdata$complete) %>%
