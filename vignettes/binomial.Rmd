@@ -311,6 +311,9 @@ str(output)
 ```
 
 
+Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
+The pipe function connects all input together. 
+
 
 ```{r opcoverall}
 
@@ -330,7 +333,7 @@ value <-
                       y0_control = NULL, N0_control = NULL,
                       alpha_max = 1, fix_alpha = FALSE,
                        weibull_scale = 0.135, weibull_shape = 3) %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 10)
 
 
 str(value)
