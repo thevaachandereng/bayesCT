@@ -69,7 +69,7 @@ Unlike traditional R function, the R package depends on pipe inputs with differe
 
 - **study_period** input determines the length of the study. Since interim look at x is done when the x^{th} patient is enrolled, the length of study is important for imputation purpose.  
 
-- **interim_look** function allows a vector of numeric value, where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please look at the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The interim_look values need to be smaller than the sample_size value. 
+- **interim_look** function allows a vector of numeric value, where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please look at the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success). The interim_look values need to be smaller than the sample_size value. 
 
 - Loss to follow up is not peculiar in a clinical trial setting, the **prop_loss_to_followup** input allows to set the proportion of loss to follow up. The default value is set to 0.10. The **prop_loss_to_followup** needs to be between 0 and 1.  
 
@@ -78,7 +78,7 @@ Unlike traditional R function, the R package depends on pipe inputs with differe
 
 - **lambda** input is similar to **param** input in the **enrollment** function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). 
 
-- **time** input works similarly to the **time** input in the **enrollment** function where **time** input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html).  
+- **time** input works similarly to the **time** input in the **enrollment** function where **time** input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment).  
 
 
 **hypothesis**: The hypothesis is a wrapper function for both simulation and analysis. The **hypothesis** wrapper takes five different inputs (**delta**, **prob_accept_ha**, **futility_prob**, **expected_success_prob** and **alternative**). 
@@ -87,9 +87,9 @@ Unlike traditional R function, the R package depends on pipe inputs with differe
 
 - The input **prob_accept_ha** controls the probability of accepting the alternative hypothesis. The default is set to 0.95. 
 
-- **futility_prob** input controls the futility rate $\omega$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. 
+- **futility_prob** input controls the futility rate $\omega$ in the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. 
 
-- **expected_success_prob** input controls the early success rate $\Delta$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.90. To prevent the trial for stopping for early success, set the **expected_success_prob** to 1. For more details on the criteria of early stopping for success or futility, please see the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The -
+- **expected_success_prob** input controls the early success rate $\Delta$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.90. To prevent the trial for stopping for early success, set the **expected_success_prob** to 1. For more details on the criteria of early stopping for success or futility, please see the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success). The -
 
 - **alternative** input takes a character string specifying the alternative hypothesis, must be one of "greater" $p_{treatment} > p_{control}$ (default), "less" $p_{treatment} < p_{control}$ or "two-sided" $p_{treatment} \neq p_{control}$.
 
@@ -99,7 +99,7 @@ Unlike traditional R function, the R package depends on pipe inputs with differe
  
  - **block_size** input controls the size of each block to randomize. 
  
-- **randomization_ratio** is a vector of length 2 which determine the ratio for control to treatment. For more details, please look at the randomization section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html).  
+- **randomization_ratio** is a vector of length 2 which determine the ratio for control to treatment. For more details, please look at the randomization section on the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme).  
 
 
 **impute**: The impute is a wrapper function for simulation and analysis. The **impute** function takes two input (**no_of_impute**, **number_mcmc**). 
@@ -312,7 +312,7 @@ str(output)
 
 
 Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
-The pipe function connects all input together. 
+The pipe function connects all input together and finally the simulation is done for 10 times to obtain the results. 
 
 
 ```{r opcoverall}
@@ -342,6 +342,8 @@ str(value)
 
 
 # Analysis
+
+
 
 ```{r}
 data(binomialdata)
