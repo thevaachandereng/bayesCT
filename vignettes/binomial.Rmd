@@ -226,6 +226,12 @@ str(output)
 ```
 
 
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
+Since, in a OPC trial, the proportion of events in the treatment group are simulated using the input provided, the delta controls the maximum threshold allowed for trial to succeed/fail. 
+The default delta used is 0, we set the delta to -0.03 (i.e $\theta_{treatment} - 0.08 > -0.03$). 
+The futility probability is set at 0.05 and the expected success probability for early stopping is set at 0.90 with the final probability of accepting the alternative set at 0.95. 
+The alternative is set to "less" due to the hypothesis function above.  
+The trial is simulated again 10 times to obtain the output. 
 
 
 ```{r opchypo}
@@ -239,7 +245,8 @@ output <- value %>%
 str(output)
 ```
 
-
+To induce variation, we simulated the randomization ratio using block size of 4 and 6 repetitively and 1:1 for control to treatment. 
+The following randomization scheme is implemented below using randomize wrapper and the trial is simulated again 10 times to obtain the output.
 
 ```{r opcrand}
 value <- value %>%
@@ -251,7 +258,8 @@ output <- value %>%
 str(output)
 ```
 
-
+The simulation is done for 25 times to impute the loss to follow up data and the posterior are sampled for 1000 (number_mcmc) to obtain an estimate for the posterior value.
+The trial is simulated for 10 times to obtain the output. 
 
 ```{r opcimpute}
 value <- value %>%
@@ -263,6 +271,11 @@ output <- value %>%
 str(output)
 ```
 
+The default non-informative beta prior used in the simulation is $\mathcal{B}eta(1, 1)$.
+In our simulation of the OPC trial, we decided to use $\mathcal{B}eta(5,5)$ to increase the weight of the non-informative prior in the simulation. 
+This non-informative beta prior is implemented using beta_prior wrapper function. 
+The trial is simulated for 10 times to obtain the output. 
+
 ```{r opcprior}
 value <- value %>%
   beta_prior(a0 = 5, b0 = 5)
@@ -272,6 +285,16 @@ output <- value %>%
 
 str(output)
 ```
+
+
+Historical data is not required to compute the simulation. 
+However, if historical data is avaialble, historical data can be augmented in the analysis using the discount prior approach as implemented in **bayesDP**. 
+In our OPC trial, we augmented historical data for illustration purpose. 
+The historical data is incorporated for the treatment group using the discount func- tion, there were 5 historical events from a historical sample size of 55 using the identity discount function.
+For more details on the method and computation, please look at the [bayesDP binomial vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html). 
+Historical binomial takes 9 inputs.
+The trial is simulated for 10 times to obtain the output. 
+
 
 ```{r opchist}
 value <- value %>%
