@@ -691,10 +691,10 @@ historical_normal <- function(mu0_treatment       = NULL,
   .data$sd0_control         <- sd0_control
   .data$N0_control          <- N0_control
   .data$discount_function   <- discount_function
-  .data$alpha_max          <- alpha_max
-  .data$fix_alpha          <- fix_alpha
-  .data$weibull_scale      <- weibull_scale
-  .data$weibull_shape      <- weibull_shape
+  .data$alpha_max           <- alpha_max
+  .data$fix_alpha           <- fix_alpha
+  .data$weibull_scale       <- weibull_scale
+  .data$weibull_shape       <- weibull_shape
   .data
 }
 
