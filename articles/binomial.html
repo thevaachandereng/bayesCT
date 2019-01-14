@@ -669,10 +669,10 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb23-4" data-line-number="4">                <span class="dt">complete  =</span> binomialdata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb23-5" data-line-number="5"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="fl">0.02</span>, <span class="dt">futility_prob =</span> <span class="fl">0.05</span>, <span class="dt">prob_accept_ha =</span> <span class="fl">0.95</span>,                                       <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, <span class="dt">alternative =</span> <span class="st">"greater"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb23-6" data-line-number="6"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">50</span>, <span class="dt">number_mcmc =</span> <span class="dv">10000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="st">  </span><span class="kw">beta_prior</span>(<span class="dt">a0 =</span> <span class="dv">5</span>, <span class="dt">b0 =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="st">  </span><span class="kw">historical_binomial</span>(<span class="dt">y0_treatment =</span> <span class="dv">5</span>, <span class="dt">N0_treatment =</span> <span class="dv">55</span>,</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="st">  </span><span class="kw">beta_prior</span>(<span class="dt">a0 =</span> <span class="dv">3</span>, <span class="dt">b0 =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"><span class="st">  </span><span class="kw">historical_binomial</span>(<span class="dt">y0_treatment =</span> <span class="dv">12</span>, <span class="dt">N0_treatment =</span> <span class="dv">100</span>,</a>
 <a class="sourceLine" id="cb23-9" data-line-number="9">                      <span class="dt">y0_control =</span> <span class="ot">NULL</span>, <span class="dt">N0_control =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb23-10" data-line-number="10">                      <span class="dt">discount_function =</span> <span class="st">"identity"</span>,</a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">                      <span class="dt">discount_function =</span> <span class="st">"weibull"</span>,</a>
 <a class="sourceLine" id="cb23-11" data-line-number="11">                      <span class="dt">alpha_max =</span> <span class="dv">1</span>, <span class="dt">fix_alpha =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb23-12" data-line-number="12">                      <span class="dt">weibull_scale =</span> <span class="fl">0.135</span>, <span class="dt">weibull_shape =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb23-13" data-line-number="13"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"binomial"</span>)</a>
@@ -686,8 +686,8 @@ The trial is simulated again 10 times to obtain the output.</p>
 <a class="sourceLine" id="cb23-21" data-line-number="21"><span class="co">#&gt;  $ N_control                    : int 137</span></a>
 <a class="sourceLine" id="cb23-22" data-line-number="22"><span class="co">#&gt;  $ N_complete                   : num 262</span></a>
 <a class="sourceLine" id="cb23-23" data-line-number="23"><span class="co">#&gt;  $ N_enrolled                   : int 300</span></a>
-<a class="sourceLine" id="cb23-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.966</span></a>
-<a class="sourceLine" id="cb23-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num 0.109</span></a>
+<a class="sourceLine" id="cb23-24" data-line-number="24"><span class="co">#&gt;  $ post_prob_accept_alternative : num 0.951</span></a>
+<a class="sourceLine" id="cb23-25" data-line-number="25"><span class="co">#&gt;  $ est_final                    : num 0.108</span></a>
 <a class="sourceLine" id="cb23-26" data-line-number="26"><span class="co">#&gt;  $ stop_futility                : num 0</span></a>
 <a class="sourceLine" id="cb23-27" data-line-number="27"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
 </div>
