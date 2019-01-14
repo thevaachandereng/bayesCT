@@ -589,10 +589,10 @@ out <-
                 complete  = binomialdata$complete) %>%
   hypothesis(delta = 0.02, futility_prob = 0.05, prob_accept_ha = 0.95,                                       expected_success_prob = 0.90, alternative = "greater") %>%
   impute(no_of_impute = 50, number_mcmc = 10000) %>%
-  beta_prior(a0 = 5, b0 = 5) %>%
-  historical_binomial(y0_treatment = 5, N0_treatment = 55,
+  beta_prior(a0 = 3, b0 = 3) %>%
+  historical_binomial(y0_treatment = 12, N0_treatment = 100,
                       y0_control = NULL, N0_control = NULL,
-                      discount_function = "identity",
+                      discount_function = "weibull",
                       alpha_max = 1, fix_alpha = FALSE,
                       weibull_scale = 0.135, weibull_shape = 3) %>%
   analysis(type = "binomial")
