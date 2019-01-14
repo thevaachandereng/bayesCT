@@ -147,6 +147,12 @@ Historical binomial takes 9 inputs.
 - **complete**: similar length as treatment and outcome variable, 1 for complete outcome, 0 for loss to follow up. If complete is 0, the outcome of the patient is ignored. If complete is not provided, the dataset is assumed to be complete.
 
 
+**analysis**: The analysis is a wrapper function for analyzing of bayesian trial with binomial outcome. The **analysis** takes the pipe function input and analyze the trial. The input of the analysis is a list of input to run the adaptive trials. The type input determines what trial to be analyzed. In the binomial vignette, the type needs to be set to "binomial". 
+
+
+**simulate**: The simulate is a wrapper function for simulation of adaptive trials. The **simulate** takes the pipe function input and runs the trial. The input of the analysis is a list of input to run the adaptive trials. The no_of_sim determines the number of trials to be run. The default is set to 10,000. 
+
+
 # Design of Adaptive Trials
 
 We will discuss the design of adaptive trial using bayesCT in the following section. 
