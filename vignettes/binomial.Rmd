@@ -259,18 +259,6 @@ output <- value %>%
 str(output)
 ```
 
-To induce variation, we simulated the randomization ratio using block size of 4 and 6 repetitively and 1:1 for control to treatment. 
-The following randomization scheme is implemented below using randomize wrapper and the trial is simulated again 10 times to obtain the output.
-
-```{r opcrand}
-value <- value %>%
-  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1))
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
 
 The simulation is done for 25 times to impute the loss to follow up data and the posterior are sampled for 1000 (number_mcmc) to obtain an estimate for the posterior value.
 The trial is simulated for 10 times to obtain the output. 
@@ -339,7 +327,6 @@ value <-
                 prop_loss_to_followup = 0.10) %>%
   hypothesis(delta = -0.03, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
-  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>%
   impute(no_of_impute = 25, number_mcmc = 1000) %>%
   beta_prior(a0 = 5, b0 = 5) %>%
   historical_binomial(y0_treatment = 5, N0_treatment = 55,
