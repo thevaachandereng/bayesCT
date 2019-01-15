@@ -242,7 +242,7 @@ str(output)
 
 The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
 Since, in a OPC trial, the proportion of events in the treatment group are simulated using the input provided, the delta controls the maximum threshold allowed for trial to succeed/fail. 
-The default delta used is 0, we set the delta to -7 (i.e $120 - \hat{\mu}_{treatment} < -7$). 
+The default delta used is 0, we set the delta to -10 (i.e $120 - \hat{\mu}_{treatment} < -10$). 
 The futility probability is set at 0.10 and the expected success probability for early stopping is set at 0.85 with the final probability of accepting the alternative set at 0.95. 
 The alternative is set to "less" due to the hypothesis function above.  
 The trial is simulated again 10 times to obtain the output. 
@@ -250,22 +250,8 @@ The trial is simulated again 10 times to obtain the output.
 
 ```{r opchypo}
 value <- value %>%
-   hypothesis(delta = -7, futility_prob = 0.10, prob_accept_ha = 0.95,
+   hypothesis(delta = -10, futility_prob = 0.10, prob_accept_ha = 0.95,
              expected_success_prob = 0.85, alternative = "less")
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-
-
-To induce variation, we simulated the randomization ratio using block size of 10 and 20 repetitively and 1:1 for control to treatment. 
-The following randomization scheme is implemented below using randomize wrapper and the trial is simulated again 10 times to obtain the output.
-
-```{r opcrand}
-value <- value %>%
-  randomize(block_size = c(10, 20), randomization_ratio = c(1, 1))
 
 output <- value %>%
             simulate(no_of_sim = 10)
@@ -355,13 +341,28 @@ str(output)
 ```
 
 The enrollment of patients in the trial is assumed to be a Poisson process.
-The enrollment rate in this trial is assumed to be 0.5 patients per day. 
-The randomization ratio is 1:1.25 with a block size of 9. 
-The trial is simulated 10 times using the enrollment rate and randomization scheme. 
+The enrollment rate in this trial is assumed to be 0.8 patients per day. 
+To induce variation, we simulated the randomization ratio using block size of 4 and 6 repetitively and 1:1 for control to treatment. 
+The following randomization scheme is implemented below using randomize wrapper and the trial is simulated again 10 times to obtain the output.
+
 
 ```{r twoarmenroll}
 value <- value %>%
-  enrollment_rate(lambda = c(0.8), time = NULL) 
+  enrollment_rate(lambda = c(0.8), time = NULL) %>%
+  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1))
+  
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+The simulation is done for 25 times to impute the loss to follow up data and the posterior are sampled for 5000 (number_mcmc) to obtain an estimate for the posterior value.
+The trial is simulated for 10 times to obtain the output. 
+
+```{r twoarmimpute}
+value <- value %>%
+  impute(no_of_impute = 25, number_mcmc = 5000)
   
 
 output <- value %>%
@@ -370,37 +371,23 @@ output <- value %>%
 str(output)
 ```
 
+However, if historical data is avaialble, historical data can be augmented in the analysis using the discount prior approach as implemented in **bayesDP**. 
+In our OPC trial, we augmented historical data for illustration purpose. 
+The historical data is incorporated for the treatment group using the discount function.
+The historical data has a mean of 13, standard deviation of 5 and sample size of 100 for the treatment group.
+The historical data has a mean of 12, standard deviation of 3 and sample size of 120 for the control group.
+For more details on the method and computation, please look at the [bayesDP normal vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html). 
+**historical_normal** takes 9 inputs as indicated above.
+The trial is simulated for 10 times to obtain the output. 
 
-```{r}
+
+```{r twoarmhistorical}
 value <- value %>%
-  impute(no_of_impute = 25, number_mcmc = 1000)
-  
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-
-
-```{r}
-value <- value %>%
-  randomize(block_size = 2, randomization_ratio = c(1, 1))
-  
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-
-```{r}
-value <- value %>%
-  historical_normal(mu0_treatment = 13, sd0_treatment = 2, N0_treatment = 100,
+  historical_normal(mu0_treatment = 13, sd0_treatment = 5, N0_treatment = 100,
                     mu0_control = 12, sd0_control = 3, N0_control = 120, 
-                    discount_function = "scaledweibull", alpha_max = F, fix_alpha = 1,
+                    discount_function = "scaledweibull", 
+                    alpha_max = F, fix_alpha = 1,
                     weibull_scale = 0.135, weibull_shape = 3)
-  
 
 output <- value %>%
             simulate(no_of_sim = 10)
@@ -409,96 +396,114 @@ str(output)
 ```
 
 
-```{r}
+Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
+The pipe function connects all input together and finally the simulation is done for 10 times to obtain the results. 
+
+
+```{r twoarmall}
 value <-
-  normal_outcome(mu_control = 16, mu_treatment = 13,
+  normal_outcome(mu_treatment = 13, mu_control = 16,
                  sd_treatment = 1.4, sd_control = 1.9) %>%
-  enrollment_rate(lambda = c(0.3, 1), time = 25) %>%
   study_details(total_sample_size = 300, study_period = 50,
-                interim_look = c(210, 240, 270),
+                interim_look = NULL,
                 prop_loss_to_followup = 0.10) %>%
-  impute(no_of_impute = 25, number_mcmc = 1000) %>%
-  randomize(block_size = 2, randomization_ratio = c(1, 1)) %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-             expected_success_prob = 0.90, alternative = "less") %>%
-  historical_normal(mu0_treatment = 13, sd0_treatment = 2, N0_treatment = 100,
+  hypothesis(delta = 0, futility_prob = 0, prob_accept_ha = 0.95,
+             expected_success_prob = 1, alternative = "less") %>%
+  impute(no_of_impute = 25, number_mcmc = 5000) %>%
+  enrollment_rate(lambda = c(0.8), time = NULL) %>%
+  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>%
+  historical_normal(mu0_treatment = 13, sd0_treatment = 5, N0_treatment = 100,
                     mu0_control = 12, sd0_control = 3, N0_control = 120, 
-                    discount_function = "weibull", alpha_max = F, fix_alpha = 1,
+                    discount_function = "scaledweibull", 
+                    alpha_max = F, fix_alpha = 1,
                     weibull_scale = 0.135, weibull_shape = 3) %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 10)
 
 
 str(value)
 ```
+
+
 # Analysis
 
 In this section, we will demonstrate how to run adaptive bayesian trial using **bayesCT**. 
 A sample dataset is provided in the package. 
-The dataset 
+The dataset **normaldata** contains the results of 300 patients with binomial outcome, treatment group and loss to follow up.
 
-```{r}
+```{r data}
 data(normaldata)
 
 head(normaldata)
 ```
 
+The minimum input needed to run an adaptive bayesian trial is the data itself. 
+The **data_normal** input allows the input of the data. 
+The treatment group (0 for control, 1 for treatment) and outcome input are essential for the analysis. 
+However, if the complete input is not provided, the function assumes the outcome data is complete. 
+The data is analyzed using the input below. 
 
-
-```{r}
-value1 <-
+```{r analysisdatainput}
+input <-
   data_normal(treatment = normaldata$treatment, 
               outcome   = normaldata$outcome, 
-              complete  = normaldata$complete) %>%
+              complete  = normaldata$complete) 
+
+out <- input %>%
   analysis(type = "normal")
 
-str(value1)
+str(out)
 ```
 
+The trials is analyzed for the following hypothesis
+$$H_0:\mu_{treatment} - \mu_{control} > 0 \quad H_A: \theta_{treatment} - \theta_{control} < 0$$
+The delta and alternative used to analyze the trial is 0 and "less" respectively. 
+The probability if accepting alternative is 0.95, the probability of stopping for futility is 0.05 and the probability of stopping for success is 0.90. 
+The trial is reanalyzed with this input. 
 
-```{r}
-value1 <-
-  data_normal(treatment = normaldata$treatment, 
-              outcome   = normaldata$outcome, 
-              complete  = normaldata$complete) %>%
+```{r analysishypo}
+input <- input %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-             expected_success_prob = 0.90, alternative = "less") %>%
+             expected_success_prob = 0.90, alternative = "less") 
+
+out <- input %>%
   analysis(type = "normal")
 
-str(value1)
+str(out)
   
 ```
 
 
-```{r}
-value1 <-
+The simulation is done for 40 times to impute the loss to follow up data and the posterior are sampled for 8000 (number_mcmc) to obtain an estimate for the posterior value.
+The trial is reanalyzed again. 
+
+
+```{r analysisimpute}
+input <- input %>%
+  impute(no_of_impute = 40, number_mcmc = 8000)
+
+out <- input %>%
+  analysis(type = "normal")
+
+str(out)
+```
+
+
+Finally, there is no historical data incorporated for this trial. 
+Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
+The pipe function connects all input together and the analysis is done again. 
+
+```{r analysisall}
+out <- 
   data_normal(treatment = normaldata$treatment, 
               outcome   = normaldata$outcome, 
               complete  = normaldata$complete) %>%
   hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
              expected_success_prob = 0.90, alternative = "less") %>%
-  impute(no_of_impute = 25, number_mcmc = 1000) %>%
+  impute(no_of_impute = 40, number_mcmc = 8000) %>%
   analysis(type = "normal")
 
-str(value1)
+  
+str(out)
 ```
 
-
-```{r}
-
-value1 <-
-  data_normal(treatment = normaldata$treatment, 
-              outcome   = normaldata$outcome, 
-              complete  = normaldata$complete) %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-             expected_success_prob = 0.90, alternative = "less") %>%
-  impute(no_of_impute = 25, number_mcmc = 1000) %>%
-  historical_normal(mu0_treatment = 13, sd0_treatment = 2, N0_treatment = 100,
-                    mu0_control = 12, sd0_control = 3, N0_control = 120, 
-                    discount_function = "weibull", alpha_max = F, fix_alpha = 1,
-                    weibull_scale = 0.135, weibull_shape = 3) %>%
-  analysis(type = "normal")
-
-
-str(value1)
-```
 
