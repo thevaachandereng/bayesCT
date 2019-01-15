@@ -1,6 +1,8 @@
 ---
 title: "Normal Outcome"
 author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
+header-includes:
+   - \usepackage{amsmath}
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -31,7 +33,29 @@ The historical data is used as an informative prior and we use `bayesDP` as an e
 
 # Estimation of Treatment Difference
 Let $\bar{y}$, $s$, and $N$ denote the sample mean, sample standard deviation, and sample size, respectively. 
+Then, the posterior distribution of the mean under vague (flat) priors is
 
+$$ \begin{array}{rcl}
+\tilde{\sigma}^2\mid\bar{y},s,N & \sim & InverseGamma\left(\frac{N-1}{2},\,\frac{N-1}{2}s^2 \right),\\
+\\
+\tilde{\mu}\mid\bar{y},N,\tilde{\sigma}^2 & \sim & \mathcal{N}ormal\left(\bar{y},\, \frac{1}{N}\tilde{\sigma}^2  \right).
+\end{array}$$
+
+When historical data is present, let $\bar{y}_0$, $s_0$, and $N_0$ denote the sample mean, sample standard deviation, and sample size of the historical data, respectively.
+The posterior distribution of the mean for the historical data is 
+$$ \begin{array}{rcl}
+\sigma^2_0\mid\bar{y_0},s_0,N_0 & \sim & InverseGamma\left(\frac{N_0-1}{2},\,\frac{N_0-1}{2}s_0^2 \right),\\
+\\
+\mu_0 \mid \bar{y}_0, N_0, \sigma^2_0 &  \sim  & \mathcal{N}ormal\left(\bar{y}_0,\, \frac{1}{N_0}\sigma^2_0  \right).
+\end{array}$$
+The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. 
+For more details on computation of $\hat{\alpha}$, please refer to the vignette of binomial counts avaialable at [https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html).
+The posterior distribution of the mean outcome with historical data incorporated under vague (flat) priors is 
+$$\tilde{\mu} \sim \mathcal{N}ormal\left( \frac{\sigma^2_0N\bar{y} + \tilde{\sigma}^2N_0\bar{y}_0\hat{\alpha}}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}},\,\frac{\tilde{\sigma}^2\sigma^2_0}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}}      \right).$$
+
+Even though there is a closed-form solution for difference in normal distribution ( $\mathcal{N}ormal(\mu_1, \sigma_1^2)$ - $\mathcal{N}ormal(\mu_2, \sigma_2^2)$), we use Monte Carlo estimation of the posteriors of treatment and control group to compute the effect of treatment difference. 
+
+The estimation of mean of treatment difference $\tilde{\mu_T} - \tilde{\mu_C}$, where $\mu_T$ is the posterior mean outcome in the treatment group and $\mu_C$ is the posterior mean outcome in the control group.
 
 
 
@@ -75,7 +99,7 @@ Unlike traditional R function, the R package depends on pipe inputs with differe
 
 - **expected_success_prob** input controls the early success rate $\Delta$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.90. To prevent the trial for stopping for early success, set the **expected_success_prob** to 1. For more details on the criteria of early stopping for success or futility, please see the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success). The -
 
-- **alternative** input takes a character string specifying the alternative hypothesis, must be one of "greater" $p_{treatment} > p_{control}$ (default), "less" $p_{treatment} < p_{control}$ or "two-sided" $p_{treatment} \neq p_{control}$.
+- **alternative** input takes a character string specifying the alternative hypothesis, must be one of "greater" $mu_{treatment} > mu_{control}$ (default), "less" $mu_{treatment} < mu_{control}$ or "two-sided" $mu_{treatment} \neq mu_{control}$.
 
 
 **randomize**: The randomize is a wrapper function for the simulation. The **randomize**
@@ -127,7 +151,18 @@ Historical binomial takes 9 inputs.
 
 - **complete**: similar length as treatment and outcome variable, 1 for complete outcome, 0 for loss to follow up. If complete is 0, the outcome of the patient is ignored. If complete is not provided, the dataset is assumed to be complete.
 
+**analysis**: The analysis is a wrapper function for analyzing of bayesian trial with normal outcome. The **analysis** takes the pipe function input and analyze the trial. 
 
+- **input**: The input of the analysis is a list of input to run the adaptive trials. 
+
+- **type**: The type input determines what trial to be analyzed. In the normal trials, the type needs to be set to "normal". 
+
+
+**simulate**: The simulate is a wrapper function for simulation of adaptive trials. The **simulate** takes the pipe function input and runs the trial. 
+
+- **input** - The input of the analysis is a list of input to run the adaptive trials. 
+
+- **no_of_sim**- The no_of_sim determines the number of trials to be run. The default is set to 10,000. 
 
 # Design
 
@@ -230,6 +265,10 @@ str(value)
 ```
 
 # Analysis
+
+In this section, we will demonstrate how to run adaptive bayesian trial using **bayesCT**. 
+A sample dataset is provided in the package. 
+The dataset 
 
 ```{r}
 data(normaldata)
