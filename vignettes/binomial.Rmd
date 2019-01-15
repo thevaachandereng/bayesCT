@@ -242,7 +242,7 @@ str(output)
 
 The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
 Since, in a OPC trial, the proportion of events in the treatment group are simulated using the input provided, the delta controls the maximum threshold allowed for trial to succeed/fail. 
-The default delta used is 0, we set the delta to -0.03 (i.e $\theta_{treatment} - 0.08 > -0.03$). 
+The default delta used is 0, we set the delta to -0.03 (i.e $\hat\theta_{treatment} - 0.08 > -0.03$). 
 The futility probability is set at 0.05 and the expected success probability for early stopping is set at 0.90 with the final probability of accepting the alternative set at 0.95. 
 The alternative is set to "less" due to the hypothesis function above.  
 The trial is simulated again 10 times to obtain the output. 
@@ -345,7 +345,7 @@ str(value)
 ## Two-arm trial
 
 In this section, we will illustrate how to perform the design of a two-arm trial without incorporating historical data. 
-The example will compute the type 1, power and other outputs for a superiority trial as indicated below, 
+The example will compute the type 1, power and other outputs for a superiority trial with hypothesis as indicated below, 
 $$H_0: \theta_{treatment} - \theta_{control} \leq 0 \qquad H_A: \theta_{treatment} - \theta_{control} > 0.$$
 
 The binomial events are simulated using a rate of 0.15 for the treatment group and 0.12 for the control group. 
