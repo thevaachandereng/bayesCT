@@ -171,8 +171,73 @@ We illustrate an example for one-arm trial and two-arm trial using the wrapper f
 
 ## One-arm Trial
 
-In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events described as follows, 
-$$H_0: \mu_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} < 0.08.$$
+In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with mean outcome and hypothesis described as follows, 
+$$H_0: \mu_{treatment} \geq 120 \qquad H_A:\mu_{treatment} < 120.$$
+**study_details** and **binomial_outcome** are the most important wrapper function for the design of adaptive trials using bayesCT (since there is no default set).
+The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 12.5. 
+The total sample size is 400 with a study length of 60 days. 
+A 10% loss to follow up are induced to the simulated data at random.
+Based on this input, the adaptive trials are simulated 10 times to obtain the following output. 
+For the purpose of reproducing the vignette quickly, we reduce the number of simulation to 10. 
+The general rule of thumb for number of simulation used in clinical trials is 10,000.
+**Note: The inputs used are picked for illustration purpose.**
+
+```{r}
+value <-
+  normal_outcome(mu_treatment = 120,
+                 sd_treatment = 12.5) %>%
+  study_details(total_sample_size = 400, study_period = 60,
+                interim_look = NULL,
+                prop_loss_to_followup = 0.10)
+output <- value %>%
+            simulate(no_of_sim = 10)
+str(output)
+```
+
+To allow for early stopping for success or futility, we add interim look to the design where the trial is stopped at the enrollment of 350th and 380th patient. 
+Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output.
+
+
+```{r opcinterimlook}
+# adding interim look
+value <- value %>%
+  study_details(total_sample_size = 400, study_period = 60,
+                interim_look = c(350, 380),
+                prop_loss_to_followup = 0.10)
+
+# simulating 10 times
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+# structure of the simulation output
+str(output)
+```
+
+The enrollment of patients in the trial is assumed to be a Poisson process.
+The default enrollment rate is assumed to enroll 0.3 patients per day. 
+However, in this simulation we introduce a step-wise Poisson process with lambda as follows
+\[  \lambda = \left\{
+\begin{array}{ll}
+      0.4 & t \in [0, 40) \\
+      0.7 & t \in [40, \infty) \\
+\end{array} 
+\right. \]
+
+The following enrollment rate is added to the simulation and the trial is simulated for 10 times.
+
+
+```{r}
+value <- value %>%
+  enrollment_rate(lambda = c(0.4, 0.7), time = 40) 
+
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+
 
 ```{r}
 value <-
@@ -270,7 +335,6 @@ value <-
 
 str(value)
 ```
-
 # Analysis
 
 In this section, we will demonstrate how to run adaptive bayesian trial using **bayesCT**. 

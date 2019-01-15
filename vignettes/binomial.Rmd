@@ -169,7 +169,7 @@ We illustrate an example for one-arm trial and two-arm trial using the wrapper f
 
 ## One-arm Trial
 
-In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events described as follows, 
+In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events  and the hypothesis described as follows, 
 $$H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} < 0.08.$$
 
 **study_details** and **binomial_outcome** are the most important wrapper function for the design of adaptive trials using bayesCT (since there is no default set).
