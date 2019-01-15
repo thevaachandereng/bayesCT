@@ -189,7 +189,7 @@
 <div id="one-arm-trial" class="section level2">
 <h2 class="hasAnchor">
 <a href="#one-arm-trial" class="anchor"></a>One-arm Trial</h2>
-<p>In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events described as follows, <span class="math display">\[H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} &lt; 0.08.\]</span></p>
+<p>In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events and the hypothesis described as follows, <span class="math display">\[H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} &lt; 0.08.\]</span></p>
 <p><strong>study_details</strong> and <strong>binomial_outcome</strong> are the most important wrapper function for the design of adaptive trials using bayesCT (since there is no default set).</p>
 <p>The binomial events are simulated using a rate of 0.08. The total sample size is 900 with a study length of 50 days. A 10% loss to follow up are induced to the simulated data at random. Based on this input, the adaptive trials are simulated 10 times to obtain the following output. For the purpose of reproducing the vignette quickly, we reduce the number of simulation to 10. The general rule of thumb for number of simulation used in clinical trials is 10,000. <strong>Note: The inputs used are picked for illustration purpose.</strong></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">value &lt;-</a>
