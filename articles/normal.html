@@ -190,6 +190,11 @@
 <div id="design" class="section level1">
 <h1 class="hasAnchor">
 <a href="#design" class="anchor"></a>Design</h1>
+<p>We will discuss the design of adaptive trial using bayesCT for normal outcome in the following section. We illustrate an example for one-arm trial and two-arm trial using the wrapper functions described above.</p>
+<div id="one-arm-trial" class="section level2">
+<h2 class="hasAnchor">
+<a href="#one-arm-trial" class="anchor"></a>One-arm Trial</h2>
+<p>In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with proportion of events described as follows, <span class="math display">\[H_0: \mu_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} &lt; 0.08.\]</span></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">value &lt;-</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="st">  </span><span class="kw">normal_outcome</span>(<span class="dt">mu_control =</span> <span class="dv">16</span>, <span class="dt">mu_treatment =</span> <span class="dv">13</span>,</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">                 <span class="dt">sd_treatment =</span> <span class="fl">1.4</span>, <span class="dt">sd_control =</span> <span class="fl">1.9</span>) <span class="op">%&gt;%</span></a>
@@ -335,6 +340,7 @@
 <a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt;  $ stop_expect_success         : num [1:5] 1 1 1 1 1</span></a>
 <a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt;  $ stop_futility               : num [1:5] 0 0 0 0 0</span></a></code></pre></div>
 </div>
+</div>
 <div id="analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#analysis" class="anchor"></a>Analysis</h1>
@@ -450,7 +456,11 @@
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#estimation-of-treatment-difference">Estimation of Treatment Difference</a></li>
       <li><a href="#wrapper-function-for-design-and-analysis">Wrapper Function for Design and Analysis</a></li>
-      <li><a href="#design">Design</a></li>
+      <li>
+<a href="#design">Design</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#one-arm-trial">One-arm Trial</a></li>
+      </ul>
+</li>
       <li><a href="#analysis">Analysis</a></li>
       </ul>
 </div>
