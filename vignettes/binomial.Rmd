@@ -573,7 +573,7 @@ str(out)
 ```
 
 
-Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
+Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrated below. 
 The pipe function connects all input together and the analysis is done again.  
 
 
