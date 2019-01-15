@@ -163,7 +163,7 @@ Historical binomial takes 9 inputs.
 
 # Design of Adaptive Trials
 
-We will discuss the design of adaptive trial using bayesCT in the following section. 
+We will discuss the design of adaptive trial using bayesCT for binomial outcome in the following section. 
 We illustrate an example for one-arm trial and two-arm trial using the wrapper functions described above. 
 
 
