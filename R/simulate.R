@@ -35,7 +35,7 @@ simulate <- function(input, no_of_sim = 10000, .data = NULL){
     }
   }
 
-  if(!is.null(input_t1$mu_treatment)){
+  else if(!is.null(input_t1$mu_treatment)){
     if(!is.null(input_t1$mu_control)){
       input_t1$mu_treatment <- input_t1$mu_control
     }

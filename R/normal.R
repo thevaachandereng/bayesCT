@@ -74,8 +74,8 @@
 #' @return List of outputs
 #'
 #' @examples
-#' normalBACT(mu_control = 10, mu_treatment = 8,
-#'            sd_control = 0.8, sd_treatment = 1.2, N_total = 300,
+#' normalBACT(mu_treatment = 8,
+#'            sd_treatment = 1.2, N_total = 300,
 #'            lambda = c(0.3, 1), lambda_time = c(25),
 #'            interim_look = c(110, 140, 220, 270),
 #'            EndofStudy = 50)
@@ -117,7 +117,7 @@ normalBACT <- function(
   weibull_shape         = 3             # weibull parameter
  ){
   # checking inputs
-  stopifnot((mu_control > 0 & sd_control > 0), (mu_treatment > 0 & sd_treatment > 0),
+  stopifnot((mu_treatment > 0 & sd_treatment > 0),
             all(N_total > interim_look), length(lambda) == (length(lambda_time) + 1),
             EndofStudy > 0, block %% sum(rand_ratio)  == 0,
             (prop_loss_to_followup >= 0 & prop_loss_to_followup < 0.75),
@@ -314,7 +314,7 @@ normalBACT <- function(
       }
 
       else{
-        effect_imp <- post_imp$final$posterior_mu
+        effect_imp <- post_imp$posterior_treatment$posterior_mu
         if(alternative == "two-sided"){
           success <- max(c(mean(effect_imp - mu_treatment > h0), mean(mu_treatment - effect_imp > h0)))
         }
@@ -409,7 +409,7 @@ normalBACT <- function(
       }
 
       else{
-        effect_imp <- post_imp$final$posterior_mu
+        effect_imp <- post_imp$posterior_treatment$posterior_mu
         if(alternative == "two-sided"){
           success <- max(c(mean(effect_imp - mu_treatment > h0), mean(mu_treatment - effect_imp > h0)))
         }
@@ -471,7 +471,7 @@ normalBACT <- function(
     }
 
     else{
-      effect_int <- post$final$posterior_mu
+      effect_int <- post$posterior_treatment$posterior_mu
     }
 
     # Number of patients enrolled at trial stop
@@ -490,7 +490,7 @@ normalBACT <- function(
 
   # All patients that have made it to the end of study
   # - Subset out patients loss to follow-up
-  data_final <- data_interim %>%
+  data_final <- data_total %>%
     filter(id <= stage_trial_stopped,
            !loss_to_fu)
 
@@ -549,7 +549,7 @@ normalBACT <- function(
   }
 
   else{
-    effect <- post_final$final$posterior_mu
+    effect <- post_final$posterior_treatment$posterior_mu
     if(alternative == "two-sided"){
       post_paa <- max(c(mean(effect - mu_treatment > h0), mean(mu_treatment - effect > h0)))
     }
