@@ -173,8 +173,9 @@ We illustrate an example for one-arm trial and two-arm trial using the wrapper f
 
 In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with mean outcome and hypothesis described as follows, 
 $$H_0: \mu_{treatment} \geq 120 \qquad H_A:\mu_{treatment} < 120.$$
+There is no historical data incorporated in this trial. 
 **study_details** and **binomial_outcome** are the most important wrapper function for the design of adaptive trials using bayesCT (since there is no default set).
-The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 12.5. 
+The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 5.5. 
 The total sample size is 400 with a study length of 60 days. 
 A 10% loss to follow up are induced to the simulated data at random.
 Based on this input, the adaptive trials are simulated 10 times to obtain the following output. 
@@ -182,10 +183,10 @@ For the purpose of reproducing the vignette quickly, we reduce the number of sim
 The general rule of thumb for number of simulation used in clinical trials is 10,000.
 **Note: The inputs used are picked for illustration purpose.**
 
-```{r}
+```{r opcminimum}
 value <-
   normal_outcome(mu_treatment = 120,
-                 sd_treatment = 12.5) %>%
+                 sd_treatment = 5.5) %>%
   study_details(total_sample_size = 400, study_period = 60,
                 interim_look = NULL,
                 prop_loss_to_followup = 0.10)
@@ -226,7 +227,7 @@ However, in this simulation we introduce a step-wise Poisson process with lambda
 The following enrollment rate is added to the simulation and the trial is simulated for 10 times.
 
 
-```{r}
+```{r opcenroll}
 value <- value %>%
   enrollment_rate(lambda = c(0.4, 0.7), time = 40) 
 
@@ -239,12 +240,94 @@ str(output)
 
 
 
-```{r}
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
+Since, in a OPC trial, the proportion of events in the treatment group are simulated using the input provided, the delta controls the maximum threshold allowed for trial to succeed/fail. 
+The default delta used is 0, we set the delta to -7 (i.e $120 - \hat{\mu}_{treatment} < -7$). 
+The futility probability is set at 0.10 and the expected success probability for early stopping is set at 0.85 with the final probability of accepting the alternative set at 0.95. 
+The alternative is set to "less" due to the hypothesis function above.  
+The trial is simulated again 10 times to obtain the output. 
+
+
+```{r opchypo}
+value <- value %>%
+   hypothesis(delta = -7, futility_prob = 0.10, prob_accept_ha = 0.95,
+             expected_success_prob = 0.85, alternative = "less")
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+
+To induce variation, we simulated the randomization ratio using block size of 10 and 20 repetitively and 1:1 for control to treatment. 
+The following randomization scheme is implemented below using randomize wrapper and the trial is simulated again 10 times to obtain the output.
+
+```{r opcrand}
+value <- value %>%
+  randomize(block_size = c(10, 20), randomization_ratio = c(1, 1))
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+
+The simulation is done for 20 times to impute the loss to follow up data and the posterior are sampled for 2000 (number_mcmc) to obtain an estimate for the posterior value.
+The trial is simulated for 10 times to obtain the output. 
+
+```{r opcimpute}
+value <- value %>%
+  impute(no_of_impute = 20, number_mcmc = 2000)
+
+output <- value %>%
+            simulate(no_of_sim = 10)
+
+str(output)
+```
+
+Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
+The pipe function connects all input together and finally the simulation is done for 10 times to obtain the results. 
+
+
+```{r opcoverall}
 value <-
-  normal_outcome(mu_control = 16, mu_treatment = 13,
+  normal_outcome(mu_treatment = 120,
+                 sd_treatment = 5.5) %>%
+  study_details(total_sample_size = 400, study_period = 60,
+                interim_look = c(350, 380),
+                prop_loss_to_followup = 0.10) %>%
+  hypothesis(delta = -7, futility_prob = 0.10, prob_accept_ha = 0.95,
+             expected_success_prob = 0.85, alternative = "less") %>%
+  enrollment_rate(lambda = c(0.4, 0.7), time = 4) %>%
+  randomize(block_size = c(10, 20), randomization_ratio = c(1, 1)) %>%
+  impute(no_of_impute = 20, number_mcmc = 2000)
+
+
+```
+
+
+
+## Two-arm Trial
+
+In this section, we will illustrate how to perform the design of a two-arm trial with incorporating historical data. 
+The example will compute the type 1, power and other outputs for a superiority trial with hypothesis as indicated below, 
+$$H_0: \mu_{treatment} - \mu_{control} \leq 0 \qquad H_A: \mu_{treatment} - \mu_{control} > 0.$$
+Unlike the previous OPC trial, we do not include interim look in this trial. 
+The normal mean outcome are simulated using a mean value of 13 and standard deviation of 1.4 for the treatment group and a mean value of 15 and standard deviation of 1.9 for the control group. 
+The total sample size is 400 with a study length of 30 days. 
+A 15% loss to follow up are induced to the simulated data at random.
+Based on this input, the adaptive trials are simulated 10 times to obtain the following output. 
+We simulated the trials for 10 times and the input and ouput are included below.
+
+
+```{r twoarmmin}
+value <-
+  normal_outcome(mu_treatment = 13, mu_control = 16,
                  sd_treatment = 1.4, sd_control = 1.9) %>%
   study_details(total_sample_size = 300, study_period = 50,
-                interim_look = c(210, 240, 270),
+                interim_look = NULL,
                 prop_loss_to_followup = 0.10)
 
 output <- value %>%
@@ -252,10 +335,17 @@ output <- value %>%
 
 str(output)
 ```
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
+The margin of treatment difference $\delta$ is set to 0 since we are designing a superiority trial. 
+The futility probability is set at 0 and the expected success probability for early stopping is set at 1 with the final probability of accepting the alternative set at 0.975. 
+Since, there is no interim look, the probability of futility and expected success does not affect the trial. 
+The alternative is set to "less" due to the alternative hypothesis function above.  
+The trial is simulated again 10 times to obtain the output. 
 
-```{r}
+```{r twoarmhypo}
 value <- value %>%
-  enrollment_rate(lambda = c(0.3, 1), time = 25) 
+  hypothesis(delta = 0, futility_prob = 0, prob_accept_ha = 0.95,
+             expected_success_prob = 1, alternative = "less")
   
 
 output <- value %>%
@@ -264,10 +354,14 @@ output <- value %>%
 str(output)
 ```
 
-```{r}
+The enrollment of patients in the trial is assumed to be a Poisson process.
+The enrollment rate in this trial is assumed to be 0.5 patients per day. 
+The randomization ratio is 1:1.25 with a block size of 9. 
+The trial is simulated 10 times using the enrollment rate and randomization scheme. 
+
+```{r twoarmenroll}
 value <- value %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-             expected_success_prob = 0.90, alternative = "less")
+  enrollment_rate(lambda = c(0.8), time = NULL) 
   
 
 output <- value %>%
@@ -275,6 +369,7 @@ output <- value %>%
 
 str(output)
 ```
+
 
 ```{r}
 value <- value %>%
