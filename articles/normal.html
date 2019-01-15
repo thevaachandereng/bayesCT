@@ -103,7 +103,19 @@
 <div id="estimation-of-treatment-difference" class="section level1">
 <h1 class="hasAnchor">
 <a href="#estimation-of-treatment-difference" class="anchor"></a>Estimation of Treatment Difference</h1>
-<p>Let <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(s\)</span>, and <span class="math inline">\(N\)</span> denote the sample mean, sample standard deviation, and sample size, respectively.</p>
+<p>Let <span class="math inline">\(\bar{y}\)</span>, <span class="math inline">\(s\)</span>, and <span class="math inline">\(N\)</span> denote the sample mean, sample standard deviation, and sample size, respectively. Then, the posterior distribution of the mean under vague (flat) priors is</p>
+<p><span class="math display">\[ \begin{array}{rcl}
+\tilde{\sigma}^2\mid\bar{y},s,N &amp; \sim &amp; InverseGamma\left(\frac{N-1}{2},\,\frac{N-1}{2}s^2 \right),\\
+\\
+\tilde{\mu}\mid\bar{y},N,\tilde{\sigma}^2 &amp; \sim &amp; \mathcal{N}ormal\left(\bar{y},\, \frac{1}{N}\tilde{\sigma}^2  \right).
+\end{array}\]</span></p>
+<p>When historical data is present, let <span class="math inline">\(\bar{y}_0\)</span>, <span class="math inline">\(s_0\)</span>, and <span class="math inline">\(N_0\)</span> denote the sample mean, sample standard deviation, and sample size of the historical data, respectively. The posterior distribution of the mean for the historical data is <span class="math display">\[ \begin{array}{rcl}
+\sigma^2_0\mid\bar{y_0},s_0,N_0 &amp; \sim &amp; InverseGamma\left(\frac{N_0-1}{2},\,\frac{N_0-1}{2}s_0^2 \right),\\
+\\
+\mu_0 \mid \bar{y}_0, N_0, \sigma^2_0 &amp;  \sim  &amp; \mathcal{N}ormal\left(\bar{y}_0,\, \frac{1}{N_0}\sigma^2_0  \right).
+\end{array}\]</span> The weight of the historical data included in the study design and analysis is denoted by <span class="math inline">\(\hat\alpha\)</span>. For more details on computation of <span class="math inline">\(\hat{\alpha}\)</span>, please refer to the vignette of binomial counts avaialable at <a href="https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html" class="uri">https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html</a>. The posterior distribution of the mean outcome with historical data incorporated under vague (flat) priors is <span class="math display">\[\tilde{\mu} \sim \mathcal{N}ormal\left( \frac{\sigma^2_0N\bar{y} + \tilde{\sigma}^2N_0\bar{y}_0\hat{\alpha}}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}},\,\frac{\tilde{\sigma}^2\sigma^2_0}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}}      \right).\]</span></p>
+<p>Even though there is a closed-form solution for difference in normal distribution ( <span class="math inline">\(\mathcal{N}ormal(\mu_1, \sigma_1^2)\)</span> - <span class="math inline">\(\mathcal{N}ormal(\mu_2, \sigma_2^2)\)</span>), we use Monte Carlo estimation of the posteriors of treatment and control group to compute the effect of treatment difference.</p>
+<p>The estimation of mean of treatment difference <span class="math inline">\(\tilde{\mu_T} - \tilde{\mu_C}\)</span>, where <span class="math inline">\(\mu_T\)</span> is the posterior mean outcome in the treatment group and <span class="math inline">\(\mu_C\)</span> is the posterior mean outcome in the control group.</p>
 </div>
 <div id="wrapper-function-for-design-and-analysis" class="section level1">
 <h1 class="hasAnchor">
@@ -132,7 +144,7 @@
 <li><p>The input <strong>prob_accept_ha</strong> controls the probability of accepting the alternative hypothesis. The default is set to 0.95.</p></li>
 <li><p><strong>futility_prob</strong> input controls the futility rate <span class="math inline">\(\omega\)</span> in the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility" class="uri">https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility</a>. The default is set to 0.10. To prevent the trial for stopping for futility, set the <strong>futility_prob</strong> to 0.</p></li>
 <li><p><strong>expected_success_prob</strong> input controls the early success rate <span class="math inline">\(\Delta\)</span> in the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html">bayesCT main vignette</a>. The default is set to 0.90. To prevent the trial for stopping for early success, set the <strong>expected_success_prob</strong> to 1. For more details on the criteria of early stopping for success or futility, please see the <a href="https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success" class="uri">https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success</a>. The -</p></li>
-<li><p><strong>alternative</strong> input takes a character string specifying the alternative hypothesis, must be one of “greater” <span class="math inline">\(p_{treatment} &gt; p_{control}\)</span> (default), “less” <span class="math inline">\(p_{treatment} &lt; p_{control}\)</span> or “two-sided” <span class="math inline">\(p_{treatment} \neq p_{control}\)</span>.</p></li>
+<li><p><strong>alternative</strong> input takes a character string specifying the alternative hypothesis, must be one of “greater” <span class="math inline">\(mu_{treatment} &gt; mu_{control}\)</span> (default), “less” <span class="math inline">\(mu_{treatment} &lt; mu_{control}\)</span> or “two-sided” <span class="math inline">\(mu_{treatment} \neq mu_{control}\)</span>.</p></li>
 </ul>
 <p><strong>randomize</strong>: The randomize is a wrapper function for the simulation. The <strong>randomize</strong> function takes two input (<strong>block_size</strong> and <strong>randomization_ratio</strong>).</p>
 <ul>
@@ -163,6 +175,16 @@
 <li><p><strong>treatment</strong>: treatment assignment for patients in the trial, 1 for treatment group and 0 for control group.</p></li>
 <li><p><strong>outcome</strong>: normal outcome of the trial. The length of the vector is the same size as the treatment variable.</p></li>
 <li><p><strong>complete</strong>: similar length as treatment and outcome variable, 1 for complete outcome, 0 for loss to follow up. If complete is 0, the outcome of the patient is ignored. If complete is not provided, the dataset is assumed to be complete.</p></li>
+</ul>
+<p><strong>analysis</strong>: The analysis is a wrapper function for analyzing of bayesian trial with normal outcome. The <strong>analysis</strong> takes the pipe function input and analyze the trial.</p>
+<ul>
+<li><p><strong>input</strong>: The input of the analysis is a list of input to run the adaptive trials.</p></li>
+<li><p><strong>type</strong>: The type input determines what trial to be analyzed. In the normal trials, the type needs to be set to “normal”.</p></li>
+</ul>
+<p><strong>simulate</strong>: The simulate is a wrapper function for simulation of adaptive trials. The <strong>simulate</strong> takes the pipe function input and runs the trial.</p>
+<ul>
+<li><p><strong>input</strong> - The input of the analysis is a list of input to run the adaptive trials.</p></li>
+<li><p><strong>no_of_sim</strong>- The no_of_sim determines the number of trials to be run. The default is set to 10,000.</p></li>
 </ul>
 </div>
 <div id="design" class="section level1">
@@ -316,6 +338,7 @@
 <div id="analysis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#analysis" class="anchor"></a>Analysis</h1>
+<p>In this section, we will demonstrate how to run adaptive bayesian trial using <strong>bayesCT</strong>. A sample dataset is provided in the package. The dataset</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(normaldata)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(normaldata)</a>
