@@ -50,7 +50,7 @@ install.packages("bayesCT")
 
 There are additional ways to download `bayesCT`. The first option is most useful for downloading a specific version of `bayesCT` (which can be found at https://github.com/thevaachandereng/bayesCT/releases):
 
-```{r, eval = TRUE, echo=TRUE}
+```{r, eval = FALSE, echo=TRUE}
 devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
 
 # or 
@@ -60,7 +60,7 @@ devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.
 
 The second option is to download the most recent stable version through GitHub:
 
-```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval=FALSE, echo=TRUE}
+```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval=TRUE, echo=TRUE}
 devtools::install_github("thevaachandereng/bayesCT")
 ```
 
