@@ -25,15 +25,11 @@ library(bayesCT)
 
 # Introduction
 
-The purpose of this vignette is to introduce how to simulate and analyze an adaptive bayesian clinical trial for normal outcomes. 
-The simulation section compromise of the design of the trial itself which provides a type I error rate and power at each interim look. 
-We use the normal-normal conjugate for the estimation of posterior probabilities. 
-The historical data is used as an informative prior and we use `bayesDP` as an engine to incorporate the historical data. 
+The purpose of this vignette is to introduce how to simulate and analyze an adaptive Bayesian clinical trial for continuous-valued, i.e., normal, outcomes. The simulation section compromises the design of the trial itself which provides type I error rate and power at each interim look. We use the normal conjugate prior for the estimation of posterior values. Available historical data can be used as an informative prior; we use the `bayesDP` package as the engine for incorporating the historical data. Instead of using traditional R function, we use pipes to input our parameters. 
 
 
 # Estimation of Treatment Difference
-Let $\bar{y}$, $s$, and $N$ denote the sample mean, sample standard deviation, and sample size, respectively. 
-Then, the posterior distribution of the mean under vague (flat) priors is
+Let $\bar{y}$, $s$, and $N$ denote the sample mean, sample standard deviation, and sample size, respectively. Then, the posterior distribution of the mean under vague (flat) priors is
 
 $$ \begin{array}{rcl}
 \tilde{\sigma}^2\mid\bar{y},s,N & \sim & InverseGamma\left(\frac{N-1}{2},\,\frac{N-1}{2}s^2 \right),\\
@@ -53,372 +49,258 @@ For more details on computation of $\hat{\alpha}$, please refer to the vignette 
 The posterior distribution of the mean outcome with historical data incorporated under vague (flat) priors is 
 $$\tilde{\mu} \sim \mathcal{N}ormal\left( \frac{\sigma^2_0N\bar{y} + \tilde{\sigma}^2N_0\bar{y}_0\hat{\alpha}}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}},\,\frac{\tilde{\sigma}^2\sigma^2_0}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}}      \right).$$
 
-Even though there is a closed-form solution for difference in normal distribution ( $\mathcal{N}ormal(\mu_1, \sigma_1^2)$ - $\mathcal{N}ormal(\mu_2, \sigma_2^2)$), we use Monte Carlo estimation of the posteriors of treatment and control group to compute the effect of treatment difference. 
+Even though there is a closed-form solution for the difference in normally distributed random variables, we use Monte Carlo simulations to estimate the treatment difference. 
 
-The estimation of mean of treatment difference $\tilde{\mu_T} - \tilde{\mu_C}$, where $\mu_T$ is the posterior mean outcome in the treatment group and $\mu_C$ is the posterior mean outcome in the control group.
+The estimation of the treatment difference is $\tilde{\mu_T} - \tilde{\mu_C}$, where $\mu_T$ is the posterior mean outcome in the treatment group and $\mu_C$ is the posterior mean outcome in the control group.
 
 
 
 
 # Wrapper Function for Design and Analysis
 
-Unlike traditional R function, the R package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below with details on the arguments for the simulation and analysis. 
+Unlike traditional R functions, the `bayesCT` package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below along with details on the arguments for the simulation and analysis.  
 
-**normal_outcome**: The normal outcome is a wrapper function for the simulation. The normal outcome has four input (**mu_treatment**, **mu_control**, **sd_treatment**, **sd_control**).
-
-- **mu_treatment** and **sd_treatment** are required inputs where the mean and standard deviation outcome for a single-arm or double-arm trials are specified for the treatment arm, where $ sd_{treatment} > 0$. 
-
-- **mu_control** and **sd_control** are set to NULL as default for single-arm trials. However, for two-arm trials **mu_control** and **sd_control** inputs specify the mean and standard deviation outcome for the control arm, where $sd_{control} > 0$. 
-
-
-**study_details**: The study details is a wrapper function for the simulation. The **study_details** function takes four input (**total_sample_size**, **study_period**, **interim_look** and **prop_loss_to_followup**). 
-
-- **total_sample_size** input determines the number of sample size required to run the simulation. 
-
-- **study_period** input determines the length of the study. Since interim look at x is done when the x^{th} patient is enrolled, the length of study is important for imputation purpose.  
-
-- **interim_look** function allows a vector of numeric value, where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please look at the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success). The interim_look values need to be smaller than the sample_size value. 
-
-- Loss to follow up is not peculiar in a clinical trial setting, the **prop_loss_to_followup** input allows to set the proportion of loss to follow up. The default value is set to 0.10. The **prop_loss_to_followup** needs to be between 0 and 1.  
+* **normal_outcome** - wrapper function for specifying observations. Inputs: 
+    + **mu_treatment** - mean of the treatment group. Required input.
+    + **sd_treatment** - standard deviation of the treatment group.  Required input. 
+    + **mu_control** - mean of the control group. Default value is NULL.
+    + **sd_control** - standard deviation of the control group. Default value is NULL. 
 
 
-**enrollment_rate**: The enrollment rate is a wrapper function for the simulation. The **enrollment_rate** function takes two input (**lambda**, **time**) unlike the **enrollment** function. 
-
-- **lambda** input is similar to **param** input in the **enrollment** function where it takes different lambda values for different poison rates (the default is set to 0.3, i.e. 0.3 patients per recruited per day). 
-
-- **time** input works similarly to the **time** input in the **enrollment** function where **time** input determines the cutoff rate for different poison rate (default set to NULL). For more details, please look at the recruitment section on the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment).  
-
-
-**hypothesis**: The hypothesis is a wrapper function for both simulation and analysis. The **hypothesis** wrapper takes five different inputs (**delta**, **prob_accept_ha**, **futility_prob**, **expected_success_prob** and **alternative**). 
-
-- The **delta** input determines the threshold difference for treatment and control group or the threshold for single-arm trial (the default is set to 0). For non-inferiority trial, the difference needs to be < 0.  
-
-- The input **prob_accept_ha** controls the probability of accepting the alternative hypothesis. The default is set to 0.95. 
-
-- **futility_prob** input controls the futility rate $\omega$ in the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. 
-
-- **expected_success_prob** input controls the early success rate $\Delta$ in the [bayesCT main vignette](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html). The default is set to 0.90. To prevent the trial for stopping for early success, set the **expected_success_prob** to 1. For more details on the criteria of early stopping for success or futility, please see the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success). The -
-
-- **alternative** input takes a character string specifying the alternative hypothesis, must be one of "greater" $mu_{treatment} > mu_{control}$ (default), "less" $mu_{treatment} < mu_{control}$ or "two-sided" $mu_{treatment} \neq mu_{control}$.
+* **study_details** - wrapper function for specifying sample size, study length, interim looks, and loss to follow-up. Inputs:
+    + **total_sample_size** - sample size required to run the simulation 
+    + **study_period** - length of the study, i.e., the follow-up period
+    + **interim_look** - enrollment values where interim looks are carried out. Specify where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please see [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success). Each `interim_look` value must be smaller than `total_sample_size`. 
+    + **prop_loss_to_followup** - proportion of subjects loss to follow-up. Must be a value be 0 and 1. Default value is 0.10. 
 
 
-**randomize**: The randomize is a wrapper function for the simulation. The **randomize**
- function takes two input (**block_size** and **randomization_ratio**). 
- 
- - **block_size** input controls the size of each block to randomize. 
- 
-- **randomization_ratio** is a vector of length 2 which determine the ratio for control to treatment. For more details, please look at the randomization section on the [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme).  
+* **enrollment_rate** - wrapper function for specifying enrollment. Inputs: 
+    + **lambda** - enrollment rate(s) at each `time`. Specified as patients per day. Can be a scalar or vector. Default is 0.3, i.e. 0.3 patients per day. 
+    + **time** - determines the cut-off for the enrollment rates. Can be NULL, a scalar, or a vector. Default is NULL. For more details, please see  [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment).  
 
 
-**impute**: The impute is a wrapper function for simulation and analysis. The **impute** function takes two input (**no_of_impute**, **number_mcmc**). 
-
-- **no_of_impute** determines the number of imputation done for loss to follow-up to stop for early success and number of imputation done for loss to follow-up and patients not enrolled (only in simulation scenario) for loss to follow-up for futility. The default is set to 10 to generate the vignette quickly. However, the general rule of thumb for implementation of adaptive trials would be to set **no_of_impute** to 10,000. 
-
-- A Monte Carlo estimation approach is used to estimate the posterior probability, requiring several samples from the posterior distributions. The **number_mcmc** controls the number of Monte Carlo estimation with default set to 10000.  
-
-
-**historical_normal**: The historical normal wrapper function allows incorporation of historical data using discount function in the analysis and simulation. This wrapper is only used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please look at the [bayesDP normal vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html). 
-Historical binomial takes 9 inputs.
-
-- **mu0_treatment**: Mean of the historical treatment group.
-
-- **sd0_treatment**: The standard deviation of the historical treatment group.
-
-- **N0_treatment**: The sample size for the historical treatment group.
-
-- **mu0_control**: Mean of the historical control group.
-
-- **sd0_control**: The standard deviation of the historical control group.
-
-- **N0_control**: The sample size for the historical control group.
-
-- **discount_function**: Specify the discount function to use. Currently supports weibull, scaledweibull, and identity. The discount function scaledweibull scales the output of the Weibull CDF to have a max value of 1. The identity discount function uses the posterior probability directly as the discount weight. Default value is "identity".
-
-- **alpha_max**: Maximum weight the discount function can apply. Default is 1. For a two-arm trial, users may specify a vector of two values where the first value is used to weight the historical treatment group and the second value is used to weight the historical control group.
-
-- **fix_alpha**: Fix alpha at alpha_max? Default value is FALSE.
-
-- **weibull_scale**: Scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when discount_function = "identity".
-
-- **weibull_shape**: Shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when discount_function = "identity".
+* **hypothesis** - wrapper function for both simulation and analysis. Inputs:
+    + **delta** - threshold difference between treatment and control groups or the threshold for single-arm trial (the default is set to 0). For non-inferiority trials, the difference must be < 0.  
+    + **prob_accept_ha** - probability of accepting alternative hypothesis. Default value is 0.95. 
+    + **futility_prob** - futility rate, i.e., $\omega$ in  [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. 
+    + **expected_success_prob** - controls stopping early for success rate, i.e., $\Delta$ in https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success). The default value is 0.90. To prevent the trial for stopping for early success, use 1.
+    + **alternative** - sign of the alternative hypothesis. Character string specifying one of "greater" $mu_{treatment} > mu_{control}$ (default), "less" $mu_{treatment} < mu_{control}$ or "two-sided" $mu_{treatment} \neq mu_{control}$.
 
 
-**data_normal**: The data normal is a wrapper function for inputting data for analysis of bayesian trial with normal outcome. The **data_normal** takes three input (**treatment**, **outcome** and **complete**).
-
-- **treatment**: treatment assignment for patients in the trial, 1 for treatment group and 0 for control group. 
-
-- **outcome**: normal outcome of the trial. The length of the vector is the same size as the treatment variable. 
-
-- **complete**: similar length as treatment and outcome variable, 1 for complete outcome, 0 for loss to follow up. If complete is 0, the outcome of the patient is ignored. If complete is not provided, the dataset is assumed to be complete.
-
-**analysis**: The analysis is a wrapper function for analyzing of bayesian trial with normal outcome. The **analysis** takes the pipe function input and analyze the trial. 
-
-- **input**: The input of the analysis is a list of input to run the adaptive trials. 
-
-- **type**: The type input determines what trial to be analyzed. In the normal trials, the type needs to be set to "normal". 
+* **randomize** - wrapper function for specifying the randomization scheme. Inputs: 
+    + **block_size** - size of each enrollment block. 
+    + **randomization_ratio** - ratio of control to treatment, specified as a vector of length 2. For more details, see [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme).  
 
 
-**simulate**: The simulate is a wrapper function for simulation of adaptive trials. The **simulate** takes the pipe function input and runs the trial. 
+* **impute** - wrapper function specifying imputation of outcomes at the interim looks. Inputs:
+    + **no_of_impute** - number of imputations. Used to impute outcomes for subjects potentially loss to follow-up when estimating the probability of stopping for early success and/or futility. In the case of the futility calculation, subjects not yet enrolled or imputed as well. Default value is 10 so that the vignette can be generated quickly. However, much larger values should be used in practice, e.g., 10000.
+    + **number_mcmc** - number of Monte Carlo iterations for sampling from posterior distributions during imputation. Default value is 10000.  
 
-- **input** - The input of the analysis is a list of input to run the adaptive trials. 
 
-- **no_of_sim**- The no_of_sim determines the number of trials to be run. The default is set to 10,000. 
+* **historical_normal** - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see [bayesDP normal vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html). Inputs:
+    + **mu0_treatment** - mean of the historical treatment group.
+    + **sd0_treatment** - standard deviation of the historical treatment group.
+    + **N0_treatment** - sample size of the historical treatment group.
+    + **mu0_control** - mean of the historical control group.
+    + **sd0_control** - standard deviation of the historical control group.
+    + **N0_control** - sample size of the historical control group.
+    + **discount_function** - discount function to use for controlling the weight given to the historical data. Currently supports `weibull`, `scaledweibull`, and `identity`. The discount function `scaledweibull` scales the output of the Weibull CDF to have a max value of 1. The `identity` discount function uses the posterior probability directly as the discount weight. Default value is `"identity"`.
+    + **alpha_max** - maximum weight the discount function can apply. Default is 1. For a two-arm trial, users may specify a vector of two values where the first value is used to weight the historical treatment group and the second value is used to weight the historical control group.
+    + **fix_alpha** - Should alpha be set to alpha_max? Default value is FALSE.
+    + **weibull_scale** - scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
+    + **weibull_shape** - shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
 
-# Design
 
-We will discuss the design of adaptive trial using bayesCT for normal outcome in the following section. 
-We illustrate an example for one-arm trial and two-arm trial using the wrapper functions described above. 
+* **data_normal** - wrapper function for inputting data with a normal outcome. Inputs:
+    + **treatment** - assignment for patients in the trial, 1 for treatment group and 0 for control group. Input should be a vector.
+    + **outcome** - continuous valued outcome of the trial. Input should be a vector with same lenggth as **treatment**. 
+    + **complete** - indicator for whether outcome is observed; 1 for complete outcome, 0 for loss to follow up or not yet observed. If a value is 0, the outcome of the patient is ignored. If not provided, the dataset is assumed to be complete.
+
+
+* **analysis** - wrapper function for analyzing a trial. Inputs:
+    + **input** - list of input to analyze the adaptive trial. 
+    + **type** - outcome type of the trial. Use `type="normal"` for a trial with normal outcomes. 
+
+
+* **simulate** - wrapper function for simulating trials. Should be used as the terminal end of the pipe. Inputs: 
+    + **input** - list of inputs specifying the adaptive trial simulation set-up.
+    + **no_of_sim** - number of trials to simulate. Default value is 10000. 
+
+
+
+
+# Design of Adaptive Trials
+
+In the following section, we will discuss the design of adaptive trials using `bayesCT` for normal outcomes. We illustrate an example for one-arm trial and two-arm trials using the wrapper functions described above. 
+
 
 ## One-arm Trial
 
-In the example below, we will illustrate how to compute power, type 1 error and other clinical trial details for an objective performace criterion (OPC) trial with mean outcome and hypothesis described as follows, 
+In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performace criterion (OPC) trial with mean outcome and hypothesis described as follows, 
 $$H_0: \mu_{treatment} \geq 120 \qquad H_A:\mu_{treatment} < 120.$$
-There is no historical data incorporated in this trial. 
-**study_details** and **binomial_outcome** are the most important wrapper function for the design of adaptive trials using bayesCT (since there is no default set).
-The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 5.5. 
-The total sample size is 400 with a study length of 60 days. 
-A 10% loss to follow up are induced to the simulated data at random.
-Based on this input, the adaptive trials are simulated 10 times to obtain the following output. 
-For the purpose of reproducing the vignette quickly, we reduce the number of simulation to 10. 
-The general rule of thumb for number of simulation used in clinical trials is 10,000.
-**Note: The inputs used are picked for illustration purpose.**
+
+The most important wrapper functions are **study_details** and **normal_outcome** (especially since there are no default values).
+
+The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 5.5. The total sample size is 400 with a study length of 60 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
 
 ```{r opcminimum}
-value <-
-  normal_outcome(mu_treatment = 120,
-                 sd_treatment = 5.5) %>%
-  study_details(total_sample_size = 400, study_period = 60,
-                interim_look = NULL,
+value <- normal_outcome(mu_treatment = 120,
+                        sd_treatment = 5.5) %>%
+  study_details(total_sample_size     = 400, 
+                study_period          = 60,
+                interim_look          = NULL,
                 prop_loss_to_followup = 0.10)
+				
+# Simulate 10 trials
 output <- value %>%
-            simulate(no_of_sim = 10)
+  simulate(no_of_sim = 10)
+
+# Structure of the simulation output
 str(output)
 ```
 
-To allow for early stopping for success or futility, we add interim look to the design where the trial is stopped at the enrollment of 350th and 380th patient. 
-Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output.
+To allow for early stopping for success or futility, we add interim looks to the design.  We'll check for success or futility at the enrollment of the 350th and 380th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
 
 
 ```{r opcinterimlook}
 # adding interim look
 value <- value %>%
-  study_details(total_sample_size = 400, study_period = 60,
-                interim_look = c(350, 380),
+  study_details(total_sample_size     = 400, 
+                study_period          = 60,
+                interim_look          = c(350, 380),
                 prop_loss_to_followup = 0.10)
 
-# simulating 10 times
+# Simulate 10 trials
 output <- value %>%
-            simulate(no_of_sim = 10)
+  simulate(no_of_sim = 10)
 
-# structure of the simulation output
+# Structure of the simulation output
 str(output)
 ```
 
-The enrollment of patients in the trial is assumed to be a Poisson process.
-The default enrollment rate is assumed to enroll 0.3 patients per day. 
-However, in this simulation we introduce a step-wise Poisson process with lambda as follows
+Patient enrollment is assumed to follow a Poisson process. The default enrollment rate is 0.3 patients per day. In this simulation we'll introduce a step-wise Poisson process with rate $\lambda$ as follows:
 \[  \lambda = \left\{
 \begin{array}{ll}
-      0.4 & t \in [0, 40) \\
-      0.7 & t \in [40, \infty) \\
+      0.4 & \text(time) \in [0, 40) \\
+      0.7 & \text(time) \in [40, \infty) \\
 \end{array} 
 \right. \]
 
-The following enrollment rate is added to the simulation and the trial is simulated for 10 times.
-
+This enrollment scheme is illustrated below. 
 
 ```{r opcenroll}
 value <- value %>%
-  enrollment_rate(lambda = c(0.4, 0.7), time = 40) 
-
+  enrollment_rate(lambda = c(0.4, 0.7), 
+                  time = 40) 
 
 output <- value %>%
-            simulate(no_of_sim = 10)
+  simulate(no_of_sim = 10)
 
 str(output)
 ```
 
 
 
-The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
-Since, in a OPC trial, the proportion of events in the treatment group are simulated using the input provided, the delta controls the maximum threshold allowed for trial to succeed/fail. 
-The default delta used is 0, we set the delta to -10 (i.e $120 - \hat{\mu}_{treatment} < -10$). 
-The futility probability is set at 0.10 and the expected success probability for early stopping is set at 0.85 with the final probability of accepting the alternative set at 0.95. 
-The alternative is set to "less" due to the hypothesis function above.  
-The trial is simulated again 10 times to obtain the output. 
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probablity of early success, the alternative hypothesis, and the treatment difference margin.
+ 
+Since, in an OPC trial, the outcomes in the treatment group are simulated using the input provided, delta controls the maximum threshold allowed for trial to succeed/fail. The default value of `delta` is 0. Here, we'll use `delta = -10` (i.e $120 - \hat{\mu}_{treatment} < -10$). 
 
+
+We'll further set the futility probability to 0.10, the expected success probability for early stopping to 0.85, and the final probability of accepting the alternative to 0.95. The alternative is `"less"` due to the hypothesis function specified above.  
 
 ```{r opchypo}
 value <- value %>%
-   hypothesis(delta = -10, futility_prob = 0.10, prob_accept_ha = 0.95,
-             expected_success_prob = 0.85, alternative = "less")
+   hypothesis(delta                 = -10, 
+              futility_prob         = 0.10, 
+			  prob_accept_ha        = 0.95,
+              expected_success_prob = 0.85, 
+			  alternative           = "less")
 
 output <- value %>%
-            simulate(no_of_sim = 10)
+  simulate(no_of_sim = 10)
 
 str(output)
 ```
 
 
-The simulation is done for 20 times to impute the loss to follow up data and the posterior are sampled for 2000 (number_mcmc) to obtain an estimate for the posterior value.
-The trial is simulated for 10 times to obtain the output. 
+Next, we'll illustrate imputations for imputing outcomes for subjects loss to follow up. We'll carry out 20 imputations and draw 2000 values from the posterior of each imputation. 
 
 ```{r opcimpute}
 value <- value %>%
-  impute(no_of_impute = 20, number_mcmc = 2000)
+  impute(no_of_impute = 20, 
+         number_mcmc  = 2000)
 
 output <- value %>%
-            simulate(no_of_sim = 10)
+  simulate(no_of_sim = 10)
 
 str(output)
 ```
 
-Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
-The pipe function connects all input together and finally the simulation is done for 10 times to obtain the results. 
+The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 20 times to obtain results. 
 
 
 ```{r opcoverall}
-value <-
-  normal_outcome(mu_treatment = 120,
-                 sd_treatment = 5.5) %>%
-  study_details(total_sample_size = 400, study_period = 60,
-                interim_look = c(350, 380),
+value <- normal_outcome(mu_treatment = 120,
+                        sd_treatment = 5.5) %>%
+  study_details(total_sample_size     = 400, 
+                study_period          = 60,
+                interim_look          = c(350, 380),
                 prop_loss_to_followup = 0.10) %>%
-  hypothesis(delta = -7, futility_prob = 0.10, prob_accept_ha = 0.95,
-             expected_success_prob = 0.85, alternative = "less") %>%
-  enrollment_rate(lambda = c(0.4, 0.7), time = 4) %>%
-  randomize(block_size = c(10, 20), randomization_ratio = c(1, 1)) %>%
-  impute(no_of_impute = 20, number_mcmc = 2000)
+  hypothesis(delta                 = -10, 
+             futility_prob         = 0.10, 
+			 prob_accept_ha        = 0.95,
+             expected_success_prob = 0.85, 
+			 alternative           = "less") %>%
+  enrollment_rate(lambda = c(0.4, 0.7), 
+                  time   = 4) %>%
+  randomize(block_size          = c(10, 20), 
+            randomization_ratio = c(1, 1)) %>%
+  impute(no_of_impute = 20, 
+         number_mcmc  = 2000)
 
-
+str(value)
 ```
 
 
 
 ## Two-arm Trial
-
-In this section, we will illustrate how to perform the design of a two-arm trial with incorporating historical data. 
-The example will compute the type 1, power and other outputs for a superiority trial with hypothesis as indicated below, 
+In this section, we will illustrate how to perform the design of a two-arm trial with the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is 
 $$H_0: \mu_{treatment} - \mu_{control} \leq 0 \qquad H_A: \mu_{treatment} - \mu_{control} > 0.$$
-Unlike the previous OPC trial, we do not include interim look in this trial. 
-The normal mean outcome are simulated using a mean value of 13 and standard deviation of 1.4 for the treatment group and a mean value of 15 and standard deviation of 1.9 for the control group. 
-The total sample size is 400 with a study length of 30 days. 
-A 15% loss to follow up are induced to the simulated data at random.
-Based on this input, the adaptive trials are simulated 10 times to obtain the following output. 
-We simulated the trials for 10 times and the input and ouput are included below.
 
-
-```{r twoarmmin}
-value <-
-  normal_outcome(mu_treatment = 13, mu_control = 16,
-                 sd_treatment = 1.4, sd_control = 1.9) %>%
-  study_details(total_sample_size = 300, study_period = 50,
-                interim_look = NULL,
-                prop_loss_to_followup = 0.10)
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting alternative hypothesis, probablity of early success, alternative hypothesis and margin of treatment difference. 
-The margin of treatment difference $\delta$ is set to 0 since we are designing a superiority trial. 
-The futility probability is set at 0 and the expected success probability for early stopping is set at 1 with the final probability of accepting the alternative set at 0.975. 
-Since, there is no interim look, the probability of futility and expected success does not affect the trial. 
-The alternative is set to "less" due to the alternative hypothesis function above.  
-The trial is simulated again 10 times to obtain the output. 
-
-```{r twoarmhypo}
-value <- value %>%
-  hypothesis(delta = 0, futility_prob = 0, prob_accept_ha = 0.95,
-             expected_success_prob = 1, alternative = "less")
-  
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-
-The enrollment of patients in the trial is assumed to be a Poisson process.
-The enrollment rate in this trial is assumed to be 0.8 patients per day. 
-To induce variation, we simulated the randomization ratio using block size of 4 and 6 repetitively and 1:1 for control to treatment. 
-The following randomization scheme is implemented below using randomize wrapper and the trial is simulated again 10 times to obtain the output.
-
-
-```{r twoarmenroll}
-value <- value %>%
-  enrollment_rate(lambda = c(0.8), time = NULL) %>%
-  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1))
-  
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-The simulation is done for 25 times to impute the loss to follow up data and the posterior are sampled for 5000 (number_mcmc) to obtain an estimate for the posterior value.
-The trial is simulated for 10 times to obtain the output. 
-
-```{r twoarmimpute}
-value <- value %>%
-  impute(no_of_impute = 25, number_mcmc = 5000)
-  
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-
-However, if historical data is avaialble, historical data can be augmented in the analysis using the discount prior approach as implemented in **bayesDP**. 
-In our OPC trial, we augmented historical data for illustration purpose. 
-The historical data is incorporated for the treatment group using the discount function.
-The historical data has a mean of 13, standard deviation of 5 and sample size of 100 for the treatment group.
-The historical data has a mean of 12, standard deviation of 3 and sample size of 120 for the control group.
-For more details on the method and computation, please look at the [bayesDP normal vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html). 
-**historical_normal** takes 9 inputs as indicated above.
-The trial is simulated for 10 times to obtain the output. 
-
-
-```{r twoarmhistorical}
-value <- value %>%
-  historical_normal(mu0_treatment = 13, sd0_treatment = 5, N0_treatment = 100,
-                    mu0_control = 12, sd0_control = 3, N0_control = 120, 
-                    discount_function = "scaledweibull", 
-                    alpha_max = F, fix_alpha = 1,
-                    weibull_scale = 0.135, weibull_shape = 3)
-
-output <- value %>%
-            simulate(no_of_sim = 10)
-
-str(output)
-```
-
-
-Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrtaed below. 
-The pipe function connects all input together and finally the simulation is done for 10 times to obtain the results. 
-
+Unlike the OPC trial above, we will not include interim looks. The normal mean outcomes are simulated using a mean value of 13 and standard deviation of 1.4 for the treatment group and a mean value of 15 and standard deviation of 1.9 for the control group. The total sample size is 400 with a study length of 30 days. A 15% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.
 
 ```{r twoarmall}
-value <-
-  normal_outcome(mu_treatment = 13, mu_control = 16,
-                 sd_treatment = 1.4, sd_control = 1.9) %>%
-  study_details(total_sample_size = 300, study_period = 50,
-                interim_look = NULL,
+value <- normal_outcome(mu_treatment = 13, 
+                        mu_control = 16, 
+						sd_treatment = 1.4, 
+						sd_control = 1.9) %>%
+  study_details(total_sample_size     = 300, 
+                study_period          = 50,
+                interim_look          = NULL,
                 prop_loss_to_followup = 0.10) %>%
-  hypothesis(delta = 0, futility_prob = 0, prob_accept_ha = 0.95,
-             expected_success_prob = 1, alternative = "less") %>%
-  impute(no_of_impute = 25, number_mcmc = 5000) %>%
-  enrollment_rate(lambda = c(0.8), time = NULL) %>%
-  randomize(block_size = c(4, 6), randomization_ratio = c(1, 1)) %>%
-  historical_normal(mu0_treatment = 13, sd0_treatment = 5, N0_treatment = 100,
-                    mu0_control = 12, sd0_control = 3, N0_control = 120, 
+  hypothesis(delta                 = 0, 
+             futility_prob         = 0, 
+			 prob_accept_ha        = 0.95,
+             expected_success_prob = 1, 
+			 alternative           = "less") %>%
+  impute(no_of_impute = 25, 
+         number_mcmc  = 5000) %>%
+  enrollment_rate(lambda = c(0.8), 
+                  time = NULL) %>%
+  randomize(block_size          = c(4, 6), 
+            randomization_ratio = c(1, 1)) %>%
+  historical_normal(mu0_treatment     = 13, 
+                    sd0_treatment     = 5, 
+					N0_treatment      = 100,
+                    mu0_control       = 12, 
+					sd0_control       = 3, 
+					N0_control        = 120, 
                     discount_function = "scaledweibull", 
-                    alpha_max = F, fix_alpha = 1,
-                    weibull_scale = 0.135, weibull_shape = 3) %>%
+                    alpha_max         = FALSE, 
+					fix_alpha         = 1,
+                    weibull_scale     = 0.135, 
+					weibull_shape     = 3) %>%
   simulate(no_of_sim = 10)
-
 
 str(value)
 ```
@@ -426,9 +308,8 @@ str(value)
 
 # Analysis
 
-In this section, we will demonstrate how to run adaptive bayesian trial using **bayesCT**. 
-A sample dataset is provided in the package. 
-The dataset **normaldata** contains the results of 300 patients with binomial outcome, treatment group and loss to follow up.
+In this section, we will demonstrate how to run an adaptive Bayesian trial using **bayesCT**. A sample dataset is provided in the package. 
+The dataset **normaldata** contains the results of 300 subjects from a two-arm trial with normal outcome. The `complete` column indicates whether the outcome was observed, i.e., loss to follow-up.
 
 ```{r data}
 data(normaldata)
@@ -436,17 +317,12 @@ data(normaldata)
 head(normaldata)
 ```
 
-The minimum input needed to run an adaptive bayesian trial is the data itself. 
-The **data_normal** input allows the input of the data. 
-The treatment group (0 for control, 1 for treatment) and outcome input are essential for the analysis. 
-However, if the complete input is not provided, the function assumes the outcome data is complete. 
-The data is analyzed using the input below. 
+The minimum input needed to run an adaptive Bayesian trial is the data itself. The **data_normal** input allows the input of the data. The treatment group (0 for control, 1 for treatment) and outcome input are essential for the analysis. However, if the complete input is not provided, the function assumes the outcome data is complete. A default analysis is carried out below. 
 
 ```{r analysisdatainput}
-input <-
-  data_normal(treatment = normaldata$treatment, 
-              outcome   = normaldata$outcome, 
-              complete  = normaldata$complete) 
+input <- data_normal(treatment = normaldata$treatment, 
+                     outcome   = normaldata$outcome, 
+                     complete  = normaldata$complete) 
 
 out <- input %>%
   analysis(type = "normal")
@@ -454,55 +330,25 @@ out <- input %>%
 str(out)
 ```
 
-The trials is analyzed for the following hypothesis
+We'll now illustrate using piping to carry out the complete analysis. First, we'll assume the following hypothesis:
 $$H_0:\mu_{treatment} - \mu_{control} > 0 \quad H_A: \theta_{treatment} - \theta_{control} < 0$$
-The delta and alternative used to analyze the trial is 0 and "less" respectively. 
-The probability if accepting alternative is 0.95, the probability of stopping for futility is 0.05 and the probability of stopping for success is 0.90. 
-The trial is reanalyzed with this input. 
-
-```{r analysishypo}
-input <- input %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-             expected_success_prob = 0.90, alternative = "less") 
-
-out <- input %>%
-  analysis(type = "normal")
-
-str(out)
-  
-```
 
 
-The simulation is done for 40 times to impute the loss to follow up data and the posterior are sampled for 8000 (number_mcmc) to obtain an estimate for the posterior value.
-The trial is reanalyzed again. 
-
-
-```{r analysisimpute}
-input <- input %>%
-  impute(no_of_impute = 40, number_mcmc = 8000)
-
-out <- input %>%
-  analysis(type = "normal")
-
-str(out)
-```
-
-
-Finally, there is no historical data incorporated for this trial. 
-Instead of inputting parameters step by step, the trial parameters can be filled at once as illustrated below. 
-The pipe function connects all input together and the analysis is done again. 
+The delta and alternative used to analyze the trial is 0 and "less" respectively. The probability of accepting the alternative is 0.95, the probability of stopping for futility is 0.05, and the probability of stopping for success is 0.90. We will carry out imputations on subjects loss to follow up. Additionally, we will incorporate historical data on the treatment arm.
 
 ```{r analysisall}
-out <- 
-  data_normal(treatment = normaldata$treatment, 
-              outcome   = normaldata$outcome, 
-              complete  = normaldata$complete) %>%
-  hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-             expected_success_prob = 0.90, alternative = "less") %>%
-  impute(no_of_impute = 40, number_mcmc = 8000) %>%
+out <- data_normal(treatment = normaldata$treatment,
+                   outcome   = normaldata$outcome, 
+                   complete  = normaldata$complete) %>%
+  hypothesis(delta = 0, 
+             futility_prob         = 0.05, 
+			 prob_accept_ha        = 0.95,
+             expected_success_prob = 0.90, 
+			 alternative           = "less") %>%
+  impute(no_of_impute = 40, 
+         number_mcmc  = 8000) %>%
   analysis(type = "normal")
 
-  
 str(out)
 ```
 

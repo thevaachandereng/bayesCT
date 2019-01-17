@@ -48,7 +48,7 @@ The following section lays out each of the functions and inputs for carrying out
 
 Unlike traditional R functions, the `bayesCT` package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below along with details on the arguments for the simulation and analysis. 
 
-* **binomial_outcome** - wrapper function for specifying event rates.Inputs:
+* **binomial_outcome** - wrapper function for specifying event rates. Inputs:
     + **p_treatment** - required input; proportion of events for a single-arm or double-arm trials for the treatment arm, where $0 < p_{treatment} < 1$. 
     + **p_control** - NULL as default for single-arm trials; for two-arm trials **p_control** specifies the proportion of events for the control arm, where $0 < p_{control} < 1$. 
 
@@ -123,7 +123,7 @@ In the following section, we will discuss the design of adaptive trials using `b
 
 ## One-arm Trial
 
-In the example below, we will illustrate how to compute power, type 1 error and other characteristics for an objective performace criterion (OPC) trial with an observed proportion of events and  hypothesis described as follows, 
+In the example below, we will illustrate how to compute power, type 1 error, and other characteristics for an objective performace criterion (OPC) trial with an observed proportion of events and  hypothesis described as follows, 
 $$H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} < 0.08.$$
 
 The most important wrapper functions are **study_details** and **binomial_outcome** (especially since there are no default values).
@@ -141,11 +141,11 @@ value <- binomial_outcome(p_treatment = 0.08) %>%
 output <- value %>%
   simulate(no_of_sim = 10)
 
-# structure of the simulation output
+# Structure of the simulation output
 str(output)
 ```
 
-To allow for early stopping for success or futility, we can add interim look to the design. We'll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
+To allow for early stopping for success or futility, we can add interim looks to the design. We'll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
 
 
 ```{r opcinterimlook}
@@ -188,7 +188,7 @@ str(output)
 
 The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probablity of early success, the alternative hypothesis, and the treatment difference margin.
  
-Since, in a OPC trial, the proportion of events in the treatment group are simulated using the input provided, `delta` controls the maximum threshold allowed for the trial to succeed/fail. The default value of `delta` is 0. Here, we'll use `delta = -0.03` (i.e $\hat\theta_{treatment} - 0.08 > -0.03$). 
+Since, in an OPC trial, the proportion of events in the treatment group are simulated using the input provided, `delta` controls the maximum threshold allowed for the trial to succeed/fail. The default value of `delta` is 0. Here, we'll use `delta = -0.03` (i.e $\hat\theta_{treatment} - 0.08 > -0.03$). 
 
 We'll further set the futility probability to 0.05, the expected success probability for early stopping to 0.90, and the final probability of accepting the alternative to 0.95. The alternative is `"less"` due to the hypothesis function specified above.  
 
@@ -256,7 +256,7 @@ output <- value %>%
 str(output)
 ```
 
-The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the simulation is carried out 10 times to obtain results. 
+The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 10 times to obtain results. 
 
 
 ```{r opcoverall}
