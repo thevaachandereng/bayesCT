@@ -331,7 +331,7 @@ str(out)
 ```
 
 We'll now illustrate using piping to carry out the complete analysis. First, we'll assume the following hypothesis:
-$$H_0:\mu_{treatment} - \mu_{control} > 0 \quad H_A: \theta_{treatment} - \theta_{control} < 0$$
+$$H_0:\mu_{treatment} - \mu_{control} > 0 \quad H_A: \mu_{treatment} - \mu_{control} < 0$$
 
 
 The delta and alternative used to analyze the trial is 0 and "less" respectively. The probability of accepting the alternative is 0.95, the probability of stopping for futility is 0.05, and the probability of stopping for success is 0.90. We will carry out imputations on subjects loss to follow up. Additionally, we will incorporate historical data on the treatment arm.
