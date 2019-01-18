@@ -12,7 +12,7 @@ input2 <- list(mu_treatment = 8, sd_treatment = 1,
                N_impute = 20)
 
 context("")
-test_that("The binomial bayesCT is ", {
+test_that("The normal bayesCT is ", {
   set.seed(200)
   expect_equal(do.call(normalBACT, input1)$mu_treatment, 8)
   expect_equal(do.call(normalBACT, input2)$mu_treatment, 8)
