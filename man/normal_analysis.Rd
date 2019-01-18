@@ -87,7 +87,41 @@ treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
 }
 \value{
-a list of output for the bayesian trial for normal mean.
+a list of output for the analysis of bayesian trial for normal mean.
+\describe{
+  \item{\code{prob_of_accepting_alternative}}{
+    scalar. The input parameter of probability of accepting the alternative.}
+  \item{\code{margin}}{
+    scalar. The margin input value of difference between mean estimate of treatment
+     and mean estimate of the control.}
+  \item{\code{alternative}}{
+    character. The input parameter of alternative hypothesis. }
+  \item{\code{N_treatment}}{
+    scalar. The number of patients enrolled in the experimental group for
+    each simulation.}
+  \item{\code{N_control}}{
+    scalar. The number of patients enrolled in the control group for
+    each simulation.}
+  \item{\code{N_enrolled}}{
+    vector. The number of patients enrolled in the trial (sum of control
+    and experimental group for each simulation. )}
+  \item{\code{N_complete}}{
+    scalar. The number of patients who completed the trial and had no
+    loss to follow-up.}
+  \item{\code{post_prob_accept_alternative}}{
+    vector. The final probability of accepting the alternative
+    hypothesis after the analysis is done.}
+  \item{\code{est_final}}{
+    scalar. The final estimate of the difference in posterior estimate of
+    treatment and posterior estimate of the control group.}
+  \item{\code{stop_futility}}{
+    scalar. Did the trial stop for futility during imputation of patient
+    who had loss to follow up? 1 for yes and 0 for no.}
+  \item{\code{stop_expected_success}}{
+    scalar. Did the trial stop for early success during imputation of patient
+    who had loss to follow up? 1 for yes and 0 for no.}
+
+}
 }
 \description{
 Function to analyze bayesian trial for normal mean data

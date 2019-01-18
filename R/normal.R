@@ -768,7 +768,41 @@ historical_normal <- function(mu0_treatment       = NULL,
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpnormal
 #'
-#' @return a list of output for the bayesian trial for normal mean.
+#' @return a list of output for the analysis of bayesian trial for normal mean.
+#' \describe{
+#'   \item{\code{prob_of_accepting_alternative}}{
+#'     scalar. The input parameter of probability of accepting the alternative.}
+#'   \item{\code{margin}}{
+#'     scalar. The margin input value of difference between mean estimate of treatment
+#'      and mean estimate of the control.}
+#'   \item{\code{alternative}}{
+#'     character. The input parameter of alternative hypothesis. }
+#'   \item{\code{N_treatment}}{
+#'     scalar. The number of patients enrolled in the experimental group for
+#'     each simulation.}
+#'   \item{\code{N_control}}{
+#'     scalar. The number of patients enrolled in the control group for
+#'     each simulation.}
+#'   \item{\code{N_enrolled}}{
+#'     vector. The number of patients enrolled in the trial (sum of control
+#'     and experimental group for each simulation. )}
+#'   \item{\code{N_complete}}{
+#'     scalar. The number of patients who completed the trial and had no
+#'     loss to follow-up.}
+#'   \item{\code{post_prob_accept_alternative}}{
+#'     vector. The final probability of accepting the alternative
+#'     hypothesis after the analysis is done.}
+#'   \item{\code{est_final}}{
+#'     scalar. The final estimate of the difference in posterior estimate of
+#'     treatment and posterior estimate of the control group.}
+#'   \item{\code{stop_futility}}{
+#'     scalar. Did the trial stop for futility during imputation of patient
+#'     who had loss to follow up? 1 for yes and 0 for no.}
+#'   \item{\code{stop_expected_success}}{
+#'     scalar. Did the trial stop for early success during imputation of patient
+#'     who had loss to follow up? 1 for yes and 0 for no.}
+#'
+#' }
 #'
 #' @export normal_analysis
 
@@ -1061,7 +1095,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "
 #'    the dataset is assumed to be complete.
 #' @param .data NULL. stores the normal data for analysis, please do not fill it in.
 #'
-#' @return a list with normal data file to be analyzed.
+#' @return a list with treatment, outcome and loss to follow up vector with normal
+#'   outcome.
 #'
 #' @export data_normal
 data_normal <- function(treatment, outcome, complete, .data = NULL){
