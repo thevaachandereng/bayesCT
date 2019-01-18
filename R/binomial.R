@@ -13,7 +13,52 @@
 #'   set to beta(1, 1).
 #' @inheritParams normalBACT
 #'
-#' @return a list of output
+#' @return a list of output for a single trial simulation.
+#' \describe{
+#'   \item{\code{p_treatment}}{
+#'     scalar. The input parameter of proportion of events in the
+#'     treatment group.}
+#'   \item{\code{p_control}}{
+#'     scalar. The input parameter of proportion of events in the
+#'     control group.}
+#'   \item{\code{prob_of_accepting_alternative}}{
+#'     scalar. The input parameter of probability threshold of accepting the
+#'     alternative.}
+#'   \item{\code{margin}}{
+#'     scalar. The margin input value of difference between mean estimate of treatment
+#'      and mean estimate of the control.}
+#'   \item{\code{alternative}}{
+#'     character. The input parameter of alternative hypothesis. }
+#'   \item{\code{interim_look}}{
+#'     vector. The sample size for each interim look.}
+#'   \item{\code{N_treatment}}{
+#'     scalar. The number of patients enrolled in the experimental group for
+#'     each simulation.}
+#'   \item{\code{N_control}}{
+#'     scalar. The number of patients enrolled in the control group for
+#'     each simulation.}
+#'   \item{\code{N_enrolled}}{
+#'     vector. The number of patients enrolled in the trial (sum of control
+#'     and experimental group for each simulation. )}
+#'   \item{\code{N_complete}}{
+#'     scalar. The number of patients who completed the trial and had no
+#'     loss to follow-up.}
+#'   \item{\code{post_prob_accept_alternative}}{
+#'     vector. The final probability of accepting the alternative
+#'     hypothesis after the analysis is done.}
+#'   \item{\code{est_final}}{
+#'     scalar. The final estimate of the difference in posterior estimate of
+#'     treatment and posterior estimate of the control group.}
+#'   \item{\code{stop_futility}}{
+#'     scalar. Did the trial stop for futility during imputation of patient
+#'     who had loss to follow up? 1 for yes and 0 for no.}
+#'   \item{\code{stop_expected_success}}{
+#'     scalar. Did the trial stop for early success during imputation of patient
+#'     who had loss to follow up? 1 for yes and 0 for no.}
+#'   \item{\code{est_interim}}{
+#'     scalar. The interim estimate of the difference in posterior estimate of
+#'     treatment and posterior estimate of the control group.}
+#' }
 #'
 #' @examples
 #' binomialBACT(p_control = 0.12, p_treatment = 0.10,
@@ -666,6 +711,41 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
 #'
 #' @return a list of output for the bayesian trial for binomial count.
 #'
+#' \describe{
+#'   \item{\code{prob_of_accepting_alternative}}{
+#'     scalar. The input parameter of probability of accepting the alternative.}
+#'   \item{\code{margin}}{
+#'     scalar. The margin input value of difference between mean estimate of treatment
+#'      and mean estimate of the control.}
+#'   \item{\code{alternative}}{
+#'     character. The input parameter of alternative hypothesis. }
+#'   \item{\code{N_treatment}}{
+#'     scalar. The number of patients enrolled in the experimental group for
+#'     each simulation.}
+#'   \item{\code{N_control}}{
+#'     scalar. The number of patients enrolled in the control group for
+#'     each simulation.}
+#'   \item{\code{N_enrolled}}{
+#'     vector. The number of patients enrolled in the trial (sum of control
+#'     and experimental group for each simulation. )}
+#'   \item{\code{N_complete}}{
+#'     scalar. The number of patients who completed the trial and had no
+#'     loss to follow-up.}
+#'   \item{\code{post_prob_accept_alternative}}{
+#'     vector. The final probability of accepting the alternative
+#'     hypothesis after the analysis is done.}
+#'   \item{\code{est_final}}{
+#'     scalar. The final estimate of the difference in posterior estimate of
+#'     treatment and posterior estimate of the control group.}
+#'   \item{\code{stop_futility}}{
+#'     scalar. Did the trial stop for futility during imputation of patient
+#'     who had loss to follow up? 1 for yes and 0 for no.}
+#'   \item{\code{stop_expected_success}}{
+#'     scalar. Did the trial stop for early success during imputation of patient
+#'     who had loss to follow up? 1 for yes and 0 for no.}
+#'
+#' }
+#'
 #' @export binomial_analysis
 
 binomial_analysis <- function(
@@ -943,7 +1023,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "
 #' @inheritParams binomial_analysis
 #' @param .data NULL. stores the binomial data for analysis, please do not fill it in.
 #'
-#' @return a list with binomial data file to be analyzed.
+#' @return a list with treatment, outcome and loss to follow up vector.
 #'
 #' @examples data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
 #' @export data_binomial
