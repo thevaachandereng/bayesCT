@@ -151,7 +151,26 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with results of the simulation (power and type I error).</p>
+    <p>a list with results of the simulation (power and type I error) and the input.</p>
+<dl class='dl-horizontal'>
+  <dt><code>input</code></dt><dd><p>A list of input values used in the trial simulation.</p></dd>
+  <dt><code>power</code></dt><dd><p>data_frame. A data frame with the interim look and power at each look.</p></dd>
+  <dt><code>type1_error</code></dt><dd><p>scalar. The type 1 error or the number of times the trial rejects the null
+    when the parameters are simulated under the null hypothesis.</p></dd>
+  <dt><code>est_final</code></dt><dd><p>vector. The final estimate of the difference in posterior estimate of
+    treatment and posterior estimate of the control group for all the
+    simulation.</p></dd>
+  <dt><code>post_prob_accept_alternative</code></dt><dd><p>vector. The final probability of accepting the alternative for the
+    simulations.</p></dd>
+  <dt><code>N_enrolled</code></dt><dd><p>vector. The number of patients enrolled in the trial (sum of control
+    and experimental group for each simulation.)</p></dd>
+  <dt><code>stop_futility</code></dt><dd><p>vector. Did the trial stop for futility during imputation of patient
+    who had loss to follow up? 1 for yes and 0 for no.</p></dd>
+  <dt><code>stop_expected_success</code></dt><dd><p>vector. Did the trial stop for early success during imputation of patient
+    who had loss to follow up? 1 for yes and 0 for no.</p></dd>
+
+</dl>
+
     
 
   </div>
