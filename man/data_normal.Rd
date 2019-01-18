@@ -19,7 +19,8 @@ the dataset is assumed to be complete.}
 \item{.data}{NULL. stores the normal data for analysis, please do not fill it in.}
 }
 \value{
-a list with normal data file to be analyzed.
+a list with treatment, outcome and loss to follow up vector with normal
+  outcome.
 }
 \description{
 Wrapper function for data file in normal analysis.
