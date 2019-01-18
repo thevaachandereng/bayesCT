@@ -20,7 +20,7 @@ the dataset is assumed to be complete.}
 \item{.data}{NULL. stores the binomial data for analysis, please do not fill it in.}
 }
 \value{
-a list with binomial data file to be analyzed.
+a list with treatment, outcome and loss to follow up vector.
 }
 \description{
 Wrapper function for data file in binomial analysis.
