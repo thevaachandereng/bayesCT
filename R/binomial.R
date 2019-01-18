@@ -1023,7 +1023,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "
 #' @inheritParams binomial_analysis
 #' @param .data NULL. stores the binomial data for analysis, please do not fill it in.
 #'
-#' @return a list with treatment, outcome and loss to follow up vector.
+#' @return a list with treatment, outcome and loss to follow up vector with binomial
+#'   outcome.
 #'
 #' @examples data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
 #' @export data_binomial
