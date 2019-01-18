@@ -307,7 +307,41 @@ historical control group. Not used when discount_function = "identity".</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>List of outputs</p>
+    <p>a list of output for a single trial simulation.</p><dl class='dl-horizontal'>
+  <dt><code>mu_treatment</code></dt><dd><p>scalar. The input parameter of mean value of the outcome in the
+    treatment group.</p></dd>
+  <dt><code>p_control</code></dt><dd><p>scalar. The input parameter of mean value of the outcome in the
+    control group.</p></dd>
+  <dt><code>sd_treatment</code></dt><dd><p>scalar. The input parameter of standard deviation of the outcome
+    in the control group.</p></dd>
+  <dt><code>sd_control</code></dt><dd><p>scalar. The input parameter of standard deviation of the outcome
+    in the control group.</p></dd>
+  <dt><code>prob_of_accepting_alternative</code></dt><dd><p>scalar. The input parameter of probability threshold of accepting the
+    alternative.</p></dd>
+  <dt><code>margin</code></dt><dd><p>scalar. The margin input value of difference between mean estimate of treatment
+     and mean estimate of the control.</p></dd>
+  <dt><code>alternative</code></dt><dd><p>character. The input parameter of alternative hypothesis.</p></dd>
+  <dt><code>interim_look</code></dt><dd><p>vector. The sample size for each interim look.</p></dd>
+  <dt><code>N_treatment</code></dt><dd><p>scalar. The number of patients enrolled in the experimental group for
+    each simulation.</p></dd>
+  <dt><code>N_control</code></dt><dd><p>scalar. The number of patients enrolled in the control group for
+    each simulation.</p></dd>
+  <dt><code>N_enrolled</code></dt><dd><p>vector. The number of patients enrolled in the trial (sum of control
+    and experimental group for each simulation. )</p></dd>
+  <dt><code>N_complete</code></dt><dd><p>scalar. The number of patients who completed the trial and had no
+    loss to follow-up.</p></dd>
+  <dt><code>post_prob_accept_alternative</code></dt><dd><p>vector. The final probability of accepting the alternative
+    hypothesis after the analysis is done.</p></dd>
+  <dt><code>est_final</code></dt><dd><p>scalar. The final estimate of the difference in posterior estimate of
+    treatment and posterior estimate of the control group.</p></dd>
+  <dt><code>stop_futility</code></dt><dd><p>scalar. Did the trial stop for futility during imputation of patient
+    who had loss to follow up? 1 for yes and 0 for no.</p></dd>
+  <dt><code>stop_expected_success</code></dt><dd><p>scalar. Did the trial stop for early success during imputation of patient
+    who had loss to follow up? 1 for yes and 0 for no.</p></dd>
+  <dt><code>est_interim</code></dt><dd><p>scalar. The interim estimate of the difference in posterior estimate of
+    treatment and posterior estimate of the control group.</p></dd>
+</dl>
+
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
