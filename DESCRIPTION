@@ -9,7 +9,7 @@ Authors@R: c(person(given = "Thevaa", family = "Chandereng", role = c("aut", "cr
 	           person("Graeme", "Hickey", email = "graeme.l.hickey@medtronic.com", role = c("aut", "cph")), 
              person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com", role = c("aut", "cph")),
              person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com", role = c("aut", "cph")))
-Description: Simulation and analysis of bayesian adaptive clinical trial, incorporates historical 
+Description: Simulation and analysis of Bayesian adaptive clinical trial, incorporates historical 
       data and allows early stopping for futility or early success. 
 LazyLoad: yes
 License: GPL-3
