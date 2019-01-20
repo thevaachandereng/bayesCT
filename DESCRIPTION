@@ -1,6 +1,6 @@
 Package: bayesCT
 Type: Package
-Title: An R Package for Simulation and Analysis of Adaptive Bayesian Clinical Trials (bayesCT)
+Title: Simulation and Analysis of Adaptive Bayesian Clinical Trials 
 Version: 0.99.0
 Authors@R: c(person(given = "Thevaa", family = "Chandereng", role = c("aut", "cre", "cph"), 
              email = "chandereng@wisc.edu", comment = c(ORCID = "0000-0003-4078-9176")), 
