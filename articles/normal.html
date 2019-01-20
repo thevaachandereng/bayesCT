@@ -113,7 +113,7 @@
 \sigma^2_0\mid\bar{y_0},s_0,N_0 &amp; \sim &amp; InverseGamma\left(\frac{N_0-1}{2},\,\frac{N_0-1}{2}s_0^2 \right),\\
 \\
 \mu_0 \mid \bar{y}_0, N_0, \sigma^2_0 &amp;  \sim  &amp; \mathcal{N}ormal\left(\bar{y}_0,\, \frac{1}{N_0}\sigma^2_0  \right).
-\end{array}\]</span> The weight of the historical data included in the study design and analysis is denoted by <span class="math inline">\(\hat\alpha\)</span>. For more details on computation of <span class="math inline">\(\hat{\alpha}\)</span>, please refer to the vignette of binomial counts avaialable at <a href="https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html" class="uri">https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html</a>. The posterior distribution of the mean outcome with historical data incorporated under vague (flat) priors is <span class="math display">\[\tilde{\mu} \sim \mathcal{N}ormal\left( \frac{\sigma^2_0N\bar{y} + \tilde{\sigma}^2N_0\bar{y}_0\hat{\alpha}}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}},\,\frac{\tilde{\sigma}^2\sigma^2_0}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}}      \right).\]</span></p>
+\end{array}\]</span> The weight of the historical data included in the study design and analysis is denoted by <span class="math inline">\(\hat\alpha\)</span>. For more details on computation of <span class="math inline">\(\hat{\alpha}\)</span>, please refer to the vignette of binomial counts avaialable at <a href="https://CRAN.R-project.org/package=bayesDP" class="uri">https://CRAN.R-project.org/package=bayesDP</a>. The posterior distribution of the mean outcome with historical data incorporated under vague (flat) priors is <span class="math display">\[\tilde{\mu} \sim \mathcal{N}ormal\left( \frac{\sigma^2_0N\bar{y} + \tilde{\sigma}^2N_0\bar{y}_0\hat{\alpha}}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}},\,\frac{\tilde{\sigma}^2\sigma^2_0}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}}      \right).\]</span></p>
 <p>Even though there is a closed-form solution for the difference in normally distributed random variables, we use Monte Carlo simulations to estimate the treatment difference.</p>
 <p>The estimation of the treatment difference is <span class="math inline">\(\tilde{\mu_T} - \tilde{\mu_C}\)</span>, where <span class="math inline">\(\mu_T\)</span> is the posterior mean outcome in the treatment group and <span class="math inline">\(\mu_C\)</span> is the posterior mean outcome in the control group.</p>
 </div>
@@ -192,7 +192,7 @@
 </ul>
 </li>
 <li>
-<strong>historical_normal</strong> - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see <a href="https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpnormal-vignette.html">bayesDP normal vignette</a>. Inputs:
+<strong>historical_normal</strong> - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see <a href="https://CRAN.R-project.org/package=bayesDP" class="uri">https://CRAN.R-project.org/package=bayesDP</a>. Inputs:
 <ul>
 <li>
 <strong>mu0_treatment</strong> - mean of the historical treatment group.</li>
