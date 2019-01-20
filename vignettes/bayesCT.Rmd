@@ -124,7 +124,7 @@ randomization(N_total = 120, block = 120, allocation = c(2, 1))
 
 The Bayesian attitude is to use all available data to address the scientific question under consideration. Most clinical trials are not conducted in a vacuum. Often, pilot studies are conducted in small sample sizes to obtain an estimate of parameters for a clinical trial, e.g., clinically relevant effect size, sample size determination, recruitment rates, etc. Besides pilot studies, the control and/or treatment are usually studied in early phase lab or bench settings. However, clinical trialists need to carefully consider the inclusion and exclusion criteria of historical data in a trial. The R package `bayesDP` is used as a computational engine for incorporating historical data into a trial design.
 
-The vignettes presented in the `bayesDP` package are a rich resource for unstanding the discount function approach and its implementation. Interested readers can refer to the vignettes avaialable at [https://CRAN.R-project.org/package=bayesDP](https://cran.r-project.org/web/packages/bayesDP/).
+The vignettes presented in the `bayesDP` package are a rich resource for unstanding the discount function approach and its implementation. Interested readers can refer to the vignettes avaialable at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
 
 
 
