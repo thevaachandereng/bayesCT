@@ -33,7 +33,7 @@ The purpose of this vignette is to introduce how to simulate and analyze an adap
 Let $y$ and $N$ denote the number of events and the sample size, respectively. Let $a_0$ and $b_0$ denote the rate parameters of a Beta distribution. Then, the posterior distribution of the event rate under vague (flat) priors is
 
 $$ \tilde{\theta}\mid y,N \; \sim \;  \mathcal{B}eta\left(y+a_0,\,N-y+b_0 \right).$$
-When historical data is present, $y_0$ and $N_0$ denote the number of events and sample size of the historical data. The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. For more details on the computation of $\hat{\alpha}$, please refer to the vignette of binomial counts avaialable at [https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html).
+When historical data is present, $y_0$ and $N_0$ denote the number of events and sample size of the historical data. The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. For more details on the computation of $\hat{\alpha}$, please refer to the vignette of binomial counts avaialable at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
 The posterior distribution of the event rate with historical data incorporated under vague (flat) priors is 
 
 $$\tilde{\theta} \mid y,N, y_0, N_0 \; \sim \; \mathcal{B}eta\left(y+y_0\hat{\alpha}+a_0,\, N-y+\hat{\alpha}(N_0-y_0)+b_0 \right),$$
@@ -88,7 +88,7 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
     + **b_0** - shape value of the beta distribution. Default is 1. To completely avoid using a non-informative prior, users can set this value to 0. 
 
 
-* **historical_binomial** - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see [bayesDP binomial vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html). Inputs:
+* **historical_binomial** - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). Inputs:
     + **y0_treatment** - number of events in the historical treatment group.
     + **N0_treatment** - sample size for the historical treatment group.
     + **y0_control** - number of events in the historical control group.
@@ -236,7 +236,7 @@ Historical data is not required to compute the simulation. However, if historica
  
 In our OPC trial, we'll illustrate historical data incorporation. We'll assume that the historical data had 5 events in 55 subjects. We'll incorporate this historical data using the identity discount function. 
 
-For more details on the historical data incorporation method and computation, please see [bayesDP binomial vignette](https://cran.r-project.org/web/packages/bayesDP/vignettes/bdpbinomial-vignette.html). 
+For more details on the historical data incorporation method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). 
 
 ```{r opchist}
 value <- value %>%
