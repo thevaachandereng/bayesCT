@@ -6,7 +6,7 @@ bayesCT - Tool for Simulation and Analysis of Adaptive Bayesian Clinical Trials 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/bayesCT)](https://cran.r-project.org/package=bayesCT)
 [![Download_Badge](https://cranlogs.r-pkg.org/badges/bayesCT)](https://cran.r-project.org/package=bayesCT)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![](https://cranlogs.r-pkg.org/badges/bayesCT)](https://cran.r-project.org/package=bayesCT)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/donaldmusgrove/bayesDP/issues)
 [![Build status](https://ci.appveyor.com/api/projects/status/2wfwigrrcpom0oi9/branch/master?svg=true)](https://ci.appveyor.com/project/thevaachandereng/bayesct/branch/master)
 [![codecov](https://codecov.io/gh/thevaachandereng/bayesCT/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/bayesCT)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
