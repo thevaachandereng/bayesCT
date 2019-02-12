@@ -1,0 +1,32 @@
+---
+title: "Time-to-Event Outcome"
+author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
+header-includes:
+   - \usepackage{amsmath}
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{bayesCT:binomial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Estimation of Treatment Difference 
+
+Let $d_{ij}$ and $t_{ij}$ denote the the event indicator and event time or censoring time for the $i$th subject in the $j$th interval of the current data, respectively. Let $a_0$ and $b_0$ denote the shape and rate parameters of a gamma distribution, respectively. Then, the posterior distributions of the $j$th piecewise hazard rates for current and historical data, under vague (flat) priors are
+$$\lambda_{j} \sim \mathcal{G}amma\left(a_0+D_j,\,b_0+T_j\right),$$
+where $D_j=\sum_id_{ij}$, $T_j=\sum_it_{ij}$.
+When historical data is present, let $d_{0ij}$ and $t_{0ij}$ denote the the event indicator and event time or censoring time for the $i$th subject in the $j$th interval of the historical data, respectively.
+The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. The computation of $\alpha$ is done using the discount prior approach \cite{haddad2017incorporation}.
+The posterior distribution of the piecewise hazard rate for the historical data is
+$$\lambda_{j} \sim \mathcal{G}amma\left(a_0+D_j + \alpha D_{0j},\,b_0+T_j + \alpha T_{0j}\right),$$
+where $D_j=\sum_id_{ij}$, $T_j=\sum_it_{ij}$, $D_{0j}=\sum_id_{0ij}$, and $T_{j0}=\sum_it_{0ij}$.
+Even though there is a closed-form solution for the difference in gamma distributed random variables, we use Monte Carlo simulations to estimate the treatment difference. 
+The estimation of posterior chain of log-hazard rate comparing treatment and control groups is $\tilde{\lambda_{jT}} - \tilde{\lambda_{jT}}$, where $\lambda_{jT}$ is the posterior chain of log-hazard in the treatment group and $\mu_C$ is the posterior chain of log-hazard in the control group.
