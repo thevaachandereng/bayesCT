@@ -30,3 +30,57 @@ $$\lambda_{j} \sim \mathcal{G}amma\left(a_0+D_j + \alpha D_{0j},\,b_0+T_j + \alp
 where $D_j=\sum_id_{ij}$, $T_j=\sum_it_{ij}$, $D_{0j}=\sum_id_{0ij}$, and $T_{j0}=\sum_it_{0ij}$.
 Even though there is a closed-form solution for the difference in gamma distributed random variables, we use Monte Carlo simulations to estimate the treatment difference. 
 The estimation of posterior chain of log-hazard rate comparing treatment and control groups is $\tilde{\lambda_{jT}} - \tilde{\lambda_{jT}}$, where $\lambda_{jT}$ is the posterior chain of log-hazard in the treatment group and $\mu_C$ is the posterior chain of log-hazard in the control group.
+
+
+# Wrapper Function for Design and Analysis
+
+Unlike traditional R functions, the `bayesCT` package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below along with details on the arguments for the simulation and analysis.  
+
+* **piecewise_exponential** - wrapper function for specifying observations. Inputs: 
+    + **hazard_treatment** - hazard rate of the treatment group. Required input.
+    + **cutoff_treatment** - timepoint cutoff for hazard rate of the treatment group.  Required input. 
+    + **hazard_control** - hazard rate of the control group. Default value is NULL.
+    + **cutoff_control** - timepoint cutoff for hazard rate of the control group. Default value is NULL. 
+
+
+* **study_details** - wrapper function for specifying sample size, study length, interim looks, and loss to follow-up. Inputs:
+    + **total_sample_size** - sample size required to run the simulation 
+    + **study_period** - length of the study, i.e., the follow-up period
+    + **interim_look** - enrollment values where interim looks are carried out. Specify where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please see [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success). Each `interim_look` value must be smaller than `total_sample_size`. 
+    + **prop_loss_to_followup** - proportion of subjects loss to follow-up. Must be a value be 0 and 1. Default value is 0.10. 
+
+
+* **enrollment_rate** - wrapper function for specifying enrollment. Inputs: 
+    + **lambda** - enrollment rate(s) at each `time`. Specified as patients per day. Can be a scalar or vector. Default is 0.3, i.e. 0.3 patients per day. 
+    + **time** - determines the cut-off for the enrollment rates. Can be NULL, a scalar, or a vector. Default is NULL. For more details, please see  [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment).  
+
+
+* **hypothesis** - wrapper function for both simulation and analysis. Inputs:
+    + **delta** - threshold difference between treatment and control groups or the threshold for single-arm trial (the default is set to 0). For non-inferiority trials, the difference must be < 0.  
+    + **prob_accept_ha** - probability of accepting alternative hypothesis. Default value is 0.95. 
+    + **futility_prob** - futility rate, i.e., $\omega$ in  [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. 
+    + **expected_success_prob** - controls stopping early for success rate, i.e., $\Delta$ in https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success). The default value is 0.90. To prevent the trial for stopping for early success, use 1.
+    + **alternative** - sign of the alternative hypothesis. Character string specifying one of "greater" $mu_{treatment} > mu_{control}$ (default), "less" $mu_{treatment} < mu_{control}$ or "two-sided" $mu_{treatment} \neq mu_{control}$.
+
+
+* **randomize** - wrapper function for specifying the randomization scheme. Inputs: 
+    + **block_size** - size of each enrollment block. 
+    + **randomization_ratio** - ratio of control to treatment, specified as a vector of length 2. For more details, see [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme).  
+
+
+* **impute** - wrapper function specifying imputation of outcomes at the interim looks. Inputs:
+    + **no_of_impute** - number of imputations. Used to impute outcomes for subjects potentially loss to follow-up when estimating the probability of stopping for early success and/or futility. In the case of the futility calculation, subjects not yet enrolled or imputed as well. Default value is 10 so that the vignette can be generated quickly. However, much larger values should be used in practice, e.g., 10000.
+    + **number_mcmc** - number of Monte Carlo iterations for sampling from posterior distributions during imputation. Default value is 10000.  
+
+
+
+* **analysis** - wrapper function for analyzing a trial. Inputs:
+    + **input** - list of input to analyze the adaptive trial. 
+    + **type** - outcome type of the trial. Use `type="survival"` for a trial with normal outcomes. 
+
+
+* **simulate** - wrapper function for simulating trials. Should be used as the terminal end of the pipe. Inputs: 
+    + **input** - list of inputs specifying the adaptive trial simulation set-up.
+    + **no_of_sim** - number of trials to simulate. Default value is 10000. 
+
+
