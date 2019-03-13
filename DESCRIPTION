@@ -25,5 +25,6 @@ Suggests: testthat,
 VignetteBuilder: knitr
 Imports: knitr,
     bayesDP,
+    dplyr,
     purrr,
     magrittr
