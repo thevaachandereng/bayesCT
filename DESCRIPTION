@@ -23,12 +23,7 @@ Suggests: testthat,
     rmarkdown, 
     pkgdown
 VignetteBuilder: knitr
-Imports: tidyr,
-    dplyr,
-    knitr,
+Imports: knitr,
     bayesDP,
-    parallel,
     purrr,
-    msm,
-    magrittr,
-    devtools
+    magrittr
