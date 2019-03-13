@@ -21,10 +21,11 @@ LazyData: true
 RoxygenNote: 6.1.1
 Suggests: testthat,
     rmarkdown, 
-    pkgdown
+    pkgdown, 
+    devtools,
+    knitr
 VignetteBuilder: knitr
-Imports: knitr,
-    bayesDP,
+Imports: bayesDP,
     dplyr,
     purrr,
     magrittr

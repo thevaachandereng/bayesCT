@@ -37,7 +37,6 @@
 #'
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
-#' @importFrom knitr kable
 #' @importFrom purrr map_dbl
 #' @importFrom bayesDP bdpbinomial
 #'
