@@ -123,35 +123,7 @@
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_version</a></span>(<span class="st">"bayesCT"</span>, <span class="dt">version =</span> <span class="st">"x.x.x"</span>, <span class="dt">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</a></code></pre></div>
 <p>The second option is to download the most recent stable version through GitHub:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="ot">FALSE</span> Downloading GitHub repo thevaachandereng<span class="op">/</span>bayesCT<span class="op">@</span>master</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="ot">FALSE</span> </a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="ot">FALSE</span>   </a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">   checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmprBt9Di<span class="op">/</span>remotes35104bada324<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>313c6a4<span class="op">/</span>DESCRIPTION’ ...</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">  </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">✔  checking <span class="cf">for</span> file ‘<span class="op">/</span>tmp<span class="op">/</span>RtmprBt9Di<span class="op">/</span>remotes35104bada324<span class="op">/</span>thevaachandereng<span class="op">-</span>bayesCT<span class="op">-</span>313c6a4<span class="op">/</span>DESCRIPTION’</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="ot">FALSE</span> </a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">─  preparing ‘bayesCT’<span class="op">:</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="ot">FALSE</span> </a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">  </a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">   checking DESCRIPTION meta<span class="op">-</span>information ...</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">  </a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">✔  checking DESCRIPTION meta<span class="op">-</span>information</a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="ot">FALSE</span> </a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">  </a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">─  checking <span class="cf">for</span> LF line<span class="op">-</span>endings <span class="cf">in</span> source and make files and shell scripts</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="ot">FALSE</span> ─  checking <span class="cf">for</span> empty or unneeded directories</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="ot">FALSE</span> </a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">  </a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">─  looking to see <span class="cf">if</span> a ‘data<span class="op">/</span>datalist’ file should be added</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="ot">FALSE</span> ─  building ‘bayesCT_<span class="dv">0</span>.<span class="dv">99</span>.<span class="fl">1.</span>tar.gz’</a>
-<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="ot">FALSE</span> </a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">  </a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">   </a>
-<a class="sourceLine" id="cb3-27" data-line-number="27"><span class="ot">FALSE</span> </a>
-<a class="sourceLine" id="cb3-28" data-line-number="28"><span class="ot">FALSE</span> Installing package into <span class="st">'/home/travis/R/Library'</span></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29"><span class="ot">FALSE</span> (as <span class="st">'lib'</span> is unspecified)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</a></code></pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayesCT)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; </span></a>
@@ -164,7 +136,7 @@
 <h1 class="hasAnchor">
 <a href="#recruitment" class="anchor"></a>Recruitment</h1>
 <p>An importance aspect of clinical trials is the rate at which subjects are recruited into the trial. In <code>bayesCT</code>, the subject recruitment rate is assumed to follow a Poisson process. We assume trial recruitment to be an independent process, thus the <a href="https://en.wikipedia.org/wiki/Memorylessness">“memoryless property”</a> modeling of subject recruitment is used. Since the subject recruitment rate can vary over time, we can account for differential rates over time. That is, we are not restricted to a homogeneous Poisson process.</p>
-<p>The <code><a href="https://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment()</a></code> function is used to specify subject enrollment into the trial. The function assumes a piecewise stationary Poisson process. Using this processes gives the ability to specify different enrollment rates, i.e., the Poisson rates, at different time intervals. The first trial enrollment is assumed to occur at time zero.</p>
+<p>The <code><a href="../reference/enrollment.html">enrollment()</a></code> function is used to specify subject enrollment into the trial. The function assumes a piecewise stationary Poisson process. Using this processes gives the ability to specify different enrollment rates, i.e., the Poisson rates, at different time intervals. The first trial enrollment is assumed to occur at time zero.</p>
 <p>To illustrate, suppose we use a piecewise function to specify the change in enrollment rate over time: <span class="math display">\[  \lambda = \left\{
 \begin{array}{ll}
       0.3 &amp; \text{time} \in [0, 5) \\
@@ -174,30 +146,30 @@
 \end{array} 
 \right. \]</span></p>
 <p>Then, to simulate individual patient enrollment dates with a sample size (<code>N_total</code>) of 50, we use</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/enrollment">enrollment</a></span>(<span class="dt">param =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dt">N_total =</span> <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  1  2  2 11 11 13 14 15 15 16 18 19 19 24 24 25 25 25 26 27 28 28</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 29 29 29 29 30 31 33 34 36 37 37 39 40 40 45 46 46 47 48 48 52 52 52</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 55 57 58 58</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/enrollment.html">enrollment</a></span>(<span class="dt">param =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="dt">N_total =</span> <span class="dv">50</span>, <span class="dt">time =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  [1]  0  0  1  5  6  7  7  8 10 10 11 11 12 12 12 16 17 21 21 21 23 23 24</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [24] 25 25 26 28 29 29 34 34 35 35 35 36 37 38 38 39 39 39 39 40 41 43 44</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; [47] 46 47 47 49</span></a></code></pre></div>
 </div>
 <div id="randomization-scheme" class="section level1">
 <h1 class="hasAnchor">
 <a href="#randomization-scheme" class="anchor"></a>Randomization Scheme</h1>
 <p>Following recruitment, the desired randomization allocation of the trial subjects must be specified. Complete randomization may not always be ideal due to the chance of drawing a large block of a single treatment arm, potentially impacting the time to enrollment completion. Therefore, a block randomization allocation may be preferable.</p>
 <p>In <code>bayeCT</code>, the block randomization allocation specification allows for different randomization ratios, but they must be given in integer form. Additionally, the block size should be an integer that is divisible by the sum of the randomization allocation. For example,</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/randomization.html">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">7</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p>will not work (and will return an error) because the sum of the allocation is not a multiple of the block, i.e., <span class="math inline">\(2+1=3\)</span> is not a multiple of <span class="math inline">\(7\)</span>. Changing the block size to 6 will work:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 0 0 0 1 0 0 0 1 1 0 1 1 0 0 0 0 0 0 1 1 0 0 1 0 1 0 0 0 0 1 0 1 0</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 1 0 0 1 0 0 1 0 0 0 1 0 0 1 0 0 1 1 1 0 0 0 0 0 0 1 1 0 0 0 1 0 0</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 0 1 1 0 1 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 1 0 0 1 1 0 0 1 0 0 1 0 0</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 0 1 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 0 1 1 0 0 0 0 1 0 1 0 0 1 0 0 1 0 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/randomization.html">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">140</span>, <span class="dt">block =</span> <span class="dv">6</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;   [1] 1 0 1 0 0 0 1 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 0 1 1 0 1 0 0 0 0 1 0 1 0</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [36] 0 0 0 0 1 1 0 0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 0 0 1 0 0 1 0 0 1 0 0 0 0</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [71] 1 1 0 0 1 0 1 0 0 0 1 0 1 0 1 0 1 0 0 0 1 1 0 0 0 0 0 0 0 1 0 1 1 1 0</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [106] 0 0 0 1 0 1 0 0 0 1 0 0 0 1 0 0 1 1 0 0 0 0 1 1 0 0 0 0 1 0 0 1 0 1 0</span></a></code></pre></div>
 <p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. Since <span class="math inline">\(2+1 = 3\)</span> is a multiple of the block size of 6, this allocation is valid.</p>
 <p>Complete randomization can be performed by setting the block size equal to the total sample size:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/bayesCT/topics/randomization">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">120</span>, <span class="dt">block =</span> <span class="dv">120</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 0 0 0 0 0 1 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0 1 0 1 0 0 1 0 1 0 1 0 0 0 1</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 1 0 0 0 0 0 1 0 1 0 0 1 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 1 0 1 0 0 1 0 0 1 0 1 0 1 0 0 1 0 1 1 1 0 0 1 0 1 0 0 0 0 1 1 0 0 1 0</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 1 0 0 1 0 1 0 0 1 0 1 0 0 0 0</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/randomization.html">randomization</a></span>(<span class="dt">N_total =</span> <span class="dv">120</span>, <span class="dt">block =</span> <span class="dv">120</span>, <span class="dt">allocation =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">2</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;   [1] 0 1 0 0 0 0 0 0 1 0 0 0 0 1 1 0 0 0 1 0 0 0 0 1 1 1 0 0 0 1 0 1 1 1 1</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;  [36] 1 0 0 0 1 0 0 1 0 1 0 0 1 1 0 1 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;  [71] 0 0 0 0 0 0 1 0 0 0 0 1 1 0 1 0 0 0 0 0 0 1 0 1 0 0 0 1 0 0 1 1 0 0 0</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; [106] 1 1 1 0 0 0 1 1 1 0 0 0 1 0 0</span></a></code></pre></div>
 </div>
 <div id="incorporation-of-historical-data" class="section level1">
 <h1 class="hasAnchor">

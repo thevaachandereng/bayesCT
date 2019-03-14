@@ -259,16 +259,16 @@
 <p>In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performace criterion (OPC) trial with mean outcome and hypothesis described as follows, <span class="math display">\[H_0: \mu_{treatment} \geq 120 \qquad H_A:\mu_{treatment} &lt; 120.\]</span></p>
 <p>The most important wrapper functions are <strong>study_details</strong> and <strong>normal_outcome</strong> (especially since there are no default values).</p>
 <p>The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 5.5. The total sample size is 400 with a study length of 60 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (<strong>NOTE</strong>: for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">value &lt;-<span class="st"> </span><span class="kw">normal_outcome</span>(<span class="dt">mu_treatment =</span> <span class="dv">120</span>,</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">value &lt;-<span class="st"> </span><span class="kw"><a href="../reference/normal_outcome.html">normal_outcome</a></span>(<span class="dt">mu_treatment =</span> <span class="dv">120</span>,</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">                        <span class="dt">sd_treatment =</span> <span class="fl">5.5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="st">  </span><span class="kw">study_details</span>(<span class="dt">total_sample_size     =</span> <span class="dv">400</span>, </a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/study_details.html">study_details</a></span>(<span class="dt">total_sample_size     =</span> <span class="dv">400</span>, </a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">                <span class="dt">study_period          =</span> <span class="dv">60</span>,</a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">                <span class="dt">interim_look          =</span> <span class="ot">NULL</span>,</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6">                <span class="dt">prop_loss_to_followup =</span> <span class="fl">0.10</span>)</a>
 <a class="sourceLine" id="cb1-7" data-line-number="7">                </a>
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># Simulate 10 trials</span></a>
 <a class="sourceLine" id="cb1-9" data-line-number="9">output &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/simulate.html">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># Structure of the simulation output</span></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(output)</a>
@@ -291,14 +291,14 @@
 <p>To allow for early stopping for success or futility, we add interim looks to the design. We’ll check for success or futility at the enrollment of the 350th and 380th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># adding interim look</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">value &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw">study_details</span>(<span class="dt">total_sample_size     =</span> <span class="dv">400</span>, </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/study_details.html">study_details</a></span>(<span class="dt">total_sample_size     =</span> <span class="dv">400</span>, </a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">                <span class="dt">study_period          =</span> <span class="dv">60</span>,</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">                <span class="dt">interim_look          =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">350</span>, <span class="dv">380</span>),</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">                <span class="dt">prop_loss_to_followup =</span> <span class="fl">0.10</span>)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># Simulate 10 trials</span></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9">output &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="../reference/simulate.html">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb2-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co"># Structure of the simulation output</span></a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(output)</a>
@@ -327,11 +327,11 @@
 \right. \]</span></p>
 <p>This enrollment scheme is illustrated below.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">value &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">enrollment_rate</span>(<span class="dt">lambda =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.4</span>, <span class="fl">0.7</span>), </a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/enrollment_rate.html">enrollment_rate</a></span>(<span class="dt">lambda =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.4</span>, <span class="fl">0.7</span>), </a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">                  <span class="dt">time =</span> <span class="dv">40</span>) </a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5">output &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/simulate.html">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(output)</a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; List of 8</span></a>
@@ -357,14 +357,14 @@
 <p>Since, in an OPC trial, the outcomes in the treatment group are simulated using the input provided, delta controls the maximum threshold allowed for trial to succeed/fail. The default value of <code>delta</code> is 0. Here, we’ll use <code>delta = -10</code> (i.e <span class="math inline">\(120 - \hat{\mu}_{treatment} &lt; -10\)</span>).</p>
 <p>We’ll further set the futility probability to 0.10, the expected success probability for early stopping to 0.85, and the final probability of accepting the alternative to 0.95. The alternative is <code>"less"</code> due to the hypothesis function specified above.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">value &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">   </span><span class="kw">hypothesis</span>(<span class="dt">delta                 =</span> <span class="dv">-10</span>, </a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">   </span><span class="kw"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="dt">delta                 =</span> <span class="dv">-10</span>, </a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">              <span class="dt">futility_prob         =</span> <span class="fl">0.10</span>, </a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">              <span class="dt">prob_accept_ha        =</span> <span class="fl">0.95</span>,</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">              <span class="dt">expected_success_prob =</span> <span class="fl">0.85</span>, </a>
 <a class="sourceLine" id="cb4-6" data-line-number="6">              <span class="dt">alternative           =</span> <span class="st">"less"</span>)</a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">output &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/simulate.html">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb4-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(output)</a>
 <a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; List of 8</span></a>
@@ -393,11 +393,11 @@
 <a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt;  $ stop_futility               : num [1:10] 0 0 0 0 0 0 0 0 0 0</span></a></code></pre></div>
 <p>Next, we’ll illustrate imputations for imputing outcomes for subjects loss to follow up. We’ll carry out 20 imputations and draw 2000 values from the posterior of each imputation.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">value &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">20</span>, </a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/impute.html">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">20</span>, </a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">         <span class="dt">number_mcmc  =</span> <span class="dv">2000</span>)</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">output &lt;-<span class="st"> </span>value <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/simulate.html">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(output)</a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; List of 8</span></a>
@@ -427,22 +427,22 @@
 <a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt;  $ stop_expect_success         : num [1:10] 1 1 1 1 1 1 1 1 1 1</span></a>
 <a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt;  $ stop_futility               : num [1:10] 0 0 0 0 0 0 0 0 0 0</span></a></code></pre></div>
 <p>The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 20 times to obtain results.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">value &lt;-<span class="st"> </span><span class="kw">normal_outcome</span>(<span class="dt">mu_treatment =</span> <span class="dv">120</span>,</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">value &lt;-<span class="st"> </span><span class="kw"><a href="../reference/normal_outcome.html">normal_outcome</a></span>(<span class="dt">mu_treatment =</span> <span class="dv">120</span>,</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">                        <span class="dt">sd_treatment =</span> <span class="fl">5.5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">study_details</span>(<span class="dt">total_sample_size     =</span> <span class="dv">400</span>, </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/study_details.html">study_details</a></span>(<span class="dt">total_sample_size     =</span> <span class="dv">400</span>, </a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">                <span class="dt">study_period          =</span> <span class="dv">60</span>,</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">                <span class="dt">interim_look          =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">350</span>, <span class="dv">380</span>),</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">                <span class="dt">prop_loss_to_followup =</span> <span class="fl">0.10</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta                 =</span> <span class="dv">-10</span>, </a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="dt">delta                 =</span> <span class="dv">-10</span>, </a>
 <a class="sourceLine" id="cb6-8" data-line-number="8">             <span class="dt">futility_prob         =</span> <span class="fl">0.10</span>, </a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">             <span class="dt">prob_accept_ha        =</span> <span class="fl">0.95</span>,</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">             <span class="dt">expected_success_prob =</span> <span class="fl">0.85</span>, </a>
 <a class="sourceLine" id="cb6-11" data-line-number="11">             <span class="dt">alternative           =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span><span class="kw">enrollment_rate</span>(<span class="dt">lambda =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.4</span>, <span class="fl">0.7</span>), </a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="../reference/enrollment_rate.html">enrollment_rate</a></span>(<span class="dt">lambda =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.4</span>, <span class="fl">0.7</span>), </a>
 <a class="sourceLine" id="cb6-13" data-line-number="13">                  <span class="dt">time   =</span> <span class="dv">4</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="st">  </span><span class="kw">randomize</span>(<span class="dt">block_size          =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">10</span>, <span class="dv">20</span>), </a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/randomize.html">randomize</a></span>(<span class="dt">block_size          =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">10</span>, <span class="dv">20</span>), </a>
 <a class="sourceLine" id="cb6-15" data-line-number="15">            <span class="dt">randomization_ratio =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">20</span>, </a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/impute.html">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">20</span>, </a>
 <a class="sourceLine" id="cb6-17" data-line-number="17">         <span class="dt">number_mcmc  =</span> <span class="dv">2000</span>)</a>
 <a class="sourceLine" id="cb6-18" data-line-number="18"></a>
 <a class="sourceLine" id="cb6-19" data-line-number="19"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value)</a>
@@ -470,26 +470,26 @@
 <a href="#two-arm-trial" class="anchor"></a>Two-arm Trial</h2>
 <p>In this section, we will illustrate how to perform the design of a two-arm trial with the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is <span class="math display">\[H_0: \mu_{treatment} - \mu_{control} \leq 0 \qquad H_A: \mu_{treatment} - \mu_{control} &gt; 0.\]</span></p>
 <p>Unlike the OPC trial above, we will not include interim looks. The normal mean outcomes are simulated using a mean value of 13 and standard deviation of 1.4 for the treatment group and a mean value of 15 and standard deviation of 1.9 for the control group. The total sample size is 400 with a study length of 30 days. A 15% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">value &lt;-<span class="st"> </span><span class="kw">normal_outcome</span>(<span class="dt">mu_treatment =</span> <span class="dv">13</span>, </a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">value &lt;-<span class="st"> </span><span class="kw"><a href="../reference/normal_outcome.html">normal_outcome</a></span>(<span class="dt">mu_treatment =</span> <span class="dv">13</span>, </a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">                        <span class="dt">mu_control =</span> <span class="dv">16</span>, </a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">                        <span class="dt">sd_treatment =</span> <span class="fl">1.4</span>, </a>
 <a class="sourceLine" id="cb7-4" data-line-number="4">                        <span class="dt">sd_control =</span> <span class="fl">1.9</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">study_details</span>(<span class="dt">total_sample_size     =</span> <span class="dv">300</span>, </a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/study_details.html">study_details</a></span>(<span class="dt">total_sample_size     =</span> <span class="dv">300</span>, </a>
 <a class="sourceLine" id="cb7-6" data-line-number="6">                <span class="dt">study_period          =</span> <span class="dv">50</span>,</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7">                <span class="dt">interim_look          =</span> <span class="ot">NULL</span>,</a>
 <a class="sourceLine" id="cb7-8" data-line-number="8">                <span class="dt">prop_loss_to_followup =</span> <span class="fl">0.10</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta                 =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="dt">delta                 =</span> <span class="dv">0</span>, </a>
 <a class="sourceLine" id="cb7-10" data-line-number="10">             <span class="dt">futility_prob         =</span> <span class="dv">0</span>, </a>
 <a class="sourceLine" id="cb7-11" data-line-number="11">             <span class="dt">prob_accept_ha        =</span> <span class="fl">0.95</span>,</a>
 <a class="sourceLine" id="cb7-12" data-line-number="12">             <span class="dt">expected_success_prob =</span> <span class="dv">1</span>, </a>
 <a class="sourceLine" id="cb7-13" data-line-number="13">             <span class="dt">alternative           =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>, </a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="../reference/impute.html">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">25</span>, </a>
 <a class="sourceLine" id="cb7-15" data-line-number="15">         <span class="dt">number_mcmc  =</span> <span class="dv">5000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  </span><span class="kw">enrollment_rate</span>(<span class="dt">lambda =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.8</span>), </a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  </span><span class="kw"><a href="../reference/enrollment_rate.html">enrollment_rate</a></span>(<span class="dt">lambda =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="fl">0.8</span>), </a>
 <a class="sourceLine" id="cb7-17" data-line-number="17">                  <span class="dt">time =</span> <span class="ot">NULL</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">  </span><span class="kw">randomize</span>(<span class="dt">block_size          =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">4</span>, <span class="dv">6</span>), </a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="../reference/randomize.html">randomize</a></span>(<span class="dt">block_size          =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">4</span>, <span class="dv">6</span>), </a>
 <a class="sourceLine" id="cb7-19" data-line-number="19">            <span class="dt">randomization_ratio =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">  </span><span class="kw">historical_normal</span>(<span class="dt">mu0_treatment     =</span> <span class="dv">13</span>, </a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">  </span><span class="kw"><a href="../reference/historical_normal.html">historical_normal</a></span>(<span class="dt">mu0_treatment     =</span> <span class="dv">13</span>, </a>
 <a class="sourceLine" id="cb7-21" data-line-number="21">                    <span class="dt">sd0_treatment     =</span> <span class="dv">5</span>, </a>
 <a class="sourceLine" id="cb7-22" data-line-number="22">                    <span class="dt">N0_treatment      =</span> <span class="dv">100</span>,</a>
 <a class="sourceLine" id="cb7-23" data-line-number="23">                    <span class="dt">mu0_control       =</span> <span class="dv">12</span>, </a>
@@ -500,7 +500,7 @@
 <a class="sourceLine" id="cb7-28" data-line-number="28">                    <span class="dt">fix_alpha         =</span> <span class="dv">1</span>,</a>
 <a class="sourceLine" id="cb7-29" data-line-number="29">                    <span class="dt">weibull_scale     =</span> <span class="fl">0.135</span>, </a>
 <a class="sourceLine" id="cb7-30" data-line-number="30">                    <span class="dt">weibull_shape     =</span> <span class="dv">3</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/simulate">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="st">  </span><span class="kw"><a href="../reference/simulate.html">simulate</a></span>(<span class="dt">no_of_sim =</span> <span class="dv">10</span>)</a>
 <a class="sourceLine" id="cb7-32" data-line-number="32"></a>
 <a class="sourceLine" id="cb7-33" data-line-number="33"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(value)</a>
 <a class="sourceLine" id="cb7-34" data-line-number="34"><span class="co">#&gt; List of 8</span></a>
@@ -559,12 +559,12 @@
 <a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; 5 Patient5         1  7.154615        1</span></a>
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; 6 Patient6         1  8.874396        0</span></a></code></pre></div>
 <p>The minimum input needed to run an adaptive Bayesian trial is the data itself. The <strong>data_normal</strong> input allows the input of the data. The treatment group (0 for control, 1 for treatment) and outcome input are essential for the analysis. However, if the complete input is not provided, the function assumes the outcome data is complete. A default analysis is carried out below.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">input &lt;-<span class="st"> </span><span class="kw">data_normal</span>(<span class="dt">treatment =</span> normaldata<span class="op">$</span>treatment, </a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">input &lt;-<span class="st"> </span><span class="kw"><a href="../reference/data_normal.html">data_normal</a></span>(<span class="dt">treatment =</span> normaldata<span class="op">$</span>treatment, </a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">                     <span class="dt">outcome   =</span> normaldata<span class="op">$</span>outcome, </a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">                     <span class="dt">complete  =</span> normaldata<span class="op">$</span>complete) </a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb9-5" data-line-number="5">out &lt;-<span class="st"> </span>input <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/analysis.html">analysis</a></span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt; List of 11</span></a>
@@ -581,17 +581,17 @@
 <a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt;  $ stop_expected_success        : num 0</span></a></code></pre></div>
 <p>We’ll now illustrate using piping to carry out the complete analysis. First, we’ll assume the following hypothesis: <span class="math display">\[H_0:\mu_{treatment} - \mu_{control} &gt; 0 \quad H_A: \mu_{treatment} - \mu_{control} &lt; 0\]</span></p>
 <p>The delta and alternative used to analyze the trial is 0 and “less” respectively. The probability of accepting the alternative is 0.95, the probability of stopping for futility is 0.05, and the probability of stopping for success is 0.90. We will carry out imputations on subjects loss to follow up. Additionally, we will incorporate historical data on the treatment arm.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">out &lt;-<span class="st"> </span><span class="kw">data_normal</span>(<span class="dt">treatment =</span> normaldata<span class="op">$</span>treatment,</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/data_normal.html">data_normal</a></span>(<span class="dt">treatment =</span> normaldata<span class="op">$</span>treatment,</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">                   <span class="dt">outcome   =</span> normaldata<span class="op">$</span>outcome, </a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">                   <span class="dt">complete  =</span> normaldata<span class="op">$</span>complete) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw">hypothesis</span>(<span class="dt">delta =</span> <span class="dv">0</span>, </a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="dt">delta =</span> <span class="dv">0</span>, </a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">             <span class="dt">futility_prob         =</span> <span class="fl">0.05</span>, </a>
 <a class="sourceLine" id="cb10-6" data-line-number="6">             <span class="dt">prob_accept_ha        =</span> <span class="fl">0.95</span>,</a>
 <a class="sourceLine" id="cb10-7" data-line-number="7">             <span class="dt">expected_success_prob =</span> <span class="fl">0.90</span>, </a>
 <a class="sourceLine" id="cb10-8" data-line-number="8">             <span class="dt">alternative           =</span> <span class="st">"less"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw">impute</span>(<span class="dt">no_of_impute =</span> <span class="dv">40</span>, </a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/impute.html">impute</a></span>(<span class="dt">no_of_impute =</span> <span class="dv">40</span>, </a>
 <a class="sourceLine" id="cb10-10" data-line-number="10">         <span class="dt">number_mcmc  =</span> <span class="dv">8000</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw">analysis</span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="../reference/analysis.html">analysis</a></span>(<span class="dt">type =</span> <span class="st">"normal"</span>)</a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb10-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(out)</a>
 <a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; List of 11</span></a>
