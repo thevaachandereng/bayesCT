@@ -9,6 +9,7 @@ bayesCT - Tool for Simulation and Analysis of Adaptive Bayesian Clinical Trials 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/donaldmusgrove/bayesDP/issues)
 [![Build status](https://ci.appveyor.com/api/projects/status/2wfwigrrcpom0oi9/branch/master?svg=true)](https://ci.appveyor.com/project/thevaachandereng/bayesct/branch/master)
 [![codecov](https://codecov.io/gh/thevaachandereng/bayesCT/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/bayesCT)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thevaachandereng/bayesCT/master?urlpath=rstudio)
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 
