@@ -37,11 +37,10 @@ The estimation of posterior chain of log-hazard rate comparing treatment and con
 Unlike traditional R functions, the `bayesCT` package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below along with details on the arguments for the simulation and analysis.  
 
 * **piecewise_exponential** - wrapper function for specifying observations. Inputs: 
-    + **hazard_treatment** - hazard rate of the treatment group. Required input.
-    + **cutoff_treatment** - timepoint cutoff for hazard rate of the treatment group.  Required input. 
-    + **hazard_control** - hazard rate of the control group. Default value is NULL.
-    + **cutoff_control** - timepoint cutoff for hazard rate of the control group. Default value is NULL. 
-
+    + **lambda_treatment** - hazard rate of the treatment group. Required input.
+    + **cutoff_treatment** - timepoint cutoff for hazard rate of the treatment group. Required input if * lambda_treatment* is a vector of length two or more.This is the same for the control arm.  
+    + **lambda_control** - hazard rate of the control group. Default value is NULL.
+    
 
 * **study_details** - wrapper function for specifying sample size, study length, interim looks, and loss to follow-up. Inputs:
     + **total_sample_size** - sample size required to run the simulation 
