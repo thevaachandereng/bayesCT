@@ -72,7 +72,7 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
     + **number_mcmc** - number of Monte Carlo iterations for sampling from posterior distributions during imputation. Default value is 10000.  
 
 * **historical_survival** - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). Inputs:
- + **time_treatment** - This is the follow up time for treatment group, it could be right-censored.
+    + **time_treatment** - This is the follow up time for treatment group, it could be right-censored.
     + **status_treatment** - The status indicator for treatment group, normally 0=alive, 1=dead.
     + **time_control** - This is the follow up time for control group, it could be right-censored.
     + **status_control** - The status indicator for control group, normally 0=alive, 1=dead.
