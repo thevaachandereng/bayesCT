@@ -59,7 +59,7 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
     + **prob_accept_ha** - probability of accepting alternative hypothesis. Default value is 0.95. 
     + **futility_prob** - futility rate, i.e., $\omega$ in  [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. 
     + **expected_success_prob** - controls stopping early for success rate, i.e., $\Delta$ in https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success). The default value is 0.90. To prevent the trial for stopping for early success, use 1.
-    + **alternative** - sign of the alternative hypothesis. Character string specifying one of "greater" $mu_{treatment} > mu_{control}$ (default), "less" $mu_{treatment} < mu_{control}$ or "two-sided" $mu_{treatment} \neq mu_{control}$.
+    + **alternative** - sign of the alternative hypothesis. Character string specifying one of "greater" $\lambda_{treatment} > \lambda_{control}$ (default), "less" $\lambda_{treatment} < \lambda_{control}$ or "two-sided" $\lambda_{treatment} \neq \lambda_{control}$.
 
 
 * **randomize** - wrapper function for specifying the randomization scheme. Inputs: 
