@@ -88,8 +88,8 @@ survival_analysis <- function(
 ){
 
   #if complete is NULL, assume the data is complete
-  if(is.null(complete)){
-    event <- rep(1, length(outcome))
+  if(is.null(event)){
+    event <- rep(1, length(time))
   }
 
   #reading the data
