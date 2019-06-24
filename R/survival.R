@@ -72,6 +72,7 @@ survival_analysis <- function(
   treatment_0           = NULL,
   time_0                = NULL,
   event_0               = NULL,
+  surv_time             = NULL,
   alternative           = "greater",
   N_impute              = 10,
   h0                    = 0,
@@ -94,11 +95,6 @@ survival_analysis <- function(
 
   #reading the data
   data_total <- data.frame(cbind(time, event, treatment))
-
-  prop <- data %>%
-    group_by(treatment) %>%
-    summarize(p_outcome = mean(outcome))
-
 
   if(sum(data$treatment == 0) != 0){
     y_c <- sum(data$outcome[data$treatment == 0])
@@ -225,7 +221,6 @@ survival_analysis <- function(
   if(expected_success_test / N_impute > expected_success_prob ){
     stop_expected_success <- 1
   }
-
 
   data_final <- data_interim %>%
     filter(!futility)
