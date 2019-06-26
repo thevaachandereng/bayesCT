@@ -93,17 +93,14 @@ survival_analysis <- function(
     event <- rep(1, length(time))
   }
 
+  if(!is.null(time0)){
+    data0 <- data.frame(cbind(time0, event0, treatment0))
+  }
+
   #reading the data
   data_total <- data.frame(cbind(time, event, treatment))
 
-  if(sum(data$treatment == 0) != 0){
-    y_c <- sum(data$outcome[data$treatment == 0])
-    N_c <- length(data$outcome[data$treatment == 0])
-  }
-  else{
-    y_c <- NULL
-    N_c <- NULL
-  }
+
 
   # analyze the data using bayesDp
   post <- bdpbinomial(y_t                    = sum(data$outcome[data$treatment == 1]),
