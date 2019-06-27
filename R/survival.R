@@ -93,6 +93,7 @@ survival_analysis <- function(
     event <- rep(1, length(time))
   }
 
+  # combining the histrotical data
   if(!is.null(time0)){
     data0 <- data.frame(cbind(time0, event0, treatment0))
   }
@@ -101,24 +102,12 @@ survival_analysis <- function(
   data_total <- data.frame(cbind(time, event, treatment))
 
 
-
   # analyze the data using bayesDp
-  post <- bdpbinomial(y_t                    = sum(data$outcome[data$treatment == 1]),
-                      N_t                    = length(data$outcome[data$treatment == 1]),
-                      y_c                    = y_c,
-                      N_c                    = N_c,
-                      y0_t                   = y0_treatment,
-                      N0_t                   = N0_treatment,
-                      y0_c                   = y0_control,
-                      N0_c                   = N0_control,
-                      discount_function      = discount_function,
-                      number_mcmc            = number_mcmc,
-                      a0                     = prior[1],
-                      b0                     = prior[2],
-                      alpha_max              = alpha_max,
-                      fix_alpha              = fix_alpha,
-                      weibull_scale          = weibull_scale,
-                      weibull_shape          = weibull_shape)
+  post <- bdpsurvival(formula    = Surv(time, status) ~ treatment,
+                      data       = data_total,
+                      data0      = data0,
+                      fix_alpha  = TRUE,
+                      method     = "fixed")
 
 
   # assigning stop_futility and expected success
