@@ -137,15 +137,7 @@ survival_analysis <- function(
     # Create enrolled subject data frame for discount function analysis
     data <- data_success_impute
 
-    # assigning input for control arm given it is a single or double arm
-    if(sum(data$treatment == 0) != 0){
-      y_c <- sum(data$outcome[data$treatment == 0])
-      N_c <- length(data$outcome[data$treatment == 0])
-    }
-    else{
-      y_c <- NULL
-      N_c <- NULL
-    }
+
 
     # analyze complete+imputed data using discount funtion via binomial
     post_imp <- bdpbinomial(y_t                    = sum(data$outcome[data$treatment == 1]),
