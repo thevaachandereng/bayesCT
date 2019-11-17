@@ -78,7 +78,7 @@ pw_exp_sim <- function(lambda, n, maxtime, tau = NULL) {
   }
 
   # if maxtime is lower than observed time, censor the data
-  min_time  <- pmin(time, C)
+  min_time  <- pmin(time, maxtime)
   event     <- as.numeric(time == min_time)
   dat       <- data.frame(time = min_time, event = event)
 
