@@ -4,7 +4,7 @@
 \alias{pw_exp_sim}
 \title{Simulates time-to-event outcomes.}
 \usage{
-pw_exp_sim(lambda, n, maxtime, tau = NULL)
+pw_exp_sim(lambda, n, maxtime, cutpoint = NULL)
 }
 \arguments{
 \item{lambda}{vector. The constant hazard rates for exponential failures.}
@@ -13,7 +13,7 @@ pw_exp_sim(lambda, n, maxtime, tau = NULL)
 
 \item{maxtime}{scalar. maximum time before end of study.}
 
-\item{tau}{vector. The change-point vector indicating time when the hazard rates change.}
+\item{cutpoint}{vector. The change-point vector indicating time when the hazard rates change.}
 }
 \value{
 a dataset with simulated follow-up time (time) and respective event indicator (1 = event,
