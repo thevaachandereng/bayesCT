@@ -18,6 +18,39 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+# Piecewise exponential function for time-to-event data
+
+For time-to-event data, the piecewise constant hazard function for k different constant hazards is
+
+$\begin{eqnarray}
+	h(t) &=& \begin{cases}
+	\lambda_1 & 0\leq t<\tau_1\\
+	\lambda_2 & \tau_1\leq t <\tau_2\\
+	\vdots & \vdots \\
+	\lambda_{k} & t\geq\tau_{k - 1}
+	\end{cases}
+	\end{eqnarray}$.
+	
+We know that survival function $S(t)$, cumulative distribution function $F(t)$ and cumulative hazard function $H(t)$ are related.
+$S(t) = \exp(-H(t))$, $exp(-H(t)) = 1 - F(t)$. 
+If $U \sim Unif(0,1)$, then $F(X) = U$ is equivalent to $1-\exp(-H(X)) = U$, so $X=H^{-1}(-\log(1-U))$.  Note that $-\log(1-U) \sim Exp(1)$.
+Thus, we can simulate $x$ in exponential distribution and substitute it into the inverse hazard function. 
+
+
+$\begin{eqnarray}
+H^{-1}(t)&=&\begin{cases}
+\frac{t}{\lambda_1} & 0\leq t < \lambda_1\tau_1\\
+\frac{t - \lambda_1\tau_1}{\lambda_2}+\tau_1 & \lambda_1\tau_1 \leq t < \lambda_1\tau_1 + \lambda_2(\tau_2-\tau_1)\\
+	\vdots & \vdots \\
+\frac{t - (\lambda_1\tau_1 + \sum_{i = 2}^{k - 2} \lambda_i (\tau_k - \tau_{k - 1}))}{\lambda_{k - 1}}+\tau_{k - 2} &  \lambda_1\tau_1 + \sum_{i = 2}^{k - 2} \lambda_i (\tau_k - \tau_{k - 1}) \leq t < \lambda_1\tau_1 + \sum_{i = 2}^{k - 1} \lambda_i (\tau_k - \tau_{k - 1})\\
+\frac{t - (\lambda_1\tau_1 + \sum_{i = 2}^{k - 1} \lambda_i (\tau_k - \tau_{k - 1}))}{\lambda_k}+\tau_{k - 1} &  t \geq \lambda_1\tau_1 + \sum_{i = 2}^{k - 1} \lambda_i (\tau_k - \tau_{k - 1})\\
+\end{cases}
+\end{eqnarray}$
+
+The `pw_exp_sim` function simulates time-to-event outcomes using piecewise constant hazard function. 
+
+
+
 # Estimation of Treatment Difference 
 
 Let $d_{ij}$ and $t_{ij}$ denote the the event indicator and event time or censoring time for the $i$th subject in the $j$th interval of the current data, respectively. Let $a_0$ and $b_0$ denote the shape and rate parameters of a gamma distribution, respectively. Then, the posterior distributions of the $j$th piecewise hazard rates for current and historical data, under vague (flat) priors are
