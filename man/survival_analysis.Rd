@@ -5,9 +5,10 @@
 \title{Analyzing bayesian trial for time-to-event data}
 \usage{
 survival_analysis(treatment, time, event = NULL, treatment_0 = NULL,
-  time_0 = NULL, event_0 = NULL, alternative = "greater",
-  N_impute = 10, h0 = 0, number_mcmc = 10000, prob_ha = 0.95,
-  futility_prob = 0.1, expected_success_prob = 0.9, prior = c(1, 1),
+  time_0 = NULL, event_0 = NULL, surv_time = NULL, breaks = NULL,
+  alternative = "greater", N_impute = 10, h0 = 0,
+  number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
+  expected_success_prob = 0.9, prior = c(0.1, 0.1),
   discount_function = "identity", fix_alpha = FALSE, alpha_max = 1,
   weibull_scale = 0.135, weibull_shape = 3)
 }
@@ -81,7 +82,7 @@ historical control group. Not used when discount_function = "identity".}
 \item{time0}{vector. Historical exposure time for the subjects. It must be the same length
 as the treatment variable.}
 
-\item{event}{vector. Hisc status indicator, normally 0=alive, 1=dead.
+\item{event0}{vector. Historical status indicator, normally 0=alive, 1=dead.
 Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
 For censored data, the status indicator is 0=right censored, 1 = event at time.
 Although unusual, the event indicator can be omitted, in which case
