@@ -69,6 +69,9 @@
 #'
 #' }
 #'
+#' @importFrom survival Surv
+#' @importFrom bayesDP bdpsurvival
+#'
 #' @export survival_analysis
 
 survival_analysis <- function(

@@ -129,13 +129,3 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
 
 In the following section, we will discuss the design of adaptive trials using `bayesCT` for time-to-events outcomes. We illustrate an example for one-arm trial and two-arm trials using the wrapper functions described above. 
 
-
-## One-arm Trial
-
-In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performace criterion (OPC) trial with mean outcome and hypothesis described as follows, 
-$$H_0: p_{treatment} \geq 0.10  \qquad H_A:p_{treatment} < 0.10$$
-
-The most important wrapper functions are **study_details** and **normal_outcome** (especially since there are no default values).
-
-The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 5.5. The total sample size is 400 with a study length of 60 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
-
