@@ -30,5 +30,6 @@ Imports: tidyr,
     parallel,
     purrr,
     msm,
+    survival, 
     magrittr,
     devtools

@@ -18,12 +18,14 @@
 #'   For censored data, the status indicator is 0=right censored, 1 = event at time.
 #'   Although unusual, the event indicator can be omitted, in which case
 #'   all subjects are assumed to have an event.
+#' @param treatment0 vector. the historical treatment assignment for patients,
+#'    1 for treatment group and 0 for control group.
 #' @param prior scalar. Prior value for the gamma shape of the piecewise
 #'   exponential hazards. Default is c(0.1, 0.1).
-#' @surv_time scalar. scalar. Survival time of interest for computing the probability
+#' @param surv_time scalar. scalar. Survival time of interest for computing the probability
 #'    of survival for a single arm (OPC) trial. Default is overall, i.e.,
 #'    current+historical, median survival time.
-#' @breaks vector. Breaks (interval starts) used to compose the breaks of the piecewise
+#' @param breaks vector. Breaks (interval starts) used to compose the breaks of the piecewise
 #'     exponential model. Do not include zero. Default breaks are the quantiles of the input
 #'     times.
 #' @inheritParams binomial_analysis
@@ -230,7 +232,7 @@ survival_analysis <- function(
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself
   if(sum(data_final$treatment == 0) != 0){
-    effect <- fit2$final$posterior_loghazard
+    effect <- post_final$final$posterior_loghazard
     if(alternative == "two-sided"){
       post_paa <- max(c(mean(effect > h0), mean(-effect > h0)))
     }

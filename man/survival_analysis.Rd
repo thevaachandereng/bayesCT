@@ -25,6 +25,9 @@ For censored data, the status indicator is 0=right censored, 1 = event at time.
 Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.}
 
+\item{treatment0}{vector. the historical treatment assignment for patients,
+1 for treatment group and 0 for control group.}
+
 \item{time0}{vector. Historical exposure time for the subjects. It must be the same length
 as the treatment variable.}
 
@@ -34,8 +37,16 @@ For censored data, the status indicator is 0=right censored, 1 = event at time.
 Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.}
 
+\item{surv_time}{scalar. scalar. Survival time of interest for computing the probability
+of survival for a single arm (OPC) trial. Default is overall, i.e.,
+current+historical, median survival time.}
+
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
 \code{h0=0}.}
+
+\item{breaks}{vector. Breaks (interval starts) used to compose the breaks of the piecewise
+exponential model. Do not include zero. Default breaks are the quantiles of the input
+times.}
 
 \item{alternative}{character. The string specifying the alternative
 hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
