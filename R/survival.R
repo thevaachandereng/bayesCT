@@ -72,9 +72,10 @@
 #'
 #' }
 #'
+#' @importFrom stats quantile
 #' @importFrom survival Surv
 #' @importFrom bayesDP bdpsurvival
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate bind_cols
 #'
 #' @export survival_analysis
 
