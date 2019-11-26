@@ -92,10 +92,10 @@ pw_exp_sim <- function(hazard, n, maxtime, cutpoint = NULL) {
 #' @description Imputation of time-to-event outcomes using
 #' the piecewise constant hazard exponential function.
 #'
+#' @param time vector. The observed time for patient that have had no event or passed maxtime.
 #' @param hazard vector. The constant hazard rates for exponential failures.
-#' @param cutpoint vector. The change-point vector indicating time when the hazard rates change.
-#' @param n scalar. The number of outcomes for simulation.
 #' @param maxtime scalar. maximum time before end of study.
+#' @param cutpoint vector. The change-point vector indicating time when the hazard rates change.
 #'
 #' @return a dataset with simulated follow-up time (time) and respective event indicator (1 = event,
 #'          0 = censoring)
