@@ -5,8 +5,8 @@
 \title{Analyzing bayesian trial for time-to-event data}
 \usage{
 survival_analysis(treatment, time, event = NULL, treatment0 = NULL,
-  time0 = NULL, event0 = NULL, surv_time = NULL, h0 = 0,
-  breaks = NULL, alternative = "greater", N_impute = 10,
+  time0 = NULL, event0 = NULL, surv_time = NULL, maxtime = NULL,
+  h0 = 0, breaks = NULL, alternative = "greater", N_impute = 10,
   number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
   expected_success_prob = 0.9, prior = c(0.1, 0.1),
   discount_function = "identity", fix_alpha = FALSE, alpha_max = 1,
@@ -40,6 +40,8 @@ all subjects are assumed to have an event.}
 \item{surv_time}{scalar. scalar. Survival time of interest for computing the probability
 of survival for a single arm (OPC) trial. Default is overall, i.e.,
 current+historical, median survival time.}
+
+\item{maxtime}{scalar. maximum time before end of study.}
 
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
 \code{h0=0}.}

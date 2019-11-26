@@ -29,6 +29,7 @@
 #'     exponential model. Do not include zero. Default breaks are the quantiles of the input
 #'     times.
 #' @inheritParams binomial_analysis
+#' @inheritParams pw_exp_sim
 #'
 #' @importFrom survival Surv
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
@@ -73,6 +74,7 @@
 #'
 #' @importFrom survival Surv
 #' @importFrom bayesDP bdpsurvival
+#' @importFrom dplyr mutate
 #'
 #' @export survival_analysis
 
@@ -84,6 +86,7 @@ survival_analysis <- function(
   time0                 = NULL,
   event0                = NULL,
   surv_time             = NULL,
+  maxtime               = NULL,
   h0                    = 0,
   breaks                = NULL,
   alternative           = "greater",
@@ -113,9 +116,18 @@ survival_analysis <- function(
     data0 <- NULL
   }
 
+  # if maximum time is null please replace it with 60% percentile of time
+  if(is.null(maxtime)){
+    maxtime <- quantile(x = time, probs = c(0.60))
+  }
+
+
   #reading the data
   data_total <- data.frame(cbind(time, event, treatment))
 
+  # added interim data for incomplete data
+  data_interim <- data_total %>%
+    mutate(futility = (time < maxtime & event == 0))
 
   # analyze the data using bayesDp
   post <- bdpsurvival(formula      = Surv(time, event) ~ treatment,
@@ -132,90 +144,100 @@ survival_analysis <- function(
   stop_expected_success <- 0
   expected_success_test <- 0
 
-  # for(i in 1:N_impute){
-  #   data_control_success_impute <- data_interim %>%
-  #     filter(treatment == 0) %>%
-  #     mutate(outcome_impute = ifelse(futility,
-  #                                    rbinom(n(), 1, prop$p_outcome[1]),
-  #                                    outcome))
-  #   # imputing success for treatment group
-  #   data_treatment_success_impute  <- data_interim %>%
-  #     filter(treatment == 1) %>%
-  #     mutate(outcome_impute = ifelse(futility,
-  #                                    rbinom(n(), 1, prop$p_outcome[2]),
-  #                                    outcome))
-  #
-  #   # combine the treatment and control imputed datasets
-  #   data_success_impute <- bind_rows(data_control_success_impute,
-  #                                    data_treatment_success_impute) %>%
-  #     mutate(outcome = outcome_impute) %>%
-  #     select(-outcome_impute)
-  #
-  #   # Create enrolled subject data frame for discount function analysis
-  #   data <- data_success_impute
-  #
-  #
-  #
-  #   # analyze complete+imputed data using discount funtion via binomial
-  #   post_imp <- bdpbinomial(y_t                    = sum(data$outcome[data$treatment == 1]),
-  #                           N_t                    = length(data$outcome[data$treatment == 1]),
-  #                           y_c                    = y_c,
-  #                           N_c                    = N_c,
-  #                           y0_t                   = y0_treatment,
-  #                           N0_t                   = N0_treatment,
-  #                           y0_c                   = y0_control,
-  #                           N0_c                   = N0_control,
-  #                           discount_function      = discount_function,
-  #                           number_mcmc            = number_mcmc,
-  #                           a0                     = prior[1],
-  #                           b0                     = prior[2],
-  #                           alpha_max              = alpha_max,
-  #                           fix_alpha              = fix_alpha,
-  #                           weibull_scale          = weibull_scale,
-  #                           weibull_shape          = weibull_shape)
-  #
-  #   if(sum(data$treatment == 0) != 0){
-  #     if(alternative == "two-sided"){
-  #       effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-  #       success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
-  #     }
-  #     else if(alternative == "greater"){
-  #       effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-  #       success <- mean(effect_imp > h0)
-  #     }
-  #     else{
-  #       effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-  #       success <- mean(-effect_imp > h0)
-  #     }
-  #   }
-  #
-  #   else{
-  #     effect_imp <- post_imp$final$posterior
-  #     if(alternative == "two-sided"){
-  #       success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
-  #     }
-  #     else if(alternative == "greater"){
-  #       success <- mean(effect_imp > h0)
-  #     }
-  #     else{
-  #       success <- mean(effect_imp < h0)
-  #     }
-  #   }
-  #
-  #   if(success > prob_ha){
-  #     expected_success_test <- expected_success_test + 1
-  #   }
-  #
-  # }
-  #
-  # if(expected_success_test / N_impute < futility_prob){
-  #   stop_futility       <- 1
-  # }
-  #
-  # # Test if expected success criteria met
-  # if(expected_success_test / N_impute > expected_success_prob ){
-  #   stop_expected_success <- 1
-  # }
+  for(i in 1:N_impute){
+
+    control_impute <-  data_interim %>%
+      filter(treatment == 0 & futility)
+
+    impute_control <- pw_exp_impute(time      = control_impute$time,
+                                    hazard    = post$posterior_control$posterior_flat_hazard[i, ],
+                                    maxtime   = maxtime,
+                                    cutpoint  = post$args1$breaks)
+
+    data_control_success_impute <- data_interim %>%
+      filter(treatment == 0 & futility) %>%
+      bind_cols(time_impute  = impute_control$time,
+                event_impute = impute_control$event)
+
+
+    treatment_impute <-  data_interim %>%
+      filter(treatment == 1 & futility)
+
+    impute_treatment <- pw_exp_impute(time      = treatment_impute$time,
+                                      hazard    = post$posterior_treatment$posterior_flat_hazard[i, ],
+                                      maxtime   = maxtime,
+                                      cutpoint  = post$args1$breaks)
+
+    data_treatment_success_impute <- data_interim %>%
+      filter(treatment == 1 & futility) %>%
+      bind_cols(time_impute  = impute_treatment$time,
+                event_impute = impute_treatment$event)
+
+
+    data_noimpute <- data_interim %>%
+      filter(!futility) %>%
+      mutate(time_impute = time, event_impute = event)
+
+
+    # combine the treatment and control imputed datasets
+    data_success_impute <- bind_rows(data_control_success_impute,
+                                     data_treatment_success_impute,
+                                     data_noimpute) %>%
+      mutate(time = time_impute, event = event_impute) %>%
+      select(-c(time_impute, event_impute))
+
+
+    # analyze complete+imputed data using discount funtion via binomial
+    post_imp <-bdpsurvival(formula      = Surv(time, event) ~ treatment,
+                           data         = data_success_impute,
+                           data0        = data0,
+                           fix_alpha    = TRUE,
+                           number_mcmc  = number_mcmc,
+                           breaks       = breaks,
+                           method       = "fixed")
+
+    # Posterior effect size: test vs control or treatment itself
+    if(sum(data_success_impute$treatment == 0) != 0){
+      effect_imp <- post_imp$final$posterior_loghazard
+      if(alternative == "two-sided"){
+        success  <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
+      }
+      else if(alternative == "greater"){
+        success  <- mean(effect_imp > h0)
+      }
+      else{
+        success  <- mean(-effect_imp > h0)
+      }
+    }
+
+    else{
+      effect <- post_imp$posterior_treatment$posterior_survival
+      if(alternative == "two-sided"){
+        success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
+      }
+      else if(alternative == "greater"){
+        success <- mean(effect_imp > h0)
+      }
+      else{
+        success <- mean(effect_imp < h0)
+      }
+    }
+
+
+    if(success > prob_ha){
+      expected_success_test <- expected_success_test + 1
+    }
+
+  }
+
+  if(expected_success_test / N_impute < futility_prob){
+    stop_futility       <- 1
+  }
+
+  # Test if expected success criteria met
+  if(expected_success_test / N_impute > expected_success_prob ){
+    stop_expected_success <- 1
+  }
 
   data_final <- data_total
 
@@ -286,7 +308,7 @@ survival_analysis <- function(
 }
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "outcome_impute", "id",
-                                                        "futility", "treatment",
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("time", "event", "event_impute",
+                                                        "time_impute", "id", "futility", "treatment",
                                                         "subject_impute_success",
                                                         "subject_impute_futility", "p_outcome"))
