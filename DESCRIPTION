@@ -1,7 +1,7 @@
 Package: bayesCT
 Type: Package
 Title: Simulation and Analysis of Adaptive Bayesian Clinical Trials 
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: c(person(given = "Thevaa", family = "Chandereng", role = c("aut", "cre", "cph"), 
              email = "chandereng@wisc.edu", comment = c(ORCID = "0000-0003-4078-9176")), 
              person("Donald", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut", "cph")), 
@@ -23,15 +23,15 @@ LazyData: true
 RoxygenNote: 6.1.1
 Suggests: testthat,
     rmarkdown, 
-    pkgdown
+    pkgdown, 
+    devtools,
+    knitr
 VignetteBuilder: knitr
-Imports: tidyr,
+Imports: bayesDP,
     dplyr,
-    knitr,
-    bayesDP,
-    parallel,
     purrr,
     msm,
     survival, 
     magrittr,
     devtools
+

@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(43232)
 ```
 
@@ -60,7 +61,7 @@ devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.
 
 The second option is to download the most recent stable version through GitHub:
 
-```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval=TRUE, echo=TRUE}
+```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval=FALSE, echo=TRUE}
 devtools::install_github("thevaachandereng/bayesCT")
 ```
 

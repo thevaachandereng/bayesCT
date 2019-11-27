@@ -1,5 +1,6 @@
 context("")
 test_that("The randomization is", {
+  suppressWarnings(RNGversion("3.5.0"))
   set.seed(200)
   check <- sample(rep(0:1, c(60, 40)))
   set.seed(200)

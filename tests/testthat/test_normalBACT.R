@@ -13,6 +13,7 @@ input2 <- list(mu_treatment = 8, sd_treatment = 1,
 
 context("")
 test_that("The normal bayesCT is ", {
+  suppressWarnings(RNGversion("3.5.0"))
   set.seed(200)
   expect_equal(do.call(normalBACT, input1)$mu_treatment, 8)
   expect_equal(do.call(normalBACT, input2)$mu_treatment, 8)
