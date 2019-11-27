@@ -20,20 +20,17 @@
 #'   all subjects are assumed to have an event.
 #' @param treatment0 vector. the historical treatment assignment for patients,
 #'    1 for treatment group and 0 for control group.
-#' @param prior scalar. Prior value for the gamma shape of the piecewise
-#'   exponential hazards. Default is c(0.1, 0.1).
 #' @param surv_time scalar. scalar. Survival time of interest for computing the probability
 #'    of survival for a single arm (OPC) trial. Default is overall, i.e.,
 #'    current+historical, median survival time.
 #' @param breaks vector. Breaks (interval starts) used to compose the breaks of the piecewise
 #'     exponential model. Do not include zero. Default breaks are the quantiles of the input
 #'     times.
+#' @param prior vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
+#'   set to Gamma(.1, .1).
 #' @inheritParams binomial_analysis
 #' @inheritParams pw_exp_sim
 #'
-#' @importFrom survival Surv
-#' @importFrom dplyr mutate filter group_by bind_rows select n summarize
-#' @importFrom bayesDP bdpsurvival
 #'
 #' @return a list of output for the bayesian trial for time-to-event.
 #'
@@ -81,10 +78,11 @@
 #'
 #' }
 #'
-#' @importFrom stats quantile
-#' @importFrom survival Surv
-#' @importFrom bayesDP bdpsurvival
 #' @importFrom dplyr mutate bind_cols
+#' @importFrom survival Surv
+#' @importFrom dplyr mutate filter group_by bind_rows select n summarize
+#' @importFrom bayesDP bdpsurvival
+#' @importFrom stats median
 #'
 #' @export survival_analysis
 

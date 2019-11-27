@@ -64,8 +64,8 @@ sampling posterior.}
 
 \item{expected_success_prob}{scalar. Probability of stopping early for success.}
 
-\item{prior}{scalar. Prior value for the gamma shape of the piecewise
-exponential hazards. Default is c(0.1, 0.1).}
+\item{prior}{vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
+set to Gamma(.1, .1).}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
