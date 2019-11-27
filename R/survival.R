@@ -45,18 +45,27 @@
 #'      and mean estimate of the control.}
 #'   \item{\code{alternative}}{
 #'     character. The input parameter of alternative hypothesis. }
+#'   \item{\code{alpha_max}}{
+#'     scalar. The alpha_max input. }
 #'   \item{\code{N_treatment}}{
 #'     scalar. The number of patients enrolled in the experimental group for
+#'     each simulation.}
+#'   \item{\code{event_treatment}}{
+#'     scalar. The number of events in the experimental group for
 #'     each simulation.}
 #'   \item{\code{N_control}}{
 #'     scalar. The number of patients enrolled in the control group for
 #'     each simulation.}
+#'   \item{\code{event_control}}{
+#'     scalar. The number of events in the control group for
+#'     each simulation.}
 #'   \item{\code{N_enrolled}}{
-#'     vector. The number of patients enrolled in the trial (sum of control
+#'     scalar. The number of patients enrolled in the trial (sum of control
 #'     and experimental group for each simulation. )}
 #'   \item{\code{N_complete}}{
-#'     scalar. The number of patients who completed the trial and had no
-#'     loss to follow-up.}
+#'     scalar. The number of patients whose time passes the surv_time.}
+#'   \item{\code{alpha_discount}}{
+#'     vector. The alpha discount funtion used for control and treatment.}
 #'   \item{\code{post_prob_accept_alternative}}{
 #'     vector. The final probability of accepting the alternative
 #'     hypothesis after the analysis is done.}
@@ -80,14 +89,13 @@
 #' @export survival_analysis
 
 survival_analysis <- function(
-  treatment,
   time,
+  treatment,
   event                 = NULL,
-  treatment0            = NULL,
   time0                 = NULL,
+  treatment0            = NULL,
   event0                = NULL,
   surv_time             = NULL,
-  maxtime               = NULL,
   h0                    = 0,
   breaks                = NULL,
   alternative           = "greater",
@@ -117,9 +125,8 @@ survival_analysis <- function(
     data0 <- NULL
   }
 
-  # if maximum time is null please replace it with 60% percentile of time
-  if(is.null(maxtime)){
-    maxtime <- quantile(x = time, probs = c(0.60))
+  if(is.null(surv_time)){
+    surv_time <- median(c(time, time0))
   }
 
 
@@ -128,7 +135,7 @@ survival_analysis <- function(
 
   # added interim data for incomplete data
   data_interim <- data_total %>%
-    mutate(futility = (time < maxtime & event == 0))
+    mutate(futility = (time < surv_time & event == 0))
 
   # analyze the data using bayesDp
   post <- bdpsurvival(formula      = Surv(time, event) ~ treatment,
@@ -152,7 +159,7 @@ survival_analysis <- function(
 
     impute_control <- pw_exp_impute(time      = control_impute$time,
                                     hazard    = post$posterior_control$posterior_flat_hazard[i, ],
-                                    maxtime   = maxtime,
+                                    maxtime   = surv_time,
                                     cutpoint  = post$args1$breaks)
 
     data_control_success_impute <- data_interim %>%
@@ -166,7 +173,7 @@ survival_analysis <- function(
 
     impute_treatment <- pw_exp_impute(time      = treatment_impute$time,
                                       hazard    = post$posterior_treatment$posterior_flat_hazard[i, ],
-                                      maxtime   = maxtime,
+                                      maxtime   = surv_time,
                                       cutpoint  = post$args1$breaks)
 
     data_treatment_success_impute <- data_interim %>%
@@ -280,24 +287,27 @@ survival_analysis <- function(
     }
   }
 
-  N_treatment      <- sum(data_final$treatment)         # Total sample size analyzed - test group
-  N_control        <- sum(!data_final$treatment)        # Total sample size analyzed - control group
-  N_enrolled       <- N_treatment + N_control
-
-
-  event_treatment <- sum(data_final$event[!!data_final$treatment])
-  event_control   <- sum(data_final$event[!data_final$treatment])
+  N_treatment           <- sum(data_final$treatment)         # Total sample size analyzed - test group
+  N_control             <- sum(!data_final$treatment)        # Total sample size analyzed - control group
+  N_enrolled            <- N_treatment + N_control
+  N_complete            <- sum(!data_interim$futility)
+  alpha_discount        <- c(post_final$posterior_control$alpha_discount, post_final$posterior_treatment$alpha_discount)
+  event_treatment       <- sum(data_final$event[!!data_final$treatment])
+  event_control         <- sum(data_final$event[!data_final$treatment])
 
   ## output
   results_list <- list(
     prob_of_accepting_alternative              = prob_ha,
     margin                                     = h0,                       # margin for error
     alternative                                = alternative,              # alternative hypothesis
+    alpha_max                                  = alpha_max,
     N_treatment                                = N_treatment,
     event_treatment                            = event_treatment,
     N_control                                  = N_control,
     event_control                              = event_control,
     N_enrolled                                 = N_treatment + N_control,
+    N_complete                                 = N_complete,
+    alpha_discount                             = alpha_discount,
     post_prob_accept_alternative               = post_paa,                 # Posterior probability that alternative hypothesis is true
     est_final                                  = mean(effect),             # Posterior Mean of treatment effect
     stop_futility                              = stop_futility,            # Did the trial stop for futility

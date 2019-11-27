@@ -4,20 +4,20 @@
 \alias{survival_analysis}
 \title{Analyzing bayesian trial for time-to-event data}
 \usage{
-survival_analysis(treatment, time, event = NULL, treatment0 = NULL,
-  time0 = NULL, event0 = NULL, surv_time = NULL, maxtime = NULL,
-  h0 = 0, breaks = NULL, alternative = "greater", N_impute = 10,
+survival_analysis(time, treatment, event = NULL, time0 = NULL,
+  treatment0 = NULL, event0 = NULL, surv_time = NULL, h0 = 0,
+  breaks = NULL, alternative = "greater", N_impute = 10,
   number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
   expected_success_prob = 0.9, prior = c(0.1, 0.1),
   discount_function = "identity", fix_alpha = FALSE, alpha_max = 1,
   weibull_scale = 0.135, weibull_shape = 3)
 }
 \arguments{
-\item{treatment}{vector. treatment assignment for patients, 1 for treatment group and
-0 for control group}
-
 \item{time}{vector. exposure time for the subjects. It must be the same length
 as the treatment variable.}
+
+\item{treatment}{vector. treatment assignment for patients, 1 for treatment group and
+0 for control group}
 
 \item{event}{vector. The status indicator, normally 0=alive, 1=dead.
 Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
@@ -25,11 +25,11 @@ For censored data, the status indicator is 0=right censored, 1 = event at time.
 Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.}
 
-\item{treatment0}{vector. the historical treatment assignment for patients,
-1 for treatment group and 0 for control group.}
-
 \item{time0}{vector. Historical exposure time for the subjects. It must be the same length
 as the treatment variable.}
+
+\item{treatment0}{vector. the historical treatment assignment for patients,
+1 for treatment group and 0 for control group.}
 
 \item{event0}{vector. Historical status indicator, normally 0=alive, 1=dead.
 Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
@@ -40,8 +40,6 @@ all subjects are assumed to have an event.}
 \item{surv_time}{scalar. scalar. Survival time of interest for computing the probability
 of survival for a single arm (OPC) trial. Default is overall, i.e.,
 current+historical, median survival time.}
-
-\item{maxtime}{scalar. maximum time before end of study.}
 
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
 \code{h0=0}.}
@@ -112,18 +110,27 @@ a list of output for the bayesian trial for time-to-event.
      and mean estimate of the control.}
   \item{\code{alternative}}{
     character. The input parameter of alternative hypothesis. }
+  \item{\code{alpha_max}}{
+    scalar. The alpha_max input. }
   \item{\code{N_treatment}}{
     scalar. The number of patients enrolled in the experimental group for
+    each simulation.}
+  \item{\code{event_treatment}}{
+    scalar. The number of events in the experimental group for
     each simulation.}
   \item{\code{N_control}}{
     scalar. The number of patients enrolled in the control group for
     each simulation.}
+  \item{\code{event_control}}{
+    scalar. The number of events in the control group for
+    each simulation.}
   \item{\code{N_enrolled}}{
-    vector. The number of patients enrolled in the trial (sum of control
+    scalar. The number of patients enrolled in the trial (sum of control
     and experimental group for each simulation. )}
   \item{\code{N_complete}}{
-    scalar. The number of patients who completed the trial and had no
-    loss to follow-up.}
+    scalar. The number of patients whose time passes the surv_time.}
+  \item{\code{alpha_discount}}{
+    vector. The alpha discount funtion used for control and treatment.}
   \item{\code{post_prob_accept_alternative}}{
     vector. The final probability of accepting the alternative
     hypothesis after the analysis is done.}
