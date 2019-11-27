@@ -52,8 +52,8 @@ maximum sample size should not be included.}
 
 \item{EndofStudy}{scalar. Length of the study.}
 
-\item{prior}{vector. Prior value of beta rate, beta(a0, b0). The default is
-set to beta(1, 1).}
+\item{prior}{vector. Prior values of beta rate, Beta(a0, b0). The default is
+set to Beta(1, 1).}
 
 \item{block}{scalar. Block size for generating the randomization schedule.}
 

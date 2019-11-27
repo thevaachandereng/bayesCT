@@ -51,8 +51,8 @@ sampling posterior.}
 
 \item{expected_success_prob}{scalar. Probability of stopping early for success.}
 
-\item{prior}{vector. Prior value of beta rate, beta(a0, b0). The default is
-set to beta(1, 1).}
+\item{prior}{vector. Prior values of beta rate, Beta(a0, b0). The default is
+set to Beta(1, 1).}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function

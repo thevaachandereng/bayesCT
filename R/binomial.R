@@ -9,8 +9,8 @@
 #' @param N0_treatment scalar. Sample size of the historical treatment arm.
 #' @param y0_control scalar. Number of events for the historical control arm.
 #' @param N0_control scalar. Sample size of the historical control arm.
-#' @param prior vector. Prior value of beta rate, beta(a0, b0). The default is
-#'   set to beta(1, 1).
+#' @param prior vector. Prior values of beta rate, Beta(a0, b0). The default is
+#'   set to Beta(1, 1).
 #' @inheritParams normalBACT
 #'
 #' @return a list of output for a single trial simulation.
