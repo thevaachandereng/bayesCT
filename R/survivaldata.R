@@ -1,7 +1,8 @@
-#' Survival dataset for analyzing adaptive Bayesian trials.
+#' Time-to-event dataset for analyzing adaptive Bayesian trials
 #'
-#' A dataset containing the results of 100 patients with survival outcomes,
-#' the dataset is filled with treatment assignment, time and censoring.
+#' A dataset containing the results of 100 patients with time-to-event outcome,
+#' the dataset is filled with treatment assignment and status (0 = censored,
+#' 1 = not censored).
 #'
 #' @docType data
 #'
@@ -21,4 +22,4 @@
 #'
 #' @examples
 #' data(survivaldata)
-NULL
+"survivaldata"
