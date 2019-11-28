@@ -2,7 +2,7 @@
 % Please edit documentation in R/binomial.R
 \name{binomial_analysis}
 \alias{binomial_analysis}
-\title{Analyzing bayesian trial for binomial counts}
+\title{Analyzing Bayesian trial for binomial counts}
 \usage{
 binomial_analysis(treatment, outcome, complete = NULL,
   y0_treatment = NULL, N0_treatment = NULL, y0_control = NULL,
@@ -87,7 +87,7 @@ treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
 }
 \value{
-a list of output for the bayesian trial for binomial count.
+a list of output for the Bayesian trial for binomial count.
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
@@ -125,7 +125,7 @@ a list of output for the bayesian trial for binomial count.
 }
 }
 \description{
-Function to analyze bayesian trial for binomial count data
+Function to analyze Bayesian trial for binomial count data
  which allows early stopping and incorporation of historical data using
  the discount function approach
 }

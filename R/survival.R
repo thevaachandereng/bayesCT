@@ -1,6 +1,6 @@
-#' @title Analyzing bayesian trial for time-to-event data
+#' @title Analyzing Bayesian trial for time-to-event data
 #'
-#' @description Function to analyze bayesian trial for time-to-event data
+#' @description Function to analyze Bayesian trial for time-to-event data
 #'  which allows early stopping and incorporation of historical data using
 #'  the discount function approach
 #'
@@ -32,7 +32,7 @@
 #' @inheritParams pw_exp_sim
 #'
 #'
-#' @return a list of output for the bayesian trial for time-to-event.
+#' @return a list of output for the Bayesian trial for time-to-event.
 #'
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
@@ -75,7 +75,6 @@
 #'   \item{\code{stop_expected_success}}{
 #'     scalar. Did the trial stop for early success during imputation of patient
 #'     who had loss to follow up? 1 for yes and 0 for no.}
-#'
 #' }
 #'
 #' @importFrom dplyr mutate bind_cols

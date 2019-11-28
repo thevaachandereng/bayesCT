@@ -16,7 +16,7 @@
 #' @param sd0_control scalar. Standard deviation of the historical control group.
 #' @param N0_control scalar. Number of observations of the historical control group.
 #' @param N_total scalar. Total sample size.
-#' @param lambda vector. Erollment rates across simulated enrollment times. See
+#' @param lambda vector. Enrollment rates across simulated enrollment times. See
 #'   \code{\link{enrollment}} for more details.
 #' @param lambda_time vector. Enrollment time(s) at which the enrollment rates
 #'   change. Must be same length as lambda. See \code{\link{enrollment}} for
@@ -750,9 +750,9 @@ historical_normal <- function(mu0_treatment       = NULL,
 }
 
 
-#' @title Analyzing bayesian trial for normal mean data
+#' @title Analyzing Bayesian trial for normal mean data
 #'
-#' @description Function to analyze bayesian trial for normal mean data
+#' @description Function to analyze Bayesian trial for normal mean data
 #'  which allows early stopping and incorporation of historical data using
 #'  the discount function approach
 #'
@@ -768,7 +768,7 @@ historical_normal <- function(mu0_treatment       = NULL,
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpnormal
 #'
-#' @return a list of output for the analysis of bayesian trial for normal mean.
+#' @return a list of output for the analysis of Bayesian trial for normal mean.
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
 #'     scalar. The input parameter of probability of accepting the alternative.}

@@ -40,7 +40,7 @@ more details.}
 
 \item{N_total}{scalar. Total sample size.}
 
-\item{lambda}{vector. Erollment rates across simulated enrollment times. See
+\item{lambda}{vector. Enrollment rates across simulated enrollment times. See
 \code{\link{enrollment}} for more details.}
 
 \item{lambda_time}{vector. Enrollment time(s) at which the enrollment rates

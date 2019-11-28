@@ -35,7 +35,7 @@ Adaptive Bayesian trials provide added flexibility compared to conventional freq
 
 A fundamental requirement of an adaptive trial is the *a priori* and interim evaluation of the operating characteristics, e.g., power and type 1 error. In adaptive trials, these operating characteristics generally do not have closed-form solutions; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this complexity obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.
 
-`bayesCT` is an R package for the simulation and analysis of adaptive Bayesian randomzied controlled trials under a range of trial designs and outcome types. Currently, it supports continuous-valued and binary outcome data types, with time-to-event data following soon. The package permits interim analyses of early stopping for futility or success and allows the (optional) incorporation of historical data. Please note this package is still under development. 
+`bayesCT` is an R package for the simulation and analysis of adaptive Bayesian randomized controlled trials under a range of trial designs and outcome types. Currently, it supports continuous-valued and binary outcome data types, with time-to-event data following soon. The package permits interim analyses of early stopping for futility or success and allows the (optional) incorporation of historical data. Please note this package is still under development. 
 
 If you use `bayesCT` in published research, please cite: **TBA**.
 
@@ -125,13 +125,13 @@ randomization(N_total = 120, block = 120, allocation = c(2, 1))
 
 The Bayesian attitude is to use all available data to address the scientific question under consideration. Most clinical trials are not conducted in a vacuum. Often, pilot studies are conducted in small sample sizes to obtain an estimate of parameters for a clinical trial, e.g., clinically relevant effect size, sample size determination, recruitment rates, etc. Besides pilot studies, the control and/or treatment are usually studied in early phase lab or bench settings. However, clinical trialists need to carefully consider the inclusion and exclusion criteria of historical data in a trial. The R package `bayesDP` is used as a computational engine for incorporating historical data into a trial design.
 
-The vignettes presented in the `bayesDP` package are a rich resource for unstanding the discount function approach and its implementation. Interested readers can refer to the vignettes avaialable at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
+The vignettes presented in the `bayesDP` package are a rich resource for understanding the discount function approach and its implementation. Interested readers can refer to the vignettes available at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
 
 
 
 # Early Stopping for Futility or Success
 
-With adaptive Bayesian trials, the trial can be stopped early for success or futility. In `bayesCT`, early success is achieved if the "probability of sucess" exceeds a pre-specified threshold. Likewise, futility occurs if the "probability of futility" is below a pre-specified threshold. In both cases, the probabilities are computed by imputing subjects that may be loss to follow-up or have not yet achieved the follow-up. However, final posterior estimation uses complete data only. 
+With adaptive Bayesian trials, the trial can be stopped early for success or futility. In `bayesCT`, early success is achieved if the "probability of success" exceeds a pre-specified threshold. Likewise, futility occurs if the "probability of futility" is below a pre-specified threshold. In both cases, the probabilities are computed by imputing subjects that may be loss to follow-up or have not yet achieved the follow-up. However, final posterior estimation uses complete data only. 
 
 ## Success
 The probability of stopping early for success is specified as

@@ -7,10 +7,10 @@
 beta_prior(a0 = 1, b0 = 1, .data = NULL)
 }
 \arguments{
-\item{a0}{numeric. The first shape paramater in the beta distribution
+\item{a0}{numeric. The first shape parameter in the beta distribution
 (\code{beta(a0, b0)}).}
 
-\item{b0}{numeric. The second shape paramater in the beta distribution
+\item{b0}{numeric. The second shape parameter in the beta distribution
 (\code{beta(a0, b0)}).}
 
 \item{.data}{NULL. stores the beta prior rate, please do not fill it in.}

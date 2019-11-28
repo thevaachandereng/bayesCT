@@ -2,7 +2,7 @@
 % Please edit documentation in R/normal.R
 \name{normal_analysis}
 \alias{normal_analysis}
-\title{Analyzing bayesian trial for normal mean data}
+\title{Analyzing Bayesian trial for normal mean data}
 \usage{
 normal_analysis(treatment, outcome, complete = NULL,
   mu0_treatment = NULL, sd0_treatment = NULL, N0_treatment = NULL,
@@ -87,7 +87,7 @@ treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
 }
 \value{
-a list of output for the analysis of bayesian trial for normal mean.
+a list of output for the analysis of Bayesian trial for normal mean.
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
     scalar. The input parameter of probability of accepting the alternative.}
@@ -124,7 +124,7 @@ a list of output for the analysis of bayesian trial for normal mean.
 }
 }
 \description{
-Function to analyze bayesian trial for normal mean data
+Function to analyze Bayesian trial for normal mean data
  which allows early stopping and incorporation of historical data using
  the discount function approach
 }

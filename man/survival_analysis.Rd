@@ -2,7 +2,7 @@
 % Please edit documentation in R/survival.R
 \name{survival_analysis}
 \alias{survival_analysis}
-\title{Analyzing bayesian trial for time-to-event data}
+\title{Analyzing Bayesian trial for time-to-event data}
 \usage{
 survival_analysis(time, treatment, event = NULL, time0 = NULL,
   treatment0 = NULL, event0 = NULL, surv_time = NULL, h0 = 0,
@@ -100,7 +100,7 @@ treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
 }
 \value{
-a list of output for the bayesian trial for time-to-event.
+a list of output for the Bayesian trial for time-to-event.
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
@@ -143,11 +143,10 @@ a list of output for the bayesian trial for time-to-event.
   \item{\code{stop_expected_success}}{
     scalar. Did the trial stop for early success during imputation of patient
     who had loss to follow up? 1 for yes and 0 for no.}
-
 }
 }
 \description{
-Function to analyze bayesian trial for time-to-event data
+Function to analyze Bayesian trial for time-to-event data
  which allows early stopping and incorporation of historical data using
  the discount function approach
 }

@@ -673,9 +673,9 @@ historical_binomial <- function(y0_treatment       = NULL,
 #'
 #' @description Wrapper function for beta prior \code{beta(a0, b0)}.
 #'
-#' @param a0 numeric. The first shape paramater in the beta distribution
+#' @param a0 numeric. The first shape parameter in the beta distribution
 #'   (\code{beta(a0, b0)}).
-#' @param b0 numeric. The second shape paramater in the beta distribution
+#' @param b0 numeric. The second shape parameter in the beta distribution
 #'   (\code{beta(a0, b0)}).
 #' @param .data NULL. stores the beta prior rate, please do not fill it in.
 #'
@@ -689,9 +689,9 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
 }
 
 
-#' @title Analyzing bayesian trial for binomial counts
+#' @title Analyzing Bayesian trial for binomial counts
 #'
-#' @description Function to analyze bayesian trial for binomial count data
+#' @description Function to analyze Bayesian trial for binomial count data
 #'  which allows early stopping and incorporation of historical data using
 #'  the discount function approach
 #'
@@ -709,7 +709,7 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpbinomial
 #'
-#' @return a list of output for the bayesian trial for binomial count.
+#' @return a list of output for the Bayesian trial for binomial count.
 #'
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
