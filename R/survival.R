@@ -28,6 +28,12 @@
 #'     times.
 #' @param prior vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
 #'   set to Gamma(.1, .1).
+#' @param method character. Analysis method with respect to estimation of the weight
+#'   paramter alpha. Default method "\code{mc}" estimates alpha for each
+#'   Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+#'   and holds it fixed throughout the analysis.  See the the
+#'   \code{bdpsurvival} vignette \cr
+#'   \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.
 #' @inheritParams binomial_analysis
 #' @inheritParams pw_exp_sim
 #'
@@ -106,7 +112,8 @@ survival_analysis <- function(
   fix_alpha             = FALSE,
   alpha_max             = 1,
   weibull_scale         = 0.135,
-  weibull_shape         = 3
+  weibull_shape         = 3,
+  method                = "fixed"
 ){
 
   #if complete is NULL, assume the data is complete
@@ -135,13 +142,20 @@ survival_analysis <- function(
     mutate(futility = (time < surv_time & event == 0))
 
   # analyze the data using bayesDp
-  post <- bdpsurvival(formula      = Surv(time, event) ~ treatment,
-                      data         = data_total,
-                      data0        = data0,
-                      fix_alpha    = TRUE,
-                      number_mcmc  = number_mcmc,
-                      breaks       = breaks,
-                      method       = "fixed")
+  post <- bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                      data               = data_total,
+                      data0              = data0,
+                      breaks             = breaks,
+                      a0                 = prior[1],
+                      b0                 = prior[2],
+                      surv_time          = surv_time,
+                      discount_function  = discount_function,
+                      alpha_max          = alpha_max,
+                      fix_alpha          = fix_alpha,
+                      number_mcmc        = number_mcmc,
+                      weibull_scale      = weibull_scale,
+                      weibull_shape      = weibull_shape,
+                      method             = method)
 
 
   # assigning stop_futility and expected success
@@ -193,13 +207,20 @@ survival_analysis <- function(
 
 
     # analyze complete+imputed data using discount funtion via binomial
-    post_imp <-bdpsurvival(formula      = Surv(time, event) ~ treatment,
-                           data         = data_success_impute,
-                           data0        = data0,
-                           fix_alpha    = TRUE,
-                           number_mcmc  = number_mcmc,
-                           breaks       = breaks,
-                           method       = "fixed")
+    post_imp <-bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                           data               = data_success_impute,
+                           data0              = data0,
+                           breaks             = breaks,
+                           a0                 = prior[1],
+                           b0                 = prior[2],
+                           surv_time          = surv_time,
+                           discount_function  = discount_function,
+                           alpha_max          = alpha_max,
+                           fix_alpha          = fix_alpha,
+                           number_mcmc        = number_mcmc,
+                           weibull_scale      = weibull_scale,
+                           weibull_shape      = weibull_shape,
+                           method             = method)
 
     # Posterior effect size: test vs control or treatment itself
     if(sum(data_success_impute$treatment == 0) != 0){
@@ -248,13 +269,20 @@ survival_analysis <- function(
 
 
   # Analyze complete data using discount funtion via binomial
-  post_final <- bdpsurvival(formula      = Surv(time, event) ~ treatment,
-                            data         = data_final,
-                            data0        = data0,
-                            fix_alpha    = TRUE,
-                            number_mcmc  = number_mcmc,
-                            breaks       = breaks,
-                            method       = "fixed")
+  post_final <- bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                            data               = data_final,
+                            data0              = data0,
+                            breaks             = breaks,
+                            a0                 = prior[1],
+                            b0                 = prior[2],
+                            surv_time          = surv_time,
+                            discount_function  = discount_function,
+                            alpha_max          = alpha_max,
+                            fix_alpha          = fix_alpha,
+                            number_mcmc        = number_mcmc,
+                            weibull_scale      = weibull_scale,
+                            weibull_shape      = weibull_shape,
+                            method             = method)
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself
