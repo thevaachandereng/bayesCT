@@ -32,6 +32,5 @@ Imports: bayesDP,
     purrr,
     msm,
     survival, 
-    magrittr,
-    devtools
+    magrittr
 
