@@ -11,6 +11,9 @@ historical_binomial(y0_treatment = NULL, N0_treatment = NULL,
   .data = NULL)
 }
 \arguments{
+\item{y0_treatment}{scalar. Number of events for the historical treatment
+arm.}
+
 \item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
 
 \item{discount_function}{character. If incorporating historical data, specify
@@ -22,6 +25,8 @@ scales the output of the Weibull CDF to have a max value of 1. The identity
 discount function uses the posterior probability directly as the discount
 weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
 more details.}
+
+\item{y0_control}{scalar. Number of events for the historical control arm.}
 
 \item{N0_control}{scalar. Number of observations of the historical control group.}
 

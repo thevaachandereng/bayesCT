@@ -614,6 +614,7 @@ binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL)
 #' @description Wrapper function for historical data from binomial outcome.
 #'
 #' @inheritParams normalBACT
+#' @inheritParams binomialBACT
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with historical data for control and treatment group with the discount function.
