@@ -300,7 +300,8 @@ value <- normal_outcome(mu_treatment = 13,
                     alpha_max         = FALSE, 
 					fix_alpha         = 1,
                     weibull_scale     = 0.135, 
-					weibull_shape     = 3) %>%
+					weibull_shape     = 3,
+                      method            = "fixed") %>%
   simulate(no_of_sim = 10)
 
 str(value)
