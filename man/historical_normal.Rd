@@ -8,26 +8,30 @@ historical_normal(mu0_treatment = NULL, sd0_treatment = NULL,
   N0_treatment = NULL, mu0_control = NULL, sd0_control = NULL,
   N0_control = NULL, discount_function = "identity", alpha_max = 1,
   fix_alpha = FALSE, weibull_scale = 0.135, weibull_shape = 3,
-  .data = NULL)
+  method = "fixed", .data = NULL)
 }
 \arguments{
-\item{mu0_treatment}{numeric. Mean of the historical treatment group.}
+\item{mu0_treatment}{scalar. Mean of the historical treatment group.}
 
-\item{sd0_treatment}{numeric. The  Standard deviation of the historical treatment group.}
+\item{sd0_treatment}{scalar. Standard deviation of the historical treatment group.}
 
-\item{N0_treatment}{numeric. scalar. Number of observations of the historical treatment group.}
+\item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
 
-\item{mu0_control}{numeric. Mean of the historical control group.}
+\item{mu0_control}{scalar. Mean of the historical control group.}
 
-\item{sd0_control}{numeric. The  Standard deviation of the historical control group.}
+\item{sd0_control}{scalar. Standard deviation of the historical control group.}
 
-\item{N0_control}{numeric. umber of observations of the historical control group.}
+\item{N0_control}{scalar. Number of observations of the historical control group.}
 
-\item{discount_function}{character. Specify the discount function to use. Currently supports
-weibull, scaledweibull, and identity. The discount function scaledweibull scales the
-output of the Weibull CDF to have a max value of 1. The identity discount function
-uses the posterior probability directly as the discount weight. Default value is
-"identity".}
+\item{discount_function}{character. If incorporating historical data, specify
+the discount function. Currently supports the Weibull function
+(\code{discount_function="weibull"}), the scaled-Weibull function
+(\code{discount_function="scaledweibull"}), and the identity function
+(\code{discount_function="identity"}). The scaled-Weibull discount function
+scales the output of the Weibull CDF to have a max value of 1. The identity
+discount function uses the posterior probability directly as the discount
+weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
+more details.}
 
 \item{alpha_max}{scalar. Maximum weight the discount function can apply.
 Default is 1. For a two-arm trial, users may specify a vector of two values
@@ -50,6 +54,13 @@ value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
+
+\item{method}{character. Analysis method with respect to estimation of the weight
+paramter alpha. Default method "\code{mc}" estimates alpha for each
+Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+and holds it fixed throughout the analysis.  See the the
+\code{bdpsurvival} vignette \cr
+\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
 
 \item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
 }

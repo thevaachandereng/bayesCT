@@ -28,12 +28,6 @@
 #'     times.
 #' @param prior vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
 #'   set to Gamma(.1, .1).
-#' @param method character. Analysis method with respect to estimation of the weight
-#'   paramter alpha. Default method "\code{mc}" estimates alpha for each
-#'   Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
-#'   and holds it fixed throughout the analysis.  See the the
-#'   \code{bdpsurvival} vignette \cr
-#'   \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.
 #' @inheritParams binomial_analysis
 #' @inheritParams pw_exp_sim
 #'
