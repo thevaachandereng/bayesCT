@@ -854,7 +854,7 @@ binomial_analysis <- function(
                             alpha_max              = alpha_max,
                             fix_alpha              = fix_alpha,
                             weibull_scale          = weibull_scale,
-                            weibull_shape          = weibull_shap,
+                            weibull_shape          = weibull_shape,
                             method                 = method)
 
     if(sum(data$treatment == 0) != 0){
