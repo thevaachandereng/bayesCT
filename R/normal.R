@@ -247,7 +247,7 @@ normalBACT <- function(
       mutate(subject_enrolled = id <= analysis_at_enrollnumber[i],
              subject_impute_futility = !subject_enrolled) %>%
       group_by(subject_enrolled) %>%
-      mutate(subject_impute_success = (max(enrollment) - enrollment <= EndofStudy & subject_enrolled) |
+      mutate(subject_impute_success = (analysis_at_enrollnumber[i] - enrollment <= EndofStudy & subject_enrolled) |
                (subject_enrolled & loss_to_fu))
 
     # Carry out interim analysis on patients with complete data only

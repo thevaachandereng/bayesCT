@@ -19,7 +19,7 @@
 #' @export pw_exp_sim
 
 
-pw_exp_sim <- function(hazard, n, maxtime, cutpoint = NULL) {
+pw_exp_sim <- function(hazard, n, maxtime = NULL, cutpoint = NULL) {
   ## checking input of parameters
   #make sure hazard is positive
   if(any(hazard < 0)) {stop("At least one of the hazard rate(s) is less than 0!")}
@@ -27,9 +27,17 @@ pw_exp_sim <- function(hazard, n, maxtime, cutpoint = NULL) {
   # make sure n is positive integer
   if(n <= 0 | n %% 1 != 0 ) {stop("The number of simulations need to be a positive integer!") }
 
-  #make sure maxtime is positive
-  if(maxtime <= 0 | length(maxtime) > 1) {stop("The maxtime needs to be greater than 0
-                                               and the length of maxtime needs to be 1!")}
+  #make sure maxtime is positive or null
+  if(!is.null(maxtime)){
+    if(maxtime <= 0 | length(maxtime) > 1) {
+      stop("The maxtime needs to be greater than 0 and
+           the length of maxtime needs to be 1!")}
+  }
+  else{
+    if(!is.null(maxtime)){
+      stop("Maxtime needs to be null or a scalar value!")
+    }
+  }
 
   #make sure hazard is positive
   if(length(hazard) > 1) {
@@ -79,9 +87,14 @@ pw_exp_sim <- function(hazard, n, maxtime, cutpoint = NULL) {
   }
 
   # if maxtime is lower than observed time, censor the data
-  min_time  <- pmin(time, maxtime)
-  event     <- as.numeric(time == min_time)
-  dat       <- data.frame(time = min_time, event = event)
+  if(!is.null(maxtime)){
+    min_time  <- pmin(time, maxtime)
+    event     <- as.numeric(time == min_time)
+    dat       <- data.frame(time = min_time, event = event)
+  }
+  else{
+    dat       <- data.frame(time = time, event = rep(1, length(time)))
+  }
 
   # return dataset with time and event
   return(dat)
