@@ -225,20 +225,21 @@ survivalBACT <- function(
 
 
       # Analyze data using discount function via binomial
-      post <- bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                          data               = data,
-                          data0              = data0,
-                          breaks             = breaks,
-                          a0                 = prior[1],
-                          b0                 = prior[2],
-                          surv_time          = surv_time,
-                          discount_function  = discount_function,
-                          alpha_max          = alpha_max,
-                          fix_alpha          = fix_alpha,
-                          number_mcmc        = number_mcmc,
-                          weibull_scale      = weibull_scale,
-                          weibull_shape      = weibull_shape,
-                          method             = method)
+      post <- suppressWarnings(
+        bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                    data               = data,
+                    data0              = data0,
+                    breaks             = breaks,
+                    a0                 = prior[1],
+                    b0                 = prior[2],
+                    surv_time          = surv_time,
+                    discount_function  = discount_function,
+                    alpha_max          = alpha_max,
+                    fix_alpha          = fix_alpha,
+                    number_mcmc        = number_mcmc,
+                    weibull_scale      = weibull_scale,
+                    weibull_shape      = weibull_shape,
+                    method             = method))
 
 
       # Imputation phase futility and expected success - initialize counters
@@ -298,20 +299,21 @@ survivalBACT <- function(
 
         # analyze complete+imputed data using discount funtion via binomial
         # analyze complete+imputed data using discount funtion via binomial
-        post_imp <-bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                               data               = data_success_impute,
-                               data0              = data0,
-                               breaks             = breaks,
-                               a0                 = prior[1],
-                               b0                 = prior[2],
-                               surv_time          = surv_time,
-                               discount_function  = discount_function,
-                               alpha_max          = alpha_max,
-                               fix_alpha          = fix_alpha,
-                               number_mcmc        = number_mcmc,
-                               weibull_scale      = weibull_scale,
-                               weibull_shape      = weibull_shape,
-                               method             = method)
+        post_imp <- suppressWarnings(
+          bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                      data               = data_success_impute,
+                      data0              = data0,
+                      breaks             = breaks,
+                      a0                 = prior[1],
+                      b0                 = prior[2],
+                      surv_time          = surv_time,
+                      discount_function  = discount_function,
+                      alpha_max          = alpha_max,
+                      fix_alpha          = fix_alpha,
+                      number_mcmc        = number_mcmc,
+                      weibull_scale      = weibull_scale,
+                      weibull_shape      = weibull_shape,
+                      method             = method))
 
         # estimation of the posterior effect for difference between test and
         # control - If expected success, add 1 to the counter
@@ -396,20 +398,21 @@ survivalBACT <- function(
         data <- data_futility_impute
 
         # Analyze complete+imputed data using discount funtion via binomial
-        post_imp <-bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                               data               = data_success_impute,
-                               data0              = data0,
-                               breaks             = breaks,
-                               a0                 = prior[1],
-                               b0                 = prior[2],
-                               surv_time          = surv_time,
-                               discount_function  = discount_function,
-                               alpha_max          = alpha_max,
-                               fix_alpha          = fix_alpha,
-                               number_mcmc        = number_mcmc,
-                               weibull_scale      = weibull_scale,
-                               weibull_shape      = weibull_shape,
-                               method             = method)
+        post_imp <- suppressWarnings(
+          bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                      data               = data_success_impute,
+                      data0              = data0,
+                      breaks             = breaks,
+                      a0                 = prior[1],
+                      b0                 = prior[2],
+                      surv_time          = surv_time,
+                      discount_function  = discount_function,
+                      alpha_max          = alpha_max,
+                      fix_alpha          = fix_alpha,
+                      number_mcmc        = number_mcmc,
+                      weibull_scale      = weibull_scale,
+                      weibull_shape      = weibull_shape,
+                      method             = method))
 
 
         # Estimation of the posterior effect for difference between test and
@@ -513,20 +516,21 @@ survivalBACT <- function(
 
 
   # Analyze complete data using discount funtion via binomial
-  post_final <- bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                            data               = data_final,
-                            data0              = data0,
-                            breaks             = breaks,
-                            a0                 = prior[1],
-                            b0                 = prior[2],
-                            surv_time          = surv_time,
-                            discount_function  = discount_function,
-                            alpha_max          = alpha_max,
-                            fix_alpha          = fix_alpha,
-                            number_mcmc        = number_mcmc,
-                            weibull_scale      = weibull_scale,
-                            weibull_shape      = weibull_shape,
-                            method             = method)
+  post_final <- suppressWarnings(
+    bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                data               = data_final,
+                data0              = data0,
+                breaks             = breaks,
+                a0                 = prior[1],
+                b0                 = prior[2],
+                surv_time          = surv_time,
+                discount_function  = discount_function,
+                alpha_max          = alpha_max,
+                fix_alpha          = fix_alpha,
+                number_mcmc        = number_mcmc,
+                weibull_scale      = weibull_scale,
+                weibull_shape      = weibull_shape,
+                method             = method))
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself
@@ -578,8 +582,6 @@ survivalBACT <- function(
     est_final                                  = mean(effect),             # Posterior Mean of treatment effect
     stop_futility                              = stop_futility,            # Did the trial stop for futility
     stop_expected_success                      = stop_expected_success     # Did the trial stop for expected success
-    #MLE_est                                   = MLE$coe[2],               # Treatment effect useing MLE
-    #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect useing MLE at interim analysis
   )
 
   if(length(analysis_at_enrollnumber) > 1){
@@ -738,20 +740,21 @@ survival_analysis <- function(
     mutate(futility = (time < surv_time & event == 0))
 
   # analyze the data using bayesDp
-  post <- bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                      data               = data_total,
-                      data0              = data0,
-                      breaks             = breaks,
-                      a0                 = prior[1],
-                      b0                 = prior[2],
-                      surv_time          = surv_time,
-                      discount_function  = discount_function,
-                      alpha_max          = alpha_max,
-                      fix_alpha          = fix_alpha,
-                      number_mcmc        = number_mcmc,
-                      weibull_scale      = weibull_scale,
-                      weibull_shape      = weibull_shape,
-                      method             = method)
+  post <- suppressWarnings(
+    bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                data               = data_total,
+                data0              = data0,
+                breaks             = breaks,
+                a0                 = prior[1],
+                b0                 = prior[2],
+                surv_time          = surv_time,
+                discount_function  = discount_function,
+                alpha_max          = alpha_max,
+                fix_alpha          = fix_alpha,
+                number_mcmc        = number_mcmc,
+                weibull_scale      = weibull_scale,
+                weibull_shape      = weibull_shape,
+                method             = method))
 
 
   # assigning stop_futility and expected success
@@ -803,20 +806,21 @@ survival_analysis <- function(
 
 
     # analyze complete+imputed data using discount funtion via binomial
-    post_imp <-bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                           data               = data_success_impute,
-                           data0              = data0,
-                           breaks             = breaks,
-                           a0                 = prior[1],
-                           b0                 = prior[2],
-                           surv_time          = surv_time,
-                           discount_function  = discount_function,
-                           alpha_max          = alpha_max,
-                           fix_alpha          = fix_alpha,
-                           number_mcmc        = number_mcmc,
-                           weibull_scale      = weibull_scale,
-                           weibull_shape      = weibull_shape,
-                           method             = method)
+    post_imp <- suppressWarnings(
+      bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                  data               = data_success_impute,
+                  data0              = data0,
+                  breaks             = breaks,
+                  a0                 = prior[1],
+                  b0                 = prior[2],
+                  surv_time          = surv_time,
+                  discount_function  = discount_function,
+                  alpha_max          = alpha_max,
+                  fix_alpha          = fix_alpha,
+                  number_mcmc        = number_mcmc,
+                  weibull_scale      = weibull_scale,
+                  weibull_shape      = weibull_shape,
+                  method             = method))
 
     # Posterior effect size: test vs control or treatment itself
     if(sum(data_success_impute$treatment == 0) != 0){
@@ -865,20 +869,21 @@ survival_analysis <- function(
 
 
   # Analyze complete data using discount funtion via binomial
-  post_final <- bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                            data               = data_final,
-                            data0              = data0,
-                            breaks             = breaks,
-                            a0                 = prior[1],
-                            b0                 = prior[2],
-                            surv_time          = surv_time,
-                            discount_function  = discount_function,
-                            alpha_max          = alpha_max,
-                            fix_alpha          = fix_alpha,
-                            number_mcmc        = number_mcmc,
-                            weibull_scale      = weibull_scale,
-                            weibull_shape      = weibull_shape,
-                            method             = method)
+  post_final <- suppressWarnings(
+    bdpsurvival(formula            = Surv(time, event) ~ treatment,
+                data               = data_final,
+                data0              = data0,
+                breaks             = breaks,
+                a0                 = prior[1],
+                b0                 = prior[2],
+                surv_time          = surv_time,
+                discount_function  = discount_function,
+                alpha_max          = alpha_max,
+                fix_alpha          = fix_alpha,
+                number_mcmc        = number_mcmc,
+                weibull_scale      = weibull_scale,
+                weibull_shape      = weibull_shape,
+                method             = method))
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself
