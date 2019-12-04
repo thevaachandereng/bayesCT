@@ -128,7 +128,7 @@ pw_exp_impute <- function(time, hazard, maxtime, cutpoint = NULL) {
   if(any(hazard < 0)) {stop("At least one of the hazard rate(s) is less than 0!")}
 
   # make sure n is positive integer
-  if(any(time < 0 )) {stop("The time has to be positive!") }
+  if(any(time < 0)) {stop("The time has to be positive!") }
 
   #make sure maxtime is positive
   if(maxtime <= 0 | length(maxtime) > 1) {stop("The maxtime needs to be greater than 0

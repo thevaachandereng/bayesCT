@@ -4,7 +4,7 @@
 \alias{pw_exp_sim}
 \title{Simulates time-to-event outcomes.}
 \usage{
-pw_exp_sim(hazard, n, maxtime, cutpoint = NULL)
+pw_exp_sim(hazard, n, maxtime = NULL, cutpoint = NULL)
 }
 \arguments{
 \item{hazard}{vector. The constant hazard rates for exponential failures.}
