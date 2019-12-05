@@ -44,9 +44,9 @@
 #'
 #' }
 #'
-#' @importFrom stats rbinom glm rnorm lm
-#' @importFrom dplyr mutate filter group_by bind_rows select n
-#' @importFrom bayesDP bdpbinomial bdpnormal
+#' @importFrom stats rbinom glm rnorm lm runif
+#' @importFrom dplyr mutate filter group_by bind_rows select n bind_cols
+#' @importFrom bayesDP bdpbinomial bdpnormal bdpsurvival
 #'
 #' @export analysis
 #'
@@ -58,6 +58,10 @@ analysis <- function(input, type = "binomial", .data = NULL){
 
   else if(type == "normal"){
     do.call(normal_analysis, input)
+  }
+
+  else if(type == "survival"){
+    do.call(survival_analysis, input)
   }
 
 }
