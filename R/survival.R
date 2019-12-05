@@ -1045,7 +1045,7 @@ survival_outcome <- function(hazard_treatment = NULL,
 #' @return a list with time, treatment, and event with time-to-event
 #'   outcome.
 #'
-#' @examples data_survival(time       = c(6.2, 8.2, 8.0, 2.3)
+#' @examples data_survival(time       = c(6.2, 8.2, 8.0, 2.3),
 #'                         treatment  = c(0, 1, 0, 1),
 #'                         event      = c(1, 1, 1, 1))
 #'
