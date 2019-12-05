@@ -71,7 +71,7 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
 
 * **piecewise_exponential** - wrapper function for specifying observations. Inputs: 
     + **lambda_treatment** - hazard rate of the treatment group. Required input.
-    + **cutoff_treatment** - timepoint cutoff for hazard rate of the treatment group. Required input if * lambda_treatment* is a vector of length two or more.This is the same for the control arm.  
+    + **cutoff** - timepoint cutoff for hazard rate. Required input if * lambda_treatment* is a vector of length two or more.This is the same for the control arm.  
     + **lambda_control** - hazard rate of the control group. Default value is NULL.
     
 
@@ -105,19 +105,22 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
     + **number_mcmc** - number of Monte Carlo iterations for sampling from posterior distributions during imputation. Default value is 10000.  
 
 * **historical_survival** - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). Inputs:
-    + **time_treatment** - This is the follow up time for treatment group, it could be right-censored.
-    + **status_treatment** - The status indicator for treatment group, normally 0=alive, 1=dead.
-    + **time_control** - This is the follow up time for control group, it could be right-censored.
-    + **status_control** - The status indicator for control group, normally 0=alive, 1=dead.
+    + **time** - This is the follow up time, it could be right-censored.
+    + **treatment** - The treatment indicator, 0=control, 1=treatment.
+    + **event** - The status indicator for time, normally 0=alive, 1=dead.
     + **discount_function** - discount function to use for controlling the weight given to the historical data. Currently supports `weibull`, `scaledweibull`, and `identity`. The discount function `scaledweibull` scales the output of the Weibull CDF to have a max value of 1. The `identity` discount function uses the posterior probability directly as the discount weight. Default value is `"identity"`.
     + **alpha_max** - maximum weight the discount function can apply. Default is 1. For a two-arm trial, users may specify a vector of two values where the first value is used to weight the historical treatment group and the second value is used to weight the historical control group.
     + **fix_alpha** - Should alpha be set to alpha_max? Default value is FALSE.
     + **weibull_scale** - scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
     + **weibull_shape** - shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
+     + **method** - analysis method with respect to estimation of the weight paramter alpha. Default method `mc` estimates alpha for each Monte Carlo iteration. Alternate value `fixed` estimates alpha once and holds it fixed throughout the analysis.  See the the
+`bdpsurvival` vignette `vignette("bdpsurvival-vignette", package="bayesDP"` for more details.
+    
+    
 
 * **analysis** - wrapper function for analyzing a trial. Inputs:
     + **input** - list of input to analyze the adaptive trial. 
-    + **type** - outcome type of the trial. Use `type="survival"` for a trial with normal outcomes. 
+    + **type** - outcome type of the trial. Use `type="survival"` for a trial with time-to-event outcomes. 
 
 
 * **simulate** - wrapper function for simulating trials. Should be used as the terminal end of the pipe. Inputs: 
