@@ -1034,3 +1034,27 @@ survival_outcome <- function(hazard_treatment = NULL,
   .data
 }
 
+
+#' @title Data file for survival analysis
+#'
+#' @description Wrapper function for data file in survival analysis.
+#'
+#' @inheritParams survival_analysis
+#' @param .data NULL. stores the survival data for analysis, please do not fill it in.
+#'
+#' @return a list with time, treatment, and event with time-to-event
+#'   outcome.
+#'
+#' @examples data_survival(time       = c(6.2, 8.2, 8.0, 2.3)
+#'                         treatment  = c(0, 1, 0, 1),
+#'                         event      = c(1, 1, 1, 1))
+#'
+#' @export data_survival
+data_survival <- function(time, treatment, event, .data = NULL){
+  .data$time       <- time
+  .data$treatment  <- treatment
+  .data$event      <- event
+  .data
+}
+
+
