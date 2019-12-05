@@ -99,6 +99,8 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
     + **fix_alpha** - Should alpha be set to alpha_max? Default value is FALSE.
     + **weibull_scale** - scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
     + **weibull_shape** - shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
+     + **method** - analysis method with respect to estimation of the weight paramter alpha. Default method `mc` estimates alpha for each Monte Carlo iteration. Alternate value `fixed` estimates alpha once and holds it fixed throughout the analysis.  See the the
+`bdpsurvival` vignette `vignette("bdpsurvival-vignette", package="bayesDP"` for more details.
 
 	
 * **data_binomial** - wrapper function for inputting data with a binomial outcome. Inputs: 
