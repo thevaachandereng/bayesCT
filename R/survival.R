@@ -1009,3 +1009,28 @@ gamma_prior <- function(a0 = .1, b0 = .1, .data = NULL){
   .data
 }
 
+
+#' @title Piecewise constant hazard rates and the cutpoint for control and treatment group
+#'
+#' @description Wrapper function for the piecewise constant hazard rates and the cutpoint
+#' for control and treatment group.
+#'
+#' @inheritParams survivalBACT
+#' @param .data NULL. stores the hazard rates and cutpoint, please do not fill it in.
+#'
+#' @return a list with hazard rates and cutpoint for control and treatment group.
+#'
+#' @examples survival_outcome(hazard_treatment = 0.06,
+#'                            hazard_control   = 0.08,
+#'                            cutpoint         = NULL )
+#' @export survival_outcome
+survival_outcome <- function(hazard_treatment = NULL,
+                             cutpoint         = NULL,
+                             hazard_control   = NULL,
+                             .data = NULL){
+  .data$hazard_treatment  <- p_treatment
+  .data$cutpoint          <- cutpoint
+  .data$hazard_control    <- p_control
+  .data
+}
+
