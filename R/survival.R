@@ -84,7 +84,6 @@ survivalBACT <- function(
   time0                 = NULL,
   treatment0            = NULL,
   event0                = NULL,
-  surv_time             = NULL,
   lambda                = 0.3,
   lambda_time           = NULL,
   interim_look          = NULL,
@@ -125,6 +124,11 @@ survivalBACT <- function(
   #checking if alternative is right
   if(alternative != "two-sided" & alternative != "greater" & alternative != "less"){
     stop("The input for alternative is wrong!")
+  }
+
+  ## make sure breaks is not more than Endofstudy
+  if(!is.null(breaks)){
+    stopifnot(any(breaks > EndofStudy))
   }
 
   # assigining interim look and final look
@@ -232,7 +236,7 @@ survivalBACT <- function(
                     breaks             = breaks,
                     a0                 = prior[1],
                     b0                 = prior[2],
-                    surv_time          = surv_time,
+                    surv_time          = EndofStudy,
                     discount_function  = discount_function,
                     alpha_max          = alpha_max,
                     fix_alpha          = fix_alpha,
@@ -306,7 +310,7 @@ survivalBACT <- function(
                       breaks             = breaks,
                       a0                 = prior[1],
                       b0                 = prior[2],
-                      surv_time          = surv_time,
+                      surv_time          = EndofStudy,
                       discount_function  = discount_function,
                       alpha_max          = alpha_max,
                       fix_alpha          = fix_alpha,
@@ -405,7 +409,7 @@ survivalBACT <- function(
                       breaks             = breaks,
                       a0                 = prior[1],
                       b0                 = prior[2],
-                      surv_time          = surv_time,
+                      surv_time          = EndofStudy,
                       discount_function  = discount_function,
                       alpha_max          = alpha_max,
                       fix_alpha          = fix_alpha,
@@ -523,7 +527,7 @@ survivalBACT <- function(
                 breaks             = breaks,
                 a0                 = prior[1],
                 b0                 = prior[2],
-                surv_time          = surv_time,
+                surv_time          = EndofStudy,
                 discount_function  = discount_function,
                 alpha_max          = alpha_max,
                 fix_alpha          = fix_alpha,
@@ -576,7 +580,7 @@ survivalBACT <- function(
     interim_look                               = interim_look,             # print interim looks
     N_treatment                                = N_treatment,
     N_control                                  = N_control,
-    N_complete                                 = N_treatment + N_control,
+    N_enrolled                                 = N_treatment + N_control,
     N_max                                      = N_total, 				         # Total potential sample size
     post_prob_accept_alternative               = post_paa,                 # Posterior probability that alternative hypothesis is true
     est_final                                  = mean(effect),             # Posterior Mean of treatment effect

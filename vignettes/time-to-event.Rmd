@@ -15,6 +15,7 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(bayesCT)
 ```
 
 
@@ -132,3 +133,83 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
 
 In the following section, we will discuss the design of adaptive trials using `bayesCT` for time-to-events outcomes. We illustrate an example for one-arm trial and two-arm trials using the wrapper functions described above. 
 
+
+
+## Two-arm Trial
+In this section, we will illustrate how to perform the design of a two-arm trial without the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is 
+$$H_0: \lambda_{treatment} - \lambda_{control} \geq 0 \qquad H_A: \lambda_{treatment} - \lambda_{control} < 0.$$
+
+Unlike the OPC trial above, we will not include interim looks. The hazard rates of the treatment group are 0.01 and 0.012 and the hazard rates for the control group are 0.015 and 0.017 with a cutpoint at 25 days. The total sample size is 250 with a study length of 30 days. A 10% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.
+
+```{r twoarmall}
+value <- survival_outcome(hazard_treatment = c(0.01, 0.012),
+                          hazard_control   = c(0.015, 0.017),
+                          cutpoint         = 25) %>%
+  study_details(total_sample_size     = 250, 
+                study_period          = 100,
+                interim_look          = NULL,
+                prop_loss_to_followup = 0.10) %>%
+  hypothesis(delta                 = 0,
+             futility_prob         = 0,
+             prob_accept_ha        = 0.95,
+             expected_success_prob = 1,
+             alternative           = "less") %>%
+  impute(no_of_impute = 25, 
+         number_mcmc  = 5000) %>%
+  enrollment_rate(lambda = c(0.8), 
+                  time = NULL) %>%
+  randomize(block_size          = c(4, 6), 
+            randomization_ratio = c(1, 1)) %>%
+  simulate(no_of_sim = 10)
+
+str(value)
+```
+
+
+
+
+# Analysis
+
+In this section, we will demonstrate how to run an adaptive Bayesian trial using **bayesCT**. A sample dataset is provided in the package. 
+The dataset **survivaldata** contains the results of 100 subjects from a two-arm trial with time-to-event outcomes.
+
+```{r data}
+data(survivaldata)
+
+head(survivaldata)
+```
+
+The minimum input needed to run an adaptive Bayesian trial is the data itself. The **data_survival** input allows the input of the data. The treatment group (0 for control, 1 for treatment) and time input are essential for the analysis. However, if the event input is not provided, the function assumes the events have occurred. A default analysis is carried out below. 
+
+```{r analysisdata}
+input <- data_survival(time       = survivaldata$time,
+                       treatment  = survivaldata$treatment,
+                       event      = survivaldata$event)
+
+out <- input %>%
+  analysis(type = "survival")
+
+str(out)
+```
+We'll now illustrate using piping to carry out the complete analysis. First, we'll assume the following hypothesis:
+$$H_0:\theta_{treatment} - \theta_{control} <= 0.02 \quad H_A: \theta_{treatment} - \theta_{control} > 0.02$$
+The delta and alternative used to analyze the trial is 0.02 and "greater" respectively. The probability of accepting the alternative is 0.95, the probability of stopping for futility is 0.05, and the probability of stopping for success is 0.90. We will carry out imputations on subjects loss to follow up. Additionally, we will incorporate historical data on the treatment arm.
+
+```{r analysisall}
+out <- data_survival(time       = survivaldata$time,
+                     treatment  = survivaldata$treatment,
+                     event      = survivaldata$event) %>%
+  hypothesis(delta                 = -1.02, 
+             futility_prob         = 0.05, 
+             prob_accept_ha        = 0.95,
+             expected_success_prob = 0.90,
+             alternative           = "less") %>%
+  impute(no_of_impute = 50, 
+         number_mcmc  = 10000) %>%
+  gamma_prior(a0 = .2, 
+              b0 = .2) %>%
+  analysis(type = "survival")
+
+str(out)
+
+```

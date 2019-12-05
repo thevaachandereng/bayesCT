@@ -6,9 +6,9 @@
 \usage{
 survivalBACT(hazard_treatment, cutpoint = NULL, hazard_control = NULL,
   N_total, breaks = NULL, time0 = NULL, treatment0 = NULL,
-  event0 = NULL, surv_time = NULL, lambda = 0.3,
-  lambda_time = NULL, interim_look = NULL, EndofStudy, prior = c(0.1,
-  0.1), block = 2, rand_ratio = c(1, 1), prop_loss_to_followup = 0.1,
+  event0 = NULL, lambda = 0.3, lambda_time = NULL,
+  interim_look = NULL, EndofStudy, prior = c(0.1, 0.1), block = 2,
+  rand_ratio = c(1, 1), prop_loss_to_followup = 0.1,
   alternative = "greater", h0 = 0, futility_prob = 0.05,
   expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 10,
   number_mcmc = 10000, discount_function = "identity", alpha_max = 1,
@@ -39,10 +39,6 @@ Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
 For censored data, the status indicator is 0=right censored, 1 = event at time.
 Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.}
-
-\item{surv_time}{scalar. scalar. Survival time of interest for computing the probability
-of survival for a single arm (OPC) trial. Default is overall, i.e.,
-current+historical, median survival time.}
 
 \item{lambda}{vector. Enrollment rates across simulated enrollment times. See
 \code{\link{enrollment}} for more details.}
