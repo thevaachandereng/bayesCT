@@ -1028,9 +1028,9 @@ survival_outcome <- function(hazard_treatment = NULL,
                              cutpoint         = NULL,
                              hazard_control   = NULL,
                              .data = NULL){
-  .data$hazard_treatment  <- p_treatment
+  .data$hazard_treatment  <- hazard_treatment
   .data$cutpoint          <- cutpoint
-  .data$hazard_control    <- p_control
+  .data$hazard_control    <- hazard_control
   .data
 }
 
