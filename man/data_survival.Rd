@@ -29,7 +29,7 @@ a list with time, treatment, and event with time-to-event
 Wrapper function for data file in survival analysis.
 }
 \examples{
-data_survival(time       = c(6.2, 8.2, 8.0, 2.3)
+data_survival(time       = c(6.2, 8.2, 8.0, 2.3),
                         treatment  = c(0, 1, 0, 1),
                         event      = c(1, 1, 1, 1))
 
