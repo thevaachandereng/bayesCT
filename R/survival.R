@@ -949,3 +949,63 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("time", "event", "event_
                                                         "time_impute", "id", "futility", "treatment",
                                                         "subject_impute_success",
                                                         "subject_impute_futility"))
+
+
+#' @title Historical data for survival analysis
+#'
+#' @description Wrapper function for historical data from time-to-event outcome.
+#'
+#' @inheritParams survival_analysis
+#' @param .data NULL. stores the historical time, treatment and event , please do not fill it in.
+#'
+#' @return a list with historical data for time-to-event outcome with the discount function.
+#'
+#' @examples
+#' historical_survival(time      = rexp(10, 0.01),
+#'                     treatment = rep(10, 1),
+#'                     event     = rep(10, 1))
+#'
+#' @export historical_survival
+historical_survival <- function(time               = NULL,
+                                treatment          = NULL,
+                                event              = NULL,
+                                discount_function  = "identity",
+                                alpha_max          = 1,            # max weight on incorporating historical data
+                                fix_alpha          = FALSE,        # fix alpha set weight of historical data to alpha_max
+                                weibull_scale      = 0.135,        # weibull parameter
+                                weibull_shape      = 3,            # weibull parameter
+                                method             = "fixed",
+                                .data              = NULL
+){
+  .data$time               <- time
+  .data$treatment          <- treatment
+  .data$event              <- event
+  .data$discount_function  <- discount_function
+  .data$alpha_max          <- alpha_max
+  .data$fix_alpha          <- fix_alpha
+  .data$weibull_scale      <- weibull_scale
+  .data$weibull_shape      <- weibull_shape
+  .data$method             <- method
+  .data
+}
+
+
+#' @title Gamma prior for for control and treatment group
+#'
+#' @description Wrapper function for gamma prior \code{Gamma(a0, b0)}.
+#'
+#' @param a0 numeric. The shape parameter in the gamma distribution
+#'   (\code{beta(a0, b0)}).
+#' @param b0 numeric. The scale parameter in the beta distribution
+#'   (\code{beta(a0, b0)}).
+#' @param .data NULL. stores the gamma prior rate, please do not fill it in.
+#'
+#' @return a list with vector of gamma rate for the gamma prior for treatment and control group.
+#'
+#' @examples gamma_prior(a0 = .1, b0 = .1)
+#' @export gamma_prior
+gamma_prior <- function(a0 = .1, b0 = .1, .data = NULL){
+  .data$prior  <- c(a0, b0)
+  .data
+}
+
