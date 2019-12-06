@@ -257,6 +257,7 @@ survivalBACT <- function(
 
       for(j in 1:N_impute){
         #imputing the success for control group
+        if(!is.null(hazard_control)){
         control_impute <-  data_interim %>%
           filter(treatment == 0 & subject_impute_success)
 
@@ -265,11 +266,14 @@ survivalBACT <- function(
                                         maxtime   = EndofStudy,
                                         cutpoint  = post$args1$breaks)
 
-
         data_control_success_impute <- data_interim %>%
           filter(treatment == 0 & subject_impute_success) %>%
           bind_cols(time_impute  = impute_control$time,
                     event_impute = impute_control$event)
+        }
+        else{
+          data_control_success_impute <- NULL
+        }
 
         # imputing success for treatment group
 
@@ -361,6 +365,7 @@ survivalBACT <- function(
 
         # For patients not enrolled, impute the outcome
         # imputing the control group
+        if(!is.null(hazard_control)){
         control_impute <-  data_success_impute %>%
           filter(treatment == 0 & subject_impute_futility)
 
@@ -373,6 +378,10 @@ survivalBACT <- function(
           filter(treatment == 0 & subject_impute_futility) %>%
           bind_cols(time_impute  = impute_control$time,
                     event_impute = impute_control$event)
+        }
+        else{
+          data_control_futility_impute <- NULL
+        }
 
         # imputing the treatment group
         treatment_impute <-  data_success_impute %>%
