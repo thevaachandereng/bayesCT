@@ -131,6 +131,10 @@ survivalBACT <- function(
     stopifnot(any(breaks > EndofStudy))
   }
 
+  if(is.null(hazard_control) & h0 == 0){
+    h0 <- 0.5
+  }
+
   # assigining interim look and final look
   analysis_at_enrollnumber <- c(interim_look, N_total)
 
@@ -165,7 +169,7 @@ survivalBACT <- function(
   event[which(!!group)] <- sim_treatment$event
 
   if(is.null(breaks)){
-    breaks <- median(time)
+    breaks <- mean(time)
   }
 
   # simulate loss to follow-up
@@ -334,7 +338,7 @@ survivalBACT <- function(
           }
         }
         else{
-          effect <- post_imp$posterior_treatment$posterior_survival
+          effect <- post_imp$final$posterior_survival
           if(alternative == "two-sided"){
             success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
           }
@@ -434,7 +438,7 @@ survivalBACT <- function(
           }
         }
         else{
-          effect <- post_imp$posterior_treatment$posterior_survival
+          effect <- post_imp$final$posterior_survival
           if(alternative == "two-sided"){
             success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
           }
