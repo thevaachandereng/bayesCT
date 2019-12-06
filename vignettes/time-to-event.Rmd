@@ -13,11 +13,15 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-library(bayesCT)
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+suppressWarnings(RNGversion("3.5.0"))
+set.seed(28999)
 ```
 
+```{r, echo = FALSE, message = FALSE}
+library(bayesCT)
+```
 
 # Piecewise exponential function for time-to-event data
 
@@ -132,6 +136,121 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
 # Design of Adaptive Trials
 
 In the following section, we will discuss the design of adaptive trials using `bayesCT` for time-to-events outcomes. We illustrate an example for one-arm trial and two-arm trials using the wrapper functions described above. 
+
+
+## One-arm Trial
+
+In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performance criterion (OPC) trial with hazard rates and hypothesis described as follows, 
+$$H_0: P(S_{treatment} > 70) \leq 0.5 \qquad H_A: P(S_{treatment} > 70) > 0.5.$$
+
+The most important wrapper functions are **study_details** and **survival_outcome** (especially since there are no default values).
+
+The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
+
+```{r opcminimum}
+value <- survival_outcome(hazard_treatment = c(0.012, 0.08), 
+                          cutpoint         = 30) %>%
+  study_details(total_sample_size     = 200, 
+                study_period          = 70,
+                interim_look          = NULL,
+                prop_loss_to_followup = 0.1) 
+ 
+				
+# Simulate 10 trials
+output <- value %>%
+  simulate(no_of_sim = 10)
+
+# Structure of the simulation output
+str(output)
+```
+
+
+
+To allow for early stopping for success or futility, we can add interim looks to the design. We'll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
+
+
+```{r opcinterimlook}
+# Adding interim looks
+value <- value %>%
+  study_details(total_sample_size     = 200, 
+                study_period          = 70,
+                interim_look          = NULL,
+                prop_loss_to_followup = 0.10)
+
+# Simulate 10 trials
+output <- value %>% 
+  simulate(no_of_sim = 10)
+
+# Structure of the simulation output
+str(output)
+```
+
+Patient enrollment is assumed to follow a Poisson process. The default enrollment rate is 0.3 patients per day. In this simulation we'll introduce a step-wise Poisson process with rate $\lambda$ as follows:
+
+\[  \lambda = \left\{
+\begin{array}{ll}
+      0.25 & \text(time) \in [0, 40) \\
+      0.8 & \text(time) \in [40, \infty) \\
+\end{array} 
+\right. \]
+
+This enrollment scheme is illustrated below. 
+
+```{r opcenrollment}
+value <- value %>%
+  enrollment_rate(lambda = c(0.25, 0.8), 
+                  time   = 40)
+
+output <- value %>%
+  simulate(no_of_sim = 10)
+
+str(output)
+```
+
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probability of early success, the alternative hypothesis, and the treatment difference margin.
+ 
+
+We'll further set the futility probability to 0.05, the expected success probability for early stopping to 0.90, and the final probability of accepting the alternative to 0.95. The alternative is `"less"` due to the hypothesis function specified above.  
+
+```{r opchypo}
+value <- value %>%
+  hypothesis(delta                  = 0.50,
+             futility_prob          = 0.05,
+             prob_accept_ha         = 0.95,
+             expected_success_prob  = 0.90,
+             alternative            = "less")
+
+output <- value %>%
+  simulate(no_of_sim = 10)
+
+str(output)
+```
+
+Next, we'll illustrate imputations for imputing outcomes for subjects loss to follow up. We'll carry out 20 imputations and draw 2000 values from the posterior of each imputation. 
+
+```{r opcimpute}
+value <- value %>%
+  impute(no_of_impute = 20, 
+         number_mcmc  = 2000)
+
+output <- value %>%
+  simulate(no_of_sim = 10)
+
+str(output)
+```
+
+The default non-informative gamma prior used in the simulation is $\mathcal{G}amma(.1, .1)$. In our OPC trial simulation, we'll change the default to $\mathcal{G}amma(.2, .2)$. This will increase the weight of the non-informative prior in the simulation. This non-informative gamma prior is implemented using gamma_prior wrapper function.
+
+```{r opcprior}
+value <- value %>%
+  gamma_prior(a0 = .2, 
+             b0 = .2)
+
+output <- value %>%
+  simulate(no_of_sim = 10)
+
+str(output)
+```
 
 
 
