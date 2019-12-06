@@ -79,7 +79,12 @@ simulate <- function(input, no_of_sim = 10000, .data = NULL){
       input_t1$hazard_treatment <- input_t1$hazard_control
     }
     else{
-      input_t1$h0 <- 0
+      if(!is.null(input_t1$h0)){
+        input_t1$h0 <- input_t1$h0 + 0.10
+      }
+      else{
+        input_t1$h0 <- 0.75
+      }
     }
     for(i in 1:no_of_sim){
       output_power[[i]] <- do.call(survivalBACT, input)
