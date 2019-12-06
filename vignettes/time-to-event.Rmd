@@ -174,7 +174,7 @@ To allow for early stopping for success or futility, we can add interim looks to
 value <- value %>%
   study_details(total_sample_size     = 200, 
                 study_period          = 70,
-                interim_look          = NULL,
+                interim_look          = 180,
                 prop_loss_to_followup = 0.10)
 
 # Simulate 10 trials

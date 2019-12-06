@@ -110,7 +110,7 @@ survivalBACT <- function(
 
   # checking interim_look
   if(!is.null(interim_look)){
-   stopifnot(all(N_total > interim_look))
+    stopifnot(all(N_total > interim_look))
   }
 
   # combining the histrotical data
@@ -215,10 +215,10 @@ survivalBACT <- function(
                  (1 - event) * (enrollment[analysis_at_enrollnumber[i]] - enrollment <= time & subject_enrolled) |
                  (subject_enrolled & loss_to_fu)) %>%
         mutate(real_time = ifelse(event * (enrollment[analysis_at_enrollnumber[i]] - enrollment <= EndofStudy & subject_enrolled) |
-                                   (1 - event) * (enrollment[analysis_at_enrollnumber[i]] - enrollment <= time & subject_enrolled),
-                                   enrollment[analysis_at_enrollnumber[i]] - enrollment + sd(time) / 10000, time)) %>%
+                                    (1 - event) * (enrollment[analysis_at_enrollnumber[i]] - enrollment <= time & subject_enrolled),
+                                  enrollment[analysis_at_enrollnumber[i]] - enrollment + sd(time) / 10000, time)) %>%
         mutate(real_event = ifelse(event * (enrollment[analysis_at_enrollnumber[i]] - enrollment <= EndofStudy & subject_enrolled) |
-                                   (1 - event) * (enrollment[analysis_at_enrollnumber[i]] - enrollment <= time & subject_enrolled),
+                                     (1 - event) * (enrollment[analysis_at_enrollnumber[i]] - enrollment <= time & subject_enrolled),
                                    0, event))
 
       data_interim <- data_interim %>%
@@ -258,18 +258,18 @@ survivalBACT <- function(
       for(j in 1:N_impute){
         #imputing the success for control group
         if(!is.null(hazard_control)){
-        control_impute <-  data_interim %>%
-          filter(treatment == 0 & subject_impute_success)
+          control_impute <-  data_interim %>%
+            filter(treatment == 0 & subject_impute_success)
 
-        impute_control <- pw_exp_impute(time      = control_impute$time,
-                                        hazard    = post$posterior_control$posterior_flat_hazard[i, ],
-                                        maxtime   = EndofStudy,
-                                        cutpoint  = post$args1$breaks)
+          impute_control <- pw_exp_impute(time      = control_impute$time,
+                                          hazard    = post$posterior_control$posterior_flat_hazard[i, ],
+                                          maxtime   = EndofStudy,
+                                          cutpoint  = post$args1$breaks)
 
-        data_control_success_impute <- data_interim %>%
-          filter(treatment == 0 & subject_impute_success) %>%
-          bind_cols(time_impute  = impute_control$time,
-                    event_impute = impute_control$event)
+          data_control_success_impute <- data_interim %>%
+            filter(treatment == 0 & subject_impute_success) %>%
+            bind_cols(time_impute  = impute_control$time,
+                      event_impute = impute_control$event)
         }
         else{
           data_control_success_impute <- NULL
@@ -342,7 +342,7 @@ survivalBACT <- function(
           }
         }
         else{
-          effect <- post_imp$final$posterior_survival
+          effect_imp <- post_imp$final$posterior_survival
           if(alternative == "two-sided"){
             success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
           }
@@ -366,18 +366,18 @@ survivalBACT <- function(
         # For patients not enrolled, impute the outcome
         # imputing the control group
         if(!is.null(hazard_control)){
-        control_impute <-  data_success_impute %>%
-          filter(treatment == 0 & subject_impute_futility)
+          control_impute <-  data_success_impute %>%
+            filter(treatment == 0 & subject_impute_futility)
 
-        impute_control <- pw_exp_sim(hazard    = post$posterior_control$posterior_flat_hazard[i, ],
-                                     n         = nrow(control_impute),
-                                     maxtime   = EndofStudy,
-                                     cutpoint  = post$args1$breaks)
+          impute_control <- pw_exp_sim(hazard    = post$posterior_control$posterior_flat_hazard[i, ],
+                                       n         = nrow(control_impute),
+                                       maxtime   = EndofStudy,
+                                       cutpoint  = post$args1$breaks)
 
-        data_control_futility_impute <- data_success_impute %>%
-          filter(treatment == 0 & subject_impute_futility) %>%
-          bind_cols(time_impute  = impute_control$time,
-                    event_impute = impute_control$event)
+          data_control_futility_impute <- data_success_impute %>%
+            filter(treatment == 0 & subject_impute_futility) %>%
+            bind_cols(time_impute  = impute_control$time,
+                      event_impute = impute_control$event)
         }
         else{
           data_control_futility_impute <- NULL
@@ -405,8 +405,8 @@ survivalBACT <- function(
 
         # combine the treatment and control imputed datasets
         data_futility_impute <- bind_rows(data_control_futility_impute,
-                                         data_treatment_futility_impute,
-                                         data_noimpute_futility) %>%
+                                          data_treatment_futility_impute,
+                                          data_noimpute_futility) %>%
           mutate(time = time_impute, event = event_impute) %>%
           select(-c(time_impute, event_impute))
 
@@ -447,7 +447,7 @@ survivalBACT <- function(
           }
         }
         else{
-          effect <- post_imp$final$posterior_survival
+          effect_imp <- post_imp$final$posterior_survival
           if(alternative == "two-sided"){
             success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
           }
