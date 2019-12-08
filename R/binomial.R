@@ -9,8 +9,8 @@
 #' @param N0_treatment scalar. Sample size of the historical treatment arm.
 #' @param y0_control scalar. Number of events for the historical control arm.
 #' @param N0_control scalar. Sample size of the historical control arm.
-#' @param prior vector. Prior value of beta rate, beta(a0, b0). The default is
-#'   set to beta(1, 1).
+#' @param prior vector. Prior values of beta rate, Beta(a0, b0). The default is
+#'   set to Beta(1, 1).
 #' @inheritParams normalBACT
 #'
 #' @return a list of output for a single trial simulation.
@@ -80,7 +80,6 @@ binomialBACT <- function(
   N0_treatment          = NULL,
   y0_control            = NULL,
   N0_control            = NULL,
-  discount_function     = "identity",
   N_total,
   lambda                = 0.3,
   lambda_time           = NULL,
@@ -90,17 +89,19 @@ binomialBACT <- function(
   block                 = 2,            # block size for randomization
   rand_ratio            = c(1, 1),      # randomization ratio in control to treatament (default 1:1)
   prop_loss_to_followup = 0.10,         # Proportion of loss in data
-  alternative           = "greater",  # the alternative hypothesis (either two-sided, greater, less)
+  alternative           = "greater",    # the alternative hypothesis (either two-sided, greater, less)
   h0                    = 0,            # Null hypothesis value
   futility_prob         = 0.05,         # Futility probability
   expected_success_prob = 0.9,          # Expected success probability
   prob_ha               = 0.95,         # Posterior probability of accepting alternative hypothesis
-  N_impute              = 10,         # Number of imputation simulations for predictive distribution
-  number_mcmc           = 10000,         # Number of posterior sampling
+  N_impute              = 10,           # Number of imputation simulations for predictive distribution
+  number_mcmc           = 10000,        # Number of posterior sampling
+  discount_function     = "identity",
   alpha_max             = 1,            # max weight on incorporating historical data
   fix_alpha             = FALSE,        # fix alpha set weight of historical data to alpha_max
   weibull_scale         = 0.135,        # weibull parameter
-  weibull_shape         = 3             # weibull parameter
+  weibull_shape         = 3,            # weibull parameter
+  method                = "fixed"
   ){
 
   # checking p_control
@@ -194,9 +195,8 @@ binomialBACT <- function(
       mutate(subject_enrolled = id <= analysis_at_enrollnumber[i],
              subject_impute_futility = !subject_enrolled) %>%
       group_by(subject_enrolled) %>%
-      mutate(subject_impute_success = (max(enrollment) - enrollment <= EndofStudy & subject_enrolled) |
+      mutate(subject_impute_success = (enrollment[analysis_at_enrollnumber[i]] - enrollment <= EndofStudy & subject_enrolled) |
                (subject_enrolled & loss_to_fu))
-
 
     # Carry out interim analysis on patients with complete data only
     # - Set-up `new data` data frame
@@ -233,7 +233,8 @@ binomialBACT <- function(
                         alpha_max              = alpha_max,
                         fix_alpha              = fix_alpha,
                         weibull_scale          = weibull_scale,
-                        weibull_shape          = weibull_shape)
+                        weibull_shape          = weibull_shape,
+                        method                 = method)
 
     # Imputation phase futility and expected success - initialize counters
     # for the current imputation phase
@@ -291,7 +292,8 @@ binomialBACT <- function(
                               alpha_max              = alpha_max,
                               fix_alpha              = fix_alpha,
                               weibull_scale          = weibull_scale,
-                              weibull_shape          = weibull_shape)
+                              weibull_shape          = weibull_shape,
+                              method                 = method)
 
       # estimation of the posterior effect for difference between test and
       # control - If expected success, add 1 to the counter
@@ -380,7 +382,8 @@ binomialBACT <- function(
                               alpha_max              = alpha_max,
                               fix_alpha              = fix_alpha,
                               weibull_scale          = weibull_scale,
-                              weibull_shape          = weibull_shape)
+                              weibull_shape          = weibull_shape,
+                              method                 = method)
 
       # Estimation of the posterior effect for difference between test and
       # control
@@ -507,10 +510,11 @@ binomialBACT <- function(
                             discount_function    = discount_function,
                             a0                   = prior[1],
                             b0                   = prior[2],
-                            alpha_max              = alpha_max,
-                            fix_alpha              = fix_alpha,
-                            weibull_scale          = weibull_scale,
-                            weibull_shape          = weibull_shape)
+                            alpha_max            = alpha_max,
+                            fix_alpha            = fix_alpha,
+                            weibull_scale        = weibull_scale,
+                            weibull_shape        = weibull_shape,
+                            method               = method)
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself
@@ -608,33 +612,8 @@ binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL)
 #'
 #' @description Wrapper function for historical data from binomial outcome.
 #'
-#' @param y0_treatment numeric. The proportion of event in the historical treatment group.
-#' @param N0_treatment numeric. The sample size for the historical treatment group.
-#' @param discount_function character. Specify the discount function to use. Currently supports weibull,
-#'                          scaledweibull, and identity. The discount function scaledweibull scales the
-#'                          output of the Weibull CDF to have a max value of 1. The identity discount function
-#'                          uses the posterior probability directly as the discount weight. Default value is
-#'                          "identity".
-#' @param y0_control numeric. The proportion of event in the historical control group.
-#' @param N0_control numeric. The sample size for the historical control group.
-#' @param alpha_max scalar. Maximum weight the discount function can apply.
-#'   Default is 1. For a two-arm trial, users may specify a vector of two values
-#'   where the first value is used to weight the historical treatment group and
-#'   the second value is used to weight the historical control group.
-#' @param fix_alpha logical. Fix alpha at alpha_max? Default value is FALSE.
-#' @param weibull_scale scalar. Scale parameter of the Weibull discount function
-#'   used to compute alpha, the weight parameter of the historical data. Default
-#'   value is 0.135. For a two-arm trial, users may specify a vector of two
-#'   values where the first value is used to estimate the weight of the
-#'   historical treatment group and the second value is used to estimate the
-#'   weight of the historical control group. Not used when discount_function =
-#'   "identity".
-#' @param weibull_shape scalar. Shape parameter of the Weibull discount function
-#'   used to compute alpha, the weight parameter of the historical data. Default
-#'   value is 3. For a two-arm trial, users may specify a vector of two values
-#'   where the first value is used to estimate the weight of the historical
-#'   treatment group and the second value is used to estimate the weight of the
-#'   historical control group. Not used when discount_function = "identity".
+#' @inheritParams normalBACT
+#' @inheritParams binomialBACT
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with historical data for control and treatment group with the discount function.
@@ -653,7 +632,8 @@ historical_binomial <- function(y0_treatment       = NULL,
                                 alpha_max          = 1,            # max weight on incorporating historical data
                                 fix_alpha          = FALSE,        # fix alpha set weight of historical data to alpha_max
                                 weibull_scale      = 0.135,        # weibull parameter
-                                weibull_shape      = 3,             # weibull parameter
+                                weibull_shape      = 3,            # weibull parameter
+                                method             = "fixed",
                                 .data              = NULL
                                 ){
   .data$y0_treatment       <- y0_treatment
@@ -665,6 +645,7 @@ historical_binomial <- function(y0_treatment       = NULL,
   .data$fix_alpha          <- fix_alpha
   .data$weibull_scale      <- weibull_scale
   .data$weibull_shape      <- weibull_shape
+  .data$method             <- method
   .data
 }
 
@@ -673,9 +654,9 @@ historical_binomial <- function(y0_treatment       = NULL,
 #'
 #' @description Wrapper function for beta prior \code{beta(a0, b0)}.
 #'
-#' @param a0 numeric. The first shape paramater in the beta distribution
+#' @param a0 numeric. The first shape parameter in the beta distribution
 #'   (\code{beta(a0, b0)}).
-#' @param b0 numeric. The second shape paramater in the beta distribution
+#' @param b0 numeric. The second shape parameter in the beta distribution
 #'   (\code{beta(a0, b0)}).
 #' @param .data NULL. stores the beta prior rate, please do not fill it in.
 #'
@@ -689,9 +670,9 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
 }
 
 
-#' @title Analyzing bayesian trial for binomial counts
+#' @title Analyzing Bayesian trial for binomial counts
 #'
-#' @description Function to analyze bayesian trial for binomial count data
+#' @description Function to analyze Bayesian trial for binomial count data
 #'  which allows early stopping and incorporation of historical data using
 #'  the discount function approach
 #'
@@ -709,7 +690,7 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL){
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpbinomial
 #'
-#' @return a list of output for the bayesian trial for binomial count.
+#' @return a list of output for the Bayesian trial for binomial count.
 #'
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
@@ -768,7 +749,8 @@ binomial_analysis <- function(
   fix_alpha             = FALSE,
   alpha_max             = 1,
   weibull_scale         = 0.135,
-  weibull_shape         = 3
+  weibull_shape         = 3,
+  method                = "fixed"
 ){
 
   #if complete is NULL, assume the data is complete
@@ -815,7 +797,8 @@ binomial_analysis <- function(
                       alpha_max              = alpha_max,
                       fix_alpha              = fix_alpha,
                       weibull_scale          = weibull_scale,
-                      weibull_shape          = weibull_shape)
+                      weibull_shape          = weibull_shape,
+                      method                 = method)
 
 
   # assigning stop_futility and expected success
@@ -871,7 +854,8 @@ binomial_analysis <- function(
                             alpha_max              = alpha_max,
                             fix_alpha              = fix_alpha,
                             weibull_scale          = weibull_scale,
-                            weibull_shape          = weibull_shape)
+                            weibull_shape          = weibull_shape,
+                            method                 = method)
 
     if(sum(data$treatment == 0) != 0){
       if(alternative == "two-sided"){
@@ -945,7 +929,8 @@ binomial_analysis <- function(
                             alpha_max            = alpha_max,
                             fix_alpha            = fix_alpha,
                             weibull_scale        = weibull_scale,
-                            weibull_shape        = weibull_shape)
+                            weibull_shape        = weibull_shape,
+                            method               = method)
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself

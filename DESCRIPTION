@@ -17,6 +17,8 @@ NeedsCompilation: no
 URL: https://github.com/thevaachandereng/bayesCT/
 BugReports: https://github.com/thevaachandereng/bayesCT/issues/
 Encoding: UTF-8
+Depends:
+    R (>= 2.10)
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: testthat,
@@ -28,4 +30,7 @@ VignetteBuilder: knitr
 Imports: bayesDP,
     dplyr,
     purrr,
+    msm,
+    survival, 
     magrittr
+

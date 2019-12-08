@@ -1,0 +1,403 @@
+---
+title: "Time-to-Event Outcome"
+author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
+header-includes:
+   - \usepackage{amsmath}
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{bayesCT:survival}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, echo=FALSE, results="hide"}
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+suppressWarnings(RNGversion("3.5.0"))
+set.seed(28999)
+```
+
+```{r, echo = FALSE, message = FALSE}
+library(bayesCT)
+```
+
+# Piecewise exponential function for time-to-event data
+
+For time-to-event data, the piecewise constant hazard function for k different constant hazards is
+
+$\begin{eqnarray}
+	h(t) &=& \begin{cases}
+	\lambda_1 & 0\leq t<\tau_1\\
+	\lambda_2 & \tau_1\leq t <\tau_2\\
+	\vdots & \vdots \\
+	\lambda_{k} & t\geq\tau_{k - 1}
+	\end{cases}
+	\end{eqnarray}$.
+	
+We know that survival function $S(t)$, cumulative distribution function $F(t)$ and cumulative hazard function $H(t)$ are related.
+$S(t) = \exp(-H(t))$, $exp(-H(t)) = 1 - F(t)$. 
+If $U \sim Unif(0,1)$, then $F(X) = U$ is equivalent to $1-\exp(-H(X)) = U$, so $X=H^{-1}(-\log(1-U))$.  Note that $-\log(1-U) \sim Exp(1)$.
+Thus, we can simulate $x$ in exponential distribution and substitute it into the inverse hazard function. 
+
+
+$\begin{eqnarray}
+H^{-1}(t)&=&\begin{cases}
+\frac{t}{\lambda_1} & 0\leq t < \lambda_1\tau_1\\
+\frac{t - \lambda_1\tau_1}{\lambda_2}+\tau_1 & \lambda_1\tau_1 \leq t < \lambda_1\tau_1 + \lambda_2(\tau_2-\tau_1)\\
+	\vdots & \vdots \\
+\frac{t - (\lambda_1\tau_1 + \sum_{i = 2}^{k - 2} \lambda_i (\tau_k - \tau_{k - 1}))}{\lambda_{k - 1}}+\tau_{k - 2} &  \lambda_1\tau_1 + \sum_{i = 2}^{k - 2} \lambda_i (\tau_k - \tau_{k - 1}) \leq t < \lambda_1\tau_1 + \sum_{i = 2}^{k - 1} \lambda_i (\tau_k - \tau_{k - 1})\\
+\frac{t - (\lambda_1\tau_1 + \sum_{i = 2}^{k - 1} \lambda_i (\tau_k - \tau_{k - 1}))}{\lambda_k}+\tau_{k - 1} &  t \geq \lambda_1\tau_1 + \sum_{i = 2}^{k - 1} \lambda_i (\tau_k - \tau_{k - 1})\\
+\end{cases}
+\end{eqnarray}$
+
+The `pw_exp_sim` function simulates time-to-event outcomes using piecewise constant hazard function. 
+
+
+
+# Estimation of Treatment Difference 
+
+Let $d_{ij}$ and $t_{ij}$ denote the the event indicator and event time or censoring time for the $i$th subject in the $j$th interval of the current data, respectively. Let $a_0$ and $b_0$ denote the shape and rate parameters of a gamma distribution, respectively. Then, the posterior distributions of the $j$th piecewise hazard rates for current and historical data, under vague (flat) priors are
+$$\lambda_{j} \sim \mathcal{G}amma\left(a_0+D_j,\,b_0+T_j\right),$$
+where $D_j=\sum_id_{ij}$, $T_j=\sum_it_{ij}$.
+When historical data is present, let $d_{0ij}$ and $t_{0ij}$ denote the the event indicator and event time or censoring time for the $i$th subject in the $j$th interval of the historical data, respectively.
+The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. The computation of $\alpha$ is done using the discount prior approach \cite{haddad2017incorporation}.
+The posterior distribution of the piecewise hazard rate for the historical data is
+$$\lambda_{j} \sim \mathcal{G}amma\left(a_0+D_j + \alpha D_{0j},\,b_0+T_j + \alpha T_{0j}\right),$$
+where $D_j=\sum_id_{ij}$, $T_j=\sum_it_{ij}$, $D_{0j}=\sum_id_{0ij}$, and $T_{j0}=\sum_it_{0ij}$.
+Even though there is a closed-form solution for the difference in gamma distributed random variables, we use Monte Carlo simulations to estimate the treatment difference. 
+The estimation of posterior chain of log-hazard rate comparing treatment and control groups is $\tilde{\lambda_{jT}} - \tilde{\lambda_{jT}}$, where $\lambda_{jT}$ is the posterior chain of log-hazard in the treatment group and $\lambda_C$ is the posterior chain of log-hazard in the control group.
+
+
+# Wrapper Function for Design and Analysis
+
+Unlike traditional R functions, the `bayesCT` package depends on pipe inputs with different wrapper functions. All the wrapper functions are illustrated below along with details on the arguments for the simulation and analysis.  
+
+* **piecewise_exponential** - wrapper function for specifying observations. Inputs: 
+    + **lambda_treatment** - hazard rate of the treatment group. Required input.
+    + **cutoff** - timepoint cutoff for hazard rate. Required input if * lambda_treatment* is a vector of length two or more.This is the same for the control arm.  
+    + **lambda_control** - hazard rate of the control group. Default value is NULL.
+    
+
+* **study_details** - wrapper function for specifying sample size, study length, interim looks, and loss to follow-up. Inputs:
+    + **total_sample_size** - sample size required to run the simulation 
+    + **study_period** - length of the study, i.e., the follow-up period
+    + **interim_look** - enrollment values where interim looks are carried out. Specify where the trials are stopped to check for early success or futility. For more details on the early stopping for futility or success, please see [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#early-stopping-for-futility-or-success). Each `interim_look` value must be smaller than `total_sample_size`. 
+    + **prop_loss_to_followup** - proportion of subjects loss to follow-up. Must be a value be 0 and 1. Default value is 0.10. 
+
+
+* **enrollment_rate** - wrapper function for specifying enrollment. Inputs: 
+    + **lambda** - enrollment rate(s) at each `time`. Specified as patients per day. Can be a scalar or vector. Default is 0.3, i.e. 0.3 patients per day. 
+    + **time** - determines the cut-off for the enrollment rates. Can be NULL, a scalar, or a vector. Default is NULL. For more details, please see  [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#recruitment).  
+
+
+* **hypothesis** - wrapper function for both simulation and analysis. Inputs:
+    + **delta** - threshold difference between treatment and control groups or the threshold for single-arm trial (the default is set to 0). For non-inferiority trials, the difference must be < 0.  
+    + **prob_accept_ha** - probability of accepting alternative hypothesis. Default value is 0.95. 
+    + **futility_prob** - futility rate, i.e., $\omega$ in  [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#futility). The default is set to 0.10. To prevent the trial for stopping for futility, set the **futility_prob** to 0. 
+    + **expected_success_prob** - controls stopping early for success rate, i.e., $\Delta$ in https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#success). The default value is 0.90. To prevent the trial for stopping for early success, use 1.
+    + **alternative** - sign of the alternative hypothesis. Character string specifying one of "greater" $\lambda_{treatment} > \lambda_{control}$ (default), "less" $\lambda_{treatment} < \lambda_{control}$ or "two-sided" $\lambda_{treatment} \neq \lambda_{control}$.
+
+
+* **randomize** - wrapper function for specifying the randomization scheme. Inputs: 
+    + **block_size** - size of each enrollment block. 
+    + **randomization_ratio** - ratio of control to treatment, specified as a vector of length 2. For more details, see [https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme](https://thevaachandereng.github.io/bayesCT/articles/bayesCT.html#randomization-scheme).  
+
+
+* **impute** - wrapper function specifying imputation of outcomes at the interim looks. Inputs:
+    + **no_of_impute** - number of imputations. Used to impute outcomes for subjects potentially loss to follow-up when estimating the probability of stopping for early success and/or futility. In the case of the futility calculation, subjects not yet enrolled or imputed as well. Default value is 10 so that the vignette can be generated quickly. However, much larger values should be used in practice, e.g., 10000.
+    + **number_mcmc** - number of Monte Carlo iterations for sampling from posterior distributions during imputation. Default value is 10000.  
+
+* **historical_survival** - wrapper function for specifying historical data, if available. This function should only be used when historical data is incorporated in the analysis or simulation. For more details on the method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). Inputs:
+    + **time** - This is the follow up time, it could be right-censored.
+    + **treatment** - The treatment indicator, 0=control, 1=treatment.
+    + **event** - The status indicator for time, normally 0=alive, 1=dead.
+    + **discount_function** - discount function to use for controlling the weight given to the historical data. Currently supports `weibull`, `scaledweibull`, and `identity`. The discount function `scaledweibull` scales the output of the Weibull CDF to have a max value of 1. The `identity` discount function uses the posterior probability directly as the discount weight. Default value is `"identity"`.
+    + **alpha_max** - maximum weight the discount function can apply. Default is 1. For a two-arm trial, users may specify a vector of two values where the first value is used to weight the historical treatment group and the second value is used to weight the historical control group.
+    + **fix_alpha** - Should alpha be set to alpha_max? Default value is FALSE.
+    + **weibull_scale** - scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
+    + **weibull_shape** - shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
+     + **method** - analysis method with respect to estimation of the weight paramter alpha. Default method `mc` estimates alpha for each Monte Carlo iteration. Alternate value `fixed` estimates alpha once and holds it fixed throughout the analysis.  See the the
+`bdpsurvival` vignette `vignette("bdpsurvival-vignette", package="bayesDP"` for more details.
+    
+    
+
+* **analysis** - wrapper function for analyzing a trial. Inputs:
+    + **input** - list of input to analyze the adaptive trial. 
+    + **type** - outcome type of the trial. Use `type="survival"` for a trial with time-to-event outcomes. 
+
+
+* **simulate** - wrapper function for simulating trials. Should be used as the terminal end of the pipe. Inputs: 
+    + **input** - list of inputs specifying the adaptive trial simulation set-up.
+    + **no_of_sim** - number of trials to simulate. Default value is 10000. 
+
+
+# Design of Adaptive Trials
+
+In the following section, we will discuss the design of adaptive trials using `bayesCT` for time-to-events outcomes. We illustrate an example for one-arm trial and two-arm trials using the wrapper functions described above. 
+
+
+## One-arm Trial
+
+In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performance criterion (OPC) trial with hazard rates and hypothesis described as follows, 
+$$H_0: P(S_{treatment} > 70) \leq 0.5 \qquad H_A: P(S_{treatment} > 70) > 0.5.$$
+
+The most important wrapper functions are **study_details** and **survival_outcome** (especially since there are no default values).
+
+The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
+
+```{r opcminimum}
+value <- survival_outcome(hazard_treatment = c(0.012, 0.008), 
+                          cutpoint         = 30) %>%
+  study_details(total_sample_size     = 200, 
+                study_period          = 70,
+                interim_look          = NULL,
+                prop_loss_to_followup = 0.1) 
+ 
+				
+# Simulate 10 trials
+output <- value %>%
+  simulate(no_of_sim = 5)
+
+# Structure of the simulation output
+str(output)
+```
+
+
+
+To allow for early stopping for success or futility, we can add interim looks to the design. We'll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
+
+
+```{r opcinterimlook}
+# Adding interim looks
+value <- value %>%
+  study_details(total_sample_size     = 200, 
+                study_period          = 70,
+                interim_look          = 180,
+                prop_loss_to_followup = 0.10)
+
+# Simulate 10 trials
+output <- value %>% 
+  simulate(no_of_sim = 5)
+
+# Structure of the simulation output
+str(output)
+```
+
+Patient enrollment is assumed to follow a Poisson process. The default enrollment rate is 0.3 patients per day. In this simulation we'll introduce a step-wise Poisson process with rate $\lambda$ as follows:
+
+\[  \lambda = \left\{
+\begin{array}{ll}
+      0.25 & \text(time) \in [0, 40) \\
+      0.8 & \text(time) \in [40, \infty) \\
+\end{array} 
+\right. \]
+
+This enrollment scheme is illustrated below. 
+
+```{r opcenrollment}
+value <- value %>%
+  enrollment_rate(lambda = c(0.25, 0.8), 
+                  time   = 40)
+
+output <- value %>%
+  simulate(no_of_sim = 5)
+
+str(output)
+```
+
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probability of early success, the alternative hypothesis, and the treatment difference margin.
+ 
+
+We'll further set the futility probability to 0.05, the expected success probability for early stopping to 0.90, and the final probability of accepting the alternative to 0.95. The alternative is `"less"` due to the hypothesis function specified above.  
+
+```{r opchypo}
+value <- value %>%
+  hypothesis(delta                  = 0.50,
+             futility_prob          = 0.05,
+             prob_accept_ha         = 0.95,
+             expected_success_prob  = 0.90,
+             alternative            = "less")
+
+output <- value %>%
+  simulate(no_of_sim = 5)
+
+str(output)
+```
+
+Next, we'll illustrate imputations for imputing outcomes for subjects loss to follow up. We'll carry out 10 imputations and draw 2000 values from the posterior of each imputation. 
+
+```{r opcimpute}
+value <- value %>%
+  impute(no_of_impute = 10, 
+         number_mcmc  = 2000)
+
+output <- value %>%
+  simulate(no_of_sim = 5)
+
+str(output)
+```
+
+The default non-informative gamma prior used in the simulation is $\mathcal{G}amma(.1, .1)$. In our OPC trial simulation, we'll change the default to $\mathcal{G}amma(.2, .2)$. This will increase the weight of the non-informative prior in the simulation. This non-informative gamma prior is implemented using gamma_prior wrapper function.
+
+```{r opcprior}
+value <- value %>%
+  gamma_prior(a0 = .2, 
+             b0 = .2)
+
+output <- value %>%
+  simulate(no_of_sim = 5)
+
+str(output)
+```
+
+Historical data is not required to compute the simulation. However, if historical data is avaialble, it can be incorporated into the analysis using the discount prior approach as implemented in the  `bayesDP` R package. 
+ 
+In our OPC trial, we'll illustrate historical data incorporation. We'll simulate the historical data as follows. 
+
+```{r}
+hist_data <- data.frame(time      = rexp(100, 0.011),
+                        event     = rbinom(100, 1, 0.8),
+                        treatment = rep(1, 100))
+
+str(hist_data)
+```
+
+
+
+We'll incorporate this historical data using the weilbull discount function. 
+For more details on the historical data incorporation method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). 
+
+```{r opchist}
+value <- value %>%
+  historical_survival(time              = hist_data$time, 
+                      treatment         = hist_data$treatment,
+                      event             = hist_data$event,
+                      discount_function = "weibull",
+                      alpha_max         = 1, 
+                      fix_alpha         = FALSE,
+                      weibull_scale     = 0.135, 
+                      weibull_shape     = 3,
+                      method            = "mc")
+
+output <- value %>%
+  simulate(no_of_sim = 5)
+
+str(output)
+```
+he above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 10 times to obtain results. 
+
+
+```{r opcoverall}
+value <- survival_outcome(hazard_treatment = c(0.012, 0.008), 
+                          cutpoint         = 30) %>%
+  enrollment_rate(lambda = c(0.25, 0.8), 
+                  time   = 40) %>%
+  study_details(total_sample_size     = 200, 
+                study_period          = 70,
+                interim_look          = 180,
+                prop_loss_to_followup = 0.10) %>%
+  hypothesis(delta                  = 0.50,
+             futility_prob          = 0.05,
+             prob_accept_ha         = 0.95,
+             expected_success_prob  = 0.90,
+             alternative            = "less") %>%
+  impute(no_of_impute = 10, 
+         number_mcmc  = 2000) %>%
+  gamma_prior(a0 = .2,
+              b0 = .2) %>%
+   historical_survival(time             = hist_data$time, 
+                      treatment         = hist_data$treatment,
+                      event             = hist_data$event,
+                      discount_function = "weibull",
+                      alpha_max         = 1, 
+                      fix_alpha         = FALSE,
+                      weibull_scale     = 0.135, 
+                      weibull_shape     = 3,
+                      method            = "mc") %>%
+  simulate(no_of_sim = 5)
+
+str(value)
+```
+
+
+
+## Two-arm Trial
+In this section, we will illustrate how to perform the design of a two-arm trial without the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is 
+$$H_0: \lambda_{treatment} - \lambda_{control} \geq 0 \qquad H_A: \lambda_{treatment} - \lambda_{control} < 0.$$
+
+Unlike the OPC trial above, we will not include interim looks. The hazard rates of the treatment group are 0.01 and 0.012 and the hazard rates for the control group are 0.015 and 0.017 with a cutpoint at 25 days. The total sample size is 250 with a study length of 30 days. A 10% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.
+
+```{r twoarmall}
+value <- survival_outcome(hazard_treatment = c(0.01, 0.012),
+                          hazard_control   = c(0.015, 0.017),
+                          cutpoint         = 25) %>%
+  study_details(total_sample_size     = 250, 
+                study_period          = 100,
+                interim_look          = NULL,
+                prop_loss_to_followup = 0.10) %>%
+  hypothesis(delta                 = 0,
+             futility_prob         = 0,
+             prob_accept_ha        = 0.95,
+             expected_success_prob = 1,
+             alternative           = "less") %>%
+  impute(no_of_impute = 25, 
+         number_mcmc  = 5000) %>%
+  enrollment_rate(lambda = c(0.8), 
+                  time = NULL) %>%
+  randomize(block_size          = c(4, 6), 
+            randomization_ratio = c(1, 1)) %>%
+  simulate(no_of_sim = 10)
+
+str(value)
+```
+
+
+
+
+# Analysis
+
+In this section, we will demonstrate how to run an adaptive Bayesian trial using **bayesCT**. A sample dataset is provided in the package. 
+The dataset **survivaldata** contains the results of 100 subjects from a two-arm trial with time-to-event outcomes.
+
+```{r data}
+data(survivaldata)
+
+head(survivaldata)
+```
+
+The minimum input needed to run an adaptive Bayesian trial is the data itself. The **data_survival** input allows the input of the data. The treatment group (0 for control, 1 for treatment) and time input are essential for the analysis. However, if the event input is not provided, the function assumes the events have occurred. A default analysis is carried out below. 
+
+```{r analysisdata}
+input <- data_survival(time       = survivaldata$time,
+                       treatment  = survivaldata$treatment,
+                       event      = survivaldata$event)
+
+out <- input %>%
+  analysis(type = "survival")
+
+str(out)
+```
+We'll now illustrate using piping to carry out the complete analysis. First, we'll assume the following hypothesis:
+$$H_0:\theta_{treatment} - \theta_{control} <= 0.02 \quad H_A: \theta_{treatment} - \theta_{control} > 0.02$$
+The delta and alternative used to analyze the trial is 0.02 and "greater" respectively. The probability of accepting the alternative is 0.95, the probability of stopping for futility is 0.05, and the probability of stopping for success is 0.90. We will carry out imputations on subjects loss to follow up. Additionally, we will incorporate historical data on the treatment arm.
+
+```{r analysisall}
+out <- data_survival(time       = survivaldata$time,
+                     treatment  = survivaldata$treatment,
+                     event      = survivaldata$event) %>%
+  hypothesis(delta                 = 0.02, 
+             futility_prob         = 0.05, 
+             prob_accept_ha        = 0.95,
+             expected_success_prob = 0.90,
+             alternative           = "less") %>%
+  impute(no_of_impute = 50, 
+         number_mcmc  = 10000) %>%
+  gamma_prior(a0 = .2, 
+              b0 = .2) %>%
+  analysis(type = "survival")
+
+str(out)
+
+```

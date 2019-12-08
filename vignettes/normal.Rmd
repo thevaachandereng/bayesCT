@@ -46,7 +46,7 @@ $$ \begin{array}{rcl}
 \mu_0 \mid \bar{y}_0, N_0, \sigma^2_0 &  \sim  & \mathcal{N}ormal\left(\bar{y}_0,\, \frac{1}{N_0}\sigma^2_0  \right).
 \end{array}$$
 The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. 
-For more details on computation of $\hat{\alpha}$, please refer to the vignette of binomial counts avaialable at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
+For more details on computation of $\hat{\alpha}$, please refer to the vignette of binomial counts available at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
 The posterior distribution of the mean outcome with historical data incorporated under vague (flat) priors is 
 $$\tilde{\mu} \sim \mathcal{N}ormal\left( \frac{\sigma^2_0N\bar{y} + \tilde{\sigma}^2N_0\bar{y}_0\hat{\alpha}}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}},\,\frac{\tilde{\sigma}^2\sigma^2_0}{N\sigma^2_0 + \tilde{\sigma}^2N_0\hat{\alpha}}      \right).$$
 
@@ -110,11 +110,13 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
     + **fix_alpha** - Should alpha be set to alpha_max? Default value is FALSE.
     + **weibull_scale** - scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
     + **weibull_shape** - shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
+     + **method** - analysis method with respect to estimation of the weight paramter alpha. Default method `mc` estimates alpha for each Monte Carlo iteration. Alternate value `fixed` estimates alpha once and holds it fixed throughout the analysis.  See the the
+`bdpsurvival` vignette `vignette("bdpnormal-vignette", package="bayesDP"` for more details.
 
 
 * **data_normal** - wrapper function for inputting data with a normal outcome. Inputs:
     + **treatment** - assignment for patients in the trial, 1 for treatment group and 0 for control group. Input should be a vector.
-    + **outcome** - continuous valued outcome of the trial. Input should be a vector with same lenggth as **treatment**. 
+    + **outcome** - continuous valued outcome of the trial. Input should be a vector with same length as **treatment**. 
     + **complete** - indicator for whether outcome is observed; 1 for complete outcome, 0 for loss to follow up or not yet observed. If a value is 0, the outcome of the patient is ignored. If not provided, the dataset is assumed to be complete.
 
 
@@ -137,7 +139,7 @@ In the following section, we will discuss the design of adaptive trials using `b
 
 ## One-arm Trial
 
-In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performace criterion (OPC) trial with mean outcome and hypothesis described as follows, 
+In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performance criterion (OPC) trial with mean outcome and hypothesis described as follows, 
 $$H_0: \mu_{treatment} \geq 120 \qquad H_A:\mu_{treatment} < 120.$$
 
 The most important wrapper functions are **study_details** and **normal_outcome** (especially since there are no default values).
@@ -202,7 +204,7 @@ str(output)
 
 
 
-The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probablity of early success, the alternative hypothesis, and the treatment difference margin.
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probability of early success, the alternative hypothesis, and the treatment difference margin.
  
 Since, in an OPC trial, the outcomes in the treatment group are simulated using the input provided, delta controls the maximum threshold allowed for trial to succeed/fail. The default value of `delta` is 0. Here, we'll use `delta = -10` (i.e $120 - \hat{\mu}_{treatment} < -10$). 
 
@@ -300,7 +302,8 @@ value <- normal_outcome(mu_treatment = 13,
                     alpha_max         = FALSE, 
 					fix_alpha         = 1,
                     weibull_scale     = 0.135, 
-					weibull_shape     = 3) %>%
+					weibull_shape     = 3,
+                      method            = "fixed") %>%
   simulate(no_of_sim = 10)
 
 str(value)

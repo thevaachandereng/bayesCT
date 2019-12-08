@@ -34,7 +34,7 @@ The purpose of this vignette is to introduce how to simulate and analyze an adap
 Let $y$ and $N$ denote the number of events and the sample size, respectively. Let $a_0$ and $b_0$ denote the rate parameters of a Beta distribution. Then, the posterior distribution of the event rate under vague (flat) priors is
 
 $$ \tilde{\theta}\mid y,N \; \sim \;  \mathcal{B}eta\left(y+a_0,\,N-y+b_0 \right).$$
-When historical data is present, $y_0$ and $N_0$ denote the number of events and sample size of the historical data. The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. For more details on the computation of $\hat{\alpha}$, please refer to the vignette of binomial counts avaialable at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
+When historical data is present, $y_0$ and $N_0$ denote the number of events and sample size of the historical data. The weight of the historical data included in the study design and analysis is denoted by $\hat\alpha$. For more details on the computation of $\hat{\alpha}$, please refer to the vignette of binomial counts available at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
 The posterior distribution of the event rate with historical data incorporated under vague (flat) priors is 
 
 $$\tilde{\theta} \mid y,N, y_0, N_0 \; \sim \; \mathcal{B}eta\left(y+y_0\hat{\alpha}+a_0,\, N-y+\hat{\alpha}(N_0-y_0)+b_0 \right),$$
@@ -99,11 +99,13 @@ Unlike traditional R functions, the `bayesCT` package depends on pipe inputs wit
     + **fix_alpha** - Should alpha be set to alpha_max? Default value is FALSE.
     + **weibull_scale** - scale parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 0.135. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
     + **weibull_shape** - shape parameter of the Weibull discount function used to compute alpha, the weight parameter of the historical data. Default value is 3. For a two-arm trial, users may specify a vector of two values where the first value is used to estimate the weight of the historical treatment group and the second value is used to estimate the weight of the historical control group. Not used when `discount_function = "identity"`.
+     + **method** - analysis method with respect to estimation of the weight paramter alpha. Default method `mc` estimates alpha for each Monte Carlo iteration. Alternate value `fixed` estimates alpha once and holds it fixed throughout the analysis.  See the the
+`bdpsurvival` vignette `vignette("bdpbinomial-vignette", package="bayesDP"` for more details.
 
 	
 * **data_binomial** - wrapper function for inputting data with a binomial outcome. Inputs: 
     + **treatment** - assignment for patients in the trial, 1 for treatment group and 0 for control group. Input should be a vector.
-    + **outcome** - outcome of the trial, 1 for response (success or failure), 0 for no response. Input should be a vector with same lenggth as **treatment**. 
+    + **outcome** - outcome of the trial, 1 for response (success or failure), 0 for no response. Input should be a vector with same length as **treatment**. 
     + **complete** - indicator for whether outcome is observed; 1 for complete outcome, 0 for loss to follow up or not yet observed. If a value is 0, the outcome of the patient is ignored. If not provided, the dataset is assumed to be complete.
 
 
@@ -124,7 +126,7 @@ In the following section, we will discuss the design of adaptive trials using `b
 
 ## One-arm Trial
 
-In the example below, we will illustrate how to compute power, type 1 error, and other characteristics for an objective performace criterion (OPC) trial with an observed proportion of events and  hypothesis described as follows, 
+In the example below, we will illustrate how to compute power, type 1 error, and other characteristics for an objective performance criterion (OPC) trial with an observed proportion of events and  hypothesis described as follows, 
 $$H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} < 0.08.$$
 
 The most important wrapper functions are **study_details** and **binomial_outcome** (especially since there are no default values).
@@ -187,7 +189,7 @@ output <- value %>%
 str(output)
 ```
 
-The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probablity of early success, the alternative hypothesis, and the treatment difference margin.
+The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probability of early success, the alternative hypothesis, and the treatment difference margin.
  
 Since, in an OPC trial, the proportion of events in the treatment group are simulated using the input provided, `delta` controls the maximum threshold allowed for the trial to succeed/fail. The default value of `delta` is 0. Here, we'll use `delta = -0.03` (i.e $\hat\theta_{treatment} - 0.08 > -0.03$). 
 
@@ -233,7 +235,7 @@ output <- value %>%
 str(output)
 ```
 
-Historical data is not required to compute the simulation. However, if historical data is avaialble, it can be incorporated into the analysis using the discount prior approach as implemented in the  `bayesDP` R packageg. 
+Historical data is not required to compute the simulation. However, if historical data is avaialble, it can be incorporated into the analysis using the discount prior approach as implemented in the  `bayesDP` R package. 
  
 In our OPC trial, we'll illustrate historical data incorporation. We'll assume that the historical data had 5 events in 55 subjects. We'll incorporate this historical data using the identity discount function. 
 
@@ -243,13 +245,14 @@ For more details on the historical data incorporation method and computation, pl
 value <- value %>%
   historical_binomial(y0_treatment      = 5, 
                       N0_treatment      = 55,
-					  discount_function = "identity",
+                      discount_function = "identity",
                       y0_control        = NULL, 
-					  N0_control        = NULL,
+                      N0_control        = NULL,
                       alpha_max         = 1, 
-					  fix_alpha         = FALSE,
+                      fix_alpha         = FALSE,
                       weibull_scale     = 0.135, 
-					  weibull_shape     = 3)
+                      weibull_shape     = 3,
+                      method            = "fixed")
 
 output <- value %>%
   simulate(no_of_sim = 10)
@@ -285,7 +288,8 @@ value <- binomial_outcome(p_treatment = 0.08) %>%
                       alpha_max         = 1, 
 					  fix_alpha         = FALSE,
                       weibull_scale     = 0.135, 
-					  weibull_shape     = 3) %>%
+					  weibull_shape     = 3, 
+                      method            = "fixed") %>%
   simulate(no_of_sim = 10)
 
 str(value)
@@ -374,7 +378,8 @@ out <- data_binomial(treatment = binomialdata$treatment,
                       alpha_max         = 1, 
 					  fix_alpha         = FALSE,
                       weibull_scale     = 0.135, 
-					  weibull_shape     = 3) %>%
+					  weibull_shape     = 3, 
+                      method            = "fixed") %>%
   analysis(type = "binomial")
 
 str(out)

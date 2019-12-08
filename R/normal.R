@@ -16,7 +16,7 @@
 #' @param sd0_control scalar. Standard deviation of the historical control group.
 #' @param N0_control scalar. Number of observations of the historical control group.
 #' @param N_total scalar. Total sample size.
-#' @param lambda vector. Erollment rates across simulated enrollment times. See
+#' @param lambda vector. Enrollment rates across simulated enrollment times. See
 #'   \code{\link{enrollment}} for more details.
 #' @param lambda_time vector. Enrollment time(s) at which the enrollment rates
 #'   change. Must be same length as lambda. See \code{\link{enrollment}} for
@@ -69,6 +69,12 @@
 #'   where the first value is used to estimate the weight of the historical
 #'   treatment group and the second value is used to estimate the weight of the
 #'   historical control group. Not used when discount_function = "identity".
+#' @param method character. Analysis method with respect to estimation of the weight
+#'   paramter alpha. Default method "\code{mc}" estimates alpha for each
+#'   Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+#'   and holds it fixed throughout the analysis.  See the the
+#'   \code{bdpsurvival} vignette \cr
+#'   \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.
 #'
 #'
 #' @return a list of output for a single trial simulation.
@@ -165,7 +171,8 @@ normalBACT <- function(
   alpha_max             = 1,            # max weight on incorporating historical data
   fix_alpha             = FALSE,        # fix alpha set weight of historical data to alpha_max
   weibull_scale         = 0.135,        # weibull parameter
-  weibull_shape         = 3             # weibull parameter
+  weibull_shape         = 3,            # weibull parameter
+  method                = "fixed"
  ){
   # checking inputs
   stopifnot((mu_treatment > 0 & sd_treatment > 0),
@@ -240,7 +247,7 @@ normalBACT <- function(
       mutate(subject_enrolled = id <= analysis_at_enrollnumber[i],
              subject_impute_futility = !subject_enrolled) %>%
       group_by(subject_enrolled) %>%
-      mutate(subject_impute_success = (max(enrollment) - enrollment <= EndofStudy & subject_enrolled) |
+      mutate(subject_impute_success = (enrollment[analysis_at_enrollnumber[i]] - enrollment <= EndofStudy & subject_enrolled) |
                (subject_enrolled & loss_to_fu))
 
     # Carry out interim analysis on patients with complete data only
@@ -282,7 +289,8 @@ normalBACT <- function(
                       alpha_max           = alpha_max,
                       fix_alpha           = fix_alpha,
                       weibull_scale       = weibull_scale,
-                      weibull_shape       = weibull_shape)
+                      weibull_shape       = weibull_shape,
+                      method              = method)
 
     # Imputation phase futility and expected success - initialize counters
     # for the current imputation phase
@@ -343,7 +351,8 @@ normalBACT <- function(
                             alpha_max         = alpha_max,
                             fix_alpha         = fix_alpha,
                             weibull_scale     = weibull_scale,
-                            weibull_shape     = weibull_shape)
+                            weibull_shape     = weibull_shape,
+                            method            = method)
 
 
       # Estimation of the posterior effect for difference between test and control
@@ -438,7 +447,8 @@ normalBACT <- function(
                             alpha_max           = alpha_max,
                             fix_alpha           = fix_alpha,
                             weibull_scale       = weibull_scale,
-                            weibull_shape       = weibull_shape)
+                            weibull_shape       = weibull_shape,
+                            method              = method)
 
 
       # Estimation of the posterior effect for difference between test and
@@ -579,7 +589,8 @@ normalBACT <- function(
                           alpha_max           = alpha_max,
                           fix_alpha           = fix_alpha,
                           weibull_scale       = weibull_scale,
-                          weibull_shape       = weibull_shape)
+                          weibull_shape       = weibull_shape,
+                          method              = method)
 
 
   ### Format and output results
@@ -687,35 +698,7 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 #'
 #' @description Wrapper function for historical data from normal outcome.
 #'
-#' @param mu0_treatment numeric. Mean of the historical treatment group.
-#' @param sd0_treatment numeric. The  Standard deviation of the historical treatment group.
-#' @param N0_treatment numeric. scalar. Number of observations of the historical treatment group.
-#' @param mu0_control numeric. Mean of the historical control group.
-#' @param sd0_control numeric. The  Standard deviation of the historical control group.
-#' @param N0_control numeric. umber of observations of the historical control group.
-#' @param discount_function character. Specify the discount function to use. Currently supports
-#'    weibull, scaledweibull, and identity. The discount function scaledweibull scales the
-#'    output of the Weibull CDF to have a max value of 1. The identity discount function
-#'    uses the posterior probability directly as the discount weight. Default value is
-#'    "identity".
-#' @param alpha_max scalar. Maximum weight the discount function can apply.
-#'   Default is 1. For a two-arm trial, users may specify a vector of two values
-#'   where the first value is used to weight the historical treatment group and
-#'   the second value is used to weight the historical control group.
-#' @param fix_alpha logical. Fix alpha at alpha_max? Default value is FALSE.
-#' @param weibull_scale scalar. Scale parameter of the Weibull discount function
-#'   used to compute alpha, the weight parameter of the historical data. Default
-#'   value is 0.135. For a two-arm trial, users may specify a vector of two
-#'   values where the first value is used to estimate the weight of the
-#'   historical treatment group and the second value is used to estimate the
-#'   weight of the historical control group. Not used when discount_function =
-#'   "identity".
-#' @param weibull_shape scalar. Shape parameter of the Weibull discount function
-#'   used to compute alpha, the weight parameter of the historical data. Default
-#'   value is 3. For a two-arm trial, users may specify a vector of two values
-#'   where the first value is used to estimate the weight of the historical
-#'   treatment group and the second value is used to estimate the weight of the
-#'   historical control group. Not used when discount_function = "identity".
+#' @inheritParams normalBACT
 #' @param .data NULL. stores the proportion of control and treatment, please do not fill it in.
 #'
 #' @return a list with historical data for control and treatment group with the discount function.
@@ -733,7 +716,8 @@ historical_normal <- function(mu0_treatment       = NULL,
                               alpha_max           = 1,            # max weight on incorporating historical data
                               fix_alpha           = FALSE,        # fix alpha set weight of historical data to alpha_max
                               weibull_scale       = 0.135,        # weibull parameter
-                              weibull_shape       = 3,             # weibull parameter
+                              weibull_shape       = 3,            # weibull parameter
+                              method              = "fixed",
                               .data               = NULL){
   .data$mu0_treatment       <- mu0_treatment
   .data$sd0_treatment       <- sd0_treatment
@@ -746,13 +730,14 @@ historical_normal <- function(mu0_treatment       = NULL,
   .data$fix_alpha           <- fix_alpha
   .data$weibull_scale       <- weibull_scale
   .data$weibull_shape       <- weibull_shape
+  .data$method              <- method
   .data
 }
 
 
-#' @title Analyzing bayesian trial for normal mean data
+#' @title Analyzing Bayesian trial for normal mean data
 #'
-#' @description Function to analyze bayesian trial for normal mean data
+#' @description Function to analyze Bayesian trial for normal mean data
 #'  which allows early stopping and incorporation of historical data using
 #'  the discount function approach
 #'
@@ -768,7 +753,7 @@ historical_normal <- function(mu0_treatment       = NULL,
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpnormal
 #'
-#' @return a list of output for the analysis of bayesian trial for normal mean.
+#' @return a list of output for the analysis of Bayesian trial for normal mean.
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
 #'     scalar. The input parameter of probability of accepting the alternative.}
@@ -827,7 +812,8 @@ normal_analysis <- function(
   fix_alpha             = FALSE,
   alpha_max             = 1,
   weibull_scale         = 0.135,
-  weibull_shape         = 3
+  weibull_shape         = 3,
+  method                = "fixed"
 ){
 
   #if complete is NULL, assume the data is complete
@@ -878,7 +864,8 @@ normal_analysis <- function(
                      alpha_max           = alpha_max,
                      fix_alpha           = fix_alpha,
                      weibull_scale       = weibull_scale,
-                     weibull_shape       = weibull_shape)
+                     weibull_shape       = weibull_shape,
+                     method              = method)
 
 
   # assigning stop_futility and expected success
@@ -938,7 +925,8 @@ normal_analysis <- function(
                           alpha_max           = alpha_max,
                           fix_alpha           = fix_alpha,
                           weibull_scale       = weibull_scale,
-                          weibull_shape       = weibull_shape)
+                          weibull_shape       = weibull_shape,
+                          method              = method)
 
     if(sum(data$treatment == 0) != 0){
       if(alternative == "two-sided"){
@@ -1015,7 +1003,8 @@ normal_analysis <- function(
                           alpha_max           = alpha_max,
                           fix_alpha           = fix_alpha,
                           weibull_scale       = weibull_scale,
-                          weibull_shape       = weibull_shape)
+                          weibull_shape       = weibull_shape,
+                          method              = method)
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself

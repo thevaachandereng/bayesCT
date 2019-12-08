@@ -2,7 +2,7 @@
 % Please edit documentation in R/binomial.R
 \name{binomial_analysis}
 \alias{binomial_analysis}
-\title{Analyzing bayesian trial for binomial counts}
+\title{Analyzing Bayesian trial for binomial counts}
 \usage{
 binomial_analysis(treatment, outcome, complete = NULL,
   y0_treatment = NULL, N0_treatment = NULL, y0_control = NULL,
@@ -10,7 +10,7 @@ binomial_analysis(treatment, outcome, complete = NULL,
   h0 = 0, number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
   expected_success_prob = 0.9, prior = c(1, 1),
   discount_function = "identity", fix_alpha = FALSE, alpha_max = 1,
-  weibull_scale = 0.135, weibull_shape = 3)
+  weibull_scale = 0.135, weibull_shape = 3, method = "fixed")
 }
 \arguments{
 \item{treatment}{vector. treatment assignment for patients, 1 for treatment group and
@@ -51,8 +51,8 @@ sampling posterior.}
 
 \item{expected_success_prob}{scalar. Probability of stopping early for success.}
 
-\item{prior}{vector. Prior value of beta rate, beta(a0, b0). The default is
-set to beta(1, 1).}
+\item{prior}{vector. Prior values of beta rate, Beta(a0, b0). The default is
+set to Beta(1, 1).}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
@@ -85,9 +85,16 @@ value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
+
+\item{method}{character. Analysis method with respect to estimation of the weight
+paramter alpha. Default method "\code{mc}" estimates alpha for each
+Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+and holds it fixed throughout the analysis.  See the the
+\code{bdpsurvival} vignette \cr
+\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
 }
 \value{
-a list of output for the bayesian trial for binomial count.
+a list of output for the Bayesian trial for binomial count.
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
@@ -125,7 +132,7 @@ a list of output for the bayesian trial for binomial count.
 }
 }
 \description{
-Function to analyze bayesian trial for binomial count data
+Function to analyze Bayesian trial for binomial count data
  which allows early stopping and incorporation of historical data using
  the discount function approach
 }
