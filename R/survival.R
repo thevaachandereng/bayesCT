@@ -115,7 +115,8 @@ survivalBACT <- function(
 
   # combining the histrotical data
   if(!is.null(time0)){
-    data0 <- data.frame(cbind(time = time0, event = event0, treatment = treatment0))
+    data0 <- data.frame(time = time0, treatment = treatment0, event = event0)
+    str(data0)
   }
   else{
     data0 <- NULL
@@ -994,9 +995,9 @@ historical_survival <- function(time               = NULL,
                                 method             = "fixed",
                                 .data              = NULL
 ){
-  .data$time               <- time
-  .data$treatment          <- treatment
-  .data$event              <- event
+  .data$time0              <- time
+  .data$treatment0         <- treatment
+  .data$event0             <- event
   .data$discount_function  <- discount_function
   .data$alpha_max          <- alpha_max
   .data$fix_alpha          <- fix_alpha
