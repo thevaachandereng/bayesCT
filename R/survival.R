@@ -71,7 +71,7 @@
 #'
 #'
 #' @importFrom stats runif
-#' @importFrom dplyr mutate filter group_by bind_cols bind_rows select
+#' @importFrom dplyr mutate filter group_by bind_cols bind_rows select ungroup
 #' @importFrom bayesDP bdpsurvival
 #' @export survivalBACT
 #'
@@ -115,8 +115,7 @@ survivalBACT <- function(
 
   # combining the histrotical data
   if(!is.null(time0)){
-    data0 <- data.frame(time = time0, treatment = treatment0, event = event0)
-    str(data0)
+    data0 <- data.frame(cbind(time = time0, event = event0, treatment = treatment0))
   }
   else{
     data0 <- NULL
@@ -230,7 +229,9 @@ survivalBACT <- function(
       # Carry out interim analysis on patients with complete data only
       # - Set-up `new data` data frame
       data <- data_interim %>%
-        filter(subject_enrolled)
+        filter(subject_enrolled) %>%
+        ungroup() %>%
+        select(time, event, treatment)
 
 
       # Analyze data using discount function via binomial
@@ -307,14 +308,16 @@ survivalBACT <- function(
 
         # create enrolled subject data frame for discount function analysis
         data <- data_success_impute %>%
-          filter(subject_enrolled)
+          filter(subject_enrolled)  %>%
+          ungroup() %>%
+          select(time, event, treatment)
 
 
         # analyze complete+imputed data using discount funtion via binomial
         # analyze complete+imputed data using discount funtion via binomial
         post_imp <- suppressWarnings(
           bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                      data               = data_success_impute,
+                      data               = data,
                       data0              = data0,
                       breaks             = breaks,
                       a0                 = prior[1],
@@ -413,12 +416,14 @@ survivalBACT <- function(
 
 
         # Create enrolled subject data frame for discount function analysis
-        data <- data_futility_impute
+        data <- data_futility_impute %>%
+          ungroup() %>%
+          select(time, event, treatment)
 
         # Analyze complete+imputed data using discount funtion via binomial
         post_imp <- suppressWarnings(
           bdpsurvival(formula            = Surv(time, event) ~ treatment,
-                      data               = data_success_impute,
+                      data               = data,
                       data0              = data0,
                       breaks             = breaks,
                       a0                 = prior[1],
@@ -527,7 +532,9 @@ survivalBACT <- function(
   # All patients that have made it to the end of study
   # - Subset out patients loss to follow-up
   data_final <- data_total %>%
-    filter(id <= stage_trial_stopped)
+    filter(id <= stage_trial_stopped) %>%
+    ungroup() %>%
+    select(time, event, treatment)
 
   # Compute the final MLE for the complete data using GLM function
   # MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
@@ -549,6 +556,9 @@ survivalBACT <- function(
                 weibull_scale      = weibull_scale,
                 weibull_shape      = weibull_shape,
                 method             = method))
+
+  data_final <- data_total %>%
+    filter(id <= stage_trial_stopped)
 
   ### Format and output results
   # Posterior effect size: test vs control or treatment itself
