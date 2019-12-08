@@ -133,7 +133,7 @@ survivalBACT <- function(
 
   ## make sure breaks is not more than Endofstudy
   if(!is.null(breaks)){
-    stopifnot(any(breaks > EndofStudy))
+    stopifnot(any(breaks < EndofStudy))
   }
 
   if(is.null(hazard_control) & h0 == 0){
