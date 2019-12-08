@@ -145,7 +145,7 @@ $$H_0: P(S_{treatment} > 70) \leq 0.5 \qquad H_A: P(S_{treatment} > 70) > 0.5.$$
 
 The most important wrapper functions are **study_details** and **survival_outcome** (especially since there are no default values).
 
-The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
+The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
 
 ```{r opcminimum}
 value <- survival_outcome(hazard_treatment = c(0.012, 0.008), 
@@ -158,7 +158,7 @@ value <- survival_outcome(hazard_treatment = c(0.012, 0.008),
 				
 # Simulate 10 trials
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -179,7 +179,7 @@ value <- value %>%
 
 # Simulate 10 trials
 output <- value %>% 
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -202,7 +202,7 @@ value <- value %>%
                   time   = 40)
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -221,20 +221,20 @@ value <- value %>%
              alternative            = "less")
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
 
-Next, we'll illustrate imputations for imputing outcomes for subjects loss to follow up. We'll carry out 20 imputations and draw 2000 values from the posterior of each imputation. 
+Next, we'll illustrate imputations for imputing outcomes for subjects loss to follow up. We'll carry out 10 imputations and draw 2000 values from the posterior of each imputation. 
 
 ```{r opcimpute}
 value <- value %>%
-  impute(no_of_impute = 20, 
+  impute(no_of_impute = 10, 
          number_mcmc  = 2000)
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -247,7 +247,7 @@ value <- value %>%
              b0 = .2)
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -282,7 +282,7 @@ value <- value %>%
                       method            = "mc")
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -303,7 +303,7 @@ value <- survival_outcome(hazard_treatment = c(0.012, 0.008),
              prob_accept_ha         = 0.95,
              expected_success_prob  = 0.90,
              alternative            = "less") %>%
-  impute(no_of_impute = 20, 
+  impute(no_of_impute = 10, 
          number_mcmc  = 2000) %>%
   gamma_prior(a0 = .2,
               b0 = .2) %>%
@@ -316,7 +316,7 @@ value <- survival_outcome(hazard_treatment = c(0.012, 0.008),
                       weibull_scale     = 0.135, 
                       weibull_shape     = 3,
                       method            = "mc") %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 5)
 
 str(value)
 ```
@@ -387,7 +387,7 @@ The delta and alternative used to analyze the trial is 0.02 and "greater" respec
 out <- data_survival(time       = survivaldata$time,
                      treatment  = survivaldata$treatment,
                      event      = survivaldata$event) %>%
-  hypothesis(delta                 = -1.02, 
+  hypothesis(delta                 = 0.02, 
              futility_prob         = 0.05, 
              prob_accept_ha        = 0.95,
              expected_success_prob = 0.90,
