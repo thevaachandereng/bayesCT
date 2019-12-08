@@ -126,6 +126,11 @@ survivalBACT <- function(
     stop("The input for alternative is wrong!")
   }
 
+  # if cutpoint is not NULL, assign breaks to cutpoint
+  if(!is.null(cutpoint)){
+    breaks <- cutpoint
+  }
+
   ## make sure breaks is not more than Endofstudy
   if(!is.null(breaks)){
     stopifnot(any(breaks > EndofStudy))
