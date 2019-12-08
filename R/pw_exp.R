@@ -122,7 +122,7 @@ pw_exp_sim <- function(hazard, n, maxtime = NULL, cutpoint = NULL) {
 #' @export pw_exp_impute
 
 
-pw_exp_impute <- function(time, hazard, maxtime, cutpoint = NULL) {
+pw_exp_impute <- function(time, hazard, maxtime = NULL, cutpoint = NULL) {
   ## checking input of parameters
   #make sure hazard is positive
   if(any(hazard < 0)) {stop("At least one of the hazard rate(s) is less than 0!")}
@@ -130,9 +130,17 @@ pw_exp_impute <- function(time, hazard, maxtime, cutpoint = NULL) {
   # make sure n is positive integer
   if(any(time < 0)) {stop("The time has to be positive!") }
 
-  #make sure maxtime is positive
-  if(maxtime <= 0 | length(maxtime) > 1) {stop("The maxtime needs to be greater than 0
-                                               and the length of maxtime needs to be 1!")}
+  #make sure maxtime is positive or null
+  if(!is.null(maxtime)){
+    if(maxtime <= 0 | length(maxtime) > 1) {
+      stop("The maxtime needs to be greater than 0 and
+           the length of maxtime needs to be 1!")}
+  }
+  else{
+    if(!is.null(maxtime)){
+      stop("Maxtime needs to be null or a scalar value!")
+    }
+  }
 
   #make sure hazard is positive
   if(length(hazard) > 1) {
@@ -193,10 +201,16 @@ pw_exp_impute <- function(time, hazard, maxtime, cutpoint = NULL) {
     }
   }
 
-  # if maxtime is lower than observed time, censor the data
-  min_time  <- pmin(t, maxtime)
-  event     <- as.numeric(t == min_time)
-  dat       <- data.frame(time = min_time, event = event)
+  if(!is.null(maxtime)){
+    # if maxtime is lower than observed time, censor the data
+    min_time  <- pmin(t, maxtime)
+    event     <- as.numeric(t == min_time)
+    dat       <- data.frame(time = min_time, event = event)
+  }
+  else{
+    dat       <- data.frame(time = t, event = rep(1, length(time)))
+  }
+
 
   # return dataset with time and event
   return(dat)
