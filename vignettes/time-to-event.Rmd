@@ -148,7 +148,7 @@ The most important wrapper functions are **study_details** and **survival_outcom
 The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
 
 ```{r opcminimum}
-value <- survival_outcome(hazard_treatment = c(0.012, 0.08), 
+value <- survival_outcome(hazard_treatment = c(0.012, 0.008), 
                           cutpoint         = 30) %>%
   study_details(total_sample_size     = 200, 
                 study_period          = 70,
@@ -250,6 +250,75 @@ output <- value %>%
   simulate(no_of_sim = 10)
 
 str(output)
+```
+
+Historical data is not required to compute the simulation. However, if historical data is avaialble, it can be incorporated into the analysis using the discount prior approach as implemented in the  `bayesDP` R package. 
+ 
+In our OPC trial, we'll illustrate historical data incorporation. We'll simulate the historical data as follows. 
+
+```{r}
+hist_data <- data.frame(time      = rexp(100, 0.011),
+                        event     = rbinom(100, 1, 0.8),
+                        treatment = rep(1, 100))
+
+str(hist_data)
+```
+
+
+
+We'll incorporate this historical data using the weilbull discount function. 
+For more details on the historical data incorporation method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). 
+
+```{r opchist}
+value <- value %>%
+  historical_survival(time              = hist_data$time, 
+                      treatment         = hist_data$treatment,
+                      event             = hist_data$event,
+                      discount_function = "weibull",
+                      alpha_max         = 1, 
+                      fix_alpha         = FALSE,
+                      weibull_scale     = 0.135, 
+                      weibull_shape     = 3,
+                      method            = "mc")
+
+output <- value %>%
+  simulate(no_of_sim = 10)
+
+str(output)
+```
+he above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 10 times to obtain results. 
+
+
+```{r opcoverall}
+value <- survival_outcome(hazard_treatment = c(0.012, 0.008), 
+                          cutpoint         = 30) %>%
+  enrollment_rate(lambda = c(0.25, 0.8), 
+                  time   = 40) %>%
+  study_details(total_sample_size     = 200, 
+                study_period          = 70,
+                interim_look          = 180,
+                prop_loss_to_followup = 0.10) %>%
+  hypothesis(delta                  = 0.50,
+             futility_prob          = 0.05,
+             prob_accept_ha         = 0.95,
+             expected_success_prob  = 0.90,
+             alternative            = "less") %>%
+  impute(no_of_impute = 20, 
+         number_mcmc  = 2000) %>%
+  gamma_prior(a0 = .2,
+              b0 = .2) %>%
+   historical_survival(time              = hist_data$time, 
+                      treatment         = hist_data$treatment,
+                      event             = hist_data$event,
+                      discount_function = "weibull",
+                      alpha_max         = 1, 
+                      fix_alpha         = FALSE,
+                      weibull_scale     = 0.135, 
+                      weibull_shape     = 3,
+                      method            = "mc") %>%
+  simulate(no_of_sim = 10)
+
+str(value)
 ```
 
 
