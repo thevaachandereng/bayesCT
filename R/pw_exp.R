@@ -31,12 +31,8 @@ pw_exp_sim <- function(hazard, n, maxtime = NULL, cutpoint = NULL) {
   if(!is.null(maxtime)){
     if(maxtime <= 0 | length(maxtime) > 1) {
       stop("The maxtime needs to be greater than 0 and
-           the length of maxtime needs to be 1!")}
-  }
-  else{
-    if(!is.null(maxtime)){
-      stop("Maxtime needs to be null or a scalar value!")
-    }
+           the length of maxtime needs to be 1!")
+      }
   }
 
   #make sure hazard is positive
@@ -134,12 +130,8 @@ pw_exp_impute <- function(time, hazard, maxtime = NULL, cutpoint = NULL) {
   if(!is.null(maxtime)){
     if(maxtime <= 0 | length(maxtime) > 1) {
       stop("The maxtime needs to be greater than 0 and
-           the length of maxtime needs to be 1!")}
-  }
-  else{
-    if(!is.null(maxtime)){
-      stop("Maxtime needs to be null or a scalar value!")
-    }
+           the length of maxtime needs to be 1!")
+      }
   }
 
   #make sure hazard is positive
