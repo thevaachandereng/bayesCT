@@ -1,0 +1,25 @@
+context("")
+test_that("The piecewise exponential simulate are", {
+  suppressWarnings(RNGversion("3.5.0"))
+  set.seed(200)
+  expect_equal(pw_exp_sim(hazard = 0.01, n = 100)$event, rep(1, 100))
+  expect_equal(pw_exp_sim(hazard = c(0.01, 0.005), n = 100, cutpoint = 20)$event, rep(1, 100))
+  expect_equal(pw_exp_sim(hazard = c(0.00, 0.005), n = 100, cutpoint = 50, maxtime = 51)$event, rep(0, 100))
+  expect_error(pw_exp_sim(hazard = c(0.00, 0.005), n = 100, cutpoint = c(50, 70), maxtime = 51))
+  expect_error(pw_exp_sim(hazard = c(0.01, 0.005, 0.01), n = 100, cutpoint = c(50, 70), maxtime = c(51, 90)))
+  expect_error(pw_exp_sim(hazard = c(-0.01, 0.005, 0.01), n = 100, cutpoint = c(50, 70)))
+})
+
+context("")
+test_that("The piecewise exponential impute are", {
+  suppressWarnings(RNGversion("3.5.0"))
+  set.seed(200)
+  expect_equal(pw_exp_impute(time = 20, hazard = 0.00)$event, 1)
+  expect_equal(pw_exp_impute(time = 14, hazard = c(0.01, 0.05), cutpoint = 20)$event, 1)
+  expect_equal(pw_exp_impute(time = 21, hazard = c(0.01, 0.05), cutpoint = 20)$event, 1)
+  expect_equal(pw_exp_impute(time = 56, hazard = c(0.02, 0.01), cutpoint = 50, maxtime = 20)$time, 20)
+  expect_error(pw_exp_impute(time = 22, hazard = c(0.00, 0.005), cutpoint = c(50, 70), maxtime = 51))
+  expect_error(pw_exp_impute(time = 100, hazard = c(0.01, 0.005, 0.01), cutpoint = c(50, 70), maxtime = c(51, 90)))
+  expect_error(pw_exp_impute(time = c(28, 99), hazard = c(-0.01, 0.005, 0.01), cutpoint = c(50, 70)))
+})
+
