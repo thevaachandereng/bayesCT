@@ -159,18 +159,18 @@ pw_exp_impute <- function(time, hazard, maxtime = NULL, cutpoint = NULL) {
   # generate exp(1)
   x <- rexp(length(time))
 
+  large <- max(time) + 1
 
   t <- rep(NA, length(time))
 
   for(k in 1:length(time)){
 
-    if(time[k] < maxtime){
       if(is.null(cutpoint)) {
         t[k] <- x[k] / hazard + time[k]
       }
 
       if(length(cutpoint) >= 1) {
-        index    <- min(which(time[k] < c(cutpoint, maxtime)))
+        index    <- min(which(time[k] < c(cutpoint, large)))
         interval <- c(time[k], cutpoint[index:length(cutpoint)])
         haz      <- hazard[index:length(hazard)]
         lamtau   <- NULL
@@ -195,10 +195,6 @@ pw_exp_impute <- function(time, hazard, maxtime = NULL, cutpoint = NULL) {
         }
         t[k] <- cp(x[k]) + time[k]
       }
-    }
-    else{
-      t[k] <- time[k]
-    }
   }
 
   if(!is.null(maxtime)){
@@ -210,7 +206,6 @@ pw_exp_impute <- function(time, hazard, maxtime = NULL, cutpoint = NULL) {
   else{
     dat       <- data.frame(time = t, event = rep(1, length(time)))
   }
-
 
   # return dataset with time and event
   return(dat)

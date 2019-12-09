@@ -4,7 +4,7 @@
 \alias{pw_exp_impute}
 \title{Imputes time-to-event outcomes.}
 \usage{
-pw_exp_impute(time, hazard, maxtime, cutpoint = NULL)
+pw_exp_impute(time, hazard, maxtime = NULL, cutpoint = NULL)
 }
 \arguments{
 \item{time}{vector. The observed time for patient that have had no event or passed maxtime.}
