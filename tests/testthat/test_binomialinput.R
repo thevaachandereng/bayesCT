@@ -6,8 +6,8 @@ test_that("The binomial_outcome are", {
 
 context("")
 test_that("The beta non-informative priors are", {
-  expect_equal(beta_prior(a0 = 0.5, b0 = 0.5)$a0, c(0.5, 0.5))
-  expect_equal(beta_prior(a0 = 2, b0 = 2)$a0, c(2, 2))
+  expect_equal(beta_prior(a0 = 0.5, b0 = 0.5)$prior, c(0.5, 0.5))
+  expect_equal(beta_prior(a0 = 2, b0 = 2)$prior, c(2, 2))
 })
 
 
