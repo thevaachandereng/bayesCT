@@ -29,15 +29,10 @@ pw_exp_sim <- function(hazard, n, maxtime = NULL, cutpoint = NULL) {
 
   #make sure maxtime is positive or null
   if(!is.null(maxtime)){
-    if(any(maxtime <= 0)) {
+    if(maxtime <= 0 | length(maxtime) > 1) {
       stop("The maxtime needs to be greater than 0 and
            the length of maxtime needs to be 1!")
       }
-  }
-
-  if(!is.null(maxtime) & length(maxtime) > 2){
-    maxtime <- maxtime[1]
-    warning("The first maxtime input is used!")
   }
 
   #make sure hazard is positive
