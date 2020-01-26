@@ -1,32 +1,36 @@
 Package: bayesCT
 Type: Package
-Title: An R Package for Simulation in Adaptive Bayesian Clinical Trials (bayesCT)
-Version: 1.0.0
-Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu", role = c("cre", "aut")), 
-             person("Graeme", "Hickey", email = "graeme.l.hickey@medtronic.com", role = c("aut")), 
-             person("Donald", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut")), 
-             person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com", role = c("aut")),
-             person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com", role = c("aut")),
-             person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com", role = c("aut")))
-Description: Simulation of bayesian adaptive clinical trial, incorporates power, early stopping, 
-             futility analysis and optimal randomization ratio.
+Title: Simulation and Analysis of Adaptive Bayesian Clinical Trials 
+Version: 0.99.2
+Authors@R: c(person(given = "Thevaa", family = "Chandereng", role = c("aut", "cre", "cph"), 
+             email = "chandereng@wisc.edu", comment = c(ORCID = "0000-0003-4078-9176")), 
+             person("Donald", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut", "cph")), 
+             person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com", role = c("aut", "cph")),
+	           person("Graeme", "Hickey", email = "graeme.l.hickey@medtronic.com", role = c("aut", "cph")), 
+             person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com", role = c("aut", "cph")),
+             person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com", role = c("aut", "cph")))
+Description: Simulation and analysis of Bayesian adaptive clinical trial, incorporates historical 
+      data and allows early stopping for futility or early success. 
 LazyLoad: yes
 License: GPL-3
 NeedsCompilation: no
 URL: https://github.com/thevaachandereng/bayesCT/
 BugReports: https://github.com/thevaachandereng/bayesCT/issues/
 Encoding: UTF-8
+Depends:
+    R (>= 2.10)
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: testthat,
-    knitr,
     rmarkdown, 
-    pkgdown
+    pkgdown, 
+    devtools,
+    knitr
 VignetteBuilder: knitr
-Imports: tidyr,
+Imports: bayesDP,
     dplyr,
-    bayesDP,
-    parallel,
+    purrr,
     msm,
-    magrittr,
-    devtools
+    survival, 
+    magrittr
+

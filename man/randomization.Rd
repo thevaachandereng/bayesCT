@@ -2,27 +2,35 @@
 % Please edit documentation in R/randomization.R
 \name{randomization}
 \alias{randomization}
-\title{Randomization scheme}
+\title{Randomization allocation}
 \usage{
-randomization(N_total, block = 2, scheme = c(1, 1))
+randomization(N_total, block = 2, allocation = c(1, 1))
 }
 \arguments{
-\item{N_total}{an integer value of total sample size for randomization scheme.}
+\item{N_total}{an integer value of total sample size for randomization allocation.}
 
-\item{block}{an integer value of the block size for randomization. Note that it needs to be a multiple of the sum of \code{scheme}.}
+\item{block}{a vector value of the block size for randomization. Note that it needs to be a multiple of the sum of \code{allocation}.}
 
-\item{scheme}{a numeric vector of the randomization scheme in the order \code{c(control, treatment)}.}
+\item{allocation}{a numeric vector of the randomization allocation in the order \code{c(control, treatment)}.}
 }
 \value{
-the randomization scheme with 0, 1 for control and treatment
+the randomization allocation with 0, 1 for control and treatment
 }
 \description{
-Implements a randomization scheme for control and treatment arms with different randomization ratios and block sizes.
+Implements a randomization allocation for control and treatment arms with different randomization ratios and block sizes.
 }
 \examples{
-# Implementing randomization scheme for control to treatment with 1:1.5 randomization ratio
-randomization(100, block = 5, c(2, 3))
+# Implementing treatment allocation for control to treatment with 1:1.5 randomization ratio
+randomization(N_total = 100, block = 5, allocation = c(2, 3))
 
-# Randomization scheme with 2:1 for control to treatment
-randomization(70, block = 9, c(2, 1))
+# Treatment allocation with 2:1 for control to treatment
+randomization(N_total = 70, block = 9, allocation = c(2, 1))
+
+# Treatment allocation for control to treatment with 1:2 for control to treatment with
+# multiple block sizes c(3, 9, 6)
+randomization(N_total = 100, block = c(3, 9, 6), allocation = c(1, 2))
+
+# For complete randomization set the N_total to block size
+randomization(N_total = 100, block = 100, allocation = c(1, 1))
+
 }

@@ -4,13 +4,14 @@
 \alias{randomize}
 \title{Randomization scheme wrapper}
 \usage{
-randomize(block_size, randomization_ratio, .data = NULL)
+randomize(block_size = 2, randomization_ratio = c(1, 1),
+  .data = NULL)
 }
 \arguments{
 \item{block_size}{integer. Block size for the complete randomization in a
 block.}
 
-\item{randomization_ratio}{vector. The randomization ratio control to
+\item{randomization_ratio}{vector. The randomization allocation for control to
 treatment.}
 
 \item{.data}{NULL. This should not be changed by the user.}

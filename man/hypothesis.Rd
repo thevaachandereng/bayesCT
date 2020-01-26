@@ -4,29 +4,37 @@
 \alias{hypothesis}
 \title{Hypothesis wrapper}
 \usage{
-hypothesis(delta, futility_prob, prob_ha, expected_success_prob, .data = NULL)
+hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
+  expected_success_prob = 0.9, alternative = "greater", .data = NULL)
 }
 \arguments{
-\item{delta}{numeric. Threshold set for margin in null hypothesis.}
+\item{delta}{numeric. Threshold set for margin in null hypothesis. The default
+is set to 0.}
 
-\item{futility_prob}{numeric. Probability of futility.}
+\item{futility_prob}{numeric. Probability of futility. The default is 0.05.}
 
-\item{prob_ha}{numeric. Posterior probability of accepting alternative
-hypothesis.}
+\item{prob_accept_ha}{numeric. Posterior probability of accepting alternative
+hypothesis. The default is 0.95.}
 
 \item{expected_success_prob}{numeric. Probability of expected success.}
+
+\item{alternative}{character. The string specifying the alternative hypothesis,
+must be one of \code{"greater"} (default), \code{"less"} or
+\code{"two.sided"}.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
 a list with information of hypothesis testing (threshold, futility
-  probability, probability of alternative hypothesis, and probability of
+  probability, probability of accepting the alternative hypothesis, and probability of
   expected success).
 }
 \description{
 Wrapper function for the hypothesis in the trial.
 }
 \examples{
-hypothesis(delta = 0, futility_prob = 0.05, prob_ha = 0.95, expected_success_prob = 0.90)
-hypothesis(delta= 0.2, futility_prob = 0.1, prob_ha = 0.975, expected_success_prob = 0.80)
+hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
+           expected_success_prob = 0.90, alternative = "greater")
+hypothesis(delta= 0.2, futility_prob = 0.1, prob_accept_ha = 0.975,
+           expected_success_prob = 0.80, alternative = "less")
 }
