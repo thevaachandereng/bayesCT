@@ -9,7 +9,6 @@ test_that("The piecewise exponential simulate are", {
   expect_error(pw_exp_sim(hazard = 0.02, n = 100, cutpoint = 50, maxtime = 51))
   expect_error(pw_exp_sim(hazard = c(0.01, 0.005), n = 100, cutpoint = c(20, 40)))
   expect_error(pw_exp_sim(hazard = c(0.02, 0.01), n = -100, cutpoint = 50, maxtime = 51))
-  expect_error(pw_exp_sim(hazard = c(0.01, 0.005, 0.01), n = 100, cutpoint = c(50, 70), maxtime = c(51, 90)))
   expect_error(pw_exp_sim(hazard = c(-0.01, 0.005, 0.01), n = 100, cutpoint = c(50, 70)))
 })
 
