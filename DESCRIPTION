@@ -20,7 +20,7 @@ Encoding: UTF-8
 Depends:
     R (>= 2.10)
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Suggests: testthat,
     rmarkdown, 
     pkgdown, 
@@ -33,4 +33,3 @@ Imports: bayesDP,
     msm,
     survival, 
     magrittr
-
