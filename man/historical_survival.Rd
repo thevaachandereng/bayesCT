@@ -4,10 +4,18 @@
 \alias{historical_survival}
 \title{Historical data for survival analysis}
 \usage{
-historical_survival(time = NULL, treatment = NULL, event = NULL,
-  discount_function = "identity", alpha_max = 1, fix_alpha = FALSE,
-  weibull_scale = 0.135, weibull_shape = 3, method = "fixed",
-  .data = NULL)
+historical_survival(
+  time = NULL,
+  treatment = NULL,
+  event = NULL,
+  discount_function = "identity",
+  alpha_max = 1,
+  fix_alpha = FALSE,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "fixed",
+  .data = NULL
+)
 }
 \arguments{
 \item{time}{vector. exposure time for the subjects. It must be the same length

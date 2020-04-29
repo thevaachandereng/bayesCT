@@ -4,13 +4,30 @@
 \alias{survival_analysis}
 \title{Analyzing Bayesian trial for time-to-event data}
 \usage{
-survival_analysis(time, treatment, event = NULL, time0 = NULL,
-  treatment0 = NULL, event0 = NULL, surv_time = NULL, h0 = 0,
-  breaks = NULL, alternative = "greater", N_impute = 10,
-  number_mcmc = 10000, prob_ha = 0.95, futility_prob = 0.1,
-  expected_success_prob = 0.9, prior = c(0.1, 0.1),
-  discount_function = "identity", fix_alpha = FALSE, alpha_max = 1,
-  weibull_scale = 0.135, weibull_shape = 3, method = "fixed")
+survival_analysis(
+  time,
+  treatment,
+  event = NULL,
+  time0 = NULL,
+  treatment0 = NULL,
+  event0 = NULL,
+  surv_time = NULL,
+  h0 = 0,
+  breaks = NULL,
+  alternative = "greater",
+  N_impute = 10,
+  number_mcmc = 10000,
+  prob_ha = 0.95,
+  futility_prob = 0.1,
+  expected_success_prob = 0.9,
+  prior = c(0.1, 0.1),
+  discount_function = "identity",
+  fix_alpha = FALSE,
+  alpha_max = 1,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "fixed"
+)
 }
 \arguments{
 \item{time}{vector. exposure time for the subjects. It must be the same length

@@ -4,8 +4,14 @@
 \alias{hypothesis}
 \title{Hypothesis wrapper}
 \usage{
-hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
-  expected_success_prob = 0.9, alternative = "greater", .data = NULL)
+hypothesis(
+  delta = 0,
+  futility_prob = 0.05,
+  prob_accept_ha = 0.95,
+  expected_success_prob = 0.9,
+  alternative = "greater",
+  .data = NULL
+)
 }
 \arguments{
 \item{delta}{numeric. Threshold set for margin in null hypothesis. The default

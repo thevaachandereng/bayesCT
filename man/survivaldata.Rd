@@ -4,7 +4,8 @@
 \name{survivaldata}
 \alias{survivaldata}
 \title{Time-to-event dataset for analyzing adaptive Bayesian trials}
-\format{A data frame with 100 rows and 4 variables:
+\format{
+A data frame with 100 rows and 4 variables:
 \describe{
   \item{id}{Patient ID in the trial}
   \item{treatment}{treatment assignment for patients, 1 for treatment group
@@ -12,7 +13,8 @@
   \item{time}{the follow up time for patients}
   \item{event}{The status indicator, normally 0=alive, 1=dead or
   0 = no event, 1 = event occurred}
-}}
+}
+}
 \usage{
 data(survivaldata)
 }
