@@ -57,6 +57,12 @@ Usage
 See the vignettes for usage instructions and example.
 
 
+Code of Conduct
+------------
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/thevaachandereng/bayesCT/blob/master/CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
+
 License
 ------------
 `bayesCT` is available under the open source [GNU General Public License, version 3](https://www.r-project.org/Licenses/GPL-3).
