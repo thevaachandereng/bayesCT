@@ -30,6 +30,5 @@ VignetteBuilder: knitr
 Imports: bayesDP,
     dplyr,
     purrr,
-    msm,
     survival, 
     magrittr
