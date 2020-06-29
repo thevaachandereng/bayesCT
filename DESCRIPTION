@@ -31,4 +31,4 @@ Imports: bayesDP,
     dplyr,
     purrr,
     survival, 
-    magrittr
+    magrittr (>= 1.5)
