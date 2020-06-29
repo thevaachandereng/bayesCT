@@ -246,9 +246,9 @@
 <p>In the example below, we will illustrate how to compute power, type 1 error, and other clinical trial characteristics for an objective performance criterion (OPC) trial with hazard rates and hypothesis described as follows, <span class="math display">\[H_0: P(S_{treatment} &gt; 70) \leq 0.5 \qquad H_A: P(S_{treatment} &gt; 70) &gt; 0.5.\]</span></p>
 <p>The most important wrapper functions are <strong>study_details</strong> and <strong>survival_outcome</strong> (especially since there are no default values).</p>
 <p>The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (<strong>NOTE</strong>: for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu">survival_outcome</span>(<span class="kw">hazard_treatment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.012</span>, <span class="fl">0.008</span>),
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/survival_outcome.html">survival_outcome</a></span>(<span class="kw">hazard_treatment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.012</span>, <span class="fl">0.008</span>),
                           <span class="kw">cutpoint</span>         <span class="kw">=</span> <span class="fl">30</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">study_details</span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">200</span>,
+  <span class="fu"><a href="../reference/study_details.html">study_details</a></span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">200</span>,
                 <span class="kw">study_period</span>          <span class="kw">=</span> <span class="fl">70</span>,
                 <span class="kw">interim_look</span>          <span class="kw">=</span> <span class="kw">NULL</span>,
                 <span class="kw">prop_loss_to_followup</span> <span class="kw">=</span> <span class="fl">0.1</span>)
@@ -256,7 +256,7 @@
 
 <span class="co"># Simulate 10 trials</span>
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="co"># Structure of the simulation output</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
@@ -279,14 +279,14 @@
 <p>To allow for early stopping for success or futility, we can add interim looks to the design. We’ll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># Adding interim looks</span>
 <span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu">study_details</span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">200</span>,
+  <span class="fu"><a href="../reference/study_details.html">study_details</a></span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">200</span>,
                 <span class="kw">study_period</span>          <span class="kw">=</span> <span class="fl">70</span>,
                 <span class="kw">interim_look</span>          <span class="kw">=</span> <span class="fl">180</span>,
                 <span class="kw">prop_loss_to_followup</span> <span class="kw">=</span> <span class="fl">0.10</span>)
 
 <span class="co"># Simulate 10 trials</span>
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="co"># Structure of the simulation output</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
@@ -316,11 +316,11 @@
 \right. \]</span></p>
 <p>This enrollment scheme is illustrated below.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu">enrollment_rate</span>(<span class="kw">lambda</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.8</span>),
+  <span class="fu"><a href="../reference/enrollment_rate.html">enrollment_rate</a></span>(<span class="kw">lambda</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.8</span>),
                   <span class="kw">time</span>   <span class="kw">=</span> <span class="fl">40</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -345,14 +345,14 @@
 <p>The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probability of early success, the alternative hypothesis, and the treatment difference margin.</p>
 <p>We’ll further set the futility probability to 0.05, the expected success probability for early stopping to 0.90, and the final probability of accepting the alternative to 0.95. The alternative is <code>"less"</code> due to the hypothesis function specified above.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu">hypothesis</span>(<span class="kw">delta</span>                  <span class="kw">=</span> <span class="fl">0.50</span>,
+  <span class="fu"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="kw">delta</span>                  <span class="kw">=</span> <span class="fl">0.50</span>,
              <span class="kw">futility_prob</span>          <span class="kw">=</span> <span class="fl">0.05</span>,
              <span class="kw">prob_accept_ha</span>         <span class="kw">=</span> <span class="fl">0.95</span>,
              <span class="kw">expected_success_prob</span>  <span class="kw">=</span> <span class="fl">0.90</span>,
              <span class="kw">alternative</span>            <span class="kw">=</span> <span class="st">"less"</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -381,11 +381,11 @@
 <span class="co">#&gt;  $ stop_futility               : num [1:5] 1 1 1 1 1</span></pre></body></html></div>
 <p>Next, we’ll illustrate imputations for imputing outcomes for subjects loss to follow up. We’ll carry out 10 imputations and draw 2000 values from the posterior of each imputation.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu">impute</span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">10</span>,
+  <span class="fu"><a href="../reference/impute.html">impute</a></span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">10</span>,
          <span class="kw">number_mcmc</span>  <span class="kw">=</span> <span class="fl">2000</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -416,11 +416,11 @@
 <span class="co">#&gt;  $ stop_futility               : num [1:5] 1 1 1 1 1</span></pre></body></html></div>
 <p>The default non-informative gamma prior used in the simulation is <span class="math inline">\(\mathcal{G}amma(.1, .1)\)</span>. In our OPC trial simulation, we’ll change the default to <span class="math inline">\(\mathcal{G}amma(.2, .2)\)</span>. This will increase the weight of the non-informative prior in the simulation. This non-informative gamma prior is implemented using gamma_prior wrapper function.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu">gamma_prior</span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">.2</span>,
+  <span class="fu"><a href="../reference/gamma_prior.html">gamma_prior</a></span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">.2</span>,
              <span class="kw">b0</span> <span class="kw">=</span> <span class="fl">.2</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -463,7 +463,7 @@
 <span class="co">#&gt;  $ treatment: num  1 1 1 1 1 1 1 1 1 1 ...</span></pre></body></html></div>
 <p>We’ll incorporate this historical data using the weilbull discount function. For more details on the historical data incorporation method and computation, please see <a href="https://CRAN.R-project.org/package=bayesDP" class="uri">https://CRAN.R-project.org/package=bayesDP</a>.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu">historical_survival</span>(<span class="kw">time</span>              <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">time</span>,
+  <span class="fu"><a href="../reference/historical_survival.html">historical_survival</a></span>(<span class="kw">time</span>              <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">time</span>,
                       <span class="kw">treatment</span>         <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">treatment</span>,
                       <span class="kw">event</span>             <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">event</span>,
                       <span class="kw">discount_function</span> <span class="kw">=</span> <span class="st">"weibull"</span>,
@@ -474,7 +474,7 @@
                       <span class="kw">method</span>            <span class="kw">=</span> <span class="st">"mc"</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -514,24 +514,24 @@
 <span class="co">#&gt;  $ stop_expect_success         : num [1:5] 0 0 0 0 0</span>
 <span class="co">#&gt;  $ stop_futility               : num [1:5] 1 1 1 1 1</span></pre></body></html></div>
 <p>he above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 10 times to obtain results.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu">survival_outcome</span>(<span class="kw">hazard_treatment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.012</span>, <span class="fl">0.008</span>),
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/survival_outcome.html">survival_outcome</a></span>(<span class="kw">hazard_treatment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.012</span>, <span class="fl">0.008</span>),
                           <span class="kw">cutpoint</span>         <span class="kw">=</span> <span class="fl">30</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">enrollment_rate</span>(<span class="kw">lambda</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.8</span>),
+  <span class="fu"><a href="../reference/enrollment_rate.html">enrollment_rate</a></span>(<span class="kw">lambda</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.25</span>, <span class="fl">0.8</span>),
                   <span class="kw">time</span>   <span class="kw">=</span> <span class="fl">40</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">study_details</span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">200</span>,
+  <span class="fu"><a href="../reference/study_details.html">study_details</a></span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">200</span>,
                 <span class="kw">study_period</span>          <span class="kw">=</span> <span class="fl">70</span>,
                 <span class="kw">interim_look</span>          <span class="kw">=</span> <span class="fl">180</span>,
                 <span class="kw">prop_loss_to_followup</span> <span class="kw">=</span> <span class="fl">0.10</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">hypothesis</span>(<span class="kw">delta</span>                  <span class="kw">=</span> <span class="fl">0.50</span>,
+  <span class="fu"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="kw">delta</span>                  <span class="kw">=</span> <span class="fl">0.50</span>,
              <span class="kw">futility_prob</span>          <span class="kw">=</span> <span class="fl">0.05</span>,
              <span class="kw">prob_accept_ha</span>         <span class="kw">=</span> <span class="fl">0.95</span>,
              <span class="kw">expected_success_prob</span>  <span class="kw">=</span> <span class="fl">0.90</span>,
              <span class="kw">alternative</span>            <span class="kw">=</span> <span class="st">"less"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">impute</span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">10</span>,
+  <span class="fu"><a href="../reference/impute.html">impute</a></span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">10</span>,
          <span class="kw">number_mcmc</span>  <span class="kw">=</span> <span class="fl">2000</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">gamma_prior</span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">.2</span>,
+  <span class="fu"><a href="../reference/gamma_prior.html">gamma_prior</a></span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">.2</span>,
               <span class="kw">b0</span> <span class="kw">=</span> <span class="fl">.2</span>) <span class="kw">%&gt;%</span>
-   <span class="fu">historical_survival</span>(<span class="kw">time</span>             <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">time</span>,
+   <span class="fu"><a href="../reference/historical_survival.html">historical_survival</a></span>(<span class="kw">time</span>             <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">time</span>,
                       <span class="kw">treatment</span>         <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">treatment</span>,
                       <span class="kw">event</span>             <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">event</span>,
                       <span class="kw">discount_function</span> <span class="kw">=</span> <span class="st">"weibull"</span>,
@@ -540,7 +540,7 @@
                       <span class="kw">weibull_scale</span>     <span class="kw">=</span> <span class="fl">0.135</span>,
                       <span class="kw">weibull_shape</span>     <span class="kw">=</span> <span class="fl">3</span>,
                       <span class="kw">method</span>            <span class="kw">=</span> <span class="st">"mc"</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">value</span>)
 <span class="co">#&gt; List of 8</span>
@@ -585,25 +585,25 @@
 <a href="#two-arm-trial" class="anchor"></a>Two-arm Trial</h2>
 <p>In this section, we will illustrate how to perform the design of a two-arm trial without the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is <span class="math display">\[H_0: \lambda_{treatment} - \lambda_{control} \geq 0 \qquad H_A: \lambda_{treatment} - \lambda_{control} &lt; 0.\]</span></p>
 <p>Unlike the OPC trial above, we will not include interim looks. The hazard rates of the treatment group are 0.01 and 0.012 and the hazard rates for the control group are 0.015 and 0.017 with a cutpoint at 25 days. The total sample size is 250 with a study length of 30 days. A 10% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu">survival_outcome</span>(<span class="kw">hazard_treatment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.01</span>, <span class="fl">0.012</span>),
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/survival_outcome.html">survival_outcome</a></span>(<span class="kw">hazard_treatment</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.01</span>, <span class="fl">0.012</span>),
                           <span class="kw">hazard_control</span>   <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.015</span>, <span class="fl">0.017</span>),
                           <span class="kw">cutpoint</span>         <span class="kw">=</span> <span class="fl">25</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">study_details</span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">250</span>,
+  <span class="fu"><a href="../reference/study_details.html">study_details</a></span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">250</span>,
                 <span class="kw">study_period</span>          <span class="kw">=</span> <span class="fl">100</span>,
                 <span class="kw">interim_look</span>          <span class="kw">=</span> <span class="kw">NULL</span>,
                 <span class="kw">prop_loss_to_followup</span> <span class="kw">=</span> <span class="fl">0.10</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">hypothesis</span>(<span class="kw">delta</span>                 <span class="kw">=</span> <span class="fl">0</span>,
+  <span class="fu"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="kw">delta</span>                 <span class="kw">=</span> <span class="fl">0</span>,
              <span class="kw">futility_prob</span>         <span class="kw">=</span> <span class="fl">0</span>,
              <span class="kw">prob_accept_ha</span>        <span class="kw">=</span> <span class="fl">0.95</span>,
              <span class="kw">expected_success_prob</span> <span class="kw">=</span> <span class="fl">1</span>,
              <span class="kw">alternative</span>           <span class="kw">=</span> <span class="st">"less"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">impute</span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">25</span>,
+  <span class="fu"><a href="../reference/impute.html">impute</a></span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">25</span>,
          <span class="kw">number_mcmc</span>  <span class="kw">=</span> <span class="fl">5000</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">enrollment_rate</span>(<span class="kw">lambda</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.8</span>),
+  <span class="fu"><a href="../reference/enrollment_rate.html">enrollment_rate</a></span>(<span class="kw">lambda</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.8</span>),
                   <span class="kw">time</span> <span class="kw">=</span> <span class="kw">NULL</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">randomize</span>(<span class="kw">block_size</span>          <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">6</span>),
+  <span class="fu"><a href="../reference/randomize.html">randomize</a></span>(<span class="kw">block_size</span>          <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">6</span>),
             <span class="kw">randomization_ratio</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>)) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">10</span>)
+  <span class="kw pkg">bayesCT</span><span class="kw ns">::</span><span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">10</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">value</span>)
 <span class="co">#&gt; List of 8</span>
@@ -650,12 +650,12 @@
 <span class="co">#&gt; 5 Patient5  0.6007468     1         1</span>
 <span class="co">#&gt; 6 Patient6 17.4164113     1         1</span></pre></body></html></div>
 <p>The minimum input needed to run an adaptive Bayesian trial is the data itself. The <strong>data_survival</strong> input allows the input of the data. The treatment group (0 for control, 1 for treatment) and time input are essential for the analysis. However, if the event input is not provided, the function assumes the events have occurred. A default analysis is carried out below.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">input</span> <span class="kw">&lt;-</span> <span class="fu">data_survival</span>(<span class="kw">time</span>       <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">time</span>,
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">input</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/data_survival.html">data_survival</a></span>(<span class="kw">time</span>       <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">time</span>,
                        <span class="kw">treatment</span>  <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">treatment</span>,
                        <span class="kw">event</span>      <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">event</span>)
 
 <span class="no">out</span> <span class="kw">&lt;-</span> <span class="no">input</span> <span class="kw">%&gt;%</span>
-  <span class="fu">analysis</span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"survival"</span>)
+  <span class="fu"><a href="../reference/analysis.html">analysis</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"survival"</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">out</span>)
 <span class="co">#&gt; List of 15</span>
@@ -675,19 +675,19 @@
 <span class="co">#&gt;  $ stop_futility                : num 1</span>
 <span class="co">#&gt;  $ stop_expected_success        : num 0</span></pre></body></html></div>
 <p>We’ll now illustrate using piping to carry out the complete analysis. First, we’ll assume the following hypothesis: <span class="math display">\[H_0:\theta_{treatment} - \theta_{control} &lt;= 0.02 \quad H_A: \theta_{treatment} - \theta_{control} &gt; 0.02\]</span> The delta and alternative used to analyze the trial is 0.02 and “greater” respectively. The probability of accepting the alternative is 0.95, the probability of stopping for futility is 0.05, and the probability of stopping for success is 0.90. We will carry out imputations on subjects loss to follow up. Additionally, we will incorporate historical data on the treatment arm.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu">data_survival</span>(<span class="kw">time</span>       <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">time</span>,
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/data_survival.html">data_survival</a></span>(<span class="kw">time</span>       <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">time</span>,
                      <span class="kw">treatment</span>  <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">treatment</span>,
                      <span class="kw">event</span>      <span class="kw">=</span> <span class="no">survivaldata</span>$<span class="no">event</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">hypothesis</span>(<span class="kw">delta</span>                 <span class="kw">=</span> <span class="fl">0.02</span>,
+  <span class="fu"><a href="../reference/hypothesis.html">hypothesis</a></span>(<span class="kw">delta</span>                 <span class="kw">=</span> <span class="fl">0.02</span>,
              <span class="kw">futility_prob</span>         <span class="kw">=</span> <span class="fl">0.05</span>,
              <span class="kw">prob_accept_ha</span>        <span class="kw">=</span> <span class="fl">0.95</span>,
              <span class="kw">expected_success_prob</span> <span class="kw">=</span> <span class="fl">0.90</span>,
              <span class="kw">alternative</span>           <span class="kw">=</span> <span class="st">"less"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">impute</span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">50</span>,
+  <span class="fu"><a href="../reference/impute.html">impute</a></span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">50</span>,
          <span class="kw">number_mcmc</span>  <span class="kw">=</span> <span class="fl">10000</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">gamma_prior</span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">.2</span>,
+  <span class="fu"><a href="../reference/gamma_prior.html">gamma_prior</a></span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">.2</span>,
               <span class="kw">b0</span> <span class="kw">=</span> <span class="fl">.2</span>) <span class="kw">%&gt;%</span>
-  <span class="fu">analysis</span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"survival"</span>)
+  <span class="fu"><a href="../reference/analysis.html">analysis</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"survival"</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">out</span>)
 <span class="co">#&gt; List of 15</span>
