@@ -11,6 +11,7 @@ vignette: >
   %\VignetteIndexEntry{bayesCT:normal}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 
