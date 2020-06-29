@@ -202,9 +202,9 @@ Simulation of normally distributed data for Bayesian adaptive
 }
 \examples{
 normalBACT(mu_treatment = 8,
-           sd_treatment = 1.2, N_total = 300,
+           sd_treatment = 1.2, N_total = 100,
            lambda = c(0.3, 1), lambda_time = c(25),
-           interim_look = c(220, 270),
+           interim_look = c(80),
            EndofStudy = 50)
 
 }
