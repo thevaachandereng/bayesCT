@@ -131,7 +131,7 @@ $$H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} < 0.08.$$
 
 The most important wrapper functions are **study_details** and **binomial_outcome** (especially since there are no default values).
 
-Binomial events are simulated using an event rate of 0.08. The total sample size is 900 with a study length of 50 days. A 10% loss to follow-up ais assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
+Binomial events are simulated using an event rate of 0.08. The total sample size is 900 with a study length of 50 days. A 10% loss to follow-up ais assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
 
 ```{r opcbinomial}
 value <- binomial_outcome(p_treatment = 0.08) %>%
@@ -142,7 +142,7 @@ value <- binomial_outcome(p_treatment = 0.08) %>%
 
 # Simulate 10 trials
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -161,7 +161,7 @@ value <- value %>%
 
 # Simulate 10 trials
 output <- value %>% 
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -184,7 +184,7 @@ value <- value %>%
                   time   = 25)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -204,16 +204,16 @@ value <- value %>%
 			 alternative           = "less")
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 str(output)
 ```
 
-Next, we'll illustrate imputations for imputing outcomes for subjects loss to follow up. We'll carry out 25 imputations and draw 1000 values from the posterior of each imputation. 
+Next, we'll illustrate imputations for imputing outcomes for subjects loss to follow up. We'll carry out 5 imputations and draw 1000 values from the posterior of each imputation. 
 
 ```{r opcimpute}
 value <- value %>%
-  impute(no_of_impute = 25, 
+  impute(no_of_impute = 5, 
          number_mcmc  = 1000)
 
 output <- value %>%
@@ -230,12 +230,12 @@ value <- value %>%
              b0 = 5)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 str(output)
 ```
 
-Historical data is not required to compute the simulation. However, if historical data is avaialble, it can be incorporated into the analysis using the discount prior approach as implemented in the  `bayesDP` R package. 
+Historical data is not required to compute the simulation. However, if historical data is available, it can be incorporated into the analysis using the discount prior approach as implemented in the  `bayesDP` R package. 
  
 In our OPC trial, we'll illustrate historical data incorporation. We'll assume that the historical data had 5 events in 55 subjects. We'll incorporate this historical data using the identity discount function. 
 
@@ -255,7 +255,7 @@ value <- value %>%
                       method            = "fixed")
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -290,7 +290,7 @@ value <- binomial_outcome(p_treatment = 0.08) %>%
                       weibull_scale     = 0.135, 
 					  weibull_shape     = 3, 
                       method            = "fixed") %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 str(value)
 ```
@@ -301,7 +301,7 @@ str(value)
 In this section, we will illustrate how to perform the design of a two-arm trial without incorporating historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is 
 $$H_0: \theta_{treatment} - \theta_{control} \leq 0 \qquad H_A: \theta_{treatment} - \theta_{control} > 0.$$
 
-The binomial events are simulated using an event rate of 0.15 for the treatment group and 0.12 for the control group. The total sample size is 400, with a study length of 30 days. A 15% loss to follow up is assumed. Further, we will illustrate block randomization. The following code simulates a trial 10 times using the piping procedure.
+The binomial events are simulated using an event rate of 0.15 for the treatment group and 0.12 for the control group. The total sample size is 400, with a study length of 30 days. A 15% loss to follow up is assumed. Further, we will illustrate block randomization. The following code simulates a trial 5 times using the piping procedure.
 
 ```{r twoarmoverall}
 
@@ -318,11 +318,11 @@ value <- binomial_outcome(p_treatment = 0.15,
 			 alternative           = "greater") %>%
   randomize(block_size          = 9, 
             randomization_ratio = c(4, 5)) %>%
-  impute(no_of_impute = 20, 
+  impute(no_of_impute = 5, 
          number_mcmc  = 5000) %>%
   beta_prior(a0 = 0, 
              b0 = 0) %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 str(value)
 ```
