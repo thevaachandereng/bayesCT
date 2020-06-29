@@ -4,9 +4,6 @@ author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timoth
 output: 
   rmarkdown::html_vignette:
     toc: yes
-params:
-  # EVAL: !r identical(Sys.getenv("NOT_CRAN"), "true")
-  # EVAL: !r FALSE
 vignette: >
   %\VignetteIndexEntry{bayesCT:binomial}
   %\VignetteEngine{knitr::rmarkdown}
