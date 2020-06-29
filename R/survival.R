@@ -67,8 +67,6 @@
 #'     treatment and posterior estimate of the control group.}
 #' }
 #'
-#' @examples survivalBACT(0.01, NULL, 0.014, 200, EndofStudy = 100)
-#'
 #'
 #' @importFrom stats runif
 #' @importFrom dplyr mutate filter group_by bind_cols bind_rows select ungroup

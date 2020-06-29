@@ -185,11 +185,3 @@ a list of output for a single trial simulation.
 Simulation for binomial counts for Bayesian Adaptive trial with
   different inputs to control for power, sample size, type 1 error rate, etc.
 }
-\examples{
-binomialBACT(p_control = 0.12, p_treatment = 0.10,
-             N_total = 100, N_impute = 100,
-             lambda = c(0.3, 1), lambda_time = c(25),
-             interim_look = c(80),
-             EndofStudy = 50)
-
-}

@@ -60,12 +60,6 @@
 #'     treatment and posterior estimate of the control group.}
 #' }
 #'
-#' @examples
-#' binomialBACT(p_control = 0.12, p_treatment = 0.10,
-#'              N_total = 100, N_impute = 100,
-#'              lambda = c(0.3, 1), lambda_time = c(25),
-#'              interim_look = c(80),
-#'              EndofStudy = 50)
 #'
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n

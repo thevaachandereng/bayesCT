@@ -207,8 +207,3 @@ a list of output for a single trial simulation.
 Simulation for time-to-event outcome for Bayesian Adaptive trial with
   different inputs to control for power, sample size, type 1 error rate, etc.
 }
-\examples{
-survivalBACT(0.01, NULL, 0.014, 200, EndofStudy = 100)
-
-
-}
