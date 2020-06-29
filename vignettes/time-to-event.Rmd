@@ -4,9 +4,6 @@ author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timoth
 output: 
   rmarkdown::html_vignette:
     toc: yes
-params:
-  # EVAL: !r identical(Sys.getenv("NOT_CRAN"), "true")
-  # EVAL: !r FALSE
 vignette: >
   %\VignetteIndexEntry{bayesCT:survival}
   %\VignetteEngine{knitr::rmarkdown}
@@ -286,7 +283,7 @@ output <- value %>%
 
 str(output)
 ```
-he above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 10 times to obtain results. 
+he above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 5 times to obtain results. 
 
 
 ```{r opcoverall}
@@ -327,7 +324,7 @@ str(value)
 In this section, we will illustrate how to perform the design of a two-arm trial without the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is 
 $$H_0: \lambda_{treatment} - \lambda_{control} \geq 0 \qquad H_A: \lambda_{treatment} - \lambda_{control} < 0.$$
 
-Unlike the OPC trial above, we will not include interim looks. The hazard rates of the treatment group are 0.01 and 0.012 and the hazard rates for the control group are 0.015 and 0.017 with a cutpoint at 25 days. The total sample size is 250 with a study length of 30 days. A 10% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.
+Unlike the OPC trial above, we will not include interim looks. The hazard rates of the treatment group are 0.01 and 0.012 and the hazard rates for the control group are 0.015 and 0.017 with a cutpoint at 25 days. The total sample size is 250 with a study length of 30 days. A 10% loss to follow up is assumed. The following code simulates a trial 5 times using the piping procedure.
 
 ```{r twoarmall}
 value <- survival_outcome(hazard_treatment = c(0.01, 0.012),
@@ -348,7 +345,7 @@ value <- survival_outcome(hazard_treatment = c(0.01, 0.012),
                   time = NULL) %>%
   randomize(block_size          = c(4, 6), 
             randomization_ratio = c(1, 1)) %>%
-  bayesCT::simulate(no_of_sim = 10)
+  bayesCT::simulate(no_of_sim = 5)
 
 str(value)
 ```
