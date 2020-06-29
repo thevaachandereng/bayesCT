@@ -12,7 +12,7 @@ input2 <- list(hazard_treatment = c(0.01, 0.02), cutpoint = 25,
 
 context("")
 test_that("The binomial bayesCT is ", {
-  suppressWarnings(RNGversion("3.5.0"))
+  set.seed(200)
   expect_equal(do.call(survivalBACT, input1)$hazard_treatment, 0.01)
   expect_equal(do.call(survivalBACT, input2)$margin, 0.5)
   expect_equal(do.call(survivalBACT, input2)$prob_of_accepting_alternative, 0.95)

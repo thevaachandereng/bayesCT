@@ -17,7 +17,7 @@ input3 <- list(p_control = 0.12, p_treatment = 0.08, N_impute = 10,
 
 context("")
 test_that("The binomial bayesCT is ", {
-  suppressWarnings(RNGversion("3.5.0"))
+  set.seed(200)
   expect_equal(do.call(binomialBACT, input1)$p_treatment, 0.08)
   expect_equal(do.call(binomialBACT, input1)$p_control, 0.12)
   expect_equal(do.call(binomialBACT, input2)$p_treatment, 0.09)
