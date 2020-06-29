@@ -11,6 +11,7 @@ vignette: >
   %\VignetteIndexEntry{bayesCT:binomial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 
