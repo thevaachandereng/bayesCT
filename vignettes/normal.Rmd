@@ -18,7 +18,7 @@ set.seed(28999)
 ```
 
 ```{r, message = FALSE, echo = FALSE}
-library(bayesCT, warn.conflicts = FALSE)
+library(bayesCT)
 ```
 
 # Introduction
