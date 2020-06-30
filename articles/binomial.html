@@ -264,16 +264,16 @@
 <a href="#one-arm-trial" class="anchor"></a>One-arm Trial</h2>
 <p>In the example below, we will illustrate how to compute power, type 1 error, and other characteristics for an objective performance criterion (OPC) trial with an observed proportion of events and hypothesis described as follows, <span class="math display">\[H_0: \theta_{treatment} \geq 0.08 \qquad H_A:\theta_{treatment} &lt; 0.08.\]</span></p>
 <p>The most important wrapper functions are <strong>study_details</strong> and <strong>binomial_outcome</strong> (especially since there are no default values).</p>
-<p>Binomial events are simulated using an event rate of 0.08. The total sample size is 900 with a study length of 50 days. A 10% loss to follow-up ais assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (<strong>NOTE</strong>: for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.</p>
+<p>Binomial events are simulated using an event rate of 0.08. The total sample size is 900 with a study length of 50 days. A 10% loss to follow-up as assumed. Based on this information, the adaptive trials are simulated 2 times to obtain the following output (<strong>NOTE</strong>: for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/binomial_outcome.html">binomial_outcome</a></span>(<span class="kw">p_treatment</span> <span class="kw">=</span> <span class="fl">0.08</span>) <span class="kw">%&gt;%</span>
    <span class="fu"><a href="../reference/study_details.html">study_details</a></span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">900</span>,
                  <span class="kw">study_period</span>          <span class="kw">=</span> <span class="fl">50</span>,
                  <span class="kw">interim_look</span>          <span class="kw">=</span> <span class="kw">NULL</span>,
                  <span class="kw">prop_loss_to_followup</span> <span class="kw">=</span> <span class="fl">0.10</span>)
 
-<span class="co"># Simulate 10 trials</span>
+<span class="co"># Simulate 2 trials</span>
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="co"># Structure of the simulation output</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
@@ -286,13 +286,13 @@
 <span class="co">#&gt;  $ power                       :'data.frame':    1 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num 900</span>
 <span class="co">#&gt;   ..$ power        : num 0</span>
-<span class="co">#&gt;  $ type1_error                 : num 0.2</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.0813 0.0863 0.0801 0.0875 0.0838</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.542 0.727 0.491 0.768 0.64</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 900 900 900 900 900</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 0 0 0 0 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 0 0 0 0 0</span></pre></body></html></div>
-<p>To allow for early stopping for success or futility, we can add interim looks to the design. We’ll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output.</p>
+<span class="co">#&gt;  $ type1_error                 : num 0.5</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0813 0.0863</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.542 0.727</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 900 900</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
+<p>To allow for early stopping for success or futility, we can add interim looks to the design. We’ll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 2 times to obtain the output.</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="co"># Adding interim looks</span>
 <span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/study_details.html">study_details</a></span>(<span class="kw">total_sample_size</span>     <span class="kw">=</span> <span class="fl">900</span>,
@@ -300,9 +300,9 @@
                 <span class="kw">interim_look</span>          <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">600</span>, <span class="fl">700</span>, <span class="fl">800</span>),
                 <span class="kw">prop_loss_to_followup</span> <span class="kw">=</span> <span class="fl">0.10</span>)
 
-<span class="co"># Simulate 10 trials</span>
+<span class="co"># Simulate 2 trials</span>
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="co"># Structure of the simulation output</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
@@ -316,12 +316,12 @@
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
 <span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0 0</span>
-<span class="co">#&gt;  $ type1_error                 : num 0.2</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.0914 0.0684 0.0754 0.0703 0.0747</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.861 0.146 0.326 0.187 0.309</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 800 600 600 600 600</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 0 0 0 0 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 1 1 1 1 1</span></pre></body></html></div>
+<span class="co">#&gt;  $ type1_error                 : num 0</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0846 0.0954</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.648 0.895</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 700 600</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 1 1</span></pre></body></html></div>
 <p>Patient enrollment is assumed to follow a Poisson process. The default enrollment rate is 0.3 patients per day. In this simulation we’ll introduce a step-wise Poisson process with rate <span class="math inline">\(\lambda\)</span> as follows:</p>
 <p><span class="math display">\[  \lambda = \left\{
 \begin{array}{ll}
@@ -335,7 +335,7 @@
                   <span class="kw">time</span>   <span class="kw">=</span> <span class="fl">25</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -351,11 +351,11 @@
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
 <span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0 0</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.0824 0.0692 0.095 0.0635 0.0663</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.5637 0.1573 0.8854 0.0669 0.1119</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 600 600 600 600 600</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 0 0 0 0 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 1 1 1 1 1</span></pre></body></html></div>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.091 0.0741</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.865 0.293</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 900 600</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 1</span></pre></body></html></div>
 <p>The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probability of early success, the alternative hypothesis, and the treatment difference margin.</p>
 <p>Since, in an OPC trial, the proportion of events in the treatment group are simulated using the input provided, <code>delta</code> controls the maximum threshold allowed for the trial to succeed/fail. The default value of <code>delta</code> is 0. Here, we’ll use <code>delta = -0.03</code> (i.e <span class="math inline">\(\hat\theta_{treatment} - 0.08 &gt; -0.03\)</span>).</p>
 <p>We’ll further set the futility probability to 0.05, the expected success probability for early stopping to 0.90, and the final probability of accepting the alternative to 0.95. The alternative is <code>"less"</code> due to the hypothesis function specified above.</p>
@@ -367,7 +367,7 @@
              <span class="kw">alternative</span>           <span class="kw">=</span> <span class="st">"less"</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -386,13 +386,13 @@
 <span class="co">#&gt;   ..$ alternative          : chr "less"</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0 0.8 0.8 1</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0 0.5</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.0803 0.0897 0.0879 0.0878 0.0839</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.994 0.958 0.968 0.969 0.994</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 700 700 700 700 900</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 1 1 1 1 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 0 0 0 0 0</span></pre></body></html></div>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0926 0.1071</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.952 0.613</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 900 800</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 1</span></pre></body></html></div>
 <p>Next, we’ll illustrate imputations for imputing outcomes for subjects loss to follow up. We’ll carry out 5 imputations and draw 1000 values from the posterior of each imputation.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/impute.html">impute</a></span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">5</span>,
@@ -420,20 +420,20 @@
 <span class="co">#&gt;   ..$ number_mcmc          : num 1000</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0.6 0.7 0.8 1</span>
-<span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:10] 0.0766 0.0839 0.0731 0.0927 0.0832 ...</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:10] 0.999 0.983 1 0.952 0.995 0.999 0.989 1 0.994 0.981</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:10] 600 600 700 900 800 600 600 600 600 900</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:10] 1 1 1 0 1 1 1 1 1 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:10] 0 0 0 0 0 0 0 0 0 0</span></pre></body></html></div>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0.5 0.5 0.5 0.5</span>
+<span class="co">#&gt;  $ type1_error                 : num 0.1</span>
+<span class="co">#&gt;  $ est_final                   : num [1:10] 0.0667 0.0717 0.0999 0.0959 0.0984 ...</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:10] 1 0.998 0.846 0.915 0.873 1 0.923 0.529 1 0.999</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:10] 600 600 900 900 900 600 700 700 600 600</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:10] 1 1 0 0 0 1 1 0 1 1</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:10] 0 0 0 0 0 0 0 1 0 0</span></pre></body></html></div>
 <p>The default non-informative beta prior used in the simulation is <span class="math inline">\(\mathcal{B}eta(1, 1)\)</span>. In our OPC trial simulation, we’ll change the default to <span class="math inline">\(\mathcal{B}eta(5,5)\)</span>. This will increase the weight of the non-informative prior in the simulation. This non-informative beta prior is implemented using beta_prior wrapper function.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/beta_prior.html">beta_prior</a></span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">5</span>,
              <span class="kw">b0</span> <span class="kw">=</span> <span class="fl">5</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -455,13 +455,13 @@
 <span class="co">#&gt;   ..$ prior                : num [1:2] 5 5</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0.4 0.4 0.6 0.8</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 1 1 1 1</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.088 0.0926 0.0857 0.0895 0.079</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.979 0.929 0.981 0.975 0.996</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 800 700 600 900 600</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 1 1 1 0 1</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 0 0 0 0 0</span></pre></body></html></div>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0837 0.0864</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.976 0.973</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 600 600</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 1</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
 <p>Historical data is not required to compute the simulation. However, if historical data is available, it can be incorporated into the analysis using the discount prior approach as implemented in the <code>bayesDP</code> R package.</p>
 <p>In our OPC trial, we’ll illustrate historical data incorporation. We’ll assume that the historical data had 5 events in 55 subjects. We’ll incorporate this historical data using the identity discount function.</p>
 <p>For more details on the historical data incorporation method and computation, please see <a href="https://CRAN.R-project.org/package=bayesDP" class="uri">https://CRAN.R-project.org/package=bayesDP</a>.</p>
@@ -478,7 +478,7 @@
                       <span class="kw">method</span>            <span class="kw">=</span> <span class="st">"fixed"</span>)
 
 <span class="no">output</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">output</span>)
 <span class="co">#&gt; List of 8</span>
@@ -508,14 +508,14 @@
 <span class="co">#&gt;   ..$ method               : chr "fixed"</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0.6 0.8 1 1</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0.5 1</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.0847 0.0856 0.0776 0.0805 0.0785</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.978 0.974 0.993 0.994 0.997</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 600 600 600 800 700</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 1 1 1 1 1</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 0 0 0 0 0</span></pre></body></html></div>
-<p>The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 10 times to obtain results.</p>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.084 0.0915</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.987 0.971</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 800 900</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 0</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
+<p>The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 2 times to obtain results.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/binomial_outcome.html">binomial_outcome</a></span>(<span class="kw">p_treatment</span> <span class="kw">=</span> <span class="fl">0.08</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/enrollment_rate.html">enrollment_rate</a></span>(<span class="kw">lambda</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.3</span>, <span class="fl">1</span>),
                   <span class="kw">time</span>   <span class="kw">=</span> <span class="fl">25</span>) <span class="kw">%&gt;%</span>
@@ -542,7 +542,7 @@
                       <span class="kw">weibull_scale</span>     <span class="kw">=</span> <span class="fl">0.135</span>,
                       <span class="kw">weibull_shape</span>     <span class="kw">=</span> <span class="fl">3</span>,
                       <span class="kw">method</span>            <span class="kw">=</span> <span class="st">"fixed"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">value</span>)
 <span class="co">#&gt; List of 8</span>
@@ -572,19 +572,19 @@
 <span class="co">#&gt;   ..$ method               : chr "fixed"</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0.2 0.8 0.8 0.8</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0.5 1</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.0837 0.079 0.0884 0.0775 0.0952</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.987 0.992 0.966 0.999 0.926</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 700 600 700 700 900</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 1 1 1 1 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 0 0 0 0 0</span></pre></body></html></div>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0799 0.0914</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.999 0.956</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 800 900</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 0</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
 </div>
 <div id="two-arm-trial" class="section level2">
 <h2 class="hasAnchor">
 <a href="#two-arm-trial" class="anchor"></a>Two-arm trial</h2>
 <p>In this section, we will illustrate how to perform the design of a two-arm trial without incorporating historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is <span class="math display">\[H_0: \theta_{treatment} - \theta_{control} \leq 0 \qquad H_A: \theta_{treatment} - \theta_{control} &gt; 0.\]</span></p>
-<p>The binomial events are simulated using an event rate of 0.15 for the treatment group and 0.12 for the control group. The total sample size is 400, with a study length of 30 days. A 15% loss to follow up is assumed. Further, we will illustrate block randomization. The following code simulates a trial 5 times using the piping procedure.</p>
+<p>The binomial events are simulated using an event rate of 0.15 for the treatment group and 0.12 for the control group. The total sample size is 400, with a study length of 30 days. A 15% loss to follow up is assumed. Further, we will illustrate block randomization. The following code simulates a trial 2 times using the piping procedure.</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r">
 <span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/binomial_outcome.html">binomial_outcome</a></span>(<span class="kw">p_treatment</span> <span class="kw">=</span> <span class="fl">0.15</span>,
                           <span class="kw">p_control</span>   <span class="kw">=</span> <span class="fl">0.12</span>) <span class="kw">%&gt;%</span>
@@ -603,7 +603,7 @@
          <span class="kw">number_mcmc</span>  <span class="kw">=</span> <span class="fl">5000</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/beta_prior.html">beta_prior</a></span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">0</span>,
              <span class="kw">b0</span> <span class="kw">=</span> <span class="fl">0</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">5</span>)
+  <span class="fu"><a href="../reference/simulate.html">simulate</a></span>(<span class="kw">no_of_sim</span> <span class="kw">=</span> <span class="fl">2</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">value</span>)
 <span class="co">#&gt; List of 8</span>
@@ -628,11 +628,11 @@
 <span class="co">#&gt;   ..$ interim_looks: num [1:2] 350 400</span>
 <span class="co">#&gt;   ..$ power        : num [1:2] 0 0</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:5] 0.0495 0.0112 0.0549 0.0431 -0.0211</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:5] 0.875 0.617 0.911 0.891 0.275</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:5] 350 350 350 400 350</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:5] 0 0 0 0 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:5] 1 1 1 0 1</span></pre></body></html></div>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0272 0.0482</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.756 0.905</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 400 350</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 1</span></pre></body></html></div>
 </div>
 </div>
 <div id="analysis" class="section level1">
@@ -704,8 +704,8 @@
 <span class="co">#&gt;  $ N_control                    : int 137</span>
 <span class="co">#&gt;  $ N_complete                   : num 262</span>
 <span class="co">#&gt;  $ N_enrolled                   : int 300</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.98</span>
-<span class="co">#&gt;  $ est_final                    : num 0.122</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.979</span>
+<span class="co">#&gt;  $ est_final                    : num 0.121</span>
 <span class="co">#&gt;  $ stop_futility                : num 0</span>
 <span class="co">#&gt;  $ stop_expected_success        : num 1</span></pre></body></html></div>
 </div>
