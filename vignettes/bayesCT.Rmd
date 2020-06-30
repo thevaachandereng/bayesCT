@@ -67,7 +67,7 @@ devtools::install_github("thevaachandereng/bayesCT")
 After successful installation, the package must be loaded into the working space:
 
 ```{r lib, results="asis", eval=TRUE, echo=TRUE}
-library(bayesCT, warn.conflicts = FALSE)
+library(bayesCT)
 ```
 
 

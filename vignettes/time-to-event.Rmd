@@ -155,7 +155,7 @@ value <- survival_outcome(hazard_treatment = c(0.012, 0.008),
 				
 # Simulate 10 trials
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -176,7 +176,7 @@ value <- value %>%
 
 # Simulate 10 trials
 output <- value %>% 
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -199,7 +199,7 @@ value <- value %>%
                   time   = 40)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -218,7 +218,7 @@ value <- value %>%
              alternative            = "less")
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -231,7 +231,7 @@ value <- value %>%
          number_mcmc  = 2000)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -244,7 +244,7 @@ value <- value %>%
              b0 = .2)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -279,7 +279,7 @@ value <- value %>%
                       method            = "mc")
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -313,7 +313,7 @@ value <- survival_outcome(hazard_treatment = c(0.012, 0.008),
                       weibull_scale     = 0.135, 
                       weibull_shape     = 3,
                       method            = "mc") %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(value)
 ```
@@ -345,7 +345,7 @@ value <- survival_outcome(hazard_treatment = c(0.01, 0.012),
                   time = NULL) %>%
   randomize(block_size          = c(4, 6), 
             randomization_ratio = c(1, 1)) %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(value)
 ```

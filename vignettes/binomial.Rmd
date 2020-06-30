@@ -139,7 +139,7 @@ value <- binomial_outcome(p_treatment = 0.08) %>%
 
 # Simulate 10 trials
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -158,7 +158,7 @@ value <- value %>%
 
 # Simulate 10 trials
 output <- value %>% 
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 # Structure of the simulation output
 str(output)
@@ -181,7 +181,7 @@ value <- value %>%
                   time   = 25)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -201,7 +201,7 @@ value <- value %>%
 			 alternative           = "less")
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -214,7 +214,7 @@ value <- value %>%
          number_mcmc  = 1000)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 10)
+  simulate(no_of_sim = 10)
 
 str(output)
 ```
@@ -227,7 +227,7 @@ value <- value %>%
              b0 = 5)
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -252,7 +252,7 @@ value <- value %>%
                       method            = "fixed")
 
 output <- value %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(output)
 ```
@@ -287,7 +287,7 @@ value <- binomial_outcome(p_treatment = 0.08) %>%
                       weibull_scale     = 0.135, 
 					  weibull_shape     = 3, 
                       method            = "fixed") %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(value)
 ```
@@ -319,7 +319,7 @@ value <- binomial_outcome(p_treatment = 0.15,
          number_mcmc  = 5000) %>%
   beta_prior(a0 = 0, 
              b0 = 0) %>%
-  bayesCT::simulate(no_of_sim = 5)
+  simulate(no_of_sim = 5)
 
 str(value)
 ```
