@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Analyzing Bayesian trial for binomial counts — binomial_analysis • bayesCT</title>
+<title>Analyzing a Bayesian trial for binomial counts — binomial_analysis • bayesCT</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,10 @@
 
 
 
-<meta property="og:title" content="Analyzing Bayesian trial for binomial counts — binomial_analysis" />
-<meta property="og:description" content="Function to analyze Bayesian trial for binomial count data
- which allows early stopping and incorporation of historical data using
- the discount function approach" />
+<meta property="og:title" content="Analyzing a Bayesian trial for binomial counts — binomial_analysis" />
+<meta property="og:description" content="Function to analyze a Bayesian trial for binomial count data
+  which allows for early stopping and incorporation of historical data using
+  the discount function approach" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -139,15 +139,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Analyzing Bayesian trial for binomial counts</h1>
+    <h1>Analyzing a Bayesian trial for binomial counts</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/binomial.R'><code>R/binomial.R</code></a></small>
     <div class="hidden name"><code>binomial_analysis.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function to analyze Bayesian trial for binomial count data
- which allows early stopping and incorporation of historical data using
- the discount function approach</p>
+    <p>Function to analyze a Bayesian trial for binomial count data
+  which allows for early stopping and incorporation of historical data using
+  the discount function approach</p>
     </div>
 
     <pre class="usage"><span class='fu'>binomial_analysis</span>(
@@ -179,18 +179,18 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>treatment</th>
-      <td><p>vector. treatment assignment for patients, 1 for treatment group and
-0 for control group</p></td>
+      <td><p>vector. Treatment assignment for patients, 1 for treatment
+group and 0 for control group</p></td>
     </tr>
     <tr>
       <th>outcome</th>
-      <td><p>vector. binomial outcome of the trial, 1 for response (success or
-failure), 0 for no response.</p></td>
+      <td><p>vector. Binomial outcome of the trial, 1 for response (success
+or failure), 0 for no response.</p></td>
     </tr>
     <tr>
       <th>complete</th>
-      <td><p>vector. similar length as treatment and outcome variable,
-1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+      <td><p>vector. Similar length as treatment and outcome variable, 1
+for complete outcome, 0 for loss to follow up. If complete is not provided,
 the dataset is assumed to be complete.</p></td>
     </tr>
     <tr>

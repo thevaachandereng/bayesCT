@@ -153,30 +153,31 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>treatment</th>
-      <td><p>vector. treatment assignment for patients, 1 for treatment group and
-0 for control group</p></td>
+      <td><p>vector. Treatment assignment for patients, 1 for treatment
+group and 0 for control group</p></td>
     </tr>
     <tr>
       <th>outcome</th>
-      <td><p>vector. binomial outcome of the trial, 1 for response (success or
-failure), 0 for no response.</p></td>
+      <td><p>vector. Binomial outcome of the trial, 1 for response (success
+or failure), 0 for no response.</p></td>
     </tr>
     <tr>
       <th>complete</th>
-      <td><p>vector. similar length as treatment and outcome variable,
-1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+      <td><p>vector. Similar length as treatment and outcome variable, 1
+for complete outcome, 0 for loss to follow up. If complete is not provided,
 the dataset is assumed to be complete.</p></td>
     </tr>
     <tr>
       <th>.data</th>
-      <td><p>NULL. stores the binomial data for analysis, please do not fill it in.</p></td>
+      <td><p>NULL. Stores the binomial data for analysis. Should not be
+edited by user.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with treatment, outcome and loss to follow up vector with binomial
-  outcome.</p>
+    <p>a list with treatment, outcome and loss to follow up vector with
+  binomial outcome.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data_binomial</span>(<span class='kw'>treatment</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>outcome</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>complete</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; $treatment

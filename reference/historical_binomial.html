@@ -233,13 +233,15 @@ and holds it fixed throughout the analysis.  See the the
     </tr>
     <tr>
       <th>.data</th>
-      <td><p>NULL. stores the proportion of control and treatment, please do not fill it in.</p></td>
+      <td><p>NULL. Stores the proportion of control and treatment. Should not
+be edited by the user.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with historical data for control and treatment group with the discount function.</p>
+    <p>a list with historical data for control and treatment group with the
+  discount function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>historical_binomial</span>(<span class='kw'>y0_treatment</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>N0_treatment</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>y0_control</span> <span class='kw'>=</span> <span class='fl'>15</span>, <span class='kw'>N0_control</span> <span class='kw'>=</span> <span class='fl'>23</span>)</div><div class='output co'>#&gt; $y0_treatment
