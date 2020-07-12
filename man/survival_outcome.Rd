@@ -4,8 +4,12 @@
 \alias{survival_outcome}
 \title{Piecewise constant hazard rates and the cutpoint for control and treatment group}
 \usage{
-survival_outcome(hazard_treatment = NULL, cutpoint = NULL,
-  hazard_control = NULL, .data = NULL)
+survival_outcome(
+  hazard_treatment = NULL,
+  cutpoint = NULL,
+  hazard_control = NULL,
+  .data = NULL
+)
 }
 \arguments{
 \item{hazard_treatment}{vector. Constant hazard rates under the treatment arm.}

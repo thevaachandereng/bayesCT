@@ -36,3 +36,12 @@ vignettes/*.R
 
 # Silence build of pkgdown update
 docs/*.
+pkgdown/favicon/apple-touch-icon-120x120.png
+pkgdown/favicon/apple-touch-icon-152x152.png
+pkgdown/favicon/apple-touch-icon-180x180.png
+pkgdown/favicon/apple-touch-icon-60x60.png
+pkgdown/favicon/apple-touch-icon-76x76.png
+pkgdown/favicon/apple-touch-icon.png
+pkgdown/favicon/favicon-16x16.png
+pkgdown/favicon/favicon-32x32.png
+pkgdown/favicon/favicon.ico

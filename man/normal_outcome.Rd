@@ -4,8 +4,13 @@
 \alias{normal_outcome}
 \title{Parameters for treatment and control in normal case}
 \usage{
-normal_outcome(mu_control = NULL, sd_control = NULL,
-  mu_treatment = NULL, sd_treatment = NULL, data = NULL)
+normal_outcome(
+  mu_control = NULL,
+  sd_control = NULL,
+  mu_treatment = NULL,
+  sd_treatment = NULL,
+  data = NULL
+)
 }
 \arguments{
 \item{mu_control}{numeric. The mean for the control group.}

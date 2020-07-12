@@ -9,7 +9,6 @@ test_that("The piecewise exponential simulate are", {
   expect_error(pw_exp_sim(hazard = 0.02, n = 100, cutpoint = 50, maxtime = 51))
   expect_error(pw_exp_sim(hazard = c(0.01, 0.005), n = 100, cutpoint = c(20, 40)))
   expect_error(pw_exp_sim(hazard = c(0.02, 0.01), n = -100, cutpoint = 50, maxtime = 51))
-  expect_error(pw_exp_sim(hazard = c(0.01, 0.005, 0.01), n = 100, cutpoint = c(50, 70), maxtime = c(51, 90)))
   expect_error(pw_exp_sim(hazard = c(-0.01, 0.005, 0.01), n = 100, cutpoint = c(50, 70)))
 })
 
@@ -26,7 +25,6 @@ test_that("The piecewise exponential impute are", {
   expect_error(pw_exp_impute(time = 0.1, hazard = 0.02, cutpoint = 10)$event, 1)
   expect_error(pw_exp_impute(time = -0.1, hazard = c(0.02, 0.01, 0.1), cutpoint = c(10, 15)))
   expect_error(pw_exp_impute(time = 22, hazard = c(0.00, 0.005), cutpoint = c(50, 70), maxtime = 51))
-  expect_error(pw_exp_impute(time = 100, hazard = c(0.01, 0.005, 0.01), cutpoint = c(50, 70), maxtime = c(51, 90)))
   expect_error(pw_exp_impute(time = c(28, 99), hazard = c(-0.01, 0.005, 0.01), cutpoint = c(50, 70)))
 })
 

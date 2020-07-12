@@ -1,16 +1,13 @@
 ---
 title: "Time-to-Event Outcome"
 author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
-header-includes:
-   - \usepackage{amsmath}
 output: 
   rmarkdown::html_vignette:
-    toc: true
+    toc: yes
 vignette: >
   %\VignetteIndexEntry{bayesCT:survival}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, echo=FALSE, results="hide"}
@@ -145,7 +142,7 @@ $$H_0: P(S_{treatment} > 70) \leq 0.5 \qquad H_A: P(S_{treatment} > 70) > 0.5.$$
 
 The most important wrapper functions are **study_details** and **survival_outcome** (especially since there are no default values).
 
-The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
+The piecewise constant hazard rates are simulated using 0.015 and 0.012 with the cutpoint at time 30. The total sample size is 200 with a study length of 70 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 2 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
 
 ```{r opcminimum}
 value <- survival_outcome(hazard_treatment = c(0.012, 0.008), 
@@ -156,9 +153,9 @@ value <- survival_outcome(hazard_treatment = c(0.012, 0.008),
                 prop_loss_to_followup = 0.1) 
  
 				
-# Simulate 10 trials
+# Simulate 2 trials
 output <- value %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 # Structure of the simulation output
 str(output)
@@ -166,7 +163,7 @@ str(output)
 
 
 
-To allow for early stopping for success or futility, we can add interim looks to the design. We'll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
+To allow for early stopping for success or futility, we can add interim looks to the design. We'll check for success or futility at the enrollment of the 600th, 700th and 800th subject. Upon adding this interim look requirement, the trial is simulated 2 times to obtain the output. 
 
 
 ```{r opcinterimlook}
@@ -177,9 +174,9 @@ value <- value %>%
                 interim_look          = 180,
                 prop_loss_to_followup = 0.10)
 
-# Simulate 10 trials
+# Simulate 2 trials
 output <- value %>% 
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 # Structure of the simulation output
 str(output)
@@ -202,7 +199,7 @@ value <- value %>%
                   time   = 40)
 
 output <- value %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
@@ -221,7 +218,7 @@ value <- value %>%
              alternative            = "less")
 
 output <- value %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
@@ -234,7 +231,7 @@ value <- value %>%
          number_mcmc  = 2000)
 
 output <- value %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
@@ -247,7 +244,7 @@ value <- value %>%
              b0 = .2)
 
 output <- value %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
@@ -282,11 +279,11 @@ value <- value %>%
                       method            = "mc")
 
 output <- value %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
-he above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 10 times to obtain results. 
+he above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 2 times to obtain results. 
 
 
 ```{r opcoverall}
@@ -316,7 +313,7 @@ value <- survival_outcome(hazard_treatment = c(0.012, 0.008),
                       weibull_scale     = 0.135, 
                       weibull_shape     = 3,
                       method            = "mc") %>%
-  simulate(no_of_sim = 5)
+  simulate(no_of_sim = 2)
 
 str(value)
 ```
@@ -327,7 +324,7 @@ str(value)
 In this section, we will illustrate how to perform the design of a two-arm trial without the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is 
 $$H_0: \lambda_{treatment} - \lambda_{control} \geq 0 \qquad H_A: \lambda_{treatment} - \lambda_{control} < 0.$$
 
-Unlike the OPC trial above, we will not include interim looks. The hazard rates of the treatment group are 0.01 and 0.012 and the hazard rates for the control group are 0.015 and 0.017 with a cutpoint at 25 days. The total sample size is 250 with a study length of 30 days. A 10% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.
+Unlike the OPC trial above, we will not include interim looks. The hazard rates of the treatment group are 0.01 and 0.012 and the hazard rates for the control group are 0.015 and 0.017 with a cutpoint at 25 days. The total sample size is 250 with a study length of 30 days. A 10% loss to follow up is assumed. The following code simulates a trial 2 times using the piping procedure.
 
 ```{r twoarmall}
 value <- survival_outcome(hazard_treatment = c(0.01, 0.012),
@@ -348,7 +345,7 @@ value <- survival_outcome(hazard_treatment = c(0.01, 0.012),
                   time = NULL) %>%
   randomize(block_size          = c(4, 6), 
             randomization_ratio = c(1, 1)) %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 2)
 
 str(value)
 ```

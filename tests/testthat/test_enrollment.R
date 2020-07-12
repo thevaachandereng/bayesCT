@@ -1,6 +1,5 @@
 context("")
 test_that("The enrollment is", {
-  suppressWarnings(RNGversion("3.5.0"))
   set.seed(200)
   check <- c(replicate(2, rpois(1, 1.5)), replicate(3, rpois(1, 2)))
   set.seed(200)

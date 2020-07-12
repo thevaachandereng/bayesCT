@@ -4,15 +4,36 @@
 \alias{binomialBACT}
 \title{Binomial counts for Bayesian Adaptive Trials}
 \usage{
-binomialBACT(p_treatment, p_control = NULL, y0_treatment = NULL,
-  N0_treatment = NULL, y0_control = NULL, N0_control = NULL, N_total,
-  lambda = 0.3, lambda_time = NULL, interim_look = NULL, EndofStudy,
-  prior = c(1, 1), block = 2, rand_ratio = c(1, 1),
-  prop_loss_to_followup = 0.1, alternative = "greater", h0 = 0,
-  futility_prob = 0.05, expected_success_prob = 0.9, prob_ha = 0.95,
-  N_impute = 10, number_mcmc = 10000, discount_function = "identity",
-  alpha_max = 1, fix_alpha = FALSE, weibull_scale = 0.135,
-  weibull_shape = 3, method = "fixed")
+binomialBACT(
+  p_treatment,
+  p_control = NULL,
+  y0_treatment = NULL,
+  N0_treatment = NULL,
+  y0_control = NULL,
+  N0_control = NULL,
+  N_total,
+  lambda = 0.3,
+  lambda_time = NULL,
+  interim_look = NULL,
+  EndofStudy,
+  prior = c(1, 1),
+  block = 2,
+  rand_ratio = c(1, 1),
+  prop_loss_to_followup = 0.1,
+  alternative = "greater",
+  h0 = 0,
+  futility_prob = 0.05,
+  expected_success_prob = 0.9,
+  prob_ha = 0.95,
+  N_impute = 10,
+  number_mcmc = 10000,
+  discount_function = "identity",
+  alpha_max = 1,
+  fix_alpha = FALSE,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "fixed"
+)
 }
 \arguments{
 \item{p_treatment}{scalar. Proportion of events under the treatment arm.}
@@ -163,14 +184,4 @@ a list of output for a single trial simulation.
 \description{
 Simulation for binomial counts for Bayesian Adaptive trial with
   different inputs to control for power, sample size, type 1 error rate, etc.
-}
-\examples{
-binomialBACT(p_control = 0.12, p_treatment = 0.10,
-             y0_treatment = 8, N0_treatment = 90,
-             y0_control = 13, N0_control = 95,
-             N_total = 300, N_impute = 100,
-             lambda = c(0.3, 1), lambda_time = c(25),
-             interim_look = c(210, 240, 270),
-             EndofStudy = 50)
-
 }

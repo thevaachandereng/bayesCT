@@ -4,16 +4,37 @@
 \alias{survivalBACT}
 \title{Time-to-event outcome for Bayesian Adaptive Trials}
 \usage{
-survivalBACT(hazard_treatment, cutpoint = NULL, hazard_control = NULL,
-  N_total, breaks = NULL, time0 = NULL, treatment0 = NULL,
-  event0 = NULL, lambda = 0.3, lambda_time = NULL,
-  interim_look = NULL, EndofStudy, prior = c(0.1, 0.1), block = 2,
-  rand_ratio = c(1, 1), prop_loss_to_followup = 0.1,
-  alternative = "greater", h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 10,
-  number_mcmc = 10000, discount_function = "identity", alpha_max = 1,
-  fix_alpha = FALSE, weibull_scale = 0.135, weibull_shape = 3,
-  method = "fixed")
+survivalBACT(
+  hazard_treatment,
+  cutpoint = NULL,
+  hazard_control = NULL,
+  N_total,
+  breaks = NULL,
+  time0 = NULL,
+  treatment0 = NULL,
+  event0 = NULL,
+  lambda = 0.3,
+  lambda_time = NULL,
+  interim_look = NULL,
+  EndofStudy,
+  prior = c(0.1, 0.1),
+  block = 2,
+  rand_ratio = c(1, 1),
+  prop_loss_to_followup = 0.1,
+  alternative = "greater",
+  h0 = 0,
+  futility_prob = 0.05,
+  expected_success_prob = 0.9,
+  prob_ha = 0.95,
+  N_impute = 10,
+  number_mcmc = 10000,
+  discount_function = "identity",
+  alpha_max = 1,
+  fix_alpha = FALSE,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "fixed"
+)
 }
 \arguments{
 \item{hazard_treatment}{vector. Constant hazard rates under the treatment arm.}
@@ -185,9 +206,4 @@ a list of output for a single trial simulation.
 \description{
 Simulation for time-to-event outcome for Bayesian Adaptive trial with
   different inputs to control for power, sample size, type 1 error rate, etc.
-}
-\examples{
-survivalBACT(0.01, NULL, 0.014, 200, EndofStudy = 100)
-
-
 }

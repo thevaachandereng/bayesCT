@@ -4,11 +4,21 @@
 \alias{historical_normal}
 \title{Historical data for normal distribution}
 \usage{
-historical_normal(mu0_treatment = NULL, sd0_treatment = NULL,
-  N0_treatment = NULL, mu0_control = NULL, sd0_control = NULL,
-  N0_control = NULL, discount_function = "identity", alpha_max = 1,
-  fix_alpha = FALSE, weibull_scale = 0.135, weibull_shape = 3,
-  method = "fixed", .data = NULL)
+historical_normal(
+  mu0_treatment = NULL,
+  sd0_treatment = NULL,
+  N0_treatment = NULL,
+  mu0_control = NULL,
+  sd0_control = NULL,
+  N0_control = NULL,
+  discount_function = "identity",
+  alpha_max = 1,
+  fix_alpha = FALSE,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "fixed",
+  .data = NULL
+)
 }
 \arguments{
 \item{mu0_treatment}{scalar. Mean of the historical treatment group.}

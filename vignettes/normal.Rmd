@@ -1,16 +1,13 @@
 ---
 title: "Normal Outcome"
 author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
-header-includes:
-   - \usepackage{amsmath}
 output: 
   rmarkdown::html_vignette:
-    toc: true
+    toc: yes
 vignette: >
   %\VignetteIndexEntry{bayesCT:normal}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  \usepackage[utf8]{inputenc}
 ---
 
 
@@ -144,7 +141,7 @@ $$H_0: \mu_{treatment} \geq 120 \qquad H_A:\mu_{treatment} < 120.$$
 
 The most important wrapper functions are **study_details** and **normal_outcome** (especially since there are no default values).
 
-The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 5.5. The total sample size is 400 with a study length of 60 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 10 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 10, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
+The normal mean outcomes are simulated using a mean value of 120 and standard deviation of 5.5. The total sample size is 400 with a study length of 60 days. A 10% loss to follow up is assumed. Based on this information, the adaptive trials are simulated 2 times to obtain the following output (**NOTE**:  for the purpose of reproducing the vignette quickly, we reduce the number of simulations to 5, you should use a much larger value, e.g., 10000). The aforementioned inputs were chosen for illustration purposes only.
 
 ```{r opcminimum}
 value <- normal_outcome(mu_treatment = 120,
@@ -154,15 +151,15 @@ value <- normal_outcome(mu_treatment = 120,
                 interim_look          = NULL,
                 prop_loss_to_followup = 0.10)
 				
-# Simulate 10 trials
+# Simulate 2 trials
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 2)
 
 # Structure of the simulation output
 str(output)
 ```
 
-To allow for early stopping for success or futility, we add interim looks to the design.  We'll check for success or futility at the enrollment of the 350th and 380th subject. Upon adding this interim look requirement, the trial is simulated 10 times to obtain the output. 
+To allow for early stopping for success or futility, we add interim looks to the design.  We'll check for success or futility at the enrollment of the 350th and 380th subject. Upon adding this interim look requirement, the trial is simulated 2 times to obtain the output. 
 
 
 ```{r opcinterimlook}
@@ -173,9 +170,9 @@ value <- value %>%
                 interim_look          = c(350, 380),
                 prop_loss_to_followup = 0.10)
 
-# Simulate 10 trials
+# Simulate 2 trials
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 2)
 
 # Structure of the simulation output
 str(output)
@@ -197,7 +194,7 @@ value <- value %>%
                   time = 40) 
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
@@ -220,7 +217,7 @@ value <- value %>%
 			  alternative           = "less")
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
@@ -234,12 +231,12 @@ value <- value %>%
          number_mcmc  = 2000)
 
 output <- value %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 2)
 
 str(output)
 ```
 
-The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 20 times to obtain results. 
+The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 2 times to obtain results. 
 
 
 ```{r opcoverall}
@@ -258,8 +255,9 @@ value <- normal_outcome(mu_treatment = 120,
                   time   = 4) %>%
   randomize(block_size          = c(10, 20), 
             randomization_ratio = c(1, 1)) %>%
-  impute(no_of_impute = 20, 
-         number_mcmc  = 2000)
+  impute(no_of_impute = 5, 
+         number_mcmc  = 2000)  %>%
+  simulate(no_of_sim = 2)
 
 str(value)
 ```
@@ -270,7 +268,7 @@ str(value)
 In this section, we will illustrate how to perform the design of a two-arm trial with the incorporation of historical data. The example will compute the type 1 error, power, and other outputs for a superiority trial. The study hypothesis is 
 $$H_0: \mu_{treatment} - \mu_{control} \leq 0 \qquad H_A: \mu_{treatment} - \mu_{control} > 0.$$
 
-Unlike the OPC trial above, we will not include interim looks. The normal mean outcomes are simulated using a mean value of 13 and standard deviation of 1.4 for the treatment group and a mean value of 15 and standard deviation of 1.9 for the control group. The total sample size is 400 with a study length of 30 days. A 15% loss to follow up is assumed. The following code simulates a trial 10 times using the piping procedure.
+Unlike the OPC trial above, we will not include interim looks. The normal mean outcomes are simulated using a mean value of 13 and standard deviation of 1.4 for the treatment group and a mean value of 15 and standard deviation of 1.9 for the control group. The total sample size is 400 with a study length of 30 days. A 15% loss to follow up is assumed. The following code simulates a trial 2 times using the piping procedure.
 
 ```{r twoarmall}
 value <- normal_outcome(mu_treatment = 13, 
@@ -304,7 +302,7 @@ value <- normal_outcome(mu_treatment = 13,
                     weibull_scale     = 0.135, 
 					weibull_shape     = 3,
                       method            = "fixed") %>%
-  simulate(no_of_sim = 10)
+  simulate(no_of_sim = 2)
 
 str(value)
 ```
@@ -349,7 +347,7 @@ out <- data_normal(treatment = normaldata$treatment,
 			 prob_accept_ha        = 0.95,
              expected_success_prob = 0.90, 
 			 alternative           = "less") %>%
-  impute(no_of_impute = 40, 
+  impute(no_of_impute = 10, 
          number_mcmc  = 8000) %>%
   analysis(type = "normal")
 

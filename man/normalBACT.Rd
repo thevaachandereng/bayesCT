@@ -4,16 +4,39 @@
 \alias{normalBACT}
 \title{Normal distribution for Bayesian Adaptive Trials}
 \usage{
-normalBACT(mu_treatment, sd_treatment, mu_control = NULL,
-  sd_control = NULL, mu0_treatment = NULL, sd0_treatment = NULL,
-  N0_treatment = NULL, mu0_control = NULL, sd0_control = NULL,
-  N0_control = NULL, N_total, lambda = 0.3, lambda_time = NULL,
-  interim_look = NULL, EndofStudy, block = 2, rand_ratio = c(1, 1),
-  discount_function = "identity", alternative = "greater",
-  prop_loss_to_followup = 0.15, h0 = 0, futility_prob = 0.05,
-  expected_success_prob = 0.9, prob_ha = 0.95, N_impute = 10,
-  number_mcmc = 10000, alpha_max = 1, fix_alpha = FALSE,
-  weibull_scale = 0.135, weibull_shape = 3, method = "fixed")
+normalBACT(
+  mu_treatment,
+  sd_treatment,
+  mu_control = NULL,
+  sd_control = NULL,
+  mu0_treatment = NULL,
+  sd0_treatment = NULL,
+  N0_treatment = NULL,
+  mu0_control = NULL,
+  sd0_control = NULL,
+  N0_control = NULL,
+  N_total,
+  lambda = 0.3,
+  lambda_time = NULL,
+  interim_look = NULL,
+  EndofStudy,
+  block = 2,
+  rand_ratio = c(1, 1),
+  discount_function = "identity",
+  alternative = "greater",
+  prop_loss_to_followup = 0.15,
+  h0 = 0,
+  futility_prob = 0.05,
+  expected_success_prob = 0.9,
+  prob_ha = 0.95,
+  N_impute = 10,
+  number_mcmc = 10000,
+  alpha_max = 1,
+  fix_alpha = FALSE,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "fixed"
+)
 }
 \arguments{
 \item{mu_treatment}{scalar. Mean outcome in the treatment arm.}
@@ -176,12 +199,4 @@ a list of output for a single trial simulation.
 Simulation of normally distributed data for Bayesian adaptive
   trials with various inputs to control for power, sample size, type I error
   rate, etc.
-}
-\examples{
-normalBACT(mu_treatment = 8,
-           sd_treatment = 1.2, N_total = 300,
-           lambda = c(0.3, 1), lambda_time = c(25),
-           interim_look = c(110, 140, 220, 270),
-           EndofStudy = 50)
-
 }

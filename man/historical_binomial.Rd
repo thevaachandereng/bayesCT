@@ -4,11 +4,19 @@
 \alias{historical_binomial}
 \title{Historical data for binomial distribution}
 \usage{
-historical_binomial(y0_treatment = NULL, N0_treatment = NULL,
-  discount_function = "identity", y0_control = NULL,
-  N0_control = NULL, alpha_max = 1, fix_alpha = FALSE,
-  weibull_scale = 0.135, weibull_shape = 3, method = "fixed",
-  .data = NULL)
+historical_binomial(
+  y0_treatment = NULL,
+  N0_treatment = NULL,
+  discount_function = "identity",
+  y0_control = NULL,
+  N0_control = NULL,
+  alpha_max = 1,
+  fix_alpha = FALSE,
+  weibull_scale = 0.135,
+  weibull_shape = 3,
+  method = "fixed",
+  .data = NULL
+)
 }
 \arguments{
 \item{y0_treatment}{scalar. Number of events for the historical treatment

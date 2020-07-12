@@ -10,7 +10,7 @@ bayesCT - Tool for Simulation and Analysis of Adaptive Bayesian Clinical Trials 
 [![Build status](https://ci.appveyor.com/api/projects/status/2wfwigrrcpom0oi9/branch/master?svg=true)](https://ci.appveyor.com/project/thevaachandereng/bayesct/branch/master)
 [![codecov](https://codecov.io/gh/thevaachandereng/bayesCT/branch/master/graph/badge.svg)](https://codecov.io/gh/thevaachandereng/bayesCT)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/thevaachandereng/bayesCT/master?urlpath=rstudio)
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![lifecycle](https://img.shields.io/badge/lifecycle-stable-green.svg)](https://www.tidyverse.org/lifecycle/#stable)
 
 
 **Authors**: Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson and Theodore Lystig
@@ -55,6 +55,12 @@ library(bayesCT)
 Usage
 ------------
 See the vignettes for usage instructions and example.
+
+
+Code of Conduct
+------------
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/thevaachandereng/bayesCT/blob/master/CONDUCT.md).
+By participating in this project you agree to abide by its terms.
 
 
 License
