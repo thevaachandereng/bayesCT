@@ -2,7 +2,7 @@
 % Please edit documentation in R/binomial.R
 \name{binomial_analysis}
 \alias{binomial_analysis}
-\title{Analyzing Bayesian trial for binomial counts}
+\title{Analyzing a Bayesian trial for binomial counts}
 \usage{
 binomial_analysis(
   treatment,
@@ -29,14 +29,14 @@ binomial_analysis(
 )
 }
 \arguments{
-\item{treatment}{vector. treatment assignment for patients, 1 for treatment group and
-0 for control group}
+\item{treatment}{vector. Treatment assignment for patients, 1 for treatment
+group and 0 for control group}
 
-\item{outcome}{vector. binomial outcome of the trial, 1 for response (success or
-failure), 0 for no response.}
+\item{outcome}{vector. Binomial outcome of the trial, 1 for response (success
+or failure), 0 for no response.}
 
-\item{complete}{vector. similar length as treatment and outcome variable,
-1 for complete outcome, 0 for loss to follow up. If complete is not provided,
+\item{complete}{vector. Similar length as treatment and outcome variable, 1
+for complete outcome, 0 for loss to follow up. If complete is not provided,
 the dataset is assumed to be complete.}
 
 \item{y0_treatment}{scalar. Number of events for the historical treatment
@@ -148,7 +148,7 @@ a list of output for the Bayesian trial for binomial count.
 }
 }
 \description{
-Function to analyze Bayesian trial for binomial count data
- which allows early stopping and incorporation of historical data using
- the discount function approach
+Function to analyze a Bayesian trial for binomial count data
+  which allows for early stopping and incorporation of historical data using
+  the discount function approach
 }
