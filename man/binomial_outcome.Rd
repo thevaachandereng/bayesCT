@@ -7,17 +7,21 @@
 binomial_outcome(p_treatment = NULL, p_control = NULL, .data = NULL)
 }
 \arguments{
-\item{p_treatment}{numeric. The proportion of an event in the treatment group, 0 < $p_treatment$ < 1.}
+\item{p_treatment}{numeric. The proportion of an event in the treatment
+group, 0 < $p_treatment$ < 1.}
 
-\item{p_control}{numeric. The proportion of an event in the control group, 0 < $p_control$ < 1.}
+\item{p_control}{numeric. The proportion of an event in the control group, 0
+< $p_control$ < 1.}
 
-\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. Stores the proportion of control and treatment. Should not
+be edited by the user.}
 }
 \value{
 a list with proportion of control and treatment group.
 }
 \description{
-Wrapper function for proportion of an event in control and treatment group with binomial outcome.
+Wrapper function for proportion of an event in control and
+  treatment group with binomial outcome.
 }
 \examples{
 binomial_outcome(p_control = 0.12, p_treatment = 0.08)

@@ -13,10 +13,12 @@ beta_prior(a0 = 1, b0 = 1, .data = NULL)
 \item{b0}{numeric. The second shape parameter in the beta distribution
 (\code{beta(a0, b0)}).}
 
-\item{.data}{NULL. stores the beta prior rate, please do not fill it in.}
+\item{.data}{NULL. Stores the proportion of control and treatment. Should not
+be edited by the user.}
 }
 \value{
-a list with vector of beta rate for the beta prior for treatment and control group.
+a list with vector of beta rate for the beta prior for treatment and
+  control group.
 }
 \description{
 Wrapper function for beta prior \code{beta(a0, b0)}.

@@ -67,10 +67,12 @@ and holds it fixed throughout the analysis.  See the the
 \code{bdpsurvival} vignette \cr
 \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
 
-\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. Stores the proportion of control and treatment. Should not
+be edited by the user.}
 }
 \value{
-a list with historical data for control and treatment group with the discount function.
+a list with historical data for control and treatment group with the
+  discount function.
 }
 \description{
 Wrapper function for historical data from binomial outcome.

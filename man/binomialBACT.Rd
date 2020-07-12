@@ -2,7 +2,7 @@
 % Please edit documentation in R/binomial.R
 \name{binomialBACT}
 \alias{binomialBACT}
-\title{Binomial counts for Bayesian Adaptive Trials}
+\title{Binomial counts for Bayesian adaptive trials}
 \usage{
 binomialBACT(
   p_treatment,
@@ -182,6 +182,6 @@ a list of output for a single trial simulation.
 }
 }
 \description{
-Simulation for binomial counts for Bayesian Adaptive trial with
+Simulation for binomial counts for Bayesian adaptive trials with
   different inputs to control for power, sample size, type 1 error rate, etc.
 }

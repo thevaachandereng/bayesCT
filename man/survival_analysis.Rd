@@ -33,8 +33,8 @@ survival_analysis(
 \item{time}{vector. exposure time for the subjects. It must be the same length
 as the treatment variable.}
 
-\item{treatment}{vector. treatment assignment for patients, 1 for treatment group and
-0 for control group}
+\item{treatment}{vector. Treatment assignment for patients, 1 for treatment
+group and 0 for control group}
 
 \item{event}{vector. The status indicator, normally 0=alive, 1=dead.
 Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
