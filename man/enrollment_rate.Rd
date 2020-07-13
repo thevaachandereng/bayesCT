@@ -9,12 +9,12 @@ enrollment_rate(lambda = 0.3, time = NULL, .data = NULL)
 \arguments{
 \item{lambda}{vector. Vector with different enrollment rate parameters.}
 
-\item{time}{vector. Vector with different cut-off times for lambda.}
+\item{time}{vector. Vector with different cut-off times (knots) for lambda.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
-a list with enrollment rate information
+A list with enrollment rate information.
 }
 \description{
 Wrapper function for enrollment rate.

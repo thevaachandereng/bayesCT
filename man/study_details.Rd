@@ -13,22 +13,24 @@ study_details(
 )
 }
 \arguments{
-\item{total_sample_size}{integer. The number of sample size needed.}
+\item{total_sample_size}{integer. The total sample size.}
 
-\item{study_period}{integer. The length of the study.}
+\item{study_period}{integer. The length of the study (in days).}
 
-\item{interim_look}{vector. Vector with interim looks.}
+\item{interim_look}{vector. Vector with interim looks (sample sizes).}
 
-\item{prop_loss_to_followup}{integer. The proportion of loss to follow up.}
+\item{prop_loss_to_followup}{integer. The proportion of loss to follow-up.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
-a list with sample size, length of the study, interim looks and proportion loss to follow up
+A list with sample size, length of the study, interim looks and
+  proportion loss to follow up.
 }
 \description{
 Wrapper function for details of the clinical trial simulation.
 }
 \examples{
-study_details(total_sample_size = 300, study_period = 50, interim_look = c(210, 240, 270))
+study_details(total_sample_size = 300, study_period = 50,
+                        interim_look = c(210, 240, 270))
 }

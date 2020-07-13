@@ -25,4 +25,5 @@ Wrapper function for beta prior \code{beta(a0, b0)}.
 }
 \examples{
 beta_prior(a0 = 1, b0 = 1)
+
 }

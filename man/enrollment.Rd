@@ -7,20 +7,23 @@
 enrollment(param, N_total, time = NULL)
 }
 \arguments{
-\item{param}{a vector of lambda in Poisson}
+\item{param}{vector. Lambda values for Poisson distribution.}
 
-\item{N_total}{a numeric value of total sample size}
+\item{N_total}{integer. Value of total sample size.}
 
-\item{time}{a vector of the \code{length(param)} - 1 indicating end of time when a specific lambda is used}
+\item{time}{vector. Knots (of \code{length(param)} - 1) indicating end of
+time when a specific lambda is used.}
 }
 \value{
-a vector of enrollment dates
+A vector of enrollment dates.
 }
 \description{
-This function simulates enrollment dates using either Poisson distribution
+This function simulates enrollment dates using either Poisson
+  distribution
 }
 \examples{
 enrollment(param = c(0.003, 0.7), 100, time = 10)
+
 enrollment(param = c(0.3, 0.5, 0.9, 1.2, 2.1), 200, c(20, 30, 40, 60))
 
 }

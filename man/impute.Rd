@@ -7,16 +7,16 @@
 impute(no_of_impute = 10000, number_mcmc = 10000, .data = NULL)
 }
 \arguments{
-\item{no_of_impute}{integer. Number of Monte Carlo imputation for missing
+\item{no_of_impute}{integer. Number of Monte Carlo imputations for missing
 data.}
 
-\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws from
-posterior distribution.}
+\item{number_mcmc}{scalar. Number of Markov Chain Monte Carlo (MCMC) draws
+from posterior distribution.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
-a list with number of imputation
+A list with number of imputation.
 }
 \description{
 Wrapper function for no_of_impute.

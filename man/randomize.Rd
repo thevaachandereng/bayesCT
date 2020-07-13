@@ -10,13 +10,13 @@ randomize(block_size = 2, randomization_ratio = c(1, 1), .data = NULL)
 \item{block_size}{integer. Block size for the complete randomization in a
 block.}
 
-\item{randomization_ratio}{vector. The randomization allocation for control to
-treatment.}
+\item{randomization_ratio}{vector. The randomization allocation for control
+to treatment.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
-a list with randomization details (block size and ratio).
+A list with randomization details (block size and ratio).
 }
 \description{
 Wrapper function for the randomization scheme in the trial.
