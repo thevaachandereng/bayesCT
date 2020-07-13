@@ -316,8 +316,8 @@ survivalBACT <- function(
           select(time, event, treatment)
 
 
-        # analyze complete+imputed data using discount funtion via binomial
-        # analyze complete+imputed data using discount funtion via binomial
+        # analyze complete+imputed data using discount fucntion via binomial
+        # analyze complete+imputed data using discount fucntion via binomial
         post_imp <- suppressWarnings(
           bdpsurvival(formula            = Surv(time, event) ~ treatment,
                       data               = data,
@@ -423,7 +423,7 @@ survivalBACT <- function(
           ungroup() %>%
           select(time, event, treatment)
 
-        # Analyze complete+imputed data using discount funtion via binomial
+        # Analyze complete+imputed data using discount function via binomial
         post_imp <- suppressWarnings(
           bdpsurvival(formula            = Surv(time, event) ~ treatment,
                       data               = data,
@@ -543,7 +543,7 @@ survivalBACT <- function(
   # MLE <- glm(Y ~ treatment, data = data_final, family = "binomial")
 
 
-  # Analyze complete data using discount funtion via binomial
+  # Analyze complete data using discount function via binomial
   post_final <- suppressWarnings(
     bdpsurvival(formula            = Surv(time, event) ~ treatment,
                 data               = data_final,
@@ -697,7 +697,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("time", "event", "event_
 #'   \item{\code{N_complete}}{
 #'     scalar. The number of patients whose time passes the surv_time.}
 #'   \item{\code{alpha_discount}}{
-#'     vector. The alpha discount funtion used for control and treatment.}
+#'     vector. The alpha discount function used for control and treatment.}
 #'   \item{\code{post_prob_accept_alternative}}{
 #'     vector. The final probability of accepting the alternative
 #'     hypothesis after the analysis is done.}
@@ -836,7 +836,7 @@ survival_analysis <- function(
       select(-c(time_impute, event_impute))
 
 
-    # analyze complete+imputed data using discount funtion via binomial
+    # analyze complete+imputed data using discount function via binomial
     post_imp <- suppressWarnings(
       bdpsurvival(formula            = Surv(time, event) ~ treatment,
                   data               = data_success_impute,
@@ -899,7 +899,7 @@ survival_analysis <- function(
   data_final <- data_total
 
 
-  # Analyze complete data using discount funtion via binomial
+  # Analyze complete data using discount function via binomial
   post_final <- suppressWarnings(
     bdpsurvival(formula            = Surv(time, event) ~ treatment,
                 data               = data_final,

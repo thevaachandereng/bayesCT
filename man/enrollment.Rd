@@ -7,7 +7,7 @@
 enrollment(param, N_total, time = NULL)
 }
 \arguments{
-\item{param}{a vector of lambda in poisson}
+\item{param}{a vector of lambda in Poisson}
 
 \item{N_total}{a numeric value of total sample size}
 
@@ -17,7 +17,7 @@ enrollment(param, N_total, time = NULL)
 a vector of enrollment dates
 }
 \description{
-This function simulates enrollment dates using either poisson distribution
+This function simulates enrollment dates using either Poisson distribution
 }
 \examples{
 enrollment(param = c(0.003, 0.7), 100, time = 10)

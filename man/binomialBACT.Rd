@@ -72,7 +72,7 @@ set to Beta(1, 1).}
 to treatment. Integer values mapping the size of the block. See
 \code{\link{randomization}} for more details.}
 
-\item{prop_loss_to_followup}{scalar. Overall oroportion of subjects lost to
+\item{prop_loss_to_followup}{scalar. Overall proportion of subjects lost to
 follow-up.}
 
 \item{alternative}{character. The string specifying the alternative
@@ -127,14 +127,14 @@ treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
 
 \item{method}{character. Analysis method with respect to estimation of the weight
-paramter alpha. Default method "\code{mc}" estimates alpha for each
+parameter alpha. Default method "\code{mc}" estimates alpha for each
 Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
 and holds it fixed throughout the analysis.  See the the
 \code{bdpsurvival} vignette \cr
 \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
 }
 \value{
-a list of output for a single trial simulation.
+A list of output for a single trial simulation.
 \describe{
   \item{\code{p_treatment}}{
     scalar. The input parameter of proportion of events in the

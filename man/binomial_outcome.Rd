@@ -17,7 +17,7 @@ group, 0 < $p_treatment$ < 1.}
 be edited by the user.}
 }
 \value{
-a list with proportion of control and treatment group.
+A list with proportion of control and treatment group.
 }
 \description{
 Wrapper function for proportion of an event in control and

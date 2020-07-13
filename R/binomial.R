@@ -13,7 +13,7 @@
 #'   set to Beta(1, 1).
 #' @inheritParams normalBACT
 #'
-#' @return a list of output for a single trial simulation.
+#' @return A list of output for a single trial simulation.
 #' \describe{
 #'   \item{\code{p_treatment}}{
 #'     scalar. The input parameter of proportion of events in the
@@ -121,15 +121,21 @@ binomialBACT <- function(
   # Checking other inputs
   stopifnot((p_treatment < 1 & p_treatment > 0),
             length(lambda) == (length(lambda_time) + 1),
-            EndofStudy > 0, block %% sum(rand_ratio)  == 0,
+            EndofStudy > 0, block %% sum(rand_ratio) == 0,
             (prop_loss_to_followup >= 0 & prop_loss_to_followup < 0.75),
             (h0 >= -1 & h0 < 1), (futility_prob < 0.20 & futility_prob >= 0),
             (expected_success_prob > 0.70 & expected_success_prob <= 1),
-            (prob_ha > 0.70 & prob_ha < 1), N_impute > 0)
+            (prob_ha > 0.70 & prob_ha < 1),
+            N_impute > 0)
 
   # Checking if alternative is right
-  if(alternative != "two-sided" & alternative != "greater" & alternative != "less"){
+  if (alternative != "two-sided" & alternative != "greater" & alternative != "less") {
     stop("The input for alternative is wrong!")
+  }
+
+  # Checking if N_impute is <= number_mcmc
+  if (N_impute > number_mcmc) {
+    stop("The number of imputations must not be greater than the number of MCMC draws!")
   }
 
   # Assigning interim look and final look
@@ -183,11 +189,12 @@ binomialBACT <- function(
       # - subject_impute_futility: subject has no data present in the current look;
       #                            needs baseline BP and BP change imputed
       data_interim <- data_total %>%
-        mutate(subject_enrolled = id <= analysis_at_enrollnumber[i],
-               subject_impute_futility = !subject_enrolled) %>%
-        group_by(subject_enrolled) %>%
-        mutate(subject_impute_success = (enrollment[analysis_at_enrollnumber[i]] - enrollment <= EndofStudy & subject_enrolled) |
-                 (subject_enrolled & loss_to_fu))
+        mutate(
+          subject_enrolled = id <= analysis_at_enrollnumber[i],
+          subject_impute_futility = !subject_enrolled,
+          subject_impute_success = (enrollment[analysis_at_enrollnumber[i]] - enrollment <= EndofStudy & subject_enrolled) |
+            (subject_enrolled & loss_to_fu)
+          )
 
       # Carry out interim analysis on patients with complete data only
       # - set-up `new data` data frame
@@ -199,7 +206,7 @@ binomialBACT <- function(
       #MLE_int <- glm(Y ~ treatment, data = data, family = "binomial")
 
       # Assigning input for control arm given it is a single or double arm
-      if(!is.null(p_control)){
+      if (!is.null(p_control)) {
         y_c <- sum(data$Y[data$treatment == 0])
         N_c <- length(data$Y[data$treatment == 0])
       } else {
@@ -231,6 +238,11 @@ binomialBACT <- function(
       futility_test         <- 0
       expected_success_test <- 0
 
+      # Sub-sample values from posterior to use for imputation stage
+      id_impute <- sample(1:number_mcmc, N_impute)
+      p_treatment_imp <- post$posterior_treatment$posterior[id_impute]
+      p_control_imp <- post$posterior_control$posterior[id_impute]
+
       for (j in 1:N_impute) {
         ##########################################################################
         ### Expected success computations
@@ -240,14 +252,14 @@ binomialBACT <- function(
         data_control_success_impute <- data_interim %>%
           filter(treatment == 0) %>%
           mutate(Y_impute = ifelse(subject_impute_success & subject_enrolled,
-                                   rbinom(n(), 1, p_control),
+                                   rbinom(n(), 1, p_control_imp[j]),
                                    Y))
 
         # Imputing success for treatment group
         data_treatment_success_impute <- data_interim %>%
           filter(treatment == 1) %>%
           mutate(Y_impute = ifelse(subject_impute_success & subject_enrolled,
-                                   rbinom(n(), 1, p_treatment),
+                                   rbinom(n(), 1, p_treatment_imp[j]),
                                    Y))
 
         # Combine the treatment and control imputed datasets
@@ -327,13 +339,13 @@ binomialBACT <- function(
         data_control_futility_impute <- data_success_impute %>%
           filter(treatment == 0) %>%
           mutate(Y_impute = ifelse(subject_impute_futility,
-                                   rbinom(n(), 1, p_control),
+                                   rbinom(n(), 1, p_control_imp[j]),
                                    Y))
 
         data_treatment_futility_impute <- data_success_impute %>%
           filter(treatment == 1) %>%
           mutate(Y_impute = ifelse(subject_impute_futility,
-                                   rbinom(n(), 1, p_treatment),
+                                   rbinom(n(), 1, p_treatment_imp[j]),
                                    Y))
 
         # Combine the treatment and control imputed datasets
@@ -398,7 +410,7 @@ binomialBACT <- function(
         }
 
         # Increase futility counter by 1 if P(effect_imp < h0) > ha
-        if(success > prob_ha) {
+        if (success > prob_ha) {
           futility_test <- futility_test + 1
         }
 
@@ -524,23 +536,23 @@ binomialBACT <- function(
 
   # Output
   results_list <- list(
-    p_treatment                                = p_treatment,              # probability of treatment in binomial
-    p_control                                  = p_control,                # probability of control in binomial
-    prob_of_accepting_alternative              = prob_ha,
-    margin                                     = h0,                       # margin for error
-    alternative                                = alternative,              # alternative hypothesis
-    interim_look                               = interim_look,             # print interim looks
-    N_treatment                                = N_treatment,
-    N_control                                  = N_control,
-    N_complete                                 = N_treatment + N_control,
-    N_enrolled                                 = N_enrolled,               # Total sample size enrolled when trial stopped
-    N_max                                      = N_total, 				         # Total potential sample size
-    post_prob_accept_alternative               = post_paa,                 # Posterior probability that alternative hypothesis is true
-    est_final                                  = mean(effect),             # Posterior Mean of treatment effect
-    stop_futility                              = stop_futility,            # Did the trial stop for futility
-    stop_expected_success                      = stop_expected_success     # Did the trial stop for expected success
-    #MLE_est                                   = MLE$coe[2],               # Treatment effect using MLE
-    #MLE_est_interim                           = MLE_int$coe[2]            # Treatment effect using MLE at interim analysis
+    p_treatment                   = p_treatment,              # Probability of treatment in binomial
+    p_control                     = p_control,                # Probability of control in binomial
+    prob_of_accepting_alternative = prob_ha,
+    margin                        = h0,                       # Margin for error
+    alternative                   = alternative,              # Alternative hypothesis
+    interim_look                  = interim_look,             # Print interim looks
+    N_treatment                   = N_treatment,
+    N_control                     = N_control,
+    N_complete                    = N_treatment + N_control,
+    N_enrolled                    = N_enrolled,               # Total sample size enrolled when trial stopped
+    N_max                         = N_total, 				          # Total potential sample size
+    post_prob_accept_alternative  = post_paa,                 # Posterior probability that alternative hypothesis is true
+    est_final                     = mean(effect),             # Posterior Mean of treatment effect
+    stop_futility                 = stop_futility,            # Did the trial stop for futility
+    stop_expected_success         = stop_expected_success     # Did the trial stop for expected success
+    #MLE_est                      = MLE$coe[2],               # Treatment effect using MLE
+    #MLE_est_interim              = MLE_int$coe[2]            # Treatment effect using MLE at interim analysis
   )
 
   if (length(analysis_at_enrollnumber) > 1) {
@@ -556,8 +568,8 @@ binomialBACT <- function(
 
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "subject_enrolled",
-                                                        "subject_impute_success", "subject_impute_futility"))
+if (getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "subject_enrolled",
+                                                         "subject_impute_success", "subject_impute_futility"))
 
 
 #' @title Proportion of an event in control and treatment
@@ -572,7 +584,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "
 #' @param .data NULL. Stores the proportion of control and treatment. Should not
 #'   be edited by the user.
 #'
-#' @return a list with proportion of control and treatment group.
+#' @return A list with proportion of control and treatment group.
 #'
 #' @examples binomial_outcome(p_control = 0.12, p_treatment = 0.08)
 #' @export binomial_outcome
@@ -592,7 +604,7 @@ binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL)
 #' @param .data NULL. Stores the proportion of control and treatment. Should not
 #'   be edited by the user.
 #'
-#' @return a list with historical data for control and treatment group with the
+#' @return A list with historical data for control and treatment group with the
 #'   discount function.
 #'
 #' @examples
@@ -638,7 +650,7 @@ historical_binomial <- function(y0_treatment       = NULL,
 #' @param .data NULL. Stores the proportion of control and treatment. Should not
 #'   be edited by the user.
 #'
-#' @return a list with vector of beta rate for the beta prior for treatment and
+#' @return A list with vector of beta rate for the beta prior for treatment and
 #'   control group.
 #'
 #' @examples beta_prior(a0 = 1, b0 = 1)
@@ -669,7 +681,7 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL) {
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpbinomial
 #'
-#' @return a list of output for the Bayesian trial for binomial count.
+#' @return A list of output for the Bayesian trial for binomial count.
 #'
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
@@ -782,19 +794,24 @@ binomial_analysis <- function(
   stop_expected_success <- 0
   expected_success_test <- 0
 
+  # Sub-sample values from posterior to use for imputation stage
+  id_impute <- sample(1:number_mcmc, N_impute)
+  p_treatment_imp <- post$posterior_treatment$posterior[id_impute]
+  p_control_imp <- post$posterior_control$posterior[id_impute]
+
   for(i in 1:N_impute) {
     # Imputing success for control group
     data_control_success_impute <- data_interim %>%
       filter(treatment == 0) %>%
       mutate(outcome_impute = ifelse(futility,
-                                     rbinom(n(), 1, prop$p_outcome[1]),
+                                     rbinom(n(), 1, p_control_imp[i]),
                                      outcome))
 
     # Imputing success for treatment group
     data_treatment_success_impute <- data_interim %>%
       filter(treatment == 1) %>%
       mutate(outcome_impute = ifelse(futility,
-                                     rbinom(n(), 1, prop$p_outcome[2]),
+                                     rbinom(n(), 1, p_treatment_imp[i]),
                                      outcome))
 
     # Combine the treatment and control imputed datasets
@@ -856,7 +873,7 @@ binomial_analysis <- function(
       }
     }
 
-    if (success > prob_ha){
+    if (success > prob_ha) {
       expected_success_test <- expected_success_test + 1
     }
 
@@ -957,10 +974,10 @@ binomial_analysis <- function(
 
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "outcome_impute", "id",
-                                                        "futility", "treatment",
-                                                        "subject_impute_success",
-                                                        "subject_impute_futility", "p_outcome"))
+if (getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "outcome_impute", "id",
+                                                         "futility", "treatment",
+                                                         "subject_impute_success",
+                                                         "subject_impute_futility", "p_outcome"))
 
 
 #' @title Data file for binomial analysis
@@ -971,7 +988,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", "
 #' @param .data NULL. Stores the binomial data for analysis. Should not be
 #'   edited by user.
 #'
-#' @return a list with treatment, outcome and loss to follow up vector with
+#' @return A list with treatment, outcome and loss to follow up vector with
 #'   binomial outcome.
 #'
 #' @examples data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))

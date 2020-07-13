@@ -21,7 +21,7 @@ the dataset is assumed to be complete.}
 edited by user.}
 }
 \value{
-a list with treatment, outcome and loss to follow up vector with
+A list with treatment, outcome and loss to follow up vector with
   binomial outcome.
 }
 \description{
