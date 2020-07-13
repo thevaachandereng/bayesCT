@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayesCT</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3.9000</span>
       </span>
     </div>
 
@@ -450,7 +450,7 @@
 <span class="co">#&gt;  $ N_enrolled                  : num [1:2] 180 180</span>
 <span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
 <span class="co">#&gt;  $ stop_futility               : num [1:2] 1 1</span></pre></body></html></div>
-<p>Historical data is not required to compute the simulation. However, if historical data is avaialble, it can be incorporated into the analysis using the discount prior approach as implemented in the <code>bayesDP</code> R package.</p>
+<p>Historical data is not required to compute the simulation. However, if historical data is available, it can be incorporated into the analysis using the discount prior approach as implemented in the <code>bayesDP</code> R package.</p>
 <p>In our OPC trial, we’ll illustrate historical data incorporation. We’ll simulate the historical data as follows.</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">hist_data</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">time</span>      <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span>(<span class="fl">100</span>, <span class="fl">0.011</span>),
                         <span class="kw">event</span>     <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(<span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">0.8</span>),
@@ -461,7 +461,7 @@
 <span class="co">#&gt;  $ time     : num  92.19 140.54 9.18 131.6 380.19 ...</span>
 <span class="co">#&gt;  $ event    : int  0 1 0 1 1 1 0 1 1 1 ...</span>
 <span class="co">#&gt;  $ treatment: num  1 1 1 1 1 1 1 1 1 1 ...</span></pre></body></html></div>
-<p>We’ll incorporate this historical data using the weilbull discount function. For more details on the historical data incorporation method and computation, please see <a href="https://CRAN.R-project.org/package=bayesDP" class="uri">https://CRAN.R-project.org/package=bayesDP</a>.</p>
+<p>We’ll incorporate this historical data using the Weibull discount function. For more details on the historical data incorporation method and computation, please see <a href="https://CRAN.R-project.org/package=bayesDP" class="uri">https://CRAN.R-project.org/package=bayesDP</a>.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/historical_survival.html">historical_survival</a></span>(<span class="kw">time</span>              <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">time</span>,
                       <span class="kw">treatment</span>         <span class="kw">=</span> <span class="no">hist_data</span>$<span class="no">treatment</span>,
@@ -720,7 +720,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig.</p>
+  <p>Developed by Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme L. Hickey, Timothy Hanson, Theodore Lystig.</p>
 </div>
 
 <div class="pkgdown">

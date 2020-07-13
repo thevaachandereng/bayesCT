@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayesCT</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3.9000</span>
       </span>
     </div>
 
@@ -316,10 +316,10 @@
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
 <span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0 0</span>
-<span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0846 0.0954</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.648 0.895</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 700 600</span>
+<span class="co">#&gt;  $ type1_error                 : num 0.5</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0845 0.073</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.642 0.242</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 700 700</span>
 <span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
 <span class="co">#&gt;  $ stop_futility               : num [1:2] 1 1</span></pre></body></html></div>
 <p>Patient enrollment is assumed to follow a Poisson process. The default enrollment rate is 0.3 patients per day. In this simulation we’ll introduce a step-wise Poisson process with rate <span class="math inline">\(\lambda\)</span> as follows:</p>
@@ -351,11 +351,11 @@
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
 <span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0 0</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:2] 0.091 0.0741</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.865 0.293</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 900 600</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0847 0.0758</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.64 0.342</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 600 600</span>
 <span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 1</span></pre></body></html></div>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 1 1</span></pre></body></html></div>
 <p>The hypothesis is an important wrapper function which controls the probability of futility, probability of accepting the alternative hypothesis, probability of early success, the alternative hypothesis, and the treatment difference margin.</p>
 <p>Since, in an OPC trial, the proportion of events in the treatment group are simulated using the input provided, <code>delta</code> controls the maximum threshold allowed for the trial to succeed/fail. The default value of <code>delta</code> is 0. Here, we’ll use <code>delta = -0.03</code> (i.e <span class="math inline">\(\hat\theta_{treatment} - 0.08 &gt; -0.03\)</span>).</p>
 <p>We’ll further set the futility probability to 0.05, the expected success probability for early stopping to 0.90, and the final probability of accepting the alternative to 0.95. The alternative is <code>"less"</code> due to the hypothesis function specified above.</p>
@@ -386,13 +386,13 @@
 <span class="co">#&gt;   ..$ alternative          : chr "less"</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0 0.5</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0.5 0.5 0.5 1</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0926 0.1071</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.952 0.613</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 900 800</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 1</span></pre></body></html></div>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0885 0.064</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.981 1</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 900 600</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 1</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
 <p>Next, we’ll illustrate imputations for imputing outcomes for subjects loss to follow up. We’ll carry out 5 imputations and draw 1000 values from the posterior of each imputation.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/impute.html">impute</a></span>(<span class="kw">no_of_impute</span> <span class="kw">=</span> <span class="fl">5</span>,
@@ -420,13 +420,13 @@
 <span class="co">#&gt;   ..$ number_mcmc          : num 1000</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0.5 0.5 0.5 0.5</span>
-<span class="co">#&gt;  $ type1_error                 : num 0.1</span>
-<span class="co">#&gt;  $ est_final                   : num [1:10] 0.0667 0.0717 0.0999 0.0959 0.0984 ...</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:10] 1 0.998 0.846 0.915 0.873 1 0.923 0.529 1 0.999</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:10] 600 600 900 900 900 600 700 700 600 600</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:10] 1 1 0 0 0 1 1 0 1 1</span>
-<span class="co">#&gt;  $ stop_futility               : num [1:10] 0 0 0 0 0 0 0 1 0 0</span></pre></body></html></div>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0.6 0.7 0.7 0.9</span>
+<span class="co">#&gt;  $ type1_error                 : num 0</span>
+<span class="co">#&gt;  $ est_final                   : num [1:10] 0.0777 0.0732 0.0716 0.0865 0.0692 ...</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:10] 0.993 0.997 0.998 0.994 1 0.981 1 0.955 0.887 0.999</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:10] 600 600 600 900 600 900 600 700 700 600</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:10] 1 1 1 0 1 0 1 1 0 1</span>
+<span class="co">#&gt;  $ stop_futility               : num [1:10] 0 0 0 0 0 0 0 0 1 0</span></pre></body></html></div>
 <p>The default non-informative beta prior used in the simulation is <span class="math inline">\(\mathcal{B}eta(1, 1)\)</span>. In our OPC trial simulation, we’ll change the default to <span class="math inline">\(\mathcal{B}eta(5,5)\)</span>. This will increase the weight of the non-informative prior in the simulation. This non-informative beta prior is implemented using beta_prior wrapper function.</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="no">value</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/beta_prior.html">beta_prior</a></span>(<span class="kw">a0</span> <span class="kw">=</span> <span class="fl">5</span>,
@@ -455,10 +455,10 @@
 <span class="co">#&gt;   ..$ prior                : num [1:2] 5 5</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 1 1 1 1</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0.5 0.5 0.5 0.5</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0837 0.0864</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.976 0.973</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0961 0.0873</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.867 0.962</span>
 <span class="co">#&gt;  $ N_enrolled                  : num [1:2] 600 600</span>
 <span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 1</span>
 <span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
@@ -508,12 +508,12 @@
 <span class="co">#&gt;   ..$ method               : chr "fixed"</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0.5 1</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0.5 0.5 1 1</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:2] 0.084 0.0915</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.987 0.971</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 800 900</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 0</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0745 0.0804</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.998 0.994</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 600 800</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 1</span>
 <span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
 <p>The above flow was for illustrative purposes. Instead of inputting parameters step by step, the trial parameters can be filled in all at once as illustrated below. The pipe function connects all inputs together and the trial is simulated 2 times to obtain results.</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/binomial_outcome.html">binomial_outcome</a></span>(<span class="kw">p_treatment</span> <span class="kw">=</span> <span class="fl">0.08</span>) <span class="kw">%&gt;%</span>
@@ -572,12 +572,12 @@
 <span class="co">#&gt;   ..$ method               : chr "fixed"</span>
 <span class="co">#&gt;  $ power                       :'data.frame':    4 obs. of  2 variables:</span>
 <span class="co">#&gt;   ..$ interim_looks: num [1:4] 600 700 800 900</span>
-<span class="co">#&gt;   ..$ power        : num [1:4] 0 0 0.5 1</span>
+<span class="co">#&gt;   ..$ power        : num [1:4] 0 0.5 1 1</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0799 0.0914</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.999 0.956</span>
-<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 800 900</span>
-<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 0</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0861 0.0824</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.988 0.991</span>
+<span class="co">#&gt;  $ N_enrolled                  : num [1:2] 800 700</span>
+<span class="co">#&gt;  $ stop_expect_success         : num [1:2] 1 1</span>
 <span class="co">#&gt;  $ stop_futility               : num [1:2] 0 0</span></pre></body></html></div>
 </div>
 <div id="two-arm-trial" class="section level2">
@@ -628,8 +628,8 @@
 <span class="co">#&gt;   ..$ interim_looks: num [1:2] 350 400</span>
 <span class="co">#&gt;   ..$ power        : num [1:2] 0 0</span>
 <span class="co">#&gt;  $ type1_error                 : num 0</span>
-<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0272 0.0482</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.756 0.905</span>
+<span class="co">#&gt;  $ est_final                   : num [1:2] 0.0623 0.0468</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative: num [1:2] 0.946 0.882</span>
 <span class="co">#&gt;  $ N_enrolled                  : num [1:2] 400 350</span>
 <span class="co">#&gt;  $ stop_expect_success         : num [1:2] 0 0</span>
 <span class="co">#&gt;  $ stop_futility               : num [1:2] 0 1</span></pre></body></html></div>
@@ -666,7 +666,7 @@
 <span class="co">#&gt;  $ N_control                    : int 137</span>
 <span class="co">#&gt;  $ N_complete                   : num 262</span>
 <span class="co">#&gt;  $ N_enrolled                   : int 300</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.995</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.993</span>
 <span class="co">#&gt;  $ est_final                    : num 0.124</span>
 <span class="co">#&gt;  $ stop_futility                : num 0</span>
 <span class="co">#&gt;  $ stop_expected_success        : num 1</span></pre></body></html></div>
@@ -704,7 +704,7 @@
 <span class="co">#&gt;  $ N_control                    : int 137</span>
 <span class="co">#&gt;  $ N_complete                   : num 262</span>
 <span class="co">#&gt;  $ N_enrolled                   : int 300</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.979</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.984</span>
 <span class="co">#&gt;  $ est_final                    : num 0.121</span>
 <span class="co">#&gt;  $ stop_futility                : num 0</span>
 <span class="co">#&gt;  $ stop_expected_success        : num 1</span></pre></body></html></div>
@@ -722,7 +722,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig.</p>
+  <p>Developed by Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme L. Hickey, Timothy Hanson, Theodore Lystig.</p>
 </div>
 
 <div class="pkgdown">

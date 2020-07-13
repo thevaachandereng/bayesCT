@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Analysis wrapper function — analysis" />
-<meta property="og:description" content="Wrapper function to analyze bayesian trials." />
+<meta property="og:description" content="Wrapper function to analyze Bayesian trials." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayesCT</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.3.9000</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Wrapper function to analyze bayesian trials.</p>
+    <p>Wrapper function to analyze Bayesian trials.</p>
     </div>
 
     <pre class="usage"><span class='fu'>analysis</span>(<span class='no'>input</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -162,13 +162,14 @@ normal. etc.).</p></td>
     </tr>
     <tr>
       <th>.data</th>
-      <td><p>NULL. stores the all the details, please do not fill it in.</p></td>
+      <td><p>NULL. Stores the binomial data for analysis. Should not be
+edited by user.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with results of the analysis of bayesian trial.</p>
+    <p>A list with results of the analysis of Bayesian trial.</p>
 <dl'>
   <dt><code>prob_of_accepting_alternative</code></dt><dd><p>scalar. The input parameter of probability of accepting the alternative.</p></dd>
   <dt><code>margin</code></dt><dd><p>scalar. The margin input value of difference between mean estimate of treatment
@@ -179,7 +180,7 @@ normal. etc.).</p></td>
   <dt><code>N_control</code></dt><dd><p>scalar. The number of patients enrolled in the control group for
     each simulation.</p></dd>
   <dt><code>N_enrolled</code></dt><dd><p>vector. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation. )</p></dd>
+    and experimental group for each simulation.)</p></dd>
   <dt><code>N_complete</code></dt><dd><p>scalar. The number of patients who completed the trial and had no
     loss to follow-up.</p></dd>
   <dt><code>post_prob_accept_alternative</code></dt><dd><p>vector. The final probability of accepting the alternative
@@ -190,7 +191,6 @@ normal. etc.).</p></td>
     who had loss to follow up? 1 for yes and 0 for no.</p></dd>
   <dt><code>stop_expected_success</code></dt><dd><p>scalar. Did the trial stop for early success during imputation of patient
     who had loss to follow up? 1 for yes and 0 for no.</p></dd>
-
 
 </dl>
 
@@ -206,7 +206,7 @@ normal. etc.).</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig.</p>
+  <p>Developed by Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme L. Hickey, Timothy Hanson, Theodore Lystig.</p>
 </div>
 
 <div class="pkgdown">
