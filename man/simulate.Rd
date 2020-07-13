@@ -2,38 +2,41 @@
 % Please edit documentation in R/simulate.R
 \name{simulate}
 \alias{simulate}
-\title{Simulation wrapper for binomial and normal.}
+\title{Simulation wrapper for binomial and normal}
 \usage{
 simulate(input, no_of_sim = 10000, .data = NULL)
 }
 \arguments{
-\item{input}{list. Input function for all inputs in binomial and normal .}
+\item{input}{list. Input function for all inputs in binomial, normal, and
+survival.}
 
-\item{no_of_sim}{numeric. Number of simulations to run}
+\item{no_of_sim}{numeric. Number of simulations to run.}
 
-\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. Stores the proportion of control and treatment, please do
+not fill it in.}
 }
 \value{
-a list with results of the simulation (power and type I error) and the input.
+A list with results of the simulation (power and type I error) and
+  the input.
 
 \describe{
   \item{\code{input}}{
-  A list of input values used in the trial simulation.}
+    A list of input values used in the trial simulation.}
   \item{\code{power}}{
-    data_frame. A data frame with the interim look and power at each look.}
+    data frame. A data frame with the interim look and power at each look.}
   \item{\code{type1_error}}{
-    scalar. The type 1 error or the number of times the trial rejects the null
+    scalar. The type I error or the proportion of times the trial rejects the null
     when the parameters are simulated under the null hypothesis.}
   \item{\code{est_final}}{
     vector. The final estimate of the difference in posterior estimate of
     treatment and posterior estimate of the control group for all the
-    simulation.}
+    simulations.}
   \item{\code{post_prob_accept_alternative}}{
     vector. The final probability of accepting the alternative for the
     simulations.}
   \item{\code{N_enrolled}}{
     vector. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation.)}
+    and experimental group for each simulation).}
   \item{\code{stop_futility}}{
     vector. Did the trial stop for futility during imputation of patient
     who had loss to follow up? 1 for yes and 0 for no.}
@@ -44,5 +47,6 @@ a list with results of the simulation (power and type I error) and the input.
 }
 }
 \description{
-Wrapper function for complete binomial and normal function to compute power and type 1 error.
+Wrapper function for complete binomial and normal function to
+  compute power and type I error.
 }
