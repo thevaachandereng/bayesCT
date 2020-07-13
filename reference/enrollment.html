@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Simulating enrollment dates — enrollment" />
-<meta property="og:description" content="This function simulates enrollment dates using either Poisson distribution" />
+<meta property="og:description" content="This function simulates enrollment dates using either Poisson
+  distribution" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -143,7 +144,8 @@
     </div>
 
     <div class="ref-description">
-    <p>This function simulates enrollment dates using either Poisson distribution</p>
+    <p>This function simulates enrollment dates using either Poisson
+  distribution</p>
     </div>
 
     <pre class="usage"><span class='fu'>enrollment</span>(<span class='no'>param</span>, <span class='no'>N_total</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -153,21 +155,22 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>param</th>
-      <td><p>a vector of lambda in Poisson</p></td>
+      <td><p>vector. Lambda values for Poisson distribution.</p></td>
     </tr>
     <tr>
       <th>N_total</th>
-      <td><p>a numeric value of total sample size</p></td>
+      <td><p>integer. Value of total sample size.</p></td>
     </tr>
     <tr>
       <th>time</th>
-      <td><p>a vector of the <code><a href='https://rdrr.io/r/base/length.html'>length(param)</a></code> - 1 indicating end of time when a specific lambda is used</p></td>
+      <td><p>vector. Knots (of <code><a href='https://rdrr.io/r/base/length.html'>length(param)</a></code> - 1) indicating end of
+time when a specific lambda is used.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a vector of enrollment dates</p>
+    <p>A vector of enrollment dates.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>enrollment</span>(<span class='kw'>param</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.003</span>, <span class='fl'>0.7</span>), <span class='fl'>100</span>, <span class='kw'>time</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt;   [1]   0   0   0   2   3   5   5   5   6   8   9  10  14  17  18  18  21  22
@@ -175,7 +178,8 @@
 #&gt;  [37]  48  49  58  59  59  61  62  66  66  69  71  71  71  71  73  74  74  75
 #&gt;  [55]  77  78  81  82  86  87  88  89  90  91  92  92  94  94  95  95  95  95
 #&gt;  [73]  96  98  99 100 101 101 102 104 104 105 105 108 112 113 113 114 114 115
-#&gt;  [91] 116 117 120 120 122 122 122 122 123 125</div><div class='input'><span class='fu'>enrollment</span>(<span class='kw'>param</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.5</span>, <span class='fl'>0.9</span>, <span class='fl'>1.2</span>, <span class='fl'>2.1</span>), <span class='fl'>200</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span>, <span class='fl'>60</span>))</div><div class='output co'>#&gt;   [1]   0   1  11  12  12  13  14  16  17  17  18  21  22  25  25  27  28  29
+#&gt;  [91] 116 117 120 120 122 122 122 122 123 125</div><div class='input'>
+<span class='fu'>enrollment</span>(<span class='kw'>param</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.3</span>, <span class='fl'>0.5</span>, <span class='fl'>0.9</span>, <span class='fl'>1.2</span>, <span class='fl'>2.1</span>), <span class='fl'>200</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span>, <span class='fl'>60</span>))</div><div class='output co'>#&gt;   [1]   0   1  11  12  12  13  14  16  17  17  18  21  22  25  25  27  28  29
 #&gt;  [19]  31  32  34  34  36  36  38  40  40  42  42  42  43  44  45  45  45  46
 #&gt;  [37]  46  48  48  48  49  49  50  51  51  51  51  51  51  52  53  53  53  57
 #&gt;  [55]  57  58  59  61  61  61  61  61  62  63  63  63  64  65  65  65  65  66

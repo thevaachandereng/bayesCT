@@ -160,8 +160,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>delta</th>
-      <td><p>numeric. Threshold set for margin in null hypothesis. The default
-is set to 0.</p></td>
+      <td><p>numeric. Threshold set for margin in null hypothesis. The
+default is set to 0.</p></td>
     </tr>
     <tr>
       <th>futility_prob</th>
@@ -178,8 +178,8 @@ hypothesis. The default is 0.95.</p></td>
     </tr>
     <tr>
       <th>alternative</th>
-      <td><p>character. The string specifying the alternative hypothesis,
-must be one of <code>"greater"</code> (default), <code>"less"</code> or
+      <td><p>character. The string specifying the alternative
+hypothesis, must be one of <code>"greater"</code> (default), <code>"less"</code> or
 <code>"two.sided"</code>.</p></td>
     </tr>
     <tr>
@@ -190,9 +190,9 @@ must be one of <code>"greater"</code> (default), <code>"less"</code> or
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with information of hypothesis testing (threshold, futility
-  probability, probability of accepting the alternative hypothesis, and probability of
-  expected success).</p>
+    <p>A list with information of hypothesis testing (threshold, futility
+  probability, probability of accepting the alternative hypothesis, and
+  probability of expected success).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>hypothesis</span>(<span class='kw'>delta</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>prob_accept_ha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
@@ -210,7 +210,7 @@ must be one of <code>"greater"</code> (default), <code>"less"</code> or
 #&gt; 
 #&gt; $alternative
 #&gt; [1] "greater"
-#&gt; </div><div class='input'><span class='fu'>hypothesis</span>(<span class='kw'>delta</span><span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>prob_accept_ha</span> <span class='kw'>=</span> <span class='fl'>0.975</span>,
+#&gt; </div><div class='input'><span class='fu'>hypothesis</span>(<span class='kw'>delta</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>futility_prob</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>prob_accept_ha</span> <span class='kw'>=</span> <span class='fl'>0.975</span>,
            <span class='kw'>expected_success_prob</span> <span class='kw'>=</span> <span class='fl'>0.80</span>, <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"less"</span>)</div><div class='output co'>#&gt; $h0
 #&gt; [1] 0.2
 #&gt; 
