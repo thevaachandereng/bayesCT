@@ -14,8 +14,8 @@ hypothesis(
 )
 }
 \arguments{
-\item{delta}{numeric. Threshold set for margin in null hypothesis. The default
-is set to 0.}
+\item{delta}{numeric. Threshold set for margin in null hypothesis. The
+default is set to 0.}
 
 \item{futility_prob}{numeric. Probability of futility. The default is 0.05.}
 
@@ -24,16 +24,16 @@ hypothesis. The default is 0.95.}
 
 \item{expected_success_prob}{numeric. Probability of expected success.}
 
-\item{alternative}{character. The string specifying the alternative hypothesis,
-must be one of \code{"greater"} (default), \code{"less"} or
+\item{alternative}{character. The string specifying the alternative
+hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 \code{"two.sided"}.}
 
 \item{.data}{NULL. This should not be changed by the user.}
 }
 \value{
-a list with information of hypothesis testing (threshold, futility
-  probability, probability of accepting the alternative hypothesis, and probability of
-  expected success).
+A list with information of hypothesis testing (threshold, futility
+  probability, probability of accepting the alternative hypothesis, and
+  probability of expected success).
 }
 \description{
 Wrapper function for the hypothesis in the trial.
@@ -41,6 +41,6 @@ Wrapper function for the hypothesis in the trial.
 \examples{
 hypothesis(delta = 0, futility_prob = 0.05, prob_accept_ha = 0.95,
            expected_success_prob = 0.90, alternative = "greater")
-hypothesis(delta= 0.2, futility_prob = 0.1, prob_accept_ha = 0.975,
+hypothesis(delta = 0.2, futility_prob = 0.1, prob_accept_ha = 0.975,
            expected_success_prob = 0.80, alternative = "less")
 }

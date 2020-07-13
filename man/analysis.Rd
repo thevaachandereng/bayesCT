@@ -45,10 +45,10 @@ A list with results of the analysis of Bayesian trial.
     scalar. The final estimate of the difference in posterior estimate of
     treatment and posterior estimate of the control group.}
   \item{\code{stop_futility}}{
-    scalar. Did the trial stop for futility during imputation of patient
+    scalar. Did the trial stop for futility during imputation of patients
     who had loss to follow up? 1 for yes and 0 for no.}
   \item{\code{stop_expected_success}}{
-    scalar. Did the trial stop for early success during imputation of patient
+    scalar. Did the trial stop for early success during imputation of patients
     who had loss to follow up? 1 for yes and 0 for no.}
 }
 }

@@ -1,22 +1,27 @@
 #' @title Randomization allocation
 #'
-#' @description Implements a randomization allocation for control and treatment arms with different randomization ratios and block sizes.
+#' @description Implements a randomization allocation for control and treatment
+#'   arms with different randomization ratios and block sizes.
 #'
-#' @param N_total an integer value of total sample size for randomization allocation.
-#' @param block a vector value of the block size for randomization. Note that it needs to be a multiple of the sum of \code{allocation}.
-#' @param allocation a numeric vector of the randomization allocation in the order \code{c(control, treatment)}.
+#' @param N_total an integer value of total sample size for randomization
+#'   allocation.
+#' @param block a vector value of the block size for randomization. Note that it
+#'   needs to be a multiple of the sum of \code{allocation}.
+#' @param allocation a numeric vector of the randomization allocation in the
+#'   order \code{c(control, treatment)}.
 #'
 #' @return the randomization allocation with 0, 1 for control and treatment
 #'
 #' @examples
-#' # Implementing treatment allocation for control to treatment with 1:1.5 randomization ratio
+#' # Implementing treatment allocation for control to treatment with 1:1.5
+#' # randomization ratio
 #' randomization(N_total = 100, block = 5, allocation = c(2, 3))
 #'
 #' # Treatment allocation with 2:1 for control to treatment
 #' randomization(N_total = 70, block = 9, allocation = c(2, 1))
 #'
-#' # Treatment allocation for control to treatment with 1:2 for control to treatment with
-#' # multiple block sizes c(3, 9, 6)
+#' # Treatment allocation for control to treatment with 1:2 for control
+#' # to treatment with multiple block sizes c(3, 9, 6)
 #' randomization(N_total = 100, block = c(3, 9, 6), allocation = c(1, 2))
 #'
 #' # For complete randomization set the N_total to block size

@@ -2,6 +2,7 @@
 #'
 #' @description Simulation for binomial counts for Bayesian adaptive trials with
 #'   different inputs to control for power, sample size, type 1 error rate, etc.
+#'
 #' @param p_treatment scalar. Proportion of events under the treatment arm.
 #' @param p_control scalar. Proportion of events under the control arm.
 #' @param y0_treatment scalar. Number of events for the historical treatment
@@ -64,7 +65,9 @@
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpbinomial
+#'
 #' @export binomialBACT
+
 binomialBACT <- function(
   p_treatment,
   p_control             = NULL,
@@ -587,7 +590,9 @@ if (getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", 
 #' @return A list with proportion of control and treatment group.
 #'
 #' @examples binomial_outcome(p_control = 0.12, p_treatment = 0.08)
+#'
 #' @export binomial_outcome
+
 binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL) {
   .data$p_treatment  <- p_treatment
   .data$p_control    <- p_control
@@ -612,7 +617,9 @@ binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL)
 #' historical_binomial(y0_treatment = 5, N0_treatment = 10, y0_control = 15, N0_control = 23,
 #'                      discount_function = "weibull", alpha_max = 1, fix_alpha = FALSE,
 #'                      weibull_scale = 0.135, weibull_shape = 3)
+#'
 #' @export historical_binomial
+
 historical_binomial <- function(y0_treatment       = NULL,
                                 N0_treatment       = NULL,
                                 discount_function  = "identity",
@@ -654,7 +661,9 @@ historical_binomial <- function(y0_treatment       = NULL,
 #'   control group.
 #'
 #' @examples beta_prior(a0 = 1, b0 = 1)
+#'
 #' @export beta_prior
+
 beta_prior <- function(a0 = 1, b0 = 1, .data = NULL) {
   .data$prior  <- c(a0, b0)
   .data
@@ -715,7 +724,6 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL) {
 #'   \item{\code{stop_expected_success}}{
 #'     scalar. Did the trial stop for early success during imputation of patient
 #'     who had loss to follow up? 1 for yes and 0 for no.}
-#'
 #' }
 #'
 #' @export binomial_analysis
@@ -992,7 +1000,9 @@ if (getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", 
 #'   binomial outcome.
 #'
 #' @examples data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
+#'
 #' @export data_binomial
+
 data_binomial <- function(treatment, outcome, complete, .data = NULL) {
   .data$treatment <- treatment
   .data$outcome   <- outcome

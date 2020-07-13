@@ -25,4 +25,5 @@ Wrapper function for proportion of an event in control and
 }
 \examples{
 binomial_outcome(p_control = 0.12, p_treatment = 0.08)
+
 }

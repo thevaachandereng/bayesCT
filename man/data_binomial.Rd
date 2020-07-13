@@ -29,4 +29,5 @@ Wrapper function for data file in binomial analysis.
 }
 \examples{
 data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
+
 }

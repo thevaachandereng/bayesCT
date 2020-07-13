@@ -144,7 +144,6 @@ A list of output for the Bayesian trial for binomial count.
   \item{\code{stop_expected_success}}{
     scalar. Did the trial stop for early success during imputation of patient
     who had loss to follow up? 1 for yes and 0 for no.}
-
 }
 }
 \description{
