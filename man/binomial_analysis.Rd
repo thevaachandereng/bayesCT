@@ -110,7 +110,7 @@ and holds it fixed throughout the analysis.  See the the
 \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
 }
 \value{
-a list of output for the Bayesian trial for binomial count.
+A list of output for the Bayesian trial for binomial count.
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{

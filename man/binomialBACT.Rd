@@ -134,7 +134,7 @@ and holds it fixed throughout the analysis.  See the the
 \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
 }
 \value{
-a list of output for a single trial simulation.
+A list of output for a single trial simulation.
 \describe{
   \item{\code{p_treatment}}{
     scalar. The input parameter of proportion of events in the

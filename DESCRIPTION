@@ -1,14 +1,21 @@
 Package: bayesCT
 Type: Package
 Title: Simulation and Analysis of Adaptive Bayesian Clinical Trials 
-Version: 0.99.3
-Authors@R: c(person(given = "Thevaa", family = "Chandereng", role = c("aut", "cre", "cph"), 
-             email = "chandereng@wisc.edu", comment = c(ORCID = "0000-0003-4078-9176")), 
-             person("Donald", "Musgrove", email = "donald.r.musgrove@medtronic.com", role = c("aut", "cph")), 
-             person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com", role = c("aut", "cph")),
-	           person("Graeme", "Hickey", email = "graeme.l.hickey@medtronic.com", role = c("aut", "cph")), 
-             person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com", role = c("aut", "cph")),
-             person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com", role = c("aut", "cph")))
+Version: 0.99.3.9000
+Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu",
+                 role = c("aut", "cre", "cph"),
+                 comment = c(ORCID = "0000-0003-4078-9176")), 
+             person("Donald", "Musgrove",
+                 role = c("aut", "cph")), 
+             person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com",
+                 role = c("aut", "cph")),
+	           person("Graeme L.", "Hickey", email = "graemeleehickey@gmail.com",
+	               role = c("aut", "cph"),
+	               comment = c(ORCID = "0000-0002-4989-0054")), 
+             person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com",
+                 role = c("aut", "cph")),
+             person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com",
+                 role = c("aut", "cph")))
 Description: Simulation and analysis of Bayesian adaptive clinical trials for binomial, Gaussian, and time-to-event data types, 
       incorporates historical data and allows early stopping for futility or early success. The package uses novel 
       and efficient Monte Carlo methods for estimating Bayesian posterior probabilities, evaluation of loss to follow up, 
@@ -24,14 +31,16 @@ Depends:
     R (>= 2.10)
 LazyData: true
 RoxygenNote: 7.1.0
-Suggests: testthat,
-    rmarkdown, 
-    pkgdown, 
+Suggests:
+    knitr,
     devtools,
-    knitr
+    pkgdown, 
+    rmarkdown, 
+    testthat
 VignetteBuilder: knitr
-Imports: bayesDP,
+Imports:
+    bayesDP,
     dplyr,
-    purrr,
     survival, 
-    magrittr (>= 1.5)
+    magrittr (>= 1.5),
+    purrr

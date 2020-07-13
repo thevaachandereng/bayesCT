@@ -13,7 +13,7 @@
 #'   set to Beta(1, 1).
 #' @inheritParams normalBACT
 #'
-#' @return a list of output for a single trial simulation.
+#' @return A list of output for a single trial simulation.
 #' \describe{
 #'   \item{\code{p_treatment}}{
 #'     scalar. The input parameter of proportion of events in the
@@ -584,7 +584,7 @@ if (getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", 
 #' @param .data NULL. Stores the proportion of control and treatment. Should not
 #'   be edited by the user.
 #'
-#' @return a list with proportion of control and treatment group.
+#' @return A list with proportion of control and treatment group.
 #'
 #' @examples binomial_outcome(p_control = 0.12, p_treatment = 0.08)
 #' @export binomial_outcome
@@ -604,7 +604,7 @@ binomial_outcome <- function(p_treatment = NULL, p_control = NULL, .data = NULL)
 #' @param .data NULL. Stores the proportion of control and treatment. Should not
 #'   be edited by the user.
 #'
-#' @return a list with historical data for control and treatment group with the
+#' @return A list with historical data for control and treatment group with the
 #'   discount function.
 #'
 #' @examples
@@ -650,7 +650,7 @@ historical_binomial <- function(y0_treatment       = NULL,
 #' @param .data NULL. Stores the proportion of control and treatment. Should not
 #'   be edited by the user.
 #'
-#' @return a list with vector of beta rate for the beta prior for treatment and
+#' @return A list with vector of beta rate for the beta prior for treatment and
 #'   control group.
 #'
 #' @examples beta_prior(a0 = 1, b0 = 1)
@@ -681,7 +681,7 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL) {
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpbinomial
 #'
-#' @return a list of output for the Bayesian trial for binomial count.
+#' @return A list of output for the Bayesian trial for binomial count.
 #'
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
@@ -988,7 +988,7 @@ if (getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome", 
 #' @param .data NULL. Stores the binomial data for analysis. Should not be
 #'   edited by user.
 #'
-#' @return a list with treatment, outcome and loss to follow up vector with
+#' @return A list with treatment, outcome and loss to follow up vector with
 #'   binomial outcome.
 #'
 #' @examples data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))

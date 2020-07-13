@@ -12,10 +12,11 @@ analysis(input, type = "binomial", .data = NULL)
 \item{type}{character. Type of analysis to be ran (binomial (default),
 normal. etc.).}
 
-\item{.data}{NULL. stores the all the details, please do not fill it in.}
+\item{.data}{NULL. Stores the binomial data for analysis. Should not be
+edited by user.}
 }
 \value{
-a list with results of the analysis of Bayesian trial.
+A list with results of the analysis of Bayesian trial.
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
@@ -24,7 +25,7 @@ a list with results of the analysis of Bayesian trial.
     scalar. The margin input value of difference between mean estimate of treatment
      and mean estimate of the control.}
   \item{\code{alternative}}{
-    character. The input parameter of alternative hypothesis. }
+    character. The input parameter of alternative hypothesis.}
   \item{\code{N_treatment}}{
     scalar. The number of patients enrolled in the experimental group for
     each simulation.}
@@ -33,7 +34,7 @@ a list with results of the analysis of Bayesian trial.
     each simulation.}
   \item{\code{N_enrolled}}{
     vector. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation. )}
+    and experimental group for each simulation.)}
   \item{\code{N_complete}}{
     scalar. The number of patients who completed the trial and had no
     loss to follow-up.}
@@ -49,7 +50,6 @@ a list with results of the analysis of Bayesian trial.
   \item{\code{stop_expected_success}}{
     scalar. Did the trial stop for early success during imputation of patient
     who had loss to follow up? 1 for yes and 0 for no.}
-
 }
 }
 \description{

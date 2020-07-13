@@ -17,7 +17,7 @@ beta_prior(a0 = 1, b0 = 1, .data = NULL)
 be edited by the user.}
 }
 \value{
-a list with vector of beta rate for the beta prior for treatment and
+A list with vector of beta rate for the beta prior for treatment and
   control group.
 }
 \description{

@@ -71,7 +71,7 @@ and holds it fixed throughout the analysis.  See the the
 be edited by the user.}
 }
 \value{
-a list with historical data for control and treatment group with the
+A list with historical data for control and treatment group with the
   discount function.
 }
 \description{
