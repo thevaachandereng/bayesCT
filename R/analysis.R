@@ -1,13 +1,13 @@
 #' @title Analysis wrapper function
 #'
-#' @description Wrapper function to analyze bayesian trials.
+#' @description Wrapper function to analyze Bayesian trials.
 #'
 #' @param input list. Input function for all the analysis.
 #' @param type character. Type of analysis to be ran (binomial (default),
 #'   normal. etc.).
 #' @param .data NULL. stores the all the details, please do not fill it in.
 #'
-#' @return a list with results of the analysis of bayesian trial.
+#' @return a list with results of the analysis of Bayesian trial.
 #'
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{

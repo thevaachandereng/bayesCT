@@ -1,8 +1,8 @@
 #' @title Simulating enrollment dates
 #'
-#' @description This function simulates enrollment dates using either poisson distribution
+#' @description This function simulates enrollment dates using either Poisson distribution
 #'
-#' @param param a vector of lambda in poisson
+#' @param param a vector of lambda in Poisson
 #' @param time a vector of the \code{length(param)} - 1 indicating end of time when a specific lambda is used
 #' @param N_total a numeric value of total sample size
 #' @return a vector of enrollment dates

@@ -40,7 +40,7 @@
 #' @param alternative character. The string specifying the alternative
 #'   hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 #'   \code{"two.sided"}.
-#' @param prop_loss_to_followup scalar. Overall oroportion of subjects lost to
+#' @param prop_loss_to_followup scalar. Overall proportion of subjects lost to
 #'   follow-up.
 #' @param h0 scalar. Threshold for comparing two mean values. Default is
 #'   \code{h0=0}.
@@ -70,7 +70,7 @@
 #'   treatment group and the second value is used to estimate the weight of the
 #'   historical control group. Not used when discount_function = "identity".
 #' @param method character. Analysis method with respect to estimation of the weight
-#'   paramter alpha. Default method "\code{mc}" estimates alpha for each
+#'   parameter alpha. Default method "\code{mc}" estimates alpha for each
 #'   Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
 #'   and holds it fixed throughout the analysis.  See the the
 #'   \code{bdpsurvival} vignette \cr

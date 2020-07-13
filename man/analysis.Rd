@@ -15,7 +15,7 @@ normal. etc.).}
 \item{.data}{NULL. stores the all the details, please do not fill it in.}
 }
 \value{
-a list with results of the analysis of bayesian trial.
+a list with results of the analysis of Bayesian trial.
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
@@ -53,5 +53,5 @@ a list with results of the analysis of bayesian trial.
 }
 }
 \description{
-Wrapper function to analyze bayesian trials.
+Wrapper function to analyze Bayesian trials.
 }

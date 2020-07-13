@@ -249,7 +249,7 @@ output <- value %>%
 str(output)
 ```
 
-Historical data is not required to compute the simulation. However, if historical data is avaialble, it can be incorporated into the analysis using the discount prior approach as implemented in the  `bayesDP` R package. 
+Historical data is not required to compute the simulation. However, if historical data is available, it can be incorporated into the analysis using the discount prior approach as implemented in the `bayesDP` R package. 
  
 In our OPC trial, we'll illustrate historical data incorporation. We'll simulate the historical data as follows. 
 
@@ -263,7 +263,7 @@ str(hist_data)
 
 
 
-We'll incorporate this historical data using the weilbull discount function. 
+We'll incorporate this historical data using the Weibull discount function. 
 For more details on the historical data incorporation method and computation, please see [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP). 
 
 ```{r opchist}

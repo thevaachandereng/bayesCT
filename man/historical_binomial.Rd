@@ -61,7 +61,7 @@ treatment group and the second value is used to estimate the weight of the
 historical control group. Not used when discount_function = "identity".}
 
 \item{method}{character. Analysis method with respect to estimation of the weight
-paramter alpha. Default method "\code{mc}" estimates alpha for each
+parameter alpha. Default method "\code{mc}" estimates alpha for each
 Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
 and holds it fixed throughout the analysis.  See the the
 \code{bdpsurvival} vignette \cr
