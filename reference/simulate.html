@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulation wrapper for binomial and normal. — simulate • bayesCT</title>
+<title>Simulation wrapper for binomial and normal — simulate • bayesCT</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Simulation wrapper for binomial and normal. — simulate" />
-<meta property="og:description" content="Wrapper function for complete binomial and normal function to compute power and type 1 error." />
+<meta property="og:title" content="Simulation wrapper for binomial and normal — simulate" />
+<meta property="og:description" content="Wrapper function for complete binomial and normal function to
+  compute power and type I error." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,13 +138,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulation wrapper for binomial and normal.</h1>
+    <h1>Simulation wrapper for binomial and normal</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/simulate.R'><code>R/simulate.R</code></a></small>
     <div class="hidden name"><code>simulate.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Wrapper function for complete binomial and normal function to compute power and type 1 error.</p>
+    <p>Wrapper function for complete binomial and normal function to
+  compute power and type I error.</p>
     </div>
 
     <pre class="usage"><span class='fu'>simulate</span>(<span class='no'>input</span>, <span class='kw'>no_of_sim</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
@@ -153,33 +155,36 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>input</th>
-      <td><p>list. Input function for all inputs in binomial and normal .</p></td>
+      <td><p>list. Input function for all inputs in binomial, normal, and
+survival.</p></td>
     </tr>
     <tr>
       <th>no_of_sim</th>
-      <td><p>numeric. Number of simulations to run</p></td>
+      <td><p>numeric. Number of simulations to run.</p></td>
     </tr>
     <tr>
       <th>.data</th>
-      <td><p>NULL. stores the proportion of control and treatment, please do not fill it in.</p></td>
+      <td><p>NULL. Stores the proportion of control and treatment, please do
+not fill it in.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with results of the simulation (power and type I error) and the input.</p>
+    <p>A list with results of the simulation (power and type I error) and
+  the input.</p>
 <dl'>
   <dt><code>input</code></dt><dd><p>A list of input values used in the trial simulation.</p></dd>
-  <dt><code>power</code></dt><dd><p>data_frame. A data frame with the interim look and power at each look.</p></dd>
-  <dt><code>type1_error</code></dt><dd><p>scalar. The type 1 error or the number of times the trial rejects the null
+  <dt><code>power</code></dt><dd><p>data frame. A data frame with the interim look and power at each look.</p></dd>
+  <dt><code>type1_error</code></dt><dd><p>scalar. The type I error or the proportion of times the trial rejects the null
     when the parameters are simulated under the null hypothesis.</p></dd>
   <dt><code>est_final</code></dt><dd><p>vector. The final estimate of the difference in posterior estimate of
     treatment and posterior estimate of the control group for all the
-    simulation.</p></dd>
+    simulations.</p></dd>
   <dt><code>post_prob_accept_alternative</code></dt><dd><p>vector. The final probability of accepting the alternative for the
     simulations.</p></dd>
   <dt><code>N_enrolled</code></dt><dd><p>vector. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation.)</p></dd>
+    and experimental group for each simulation).</p></dd>
   <dt><code>stop_futility</code></dt><dd><p>vector. Did the trial stop for futility during imputation of patient
     who had loss to follow up? 1 for yes and 0 for no.</p></dd>
   <dt><code>stop_expected_success</code></dt><dd><p>vector. Did the trial stop for early success during imputation of patient
