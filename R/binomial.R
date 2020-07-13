@@ -758,9 +758,6 @@ binomial_analysis <- function(
   data <- data_interim %>%
     filter(!futility)
 
-  prop <- data %>%
-    group_by(treatment) %>%
-    summarize(p_outcome = mean(outcome))
 
   if (sum(data$treatment == 0) != 0) {
     y_c <- sum(data$outcome[data$treatment == 0])
