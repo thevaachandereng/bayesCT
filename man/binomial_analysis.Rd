@@ -170,3 +170,10 @@ Function to analyze a Bayesian trial for binomial count data
   which allows for early stopping and incorporation of historical data using
   the discount function approach.
 }
+\details{
+If the enrollment size is at the final sample size, i.e. the maximum
+  allowable sample size for the trial, then this function is not of practical
+  use since there is no opportunity to stop trial enrollment. In such a case,
+  it is expected that the follow-up will be conducted per the study protocol
+  and a final analysis made.
+}

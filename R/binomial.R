@@ -416,7 +416,7 @@ binomialBACT <- function(
       }
 
       # Test if expected success criteria met
-      if (expected_success_test / N_impute > expected_success_prob ) {
+      if (expected_success_test / N_impute > expected_success_prob) {
         stop_expected_success <- 1
         stage_trial_stopped   <- analysis_at_enrollnumber[i]
         break
@@ -681,6 +681,12 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL) {
 #' @inheritParams normalBACT
 #' @inheritParams binomialBACT
 #'
+#' @details If the enrollment size is at the final sample size, i.e. the maximum
+#'   allowable sample size for the trial, then this function is not of practical
+#'   use since there is no opportunity to stop trial enrollment. In such a case,
+#'   it is expected that the follow-up will be conducted per the study protocol
+#'   and a final analysis made.
+#'
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpbinomial
@@ -768,11 +774,16 @@ binomial_analysis <- function(
     N_max_control   <- sum(treatment == 0)
   } else if (length(complete) < (N_max_treatment + N_max_control)) {
     final_analysis <- FALSE
+    # Number of subjects still to enroll
     N_horizon <- N_max_treatment + N_max_control - length(complete)
   } else if (length(complete) == (N_max_treatment + N_max_control)) {
     final_analysis <- TRUE
   } else if (length(complete) > (N_max_treatment + N_max_control)) {
     stop("Number of enrolled subjects exceeds maximum defined in analysis plan!")
+  }
+  if (final_analysis) {
+    message("Are you at the final sample size? There is no opportunity to stop enrollment.\n
+            Consider setting N_max_treatment and/or N_max_control")
   }
 
   # Reading the data
@@ -938,85 +949,81 @@ binomial_analysis <- function(
     ### Futility computations
     ##########################################################################
 
-    # Only run if an interim analysis
-    if (!final_analysis) {
-      # For patients not enrolled, impute the outcome
-      data_control_futility_impute <- data_success_impute %>%
-        filter(treatment == 0) %>%
-        mutate(outcome_impute = ifelse(subject_impute_futility,
-                                       rbinom(n(), 1, p_control_imp[i]),
-                                       outcome))
+    # For patients not enrolled, impute the outcome
+    data_control_futility_impute <- data_success_impute %>%
+      filter(treatment == 0) %>%
+      mutate(outcome_impute = ifelse(subject_impute_futility,
+                                     rbinom(n(), 1, p_control_imp[i]),
+                                     outcome))
 
-      data_treatment_futility_impute <- data_success_impute %>%
-        filter(treatment == 1) %>%
-        mutate(outcome_impute = ifelse(subject_impute_futility,
-                                       rbinom(n(), 1, p_treatment_imp[i]),
-                                       outcome))
+    data_treatment_futility_impute <- data_success_impute %>%
+      filter(treatment == 1) %>%
+      mutate(outcome_impute = ifelse(subject_impute_futility,
+                                     rbinom(n(), 1, p_treatment_imp[i]),
+                                     outcome))
 
-      # Combine the treatment and control imputed datasets
-      data_futility_impute <- bind_rows(data_control_futility_impute,
-                                        data_treatment_futility_impute) %>%
-        mutate(outcome = outcome_impute) %>%
-        select(-outcome_impute)
+    # Combine the treatment and control imputed datasets
+    data_futility_impute <- bind_rows(data_control_futility_impute,
+                                      data_treatment_futility_impute) %>%
+      mutate(outcome = outcome_impute) %>%
+      select(-outcome_impute)
 
-      # Create enrolled subject data frame for discount function analysis
-      data <- data_futility_impute
+    # Create enrolled subject data frame for discount function analysis
+    data <- data_futility_impute
 
-      if (sum(data$treatment == 0) != 0) {
-        y_c <- sum(data$outcome[data$treatment == 0])
-        N_c <- length(data$outcome[data$treatment == 0])
+    if (sum(data$treatment == 0) != 0) {
+      y_c <- sum(data$outcome[data$treatment == 0])
+      N_c <- length(data$outcome[data$treatment == 0])
+    } else {
+      y_c <- NULL
+      N_c <- NULL
+    }
+
+    # Analyze complete+imputed data using discount function via bdpbinomial
+    post_imp <- bdpbinomial(y_t               = sum(data$outcome[data$treatment == 1]),
+                            N_t               = length(data$outcome[data$treatment == 1]),
+                            y_c               = y_c,
+                            N_c               = N_c,
+                            y0_t              = y0_treatment,
+                            N0_t              = N0_treatment,
+                            y0_c              = y0_control,
+                            N0_c              = N0_control,
+                            discount_function = discount_function,
+                            number_mcmc       = number_mcmc,
+                            a0                = prior[1],
+                            b0                = prior[2],
+                            alpha_max         = alpha_max,
+                            fix_alpha         = fix_alpha,
+                            weibull_scale     = weibull_scale,
+                            weibull_shape     = weibull_shape,
+                            method            = method)
+
+    # Estimation of the posterior effect for difference between test and control
+    if (sum(data$treatment == 0) != 0) {
+      if (alternative == "two-sided") {
+        effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+        success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
+      } else if (alternative == "greater") {
+        effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+        success <- mean(effect_imp > h0)
       } else {
-        y_c <- NULL
-        N_c <- NULL
+        effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+        success <- mean(-effect_imp > h0)
       }
-
-      # Analyze complete+imputed data using discount function via bdpbinomial
-      post_imp <- bdpbinomial(y_t               = sum(data$outcome[data$treatment == 1]),
-                              N_t               = length(data$outcome[data$treatment == 1]),
-                              y_c               = y_c,
-                              N_c               = N_c,
-                              y0_t              = y0_treatment,
-                              N0_t              = N0_treatment,
-                              y0_c              = y0_control,
-                              N0_c              = N0_control,
-                              discount_function = discount_function,
-                              number_mcmc       = number_mcmc,
-                              a0                = prior[1],
-                              b0                = prior[2],
-                              alpha_max         = alpha_max,
-                              fix_alpha         = fix_alpha,
-                              weibull_scale     = weibull_scale,
-                              weibull_shape     = weibull_shape,
-                              method            = method)
-
-      # Estimation of the posterior effect for difference between test and control
-      if (sum(data$treatment == 0) != 0) {
-        if (alternative == "two-sided") {
-          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-          success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
-        } else if (alternative == "greater") {
-          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-          success <- mean(effect_imp > h0)
-        } else {
-          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-          success <- mean(-effect_imp > h0)
-        }
+    } else {
+      effect_imp <- post_imp$final$posterior
+      if (alternative == "two-sided") {
+        success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
+      } else if (alternative == "greater") {
+        success <- mean(effect_imp > h0)
       } else {
-        effect_imp <- post_imp$final$posterior
-        if (alternative == "two-sided") {
-          success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
-        } else if (alternative == "greater") {
-          success <- mean(effect_imp > h0)
-        } else {
-          success <- mean(effect_imp < h0)
-        }
+        success <- mean(effect_imp < h0)
       }
+    }
 
-      # Increase futility counter by 1 if P(effect_imp < h0) > ha
-      if (success > prob_ha) {
-        futility_test <- futility_test + 1
-      }
-
+    # Increase futility counter by 1 if P(effect_imp < h0) > ha
+    if (success > prob_ha) {
+      futility_test <- futility_test + 1
     }
 
   }
@@ -1032,7 +1039,7 @@ binomial_analysis <- function(
   }
 
   ##############################################################################
-  ### Final summary
+  ### Summary at the interim analysis
   ##############################################################################
 
   data <- data_interim %>%
@@ -1052,13 +1059,13 @@ binomial_analysis <- function(
       post_paa <- mean(-effect > h0)
     }
   } else {
-    effect_imp <- post$final$posterior
+    effect <- post$final$posterior
     if (alternative == "two-sided") {
-      success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
+      success <- max(c(mean(effect > h0), mean(effect < h0)))
     } else if (alternative == "greater") {
-      success <- mean(effect_imp > h0)
+      success <- mean(effect > h0)
     } else {
-      success <- mean(effect_imp < h0)
+      success <- mean(effect < h0)
     }
   }
 
