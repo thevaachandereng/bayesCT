@@ -8,7 +8,8 @@
 #'   time when a specific lambda is used.
 #' @param N_total integer. Value of total sample size.
 #'
-#' @return A vector of enrollment dates.
+#' @return A vector of enrollment times (from time of first patient enrollment)
+#'   in days.
 #'
 #' @examples
 #' enrollment(param = c(0.003, 0.7), 100, time = 10)
