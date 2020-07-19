@@ -658,7 +658,7 @@
   <span class="fu"><a href="../reference/analysis.html">analysis</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"binomial"</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">out</span>)
-<span class="co">#&gt; List of 11</span>
+<span class="co">#&gt; List of 13</span>
 <span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span>
 <span class="co">#&gt;  $ margin                       : num 0</span>
 <span class="co">#&gt;  $ alternative                  : chr "greater"</span>
@@ -666,9 +666,11 @@
 <span class="co">#&gt;  $ N_control                    : int 137</span>
 <span class="co">#&gt;  $ N_complete                   : num 262</span>
 <span class="co">#&gt;  $ N_enrolled                   : int 300</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.993</span>
+<span class="co">#&gt;  $ N_max_treatment              : int 140</span>
+<span class="co">#&gt;  $ N_max_control                : int 160</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.994</span>
 <span class="co">#&gt;  $ est_final                    : num 0.124</span>
-<span class="co">#&gt;  $ stop_futility                : num 0</span>
+<span class="co">#&gt;  $ stop_futility                : num 1</span>
 <span class="co">#&gt;  $ stop_expected_success        : num 1</span></pre></body></html></div>
 <p>We’ll now illustrate using piping to carry out the complete analysis. First, we’ll assume the following hypothesis: <span class="math display">\[H_0:\theta_{treatment} - \theta_{control} &lt;= 0.02 \quad H_A: \theta_{treatment} - \theta_{control} &gt; 0.02\]</span> The delta and alternative used to analyze the trial is 0.02 and “greater” respectively. The probability of accepting the alternative is 0.95, the probability of stopping for futility is 0.05, and the probability of stopping for success is 0.90. We will carry out imputations on subjects loss to follow up. Additionally, we will incorporate historical data on the treatment arm.</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/data_binomial.html">data_binomial</a></span>(<span class="kw">treatment</span> <span class="kw">=</span> <span class="no">binomialdata</span>$<span class="no">treatment</span>,
@@ -696,7 +698,7 @@
   <span class="fu"><a href="../reference/analysis.html">analysis</a></span>(<span class="kw">type</span> <span class="kw">=</span> <span class="st">"binomial"</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">out</span>)
-<span class="co">#&gt; List of 11</span>
+<span class="co">#&gt; List of 13</span>
 <span class="co">#&gt;  $ prob_of_accepting_alternative: num 0.95</span>
 <span class="co">#&gt;  $ margin                       : num 0.02</span>
 <span class="co">#&gt;  $ alternative                  : chr "greater"</span>
@@ -704,9 +706,11 @@
 <span class="co">#&gt;  $ N_control                    : int 137</span>
 <span class="co">#&gt;  $ N_complete                   : num 262</span>
 <span class="co">#&gt;  $ N_enrolled                   : int 300</span>
-<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.984</span>
-<span class="co">#&gt;  $ est_final                    : num 0.121</span>
-<span class="co">#&gt;  $ stop_futility                : num 0</span>
+<span class="co">#&gt;  $ N_max_treatment              : int 140</span>
+<span class="co">#&gt;  $ N_max_control                : int 160</span>
+<span class="co">#&gt;  $ post_prob_accept_alternative : num 0.981</span>
+<span class="co">#&gt;  $ est_final                    : num 0.12</span>
+<span class="co">#&gt;  $ stop_futility                : num 1</span>
 <span class="co">#&gt;  $ stop_expected_success        : num 1</span></pre></body></html></div>
 </div>
   </div>

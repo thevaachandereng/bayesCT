@@ -146,7 +146,13 @@
     <p>Wrapper function to analyze Bayesian trials.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>analysis</span>(<span class='no'>input</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>, <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>analysis</span>(
+  <span class='no'>input</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>,
+  <span class='kw'>N_max_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>N_max_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +165,18 @@
       <th>type</th>
       <td><p>character. Type of analysis to be ran (binomial (default),
 normal. etc.).</p></td>
+    </tr>
+    <tr>
+      <th>N_max_treatment</th>
+      <td><p>integer. Maximum allowable sample size for the
+treatment arm (including the currently enrolled subjects). Default is NULL,
+meaning we are already at the final analysis.</p></td>
+    </tr>
+    <tr>
+      <th>N_max_control</th>
+      <td><p>integer. Maximum allowable sample size for the control
+arm (including the currently enrolled subjects). Default is NULL, meaning
+we are already at the final analysis.</p></td>
     </tr>
     <tr>
       <th>.data</th>
