@@ -4,13 +4,27 @@
 \alias{analysis}
 \title{Analysis wrapper function}
 \usage{
-analysis(input, type = "binomial", .data = NULL)
+analysis(
+  input,
+  type = "binomial",
+  N_max_treatment = NULL,
+  N_max_control = NULL,
+  .data = NULL
+)
 }
 \arguments{
 \item{input}{list. Input function for all the analysis.}
 
 \item{type}{character. Type of analysis to be ran (binomial (default),
 normal. etc.).}
+
+\item{N_max_treatment}{integer. Maximum allowable sample size for the
+treatment arm (including the currently enrolled subjects). Default is NULL,
+meaning we are already at the final analysis.}
+
+\item{N_max_control}{integer. Maximum allowable sample size for the control
+arm (including the currently enrolled subjects). Default is NULL, meaning
+we are already at the final analysis.}
 
 \item{.data}{NULL. Stores the binomial data for analysis. Should not be
 edited by user.}

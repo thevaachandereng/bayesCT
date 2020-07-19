@@ -15,7 +15,8 @@ enrollment(param, N_total, time = NULL)
 time when a specific lambda is used.}
 }
 \value{
-A vector of enrollment dates.
+A vector of enrollment times (from time of first patient enrollment)
+  in days.
 }
 \description{
 This function simulates enrollment dates using either Poisson
