@@ -61,7 +61,6 @@
 #'     treatment and posterior estimate of the control group.}
 #' }
 #'
-#'
 #' @importFrom stats rbinom glm
 #' @importFrom dplyr mutate filter group_by bind_rows select n
 #' @importFrom bayesDP bdpbinomial
@@ -317,9 +316,7 @@ binomialBACT <- function(
             effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
             success <- mean(-effect_imp > h0)
           }
-        }
-
-        else {
+        } else {
           effect_imp <- post_imp$final$posterior
           if (alternative == "two-sided") {
             success <- max(c(mean(effect_imp - p_treatment > h0), mean(p_treatment - effect_imp > h0)))
@@ -399,9 +396,7 @@ binomialBACT <- function(
             effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
             success <- mean(-effect_imp > h0)
           }
-        }
-
-        else {
+        } else {
           effect_imp <- post_imp$final$posterior
           if (alternative == "two-sided") {
             success <- max(c(mean(effect_imp - p_treatment > h0), mean(p_treatment - effect_imp > h0)))
@@ -459,13 +454,10 @@ binomialBACT <- function(
     } else {
       effect_int <- post$final$posterior
     }
-
     # Number of patients enrolled at trial stop
     N_enrolled <- nrow(data_interim[data_interim$id <= stage_trial_stopped, ])
-  }
-
-  # Assigning stage trial stopped given no interim look
-  else {
+  } else {
+    # Assigning stage trial stopped given no interim look
     N_enrolled            <- N_total
     stage_trial_stopped   <- N_total
     stop_futility         <- 0
@@ -521,9 +513,7 @@ binomialBACT <- function(
       effect <- post_final$posterior_treatment$posterior - post_final$posterior_control$posterior
       post_paa <- mean(-effect > h0)
     }
-  }
-
-  else {
+  } else {
     effect <- post_final$final$posterior
     if (alternative == "two-sided") {
       post_paa <- max(c(mean(effect - p_treatment > h0), mean(p_treatment - effect > h0)))
