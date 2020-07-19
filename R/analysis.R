@@ -5,6 +5,12 @@
 #' @param input list. Input function for all the analysis.
 #' @param type character. Type of analysis to be ran (binomial (default),
 #'   normal. etc.).
+#' @param N_max_treatment integer. Maximum allowable sample size for the
+#'   treatment arm (including the currently enrolled subjects). Default is NULL,
+#'   meaning we are already at the final analysis.
+#' @param N_max_control integer. Maximum allowable sample size for the control
+#'   arm (including the currently enrolled subjects). Default is NULL, meaning
+#'   we are already at the final analysis.
 #' @param .data NULL. Stores the binomial data for analysis. Should not be
 #'   edited by user.
 #'
@@ -50,8 +56,14 @@
 #'
 #' @export analysis
 
-analysis <- function(input, type = "binomial", .data = NULL) {
+analysis <- function(input,
+                     type            = "binomial",
+                     N_max_treatment = NULL,
+                     N_max_control   = NULL,
+                     .data           = NULL
+) {
   if (type == "binomial") {
+    input <- c(input, "N_max_treatment" = N_max_treatment, "N_max_control" = N_max_control)
     do.call(binomial_analysis, input)
   } else if (type == "normal") {
     do.call(normal_analysis, input)

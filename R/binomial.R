@@ -938,83 +938,85 @@ binomial_analysis <- function(
     ### Futility computations
     ##########################################################################
 
-    # TODO: ONLY IF NOT FINAL ANALYSIS
+    # Only run if an interim analysis
+    if (!final_analysis) {
+      # For patients not enrolled, impute the outcome
+      data_control_futility_impute <- data_success_impute %>%
+        filter(treatment == 0) %>%
+        mutate(outcome_impute = ifelse(subject_impute_futility,
+                                       rbinom(n(), 1, p_control_imp[i]),
+                                       outcome))
 
-    # For patients not enrolled, impute the outcome
-    data_control_futility_impute <- data_success_impute %>%
-      filter(treatment == 0) %>%
-      mutate(outcome_impute = ifelse(subject_impute_futility,
-                                     rbinom(n(), 1, p_control_imp[i]),
-                                     outcome))
+      data_treatment_futility_impute <- data_success_impute %>%
+        filter(treatment == 1) %>%
+        mutate(outcome_impute = ifelse(subject_impute_futility,
+                                       rbinom(n(), 1, p_treatment_imp[i]),
+                                       outcome))
 
-    data_treatment_futility_impute <- data_success_impute %>%
-      filter(treatment == 1) %>%
-      mutate(outcome_impute = ifelse(subject_impute_futility,
-                                     rbinom(n(), 1, p_treatment_imp[i]),
-                                     outcome))
+      # Combine the treatment and control imputed datasets
+      data_futility_impute <- bind_rows(data_control_futility_impute,
+                                        data_treatment_futility_impute) %>%
+        mutate(outcome = outcome_impute) %>%
+        select(-outcome_impute)
 
-    # Combine the treatment and control imputed datasets
-    data_futility_impute <- bind_rows(data_control_futility_impute,
-                                      data_treatment_futility_impute) %>%
-      mutate(outcome = outcome_impute) %>%
-      select(-outcome_impute)
+      # Create enrolled subject data frame for discount function analysis
+      data <- data_futility_impute
 
-    # Create enrolled subject data frame for discount function analysis
-    data <- data_futility_impute
-
-    if (sum(data$treatment == 0) != 0) {
-      y_c <- sum(data$outcome[data$treatment == 0])
-      N_c <- length(data$outcome[data$treatment == 0])
-    } else {
-      y_c <- NULL
-      N_c <- NULL
-    }
-
-    # Analyze complete+imputed data using discount function via bdpbinomial
-    post_imp <- bdpbinomial(y_t               = sum(data$outcome[data$treatment == 1]),
-                            N_t               = length(data$outcome[data$treatment == 1]),
-                            y_c               = y_c,
-                            N_c               = N_c,
-                            y0_t              = y0_treatment,
-                            N0_t              = N0_treatment,
-                            y0_c              = y0_control,
-                            N0_c              = N0_control,
-                            discount_function = discount_function,
-                            number_mcmc       = number_mcmc,
-                            a0                = prior[1],
-                            b0                = prior[2],
-                            alpha_max         = alpha_max,
-                            fix_alpha         = fix_alpha,
-                            weibull_scale     = weibull_scale,
-                            weibull_shape     = weibull_shape,
-                            method            = method)
-
-    # Estimation of the posterior effect for difference between test and control
-    if (sum(data$treatment == 0) != 0) {
-      if (alternative == "two-sided") {
-        effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-        success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
-      } else if (alternative == "greater") {
-        effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-        success <- mean(effect_imp > h0)
+      if (sum(data$treatment == 0) != 0) {
+        y_c <- sum(data$outcome[data$treatment == 0])
+        N_c <- length(data$outcome[data$treatment == 0])
       } else {
-        effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
-        success <- mean(-effect_imp > h0)
+        y_c <- NULL
+        N_c <- NULL
       }
-    } else {
-      effect_imp <- post_imp$final$posterior
-      if (alternative == "two-sided") {
-        success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
-      } else if (alternative == "greater") {
-        success <- mean(effect_imp > h0)
-      } else {
-        success <- mean(effect_imp < h0)
-      }
-    }
 
-    # Increase futility counter by 1 if P(effect_imp < h0) > ha
-    if (success > prob_ha) {
-      futility_test <- futility_test + 1
+      # Analyze complete+imputed data using discount function via bdpbinomial
+      post_imp <- bdpbinomial(y_t               = sum(data$outcome[data$treatment == 1]),
+                              N_t               = length(data$outcome[data$treatment == 1]),
+                              y_c               = y_c,
+                              N_c               = N_c,
+                              y0_t              = y0_treatment,
+                              N0_t              = N0_treatment,
+                              y0_c              = y0_control,
+                              N0_c              = N0_control,
+                              discount_function = discount_function,
+                              number_mcmc       = number_mcmc,
+                              a0                = prior[1],
+                              b0                = prior[2],
+                              alpha_max         = alpha_max,
+                              fix_alpha         = fix_alpha,
+                              weibull_scale     = weibull_scale,
+                              weibull_shape     = weibull_shape,
+                              method            = method)
+
+      # Estimation of the posterior effect for difference between test and control
+      if (sum(data$treatment == 0) != 0) {
+        if (alternative == "two-sided") {
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
+        } else if (alternative == "greater") {
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- mean(effect_imp > h0)
+        } else {
+          effect_imp <- post_imp$posterior_treatment$posterior - post_imp$posterior_control$posterior
+          success <- mean(-effect_imp > h0)
+        }
+      } else {
+        effect_imp <- post_imp$final$posterior
+        if (alternative == "two-sided") {
+          success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
+        } else if (alternative == "greater") {
+          success <- mean(effect_imp > h0)
+        } else {
+          success <- mean(effect_imp < h0)
+        }
+      }
+
+      # Increase futility counter by 1 if P(effect_imp < h0) > ha
+      if (success > prob_ha) {
+        futility_test <- futility_test + 1
+      }
+
     }
 
   }
