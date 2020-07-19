@@ -42,8 +42,7 @@ or failure), 0 for no response.}
 for complete outcome, 0 for loss to follow up. If complete is not provided,
 the dataset is assumed to be complete.}
 
-\item{p_treatment}{scalar. Proportion (performance goal) for single arm test.
-Default is 0 (simple one-sample superiority test).}
+\item{p_treatment}{scalar. Proportion of events under the treatment arm.}
 
 \item{N_max_treatment}{integer. Maximum allowable sample size for the
 treatment arm (including the currently enrolled subjects). Default is NULL,

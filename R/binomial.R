@@ -672,8 +672,6 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL) {
 #' @param complete vector. Similar length as treatment and outcome variable, 1
 #'   for complete outcome, 0 for loss to follow up. If complete is not provided,
 #'   the dataset is assumed to be complete.
-#' @param p_treatment scalar. Proportion (performance goal) for single arm test.
-#'   Default is 0 (simple one-sample superiority test).
 #' @param N_max_treatment integer. Maximum allowable sample size for the
 #'   treatment arm (including the currently enrolled subjects). Default is NULL,
 #'   meaning we are already at the final analysis.
@@ -924,11 +922,11 @@ binomial_analysis <- function(
     } else {
       effect_imp <- post_imp$final$posterior
       if (alternative == "two-sided") {
-        success <- max(c(mean(effect_imp - p_treatment > h0), mean(p_treatment - effect_imp > h0)))
+        success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
       } else if (alternative == "greater") {
-        success <- mean(effect_imp - p_treatment > h0)
+        success <- mean(effect_imp > h0)
       } else {
-        success <- mean(p_treatment - effect_imp < h0)
+        success <- mean(effect_imp < h0)
       }
     }
 
@@ -1006,11 +1004,11 @@ binomial_analysis <- function(
     } else {
       effect_imp <- post_imp$final$posterior
       if (alternative == "two-sided") {
-        success <- max(c(mean(effect_imp - p_treatment > h0), mean(p_treatment - effect_imp > h0)))
+        success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
       } else if (alternative == "greater") {
-        success <- mean(effect_imp - p_treatment > h0)
+        success <- mean(effect_imp > h0)
       } else {
-        success <- mean(p_treatment - effect_imp > h0)
+        success <- mean(effect_imp < h0)
       }
     }
 
@@ -1052,13 +1050,13 @@ binomial_analysis <- function(
       post_paa <- mean(-effect > h0)
     }
   } else {
-    effect <- post$final$posterior
+    effect_imp <- post$final$posterior
     if (alternative == "two-sided") {
-      post_paa <- max(c(mean(effect - p_treatment > h0), mean(p_treatment - effect > h0)))
+      success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
     } else if (alternative == "greater") {
-      post_paa <- mean(effect - p_treatment > h0)
+      success <- mean(effect_imp > h0)
     } else {
-      post_paa <- mean(p_treatment - effect < h0)
+      success <- mean(effect_imp < h0)
     }
   }
 
