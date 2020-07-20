@@ -108,10 +108,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/binomial.html">Binomial Outcome</a>
+      <a href="../articles/binomial.html">Binomial Outcomes</a>
     </li>
     <li>
-      <a href="../articles/normal.html">Normal Outcome</a>
+      <a href="../articles/normal.html">Continuous Outcomes</a>
     </li>
     <li>
       <a href="../articles/time-to-event.html">Time-to-Event Outcome</a>
@@ -219,7 +219,8 @@ arm.</p></td>
     </tr>
     <tr>
       <th>N0_treatment</th>
-      <td><p>scalar. Number of observations of the historical treatment group.</p></td>
+      <td><p>scalar. Number of observations of the historical
+treatment group.</p></td>
     </tr>
     <tr>
       <th>y0_control</th>
@@ -227,7 +228,8 @@ arm.</p></td>
     </tr>
     <tr>
       <th>N0_control</th>
-      <td><p>scalar. Number of observations of the historical control group.</p></td>
+      <td><p>scalar. Number of observations of the historical control
+group.</p></td>
     </tr>
     <tr>
       <th>alternative</th>
@@ -243,11 +245,11 @@ missing data.</p></td>
     <tr>
       <th>h0</th>
       <td><p>scalar. Threshold for comparing two mean values. Default is
-<code>h0=0</code>.</p></td>
+<code>h0 = 0</code>.</p></td>
     </tr>
     <tr>
       <th>number_mcmc</th>
-      <td><p>scalar. Number of Monte Carlo Markov Chain draws in
+      <td><p>scalar. Number of Markov Chain Monte Carlo draws in
 sampling posterior.</p></td>
     </tr>
     <tr>
@@ -260,7 +262,8 @@ sampling posterior.</p></td>
     </tr>
     <tr>
       <th>expected_success_prob</th>
-      <td><p>scalar. Probability of stopping early for success.</p></td>
+      <td><p>scalar. Probability of stopping early for
+success.</p></td>
     </tr>
     <tr>
       <th>prior</th>
@@ -271,13 +274,13 @@ set to Beta(1, 1).</p></td>
       <th>discount_function</th>
       <td><p>character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(<code>discount_function="weibull"</code>), the scaled-Weibull function
-(<code>discount_function="scaledweibull"</code>), and the identity function
-(<code>discount_function="identity"</code>). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is <code>"identity"</code>. See <code>bdpnormal</code> for
-more details.</p></td>
+(<code>discount_function = "weibull"</code>), the scaled-Weibull function
+(<code>discount_function = "scaledweibull"</code>), and the identity function
+(<code>discount_function = "identity"</code>). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is <code>"identity"</code>. See
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpnormal.html'>bdpnormal</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>fix_alpha</th>
@@ -297,8 +300,8 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".</p></td>
+weight of the historical control group. Not used when
+<code>discount_function = "identity"</code>.</p></td>
     </tr>
     <tr>
       <th>weibull_shape</th>
@@ -307,22 +310,24 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".</p></td>
+historical control group. Not used when <code>discount_function =
+"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "<code>mc</code>" estimates alpha for each
-Monte Carlo iteration. Alternate value "<code>fixed</code>" estimates alpha once
+      <td><p>character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method <code>"mc"</code> estimates alpha for each
+Monte Carlo iteration. Alternate value <code>"fixed"</code> estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-<code>bdpsurvival</code> vignette <br />
-<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more details.</p></td>
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpsurvival.html'>bdpsurvival</a></code> vignette <br />
+<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more
+details.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of output for the Bayesian trial for binomial count.</p>
+    <p>A list of output for the Bayesian trial for binomial count:</p>
 <dl'>
   <dt><code>prob_of_accepting_alternative</code></dt><dd><p>integer. The input parameter of probability of accepting the alternative.</p></dd>
   <dt><code>margin</code></dt><dd><p>scalar. The margin input value of difference between mean estimate of treatment
@@ -351,6 +356,13 @@ and holds it fixed throughout the analysis.  See the the
 
 </dl>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If the enrollment size is at the final sample size, i.e. the maximum
+  allowable sample size for the trial, then this function is not of practical
+  use since there is no opportunity to stop trial enrollment. In such a case,
+  it is expected that the follow-up will be conducted per the study protocol
+  and a final analysis made.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

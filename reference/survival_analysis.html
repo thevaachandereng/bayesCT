@@ -47,9 +47,9 @@
 
 
 <meta property="og:title" content="Analyzing Bayesian trial for time-to-event data — survival_analysis" />
-<meta property="og:description" content="Function to analyze Bayesian trial for time-to-event data
- which allows early stopping and incorporation of historical data using
- the discount function approach" />
+<meta property="og:description" content="Function to analyze Bayesian trial for time-to-event data which
+  allows early stopping and incorporation of historical data using the
+  discount function approach." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -108,10 +108,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/binomial.html">Binomial Outcome</a>
+      <a href="../articles/binomial.html">Binomial Outcomes</a>
     </li>
     <li>
-      <a href="../articles/normal.html">Normal Outcome</a>
+      <a href="../articles/normal.html">Continuous Outcomes</a>
     </li>
     <li>
       <a href="../articles/time-to-event.html">Time-to-Event Outcome</a>
@@ -145,9 +145,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to analyze Bayesian trial for time-to-event data
- which allows early stopping and incorporation of historical data using
- the discount function approach</p>
+    <p>Function to analyze Bayesian trial for time-to-event data which
+  allows early stopping and incorporation of historical data using the
+  discount function approach.</p>
     </div>
 
     <pre class="usage"><span class='fu'>survival_analysis</span>(
@@ -180,8 +180,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>time</th>
-      <td><p>vector. exposure time for the subjects. It must be the same length
-as the treatment variable.</p></td>
+      <td><p>vector. exposure time for the subjects. It must be the same
+length as the treatment variable.</p></td>
     </tr>
     <tr>
       <th>treatment</th>
@@ -190,46 +190,46 @@ group and 0 for control group</p></td>
     </tr>
     <tr>
       <th>event</th>
-      <td><p>vector. The status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
-all subjects are assumed to have an event.</p></td>
+      <td><p>vector. The status indicator, normally 0=alive, 1=dead. Other
+choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For censored
+data, the status indicator is 0 = right censored, 1 = event at time.
+Although unusual, the event indicator can be omitted, in which case all
+subjects are assumed to have an event.</p></td>
     </tr>
     <tr>
       <th>time0</th>
-      <td><p>vector. Historical exposure time for the subjects. It must be the same length
-as the treatment variable.</p></td>
+      <td><p>vector. Historical exposure time for the subjects. It must be
+the same length as the treatment variable.</p></td>
     </tr>
     <tr>
       <th>treatment0</th>
-      <td><p>vector. the historical treatment assignment for patients,
-1 for treatment group and 0 for control group.</p></td>
+      <td><p>vector. the historical treatment assignment for patients, 1
+for treatment group and 0 for control group.</p></td>
     </tr>
     <tr>
       <th>event0</th>
       <td><p>vector. Historical status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
+Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For
+censored data, the status indicator is 0 = right censored, 1 = event at
+time. Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.</p></td>
     </tr>
     <tr>
       <th>surv_time</th>
-      <td><p>scalar. scalar. Survival time of interest for computing the probability
-of survival for a single arm (OPC) trial. Default is overall, i.e.,
-current+historical, median survival time.</p></td>
+      <td><p>scalar. scalar. Survival time of interest for computing the
+probability of survival for a single arm (OPC) trial. Default is overall
+(pooled), i.e. current and historical, median survival time.</p></td>
     </tr>
     <tr>
       <th>h0</th>
       <td><p>scalar. Threshold for comparing two mean values. Default is
-<code>h0=0</code>.</p></td>
+<code>h0 = 0</code>.</p></td>
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>vector. Breaks (interval starts) used to compose the breaks of the piecewise
-exponential model. Do not include zero. Default breaks are the quantiles of the input
-times.</p></td>
+      <td><p>vector. Breaks (interval starts) used to compose the breaks of
+the piecewise exponential model. Do not include zero. Default breaks are
+the quantiles of the input times.</p></td>
     </tr>
     <tr>
       <th>alternative</th>
@@ -244,7 +244,7 @@ missing data.</p></td>
     </tr>
     <tr>
       <th>number_mcmc</th>
-      <td><p>scalar. Number of Monte Carlo Markov Chain draws in
+      <td><p>scalar. Number of Markov Chain Monte Carlo draws in
 sampling posterior.</p></td>
     </tr>
     <tr>
@@ -257,24 +257,25 @@ sampling posterior.</p></td>
     </tr>
     <tr>
       <th>expected_success_prob</th>
-      <td><p>scalar. Probability of stopping early for success.</p></td>
+      <td><p>scalar. Probability of stopping early for
+success.</p></td>
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
-set to Gamma(.1, .1).</p></td>
+      <td><p>vector. Prior values of the gamma rate, Gamma(a0, b0). The
+default is set to Gamma(0.1, 0.1).</p></td>
     </tr>
     <tr>
       <th>discount_function</th>
       <td><p>character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(<code>discount_function="weibull"</code>), the scaled-Weibull function
-(<code>discount_function="scaledweibull"</code>), and the identity function
-(<code>discount_function="identity"</code>). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is <code>"identity"</code>. See <code>bdpnormal</code> for
-more details.</p></td>
+(<code>discount_function = "weibull"</code>), the scaled-Weibull function
+(<code>discount_function = "scaledweibull"</code>), and the identity function
+(<code>discount_function = "identity"</code>). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is <code>"identity"</code>. See
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpnormal.html'>bdpnormal</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>fix_alpha</th>
@@ -294,8 +295,8 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".</p></td>
+weight of the historical control group. Not used when
+<code>discount_function = "identity"</code>.</p></td>
     </tr>
     <tr>
       <th>weibull_shape</th>
@@ -304,26 +305,28 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".</p></td>
+historical control group. Not used when <code>discount_function =
+"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "<code>mc</code>" estimates alpha for each
-Monte Carlo iteration. Alternate value "<code>fixed</code>" estimates alpha once
+      <td><p>character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method <code>"mc"</code> estimates alpha for each
+Monte Carlo iteration. Alternate value <code>"fixed"</code> estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-<code>bdpsurvival</code> vignette <br />
-<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more details.</p></td>
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpsurvival.html'>bdpsurvival</a></code> vignette <br />
+<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more
+details.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list of output for the Bayesian trial for time-to-event.</p>
+    <p>A list of output for the Bayesian trial for time-to-event:</p>
 <dl'>
   <dt><code>prob_of_accepting_alternative</code></dt><dd><p>scalar. The input parameter of probability of accepting the alternative.</p></dd>
-  <dt><code>margin</code></dt><dd><p>scalar. The margin input value of difference between mean estimate of treatment
-     and mean estimate of the control.</p></dd>
+  <dt><code>margin</code></dt><dd><p>scalar. The margin input value of difference between mean estimate of
+    treatment and mean estimate of the control.</p></dd>
   <dt><code>alternative</code></dt><dd><p>character. The input parameter of alternative hypothesis.</p></dd>
   <dt><code>alpha_max</code></dt><dd><p>scalar. The alpha_max input.</p></dd>
   <dt><code>N_treatment</code></dt><dd><p>scalar. The number of patients enrolled in the experimental group for
@@ -335,8 +338,8 @@ and holds it fixed throughout the analysis.  See the the
   <dt><code>event_control</code></dt><dd><p>scalar. The number of events in the control group for
     each simulation.</p></dd>
   <dt><code>N_enrolled</code></dt><dd><p>scalar. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation. )</p></dd>
-  <dt><code>N_complete</code></dt><dd><p>scalar. The number of patients whose time passes the surv_time.</p></dd>
+    and experimental group for each simulation).</p></dd>
+  <dt><code>N_complete</code></dt><dd><p>scalar. The number of patients whose time passes the <code>surv_time</code>.</p></dd>
   <dt><code>alpha_discount</code></dt><dd><p>vector. The alpha discount function used for control and treatment.</p></dd>
   <dt><code>post_prob_accept_alternative</code></dt><dd><p>vector. The final probability of accepting the alternative
     hypothesis after the analysis is done.</p></dd>

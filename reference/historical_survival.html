@@ -106,10 +106,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/binomial.html">Binomial Outcome</a>
+      <a href="../articles/binomial.html">Binomial Outcomes</a>
     </li>
     <li>
-      <a href="../articles/normal.html">Normal Outcome</a>
+      <a href="../articles/normal.html">Continuous Outcomes</a>
     </li>
     <li>
       <a href="../articles/time-to-event.html">Time-to-Event Outcome</a>
@@ -164,8 +164,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>time</th>
-      <td><p>vector. exposure time for the subjects. It must be the same length
-as the treatment variable.</p></td>
+      <td><p>vector. exposure time for the subjects. It must be the same
+length as the treatment variable.</p></td>
     </tr>
     <tr>
       <th>treatment</th>
@@ -174,23 +174,23 @@ group and 0 for control group</p></td>
     </tr>
     <tr>
       <th>event</th>
-      <td><p>vector. The status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
-all subjects are assumed to have an event.</p></td>
+      <td><p>vector. The status indicator, normally 0=alive, 1=dead. Other
+choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For censored
+data, the status indicator is 0 = right censored, 1 = event at time.
+Although unusual, the event indicator can be omitted, in which case all
+subjects are assumed to have an event.</p></td>
     </tr>
     <tr>
       <th>discount_function</th>
       <td><p>character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(<code>discount_function="weibull"</code>), the scaled-Weibull function
-(<code>discount_function="scaledweibull"</code>), and the identity function
-(<code>discount_function="identity"</code>). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is <code>"identity"</code>. See <code>bdpnormal</code> for
-more details.</p></td>
+(<code>discount_function = "weibull"</code>), the scaled-Weibull function
+(<code>discount_function = "scaledweibull"</code>), and the identity function
+(<code>discount_function = "identity"</code>). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is <code>"identity"</code>. See
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpnormal.html'>bdpnormal</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>alpha_max</th>
@@ -210,8 +210,8 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".</p></td>
+weight of the historical control group. Not used when
+<code>discount_function = "identity"</code>.</p></td>
     </tr>
     <tr>
       <th>weibull_shape</th>
@@ -220,26 +220,30 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".</p></td>
+historical control group. Not used when <code>discount_function =
+"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "<code>mc</code>" estimates alpha for each
-Monte Carlo iteration. Alternate value "<code>fixed</code>" estimates alpha once
+      <td><p>character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method <code>"mc"</code> estimates alpha for each
+Monte Carlo iteration. Alternate value <code>"fixed"</code> estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-<code>bdpsurvival</code> vignette <br />
-<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more details.</p></td>
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpsurvival.html'>bdpsurvival</a></code> vignette <br />
+<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more
+details.</p></td>
     </tr>
     <tr>
       <th>.data</th>
-      <td><p>NULL. stores the historical time, treatment and event , please do not fill it in.</p></td>
+      <td><p>NULL. Stores the historical time, treatment and event. Should
+not be edited by the user.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with historical data for time-to-event outcome with the discount function.</p>
+    <p>A list with historical data for time-to-event outcome with the
+  discount function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>historical_survival</span>(<span class='kw'>time</span>      <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span>(<span class='fl'>10</span>, <span class='fl'>0.01</span>),

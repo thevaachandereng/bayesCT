@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Time-to-event outcome for Bayesian Adaptive Trials — survivalBACT • bayesCT</title>
+<title>Time-to-event outcome for Bayesian Adaptive trials — survivalBACT • bayesCT</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Time-to-event outcome for Bayesian Adaptive Trials — survivalBACT" />
+<meta property="og:title" content="Time-to-event outcome for Bayesian Adaptive trials — survivalBACT" />
 <meta property="og:description" content="Simulation for time-to-event outcome for Bayesian Adaptive trial with
   different inputs to control for power, sample size, type 1 error rate, etc." />
 <meta property="og:image" content="/logo.png" />
@@ -107,10 +107,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/binomial.html">Binomial Outcome</a>
+      <a href="../articles/binomial.html">Binomial Outcomes</a>
     </li>
     <li>
-      <a href="../articles/normal.html">Normal Outcome</a>
+      <a href="../articles/normal.html">Continuous Outcomes</a>
     </li>
     <li>
       <a href="../articles/time-to-event.html">Time-to-Event Outcome</a>
@@ -138,7 +138,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Time-to-event outcome for Bayesian Adaptive Trials</h1>
+    <h1>Time-to-event outcome for Bayesian Adaptive trials</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/survival.R'><code>R/survival.R</code></a></small>
     <div class="hidden name"><code>survivalBACT.Rd</code></div>
     </div>
@@ -201,26 +201,26 @@
     </tr>
     <tr>
       <th>breaks</th>
-      <td><p>vector. Breaks (interval starts) used to compose the breaks of the piecewise
-exponential model. Do not include zero. Default breaks are the quantiles of the input
-times.</p></td>
+      <td><p>vector. Breaks (interval starts) used to compose the breaks of
+the piecewise exponential model. Do not include zero. Default breaks are
+the quantiles of the input times.</p></td>
     </tr>
     <tr>
       <th>time0</th>
-      <td><p>vector. Historical exposure time for the subjects. It must be the same length
-as the treatment variable.</p></td>
+      <td><p>vector. Historical exposure time for the subjects. It must be
+the same length as the treatment variable.</p></td>
     </tr>
     <tr>
       <th>treatment0</th>
-      <td><p>vector. the historical treatment assignment for patients,
-1 for treatment group and 0 for control group.</p></td>
+      <td><p>vector. the historical treatment assignment for patients, 1
+for treatment group and 0 for control group.</p></td>
     </tr>
     <tr>
       <th>event0</th>
       <td><p>vector. Historical status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
+Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For
+censored data, the status indicator is 0 = right censored, 1 = event at
+time. Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.</p></td>
     </tr>
     <tr>
@@ -245,8 +245,8 @@ maximum sample size should not be included.</p></td>
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
-set to Gamma(.1, .1).</p></td>
+      <td><p>vector. Prior values of the gamma rate, Gamma(a0, b0). The
+default is set to Gamma(0.1, 0.1).</p></td>
     </tr>
     <tr>
       <th>block</th>
@@ -272,7 +272,7 @@ hypothesis, must be one of <code>"greater"</code> (default), <code>"less"</code>
     <tr>
       <th>h0</th>
       <td><p>scalar. Threshold for comparing two mean values. Default is
-<code>h0=0</code>.</p></td>
+<code>h0 = 0</code>.</p></td>
     </tr>
     <tr>
       <th>futility_prob</th>
@@ -280,7 +280,8 @@ hypothesis, must be one of <code>"greater"</code> (default), <code>"less"</code>
     </tr>
     <tr>
       <th>expected_success_prob</th>
-      <td><p>scalar. Probability of stopping early for success.</p></td>
+      <td><p>scalar. Probability of stopping early for
+success.</p></td>
     </tr>
     <tr>
       <th>prob_ha</th>
@@ -293,20 +294,20 @@ missing data.</p></td>
     </tr>
     <tr>
       <th>number_mcmc</th>
-      <td><p>scalar. Number of Monte Carlo Markov Chain draws in
+      <td><p>scalar. Number of Markov Chain Monte Carlo draws in
 sampling posterior.</p></td>
     </tr>
     <tr>
       <th>discount_function</th>
       <td><p>character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(<code>discount_function="weibull"</code>), the scaled-Weibull function
-(<code>discount_function="scaledweibull"</code>), and the identity function
-(<code>discount_function="identity"</code>). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is <code>"identity"</code>. See <code>bdpnormal</code> for
-more details.</p></td>
+(<code>discount_function = "weibull"</code>), the scaled-Weibull function
+(<code>discount_function = "scaledweibull"</code>), and the identity function
+(<code>discount_function = "identity"</code>). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is <code>"identity"</code>. See
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpnormal.html'>bdpnormal</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>alpha_max</th>
@@ -326,8 +327,8 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".</p></td>
+weight of the historical control group. Not used when
+<code>discount_function = "identity"</code>.</p></td>
     </tr>
     <tr>
       <th>weibull_shape</th>
@@ -336,22 +337,24 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".</p></td>
+historical control group. Not used when <code>discount_function =
+"identity"</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "<code>mc</code>" estimates alpha for each
-Monte Carlo iteration. Alternate value "<code>fixed</code>" estimates alpha once
+      <td><p>character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method <code>"mc"</code> estimates alpha for each
+Monte Carlo iteration. Alternate value <code>"fixed"</code> estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-<code>bdpsurvival</code> vignette <br />
-<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more details.</p></td>
+<code><a href='https://rdrr.io/pkg/bayesDP/man/bdpsurvival.html'>bdpsurvival</a></code> vignette <br />
+<code><a href='https://cran.rstudio.com/web/packages/bayesDP/vignettes/bdpsurvival-vignette.html'>vignette("bdpsurvival-vignette", package="bayesDP")</a></code> for more
+details.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list of output for a single trial simulation.</p><dl'>
+    <p>A list of output for a single trial simulation.</p><dl'>
   <dt><code>lambda_treatment</code></dt><dd><p>vector. The input parameter of constant hazard rates in the
     treatment group.</p></dd>
   <dt><code>cutpoint_treatment</code></dt><dd><p>vector. The change-point vector when the constant hazard rate(s) changes for
@@ -375,7 +378,7 @@ and holds it fixed throughout the analysis.  See the the
   <dt><code>event_control</code></dt><dd><p>scalar. The number of events in the control group for
     each simulation.</p></dd>
   <dt><code>N_enrolled</code></dt><dd><p>vector. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation. )</p></dd>
+    and experimental group for each simulation).</p></dd>
   <dt><code>N_complete</code></dt><dd><p>scalar. The number of patients who completed the trial and had no
     loss to follow-up.</p></dd>
   <dt><code>post_prob_accept_alternative</code></dt><dd><p>vector. The final probability of accepting the alternative

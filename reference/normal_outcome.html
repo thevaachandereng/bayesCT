@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Parameters for treatment and control in normal case — normal_outcome • bayesCT</title>
+<title>Parameters for treatment and control in continuous (normally
+  distributed) data case — normal_outcome • bayesCT</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +47,10 @@
 
 
 
-<meta property="og:title" content="Parameters for treatment and control in normal case — normal_outcome" />
-<meta property="og:description" content="Wrapper function for mean and standard deviation with normal outcome." />
+<meta property="og:title" content="Parameters for treatment and control in continuous (normally
+  distributed) data case — normal_outcome" />
+<meta property="og:description" content="Wrapper function for mean and standard deviation with continuous
+  (normally distributed) outcome." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -106,10 +109,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/binomial.html">Binomial Outcome</a>
+      <a href="../articles/binomial.html">Binomial Outcomes</a>
     </li>
     <li>
-      <a href="../articles/normal.html">Normal Outcome</a>
+      <a href="../articles/normal.html">Continuous Outcomes</a>
     </li>
     <li>
       <a href="../articles/time-to-event.html">Time-to-Event Outcome</a>
@@ -137,13 +140,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Parameters for treatment and control in normal case</h1>
+    <h1>Parameters for treatment and control in continuous (normally
+  distributed) data case</h1>
     <small class="dont-index">Source: <a href='https://github.com/thevaachandereng/bayesCT/blob/master/R/normal.R'><code>R/normal.R</code></a></small>
     <div class="hidden name"><code>normal_outcome.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Wrapper function for mean and standard deviation with normal outcome.</p>
+    <p>Wrapper function for mean and standard deviation with continuous
+  (normally distributed) outcome.</p>
     </div>
 
     <pre class="usage"><span class='fu'>normal_outcome</span>(
@@ -151,7 +156,7 @@
   <span class='kw'>sd_control</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>mu_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>sd_treatment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -174,17 +179,20 @@
       <td><p>numeric. The standard deviation for the treatment group.</p></td>
     </tr>
     <tr>
-      <th>data</th>
-      <td><p>NULL. stores the proportion of control and treatment, please do not fill it in.</p></td>
+      <th>.data</th>
+      <td><p>NULL. Stores the normal data for analysis. Should not be edited
+by the user.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list with proportion of control and treatment group.</p>
+    <p>A list with means and standard deviations for control and treatment
+  groups.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>normal_outcome</span>(<span class='kw'>mu_control</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>mu_treatment</span> <span class='kw'>=</span> <span class='fl'>8</span>, <span class='kw'>sd_treatment</span> <span class='kw'>=</span> <span class='fl'>2.2</span>, <span class='kw'>sd_control</span> <span class='kw'>=</span> <span class='fl'>1.6</span>)</div><div class='output co'>#&gt; $mu_control
+    <pre class="examples"><div class='input'><span class='fu'>normal_outcome</span>(<span class='kw'>mu_control</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>mu_treatment</span> <span class='kw'>=</span> <span class='fl'>8</span>,
+               <span class='kw'>sd_treatment</span> <span class='kw'>=</span> <span class='fl'>2.2</span>, <span class='kw'>sd_control</span> <span class='kw'>=</span> <span class='fl'>1.6</span>)</div><div class='output co'>#&gt; $mu_control
 #&gt; [1] 12
 #&gt; 
 #&gt; $sd_control
@@ -195,7 +203,8 @@
 #&gt; 
 #&gt; $sd_treatment
 #&gt; [1] 2.2
-#&gt; </div></pre>
+#&gt; </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
