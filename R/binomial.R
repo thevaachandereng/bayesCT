@@ -820,9 +820,6 @@ binomial_analysis <- function(
     filter(subject_enrolled,
            !subject_impute_success)
 
-  prop <- data %>%
-    group_by(treatment) %>%
-    summarize(p_outcome = mean(outcome))
 
   if (sum(data$treatment == 0) != 0) {
     y_c <- sum(data$outcome[data$treatment == 0])
