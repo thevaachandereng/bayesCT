@@ -41,7 +41,7 @@ normalBACT(
 \arguments{
 \item{mu_treatment}{scalar. Mean outcome in the treatment arm.}
 
-\item{sd_treatment}{scalar. Standard deviation of outcome in the treatment}
+\item{sd_treatment}{scalar. Standard deviation of outcome in the treatment.}
 
 \item{mu_control}{scalar. Mean outcome in the control arm.}
 
@@ -50,15 +50,19 @@ arm.}
 
 \item{mu0_treatment}{scalar. Mean of the historical treatment group.}
 
-\item{sd0_treatment}{scalar. Standard deviation of the historical treatment group.}
+\item{sd0_treatment}{scalar. Standard deviation of the historical treatment
+group.}
 
-\item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
+\item{N0_treatment}{scalar. Number of observations of the historical
+treatment group.}
 
 \item{mu0_control}{scalar. Mean of the historical control group.}
 
-\item{sd0_control}{scalar. Standard deviation of the historical control group.}
+\item{sd0_control}{scalar. Standard deviation of the historical control
+group.}
 
-\item{N0_control}{scalar. Number of observations of the historical control group.}
+\item{N0_control}{scalar. Number of observations of the historical control
+group.}
 
 \item{N_total}{scalar. Total sample size.}
 
@@ -82,13 +86,13 @@ to treatment. Integer values mapping the size of the block. See
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(\code{discount_function="weibull"}), the scaled-Weibull function
-(\code{discount_function="scaledweibull"}), and the identity function
-(\code{discount_function="identity"}). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
-more details.}
+(\code{discount_function = "weibull"}), the scaled-Weibull function
+(\code{discount_function = "scaledweibull"}), and the identity function
+(\code{discount_function = "identity"}). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is \code{"identity"}. See
+\code{\link[bayesDP]{bdpnormal}} for more details.}
 
 \item{alternative}{character. The string specifying the alternative
 hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
@@ -98,18 +102,19 @@ hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 follow-up.}
 
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
-\code{h0=0}.}
+\code{h0 = 0}.}
 
 \item{futility_prob}{scalar. Probability of stopping early for futility.}
 
-\item{expected_success_prob}{scalar. Probability of stopping early for success.}
+\item{expected_success_prob}{scalar. Probability of stopping early for
+success.}
 
 \item{prob_ha}{scalar. Probability of alternative hypothesis.}
 
 \item{N_impute}{scalar. Number of imputations for Monte Carlo simulation of
 missing data.}
 
-\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
+\item{number_mcmc}{scalar. Number of Markov Chain Monte Carlo draws in
 sampling posterior.}
 
 \item{alpha_max}{scalar. Maximum weight the discount function can apply.
@@ -124,25 +129,27 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".}
+weight of the historical control group. Not used when
+\code{discount_function = "identity"}.}
 
 \item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
 used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".}
+historical control group. Not used when \code{discount_function =
+"identity"}.}
 
-\item{method}{character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "\code{mc}" estimates alpha for each
-Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+\item{method}{character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method \code{"mc"} estimates alpha for each
+Monte Carlo iteration. Alternate value \code{"fixed"} estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-\code{bdpsurvival} vignette \cr
-\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
+\code{\link[bayesDP]{bdpsurvival}} vignette \cr
+\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more
+details.}
 }
 \value{
-a list of output for a single trial simulation.
+A list of output for a single trial simulation:
 \describe{
   \item{\code{mu_treatment}}{
     scalar. The input parameter of mean value of the outcome in the
@@ -160,10 +167,10 @@ a list of output for a single trial simulation.
     scalar. The input parameter of probability threshold of accepting the
     alternative.}
   \item{\code{margin}}{
-    scalar. The margin input value of difference between mean estimate of treatment
-     and mean estimate of the control.}
+    scalar. The margin input value of difference between mean estimate
+    of treatment and mean estimate of the control.}
   \item{\code{alternative}}{
-    character. The input parameter of alternative hypothesis. }
+    character. The input parameter of alternative hypothesis.}
   \item{\code{interim_look}}{
     vector. The sample size for each interim look.}
   \item{\code{N_treatment}}{
@@ -174,7 +181,7 @@ a list of output for a single trial simulation.
     each simulation.}
   \item{\code{N_enrolled}}{
     vector. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation. )}
+    and experimental group for each simulation).}
   \item{\code{N_complete}}{
     scalar. The number of patients who completed the trial and had no
     loss to follow-up.}

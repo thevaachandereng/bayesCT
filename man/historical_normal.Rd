@@ -23,25 +23,29 @@ historical_normal(
 \arguments{
 \item{mu0_treatment}{scalar. Mean of the historical treatment group.}
 
-\item{sd0_treatment}{scalar. Standard deviation of the historical treatment group.}
+\item{sd0_treatment}{scalar. Standard deviation of the historical treatment
+group.}
 
-\item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
+\item{N0_treatment}{scalar. Number of observations of the historical
+treatment group.}
 
 \item{mu0_control}{scalar. Mean of the historical control group.}
 
-\item{sd0_control}{scalar. Standard deviation of the historical control group.}
+\item{sd0_control}{scalar. Standard deviation of the historical control
+group.}
 
-\item{N0_control}{scalar. Number of observations of the historical control group.}
+\item{N0_control}{scalar. Number of observations of the historical control
+group.}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(\code{discount_function="weibull"}), the scaled-Weibull function
-(\code{discount_function="scaledweibull"}), and the identity function
-(\code{discount_function="identity"}). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
-more details.}
+(\code{discount_function = "weibull"}), the scaled-Weibull function
+(\code{discount_function = "scaledweibull"}), and the identity function
+(\code{discount_function = "identity"}). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is \code{"identity"}. See
+\code{\link[bayesDP]{bdpnormal}} for more details.}
 
 \item{alpha_max}{scalar. Maximum weight the discount function can apply.
 Default is 1. For a two-arm trial, users may specify a vector of two values
@@ -55,32 +59,37 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".}
+weight of the historical control group. Not used when
+\code{discount_function = "identity"}.}
 
 \item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
 used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".}
+historical control group. Not used when \code{discount_function =
+"identity"}.}
 
-\item{method}{character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "\code{mc}" estimates alpha for each
-Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+\item{method}{character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method \code{"mc"} estimates alpha for each
+Monte Carlo iteration. Alternate value \code{"fixed"} estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-\code{bdpsurvival} vignette \cr
-\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
+\code{\link[bayesDP]{bdpsurvival}} vignette \cr
+\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more
+details.}
 
-\item{.data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. Stores the proportion of control and treatment. Should not
+be edited by the user.}
 }
 \value{
-a list with historical data for control and treatment group with the discount function.
+A list with historical data for control and treatment group with the
+  discount function.
 }
 \description{
 Wrapper function for historical data from normal outcome.
 }
 \examples{
 historical_normal(mu0_treatment = 15, sd0_treatment = 2, N0_treatment = 10,
-                            mu0_control = 17, sd0_control = 3, N0_control = 20)
+                  mu0_control = 17, sd0_control = 3, N0_control = 20)
+
 }

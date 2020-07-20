@@ -14,7 +14,8 @@
 #'   set to Beta(1, 1).
 #' @inheritParams normalBACT
 #'
-#' @return A list of output for a single trial simulation.
+#' @return A list of output for a single trial simulation:
+#'
 #' \describe{
 #'   \item{\code{p_treatment}}{
 #'     scalar. The input parameter of proportion of events in the
@@ -366,7 +367,7 @@ binomialBACT <- function(
           N_c <- NULL
         }
 
-        # Analyze complete+imputed data using discount function via binomial
+        # Analyze complete+imputed data using discount function via bdpbinomial
         post_imp <- bdpbinomial(y_t               = sum(data$Y[data$treatment == 1]),
                                 N_t               = length(data$Y[data$treatment == 1]),
                                 y_c               = y_c,
@@ -553,15 +554,15 @@ binomialBACT <- function(
 
   }
 
-  # return results
+  # Return results
   return(results_list)
 
 }
 
 
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if (getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", "subject_enrolled",
-                                                         "subject_impute_success", "subject_impute_futility"))
+## Quiets concerns of R CMD check re: the .'s that appear in pipelines
+if (getRversion() >= "2.15.1") utils::globalVariables(c("Y", "Y_impute", "id", "subject_enrolled",
+                                                        "subject_impute_success", "subject_impute_futility"))
 
 
 #' @title Proportion of an event in control and treatment
@@ -578,7 +579,8 @@ if (getRversion() >= "2.15.1")  utils::globalVariables(c("Y", "Y_impute", "id", 
 #'
 #' @return A list with proportion of control and treatment group.
 #'
-#' @examples binomial_outcome(p_control = 0.12, p_treatment = 0.08)
+#' @examples
+#' binomial_outcome(p_control = 0.12, p_treatment = 0.08)
 #'
 #' @export binomial_outcome
 
@@ -649,7 +651,8 @@ historical_binomial <- function(y0_treatment       = NULL,
 #' @return A list with vector of beta rate for the beta prior for treatment and
 #'   control group.
 #'
-#' @examples beta_prior(a0 = 1, b0 = 1)
+#' @examples
+#' beta_prior(a0 = 1, b0 = 1)
 #'
 #' @export beta_prior
 
@@ -691,7 +694,7 @@ beta_prior <- function(a0 = 1, b0 = 1, .data = NULL) {
 #' @importFrom dplyr mutate filter group_by bind_rows select n summarize
 #' @importFrom bayesDP bdpbinomial
 #'
-#' @return A list of output for the Bayesian trial for binomial count.
+#' @return A list of output for the Bayesian trial for binomial count:
 #'
 #' \describe{
 #'   \item{\code{prob_of_accepting_alternative}}{
@@ -1102,12 +1105,12 @@ binomial_analysis <- function(
 }
 
 
-## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if (getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome",
-                                                         "outcome_impute",
-                                                         "futility", "treatment",
-                                                         "subject_impute_success",
-                                                         "subject_impute_futility"))
+## Quiets concerns of R CMD check re: the .'s that appear in pipelines
+if (getRversion() >= "2.15.1") utils::globalVariables(c("complete", "outcome",
+                                                        "outcome_impute",
+                                                        "futility", "treatment",
+                                                        "subject_impute_success",
+                                                        "subject_impute_futility"))
 
 
 #' @title Data file for binomial analysis
@@ -1121,7 +1124,8 @@ if (getRversion() >= "2.15.1")  utils::globalVariables(c("complete", "outcome",
 #' @return A list with treatment, outcome and loss to follow up vector with
 #'   binomial outcome.
 #'
-#' @examples data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
+#' @examples
+#' data_binomial(treatment = c(0, 1), outcome = c(1, 1), complete = c(1, 1))
 #'
 #' @export data_binomial
 

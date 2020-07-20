@@ -9,7 +9,7 @@ normal_outcome(
   sd_control = NULL,
   mu_treatment = NULL,
   sd_treatment = NULL,
-  data = NULL
+  .data = NULL
 )
 }
 \arguments{
@@ -21,14 +21,18 @@ normal_outcome(
 
 \item{sd_treatment}{numeric. The standard deviation for the treatment group.}
 
-\item{data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. Stores the normal data for analysis. Should not be edited
+by the user.}
 }
 \value{
-a list with proportion of control and treatment group.
+A list with proportion of control and treatment group.
 }
 \description{
-Wrapper function for mean and standard deviation with normal outcome.
+Wrapper function for mean and standard deviation with normal
+  outcome.
 }
 \examples{
-normal_outcome(mu_control = 12, mu_treatment = 8, sd_treatment = 2.2, sd_control = 1.6)
+normal_outcome(mu_control = 12, mu_treatment = 8,
+               sd_treatment = 2.2, sd_control = 1.6)
+
 }
