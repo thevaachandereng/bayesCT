@@ -78,7 +78,7 @@ and holds it fixed throughout the analysis.  See the the
 \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more
 details.}
 
-\item{.data}{NULL. Stores the proportion of control and treatment. Should not
+\item{.data}{NULL. Stores the normal data for analysis. Should not
 be edited by the user.}
 }
 \value{

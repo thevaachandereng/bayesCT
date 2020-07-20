@@ -25,7 +25,8 @@ normal_outcome(
 by the user.}
 }
 \value{
-A list with proportion of control and treatment group.
+A list with means and standard deviations for control and treatment
+  groups.
 }
 \description{
 Wrapper function for mean and standard deviation with normal

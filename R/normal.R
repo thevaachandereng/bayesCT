@@ -645,7 +645,8 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("Y", "Y_impute", "id", "
 #' @param .data NULL. Stores the normal data for analysis. Should not be edited
 #'   by the user.
 #'
-#' @return A list with proportion of control and treatment group.
+#' @return A list with means and standard deviations for control and treatment
+#'   groups.
 #'
 #' @examples
 #' normal_outcome(mu_control = 12, mu_treatment = 8,
@@ -668,7 +669,7 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 #' @description Wrapper function for historical data from normal outcome.
 #'
 #' @inheritParams normalBACT
-#' @param .data NULL. Stores the proportion of control and treatment. Should not
+#' @param .data NULL. Stores the normal data for analysis. Should not
 #'   be edited by the user.
 #'
 #' @return A list with historical data for control and treatment group with the
