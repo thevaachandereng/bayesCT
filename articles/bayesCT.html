@@ -96,7 +96,7 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials</h1>
-                        <h4 class="author">Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig</h4>
+                        <h4 class="author">Thevaa Chandereng, Donald Musgrove, Graeme L. Hickey</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/thevaachandereng/bayesCT/blob/master/vignettes/bayesCT.Rmd"><code>vignettes/bayesCT.Rmd</code></a></small>
@@ -106,6 +106,11 @@
 
     
     
+<pre><code>## 
+## Attaching package: 'bayesCT'</code></pre>
+<pre><code>## The following object is masked from 'package:stats':
+## 
+##     simulate</code></pre>
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -115,67 +120,48 @@
 <li>Incorporate historical data, helping to reduce the sample size</li>
 <li>Easily carry out interim analyses to facilitate stopping early for success or futility</li>
 <li>Work with multiple treatment arms (versus a single control), allowing for dropping of demonstrably unsuccessful treatments</li>
-<li>Alter the randomization ratio (e.g., treatment to control ratio) to improve trial efficiency or even to increase trial recruitment</li>
+<li>Alter the randomization ratio (e.g. treatment to control ratio) to improve trial efficiency or even to increase trial recruitment</li>
 </ul>
 <p>A fundamental requirement of an adaptive trial is the <em>a priori</em> and interim evaluation of the operating characteristics, e.g., power and type 1 error. In adaptive trials, these operating characteristics generally do not have closed-form solutions; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this complexity obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.</p>
 <p><code>bayesCT</code> is an R package for the simulation and analysis of adaptive Bayesian randomized controlled trials under a range of trial designs and outcome types. Currently, it supports continuous-valued and binary outcome data types, with time-to-event data following soon. The package permits interim analyses of early stopping for futility or success and allows the (optional) incorporation of historical data. Please note this package is still under development.</p>
-<p>If you use <code>bayesCT</code> in published research, please cite: <strong>TBA</strong>.</p>
 <p>If after reading through this vignette you have questions or problems using <code>bayesCT</code>, please post issues at <a href="https://github.com/thevaachandereng/bayesCT/issues" class="uri">https://github.com/thevaachandereng/bayesCT/issues</a>. This will notify the package maintainers and we can work to address the issue(s). Please note that comments and questions should <strong>not</strong> be emailed directly to the package authors.</p>
-</div>
-<div id="running-bayesct" class="section level1">
-<h1 class="hasAnchor">
-<a href="#running-bayesct" class="anchor"></a>Running bayesCT</h1>
-<p>Prior to analyzing your data, the R package needs to be installed. The easiest way to install <code>bayesCT</code> is through CRAN:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"bayesCT"</span>)</pre></body></html></div>
-<p>There are additional ways to download <code>bayesCT</code>. The first option is most useful for downloading a specific version of <code>bayesCT</code> (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT@vx.xx.x"</span>)
-
-<span class="co"># or </span>
-
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_version</a></span>(<span class="st">"bayesCT"</span>, <span class="kw">version</span> <span class="kw">=</span> <span class="st">"x.x.x"</span>, <span class="kw">repos</span> <span class="kw">=</span> <span class="st">"http://cran.us.r-project.org"</span>)</pre></body></html></div>
-<p>The second option is to download the most recent stable version through GitHub:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</pre></body></html></div>
-<p>After successful installation, the package must be loaded into the working space:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">bayesCT</span>)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'bayesCT'</span>
-<span class="co">#&gt; The following object is masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     simulate</span></pre></body></html></div>
 </div>
 <div id="recruitment" class="section level1">
 <h1 class="hasAnchor">
 <a href="#recruitment" class="anchor"></a>Recruitment</h1>
-<p>An importance aspect of clinical trials is the rate at which subjects are recruited into the trial. In <code>bayesCT</code>, the subject recruitment rate is assumed to follow a Poisson process. We assume trial recruitment to be an independent process, thus the <a href="https://en.wikipedia.org/wiki/Memorylessness">“memoryless property”</a> modeling of subject recruitment is used. Since the subject recruitment rate can vary over time, we can account for differential rates over time. That is, we are not restricted to a homogeneous Poisson process.</p>
-<p>The <code><a href="../reference/enrollment.html">enrollment()</a></code> function is used to specify subject enrollment into the trial. The function assumes a piecewise stationary Poisson process. Using this processes gives the ability to specify different enrollment rates, i.e., the Poisson rates, at different time intervals. The first trial enrollment is assumed to occur at time zero.</p>
-<p>To illustrate, suppose we use a piecewise function to specify the change in enrollment rate over time: <span class="math display">\[  \lambda = \left\{
+<p>An importance aspect of clinical trials is the rate at which subjects are recruited into the trial. In <code>bayesCT</code>, the subject recruitment rate is assumed to follow a Poisson process. We assume trial recruitment to be an independent process, thus the <a href="https://en.wikipedia.org/wiki/Memorylessness">“memoryless property”</a> modelling of subject recruitment is used. Since the subject recruitment rate can vary over time, we can account for differential rates over time. That is, we are not restricted to a homogeneous Poisson process.</p>
+<p>The <code><a href="../reference/enrollment.html">enrollment()</a></code> function is used to specify subject enrollment into the trial. The function assumes a piecewise stationary Poisson process. Using this processes gives the ability to specify different enrollment rates, i.e. the Poisson rates, at different time intervals. The first trial enrollment is assumed to occur at time zero.</p>
+<p>To illustrate, suppose we use a piecewise function to specify the change in enrollment rate over time:</p>
+<p><span class="math display">\[
+\lambda = \left\{
 \begin{array}{ll}
       0.3 &amp; \text{time} \in [0, 5) \\
       0.7 &amp; \text{time} \in [5, 10) \\
       0.9 &amp; \text{time} \in [10, 15) \\
       1.2 &amp; \text{time} \in [15, \infty) \\
 \end{array} 
-\right. \]</span></p>
+\right.
+\]</span></p>
 <p>Then, to simulate individual patient enrollment dates with a sample size (<code>N_total</code>) of 50, we use</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/enrollment.html">enrollment</a></span>(<span class="kw">param</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">50</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>))
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/enrollment.html">enrollment</a></span>(<span class="kw">param</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.3</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.2</span>), <span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">50</span>, <span class="kw">time</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>))
 <span class="co">#&gt;  [1]  0  0  1  5  6  7  7  8 10 10 11 11 12 12 12 16 17 21 21 21 23 23 24 25 25</span>
 <span class="co">#&gt; [26] 26 28 29 29 34 34 35 35 35 36 37 38 38 39 39 39 39 40 41 43 44 46 47 47 49</span></pre></body></html></div>
 </div>
 <div id="randomization-scheme" class="section level1">
 <h1 class="hasAnchor">
-<a href="#randomization-scheme" class="anchor"></a>Randomization Scheme</h1>
+<a href="#randomization-scheme" class="anchor"></a>Randomization scheme</h1>
 <p>Following recruitment, the desired randomization allocation of the trial subjects must be specified. Complete randomization may not always be ideal due to the chance of drawing a large block of a single treatment arm, potentially impacting the time to enrollment completion. Therefore, a block randomization allocation may be preferable.</p>
 <p>In <code>bayeCT</code>, the block randomization allocation specification allows for different randomization ratios, but they must be given in integer form. Additionally, the block size should be an integer that is divisible by the sum of the randomization allocation. For example,</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/randomization.html">randomization</a></span>(<span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">140</span>, <span class="kw">block</span> <span class="kw">=</span> <span class="fl">7</span>, <span class="kw">allocation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>))</pre></body></html></div>
-<p>will not work (and will return an error) because the sum of the allocation is not a multiple of the block, i.e., <span class="math inline">\(2+1=3\)</span> is not a multiple of <span class="math inline">\(7\)</span>. Changing the block size to 6 will work:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/randomization.html">randomization</a></span>(<span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">140</span>, <span class="kw">block</span> <span class="kw">=</span> <span class="fl">6</span>, <span class="kw">allocation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>))
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/randomization.html">randomization</a></span>(<span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">140</span>, <span class="kw">block</span> <span class="kw">=</span> <span class="fl">7</span>, <span class="kw">allocation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>))</pre></body></html></div>
+<p>will not work (and will return an error) because the sum of the allocation is not a multiple of the block, i.e. <span class="math inline">\(2 + 1 = 3\)</span> is not a multiple of <span class="math inline">\(7\)</span>. Changing the block size to 6 will work:</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/randomization.html">randomization</a></span>(<span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">140</span>, <span class="kw">block</span> <span class="kw">=</span> <span class="fl">6</span>, <span class="kw">allocation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>))
 <span class="co">#&gt;   [1] 1 0 1 0 0 0 1 0 0 0 1 0 1 0 0 0 0 1 1 0 0 0 0 1 1 0 1 0 0 0 0 1 0 1 0 0 0</span>
 <span class="co">#&gt;  [38] 0 0 1 1 0 0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 0 0 1 0 0 1 0 0 1 0 0 0 0 1 1 0 0</span>
 <span class="co">#&gt;  [75] 1 0 1 0 0 0 1 0 1 0 1 0 1 0 0 0 1 1 0 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 1 0 1</span>
 <span class="co">#&gt; [112] 0 0 0 1 0 0 0 1 0 0 1 1 0 0 0 0 1 1 0 0 0 0 1 0 0 1 0 1 0</span></pre></body></html></div>
-<p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. Since <span class="math inline">\(2+1 = 3\)</span> is a multiple of the block size of 6, this allocation is valid.</p>
+<p>In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. Since <span class="math inline">\(2 + 1 = 3\)</span> is a multiple of the block size of 6, this allocation is valid.</p>
 <p>Complete randomization can be performed by setting the block size equal to the total sample size:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/randomization.html">randomization</a></span>(<span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">120</span>, <span class="kw">block</span> <span class="kw">=</span> <span class="fl">120</span>, <span class="kw">allocation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>))
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="../reference/randomization.html">randomization</a></span>(<span class="kw">N_total</span> <span class="kw">=</span> <span class="fl">120</span>, <span class="kw">block</span> <span class="kw">=</span> <span class="fl">120</span>, <span class="kw">allocation</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>))
 <span class="co">#&gt;   [1] 0 1 0 0 0 0 0 0 1 0 0 0 0 1 1 0 0 0 1 0 0 0 0 1 1 1 0 0 0 1 0 1 1 1 1 1 0</span>
 <span class="co">#&gt;  [38] 0 0 1 0 0 1 0 1 0 0 1 1 0 1 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0</span>
 <span class="co">#&gt;  [75] 0 0 1 0 0 0 0 1 1 0 1 0 0 0 0 0 0 1 0 1 0 0 0 1 0 0 1 1 0 0 0 1 1 1 0 0 0</span>
@@ -183,27 +169,31 @@
 </div>
 <div id="incorporation-of-historical-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#incorporation-of-historical-data" class="anchor"></a>Incorporation of Historical Data</h1>
+<a href="#incorporation-of-historical-data" class="anchor"></a>Incorporation of historical data</h1>
 <p>The Bayesian attitude is to use all available data to address the scientific question under consideration. Most clinical trials are not conducted in a vacuum. Often, pilot studies are conducted in small sample sizes to obtain an estimate of parameters for a clinical trial, e.g., clinically relevant effect size, sample size determination, recruitment rates, etc. Besides pilot studies, the control and/or treatment are usually studied in early phase lab or bench settings. However, clinical trialists need to carefully consider the inclusion and exclusion criteria of historical data in a trial. The R package <code>bayesDP</code> is used as a computational engine for incorporating historical data into a trial design.</p>
 <p>The vignettes presented in the <code>bayesDP</code> package are a rich resource for understanding the discount function approach and its implementation. Interested readers can refer to the vignettes available at <a href="https://CRAN.R-project.org/package=bayesDP" class="uri">https://CRAN.R-project.org/package=bayesDP</a>.</p>
 </div>
-<div id="early-stopping-for-futility-or-success" class="section level1">
+<div id="early-stopping-for-futility-or-expected-success" class="section level1">
 <h1 class="hasAnchor">
-<a href="#early-stopping-for-futility-or-success" class="anchor"></a>Early Stopping for Futility or Success</h1>
+<a href="#early-stopping-for-futility-or-expected-success" class="anchor"></a>Early stopping for futility or expected success</h1>
 <p>With adaptive Bayesian trials, the trial can be stopped early for success or futility. In <code>bayesCT</code>, early success is achieved if the “probability of success” exceeds a pre-specified threshold. Likewise, futility occurs if the “probability of futility” is below a pre-specified threshold. In both cases, the probabilities are computed by imputing subjects that may be loss to follow-up or have not yet achieved the follow-up. However, final posterior estimation uses complete data only.</p>
-<div id="success" class="section level2">
+<div id="expected-success" class="section level2">
 <h2 class="hasAnchor">
-<a href="#success" class="anchor"></a>Success</h2>
+<a href="#expected-success" class="anchor"></a>Expected success</h2>
 <p>The probability of stopping early for success is specified as</p>
-<p><span class="math display">\[Pr(\theta_T - \theta_C &gt; \delta| y, y_0) &gt; \Delta,\]</span></p>
-<p>where <span class="math inline">\(\theta_T\)</span> and <span class="math inline">\(\theta_C\)</span> are the posterior means of the treatment and control groups, respectively, <span class="math inline">\(\delta\)</span> is the difference margin (important in non-inferiority design), <span class="math inline">\(y\)</span> and <span class="math inline">\(y_0\)</span> are the current and historical data, respectively, and <span class="math inline">\(\Delta\)</span> is the specified success criteria. If this probability exceeds <span class="math inline">\(\Delta\)</span>, the trial will stop enrollment for early success. The default success probability is 0.90. If stopping early for success is not desired, the probability can be set to 1.</p>
+<p><span class="math display">\[
+Pr(\theta_T - \theta_C &gt; \delta| y, y_0),
+\]</span></p>
+<p>where <span class="math inline">\(\theta_T\)</span> and <span class="math inline">\(\theta_C\)</span> are the posterior means of the treatment and control groups, respectively, <span class="math inline">\(\delta\)</span> is the difference margin (important in non-inferiority design), <span class="math inline">\(y\)</span> and <span class="math inline">\(y_0\)</span> are the current and historical data, respectively. Letting <span class="math inline">\(\Delta\)</span> denote a pre-specified success criteria, if this probability exceeds <span class="math inline">\(\Delta\)</span>, the trial will stop enrollment early for expected success. The default success probability is 0.90. If stopping early for success is not desired, the probability can be set to 1.</p>
 </div>
 <div id="futility" class="section level2">
 <h2 class="hasAnchor">
 <a href="#futility" class="anchor"></a>Futility</h2>
 <p>The probability of stopping for futility is specified as</p>
-<p><span class="math display">\[Pr(\theta_T - \theta_C &gt; \delta| y, y_0) &lt; \omega,\]</span></p>
-<p>where <span class="math inline">\(\omega\)</span> is the specified futility criteria. Now, if this probability is below <span class="math inline">\(\omega\)</span>, the trial will stop enrollment for futility. The default futility rate is set to 0.10. If stopping early for futility is not desired, the probability can be set to 0.</p>
+<p><span class="math display">\[
+Pr(\theta_T - \theta_C &gt; \delta| y, y_0).
+\]</span></p>
+<p>Letting <span class="math inline">\(\omega\)</span> denote a pre-specified futility criteria, if this probability is below <span class="math inline">\(\omega\)</span>, the trial will stop enrollment for futility. The default futility rate is set to 0.10. If stopping early for futility is not desired, the probability can be set to 0.</p>
 </div>
 </div>
   </div>
