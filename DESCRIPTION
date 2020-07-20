@@ -22,7 +22,7 @@ Description: Simulation and analysis of Bayesian adaptive clinical trials for bi
       and imputation of incomplete data. The package has the functionality for dynamically incorporating historical data 
       into the analysis via the power prior or non-informative priors.
 LazyLoad: yes
-License: GPL-3
+License: GPL-3 | file LICENSE
 NeedsCompilation: no
 URL: https://github.com/thevaachandereng/bayesCT/
 BugReports: https://github.com/thevaachandereng/bayesCT/issues/

@@ -8,3 +8,4 @@
 ^pkgdown$
 ^CONDUCT.md
 ^README\.Rmd$
+^LICENSE\.md$
