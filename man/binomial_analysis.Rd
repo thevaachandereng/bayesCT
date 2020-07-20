@@ -55,11 +55,13 @@ we are already at the final analysis.}
 \item{y0_treatment}{scalar. Number of events for the historical treatment
 arm.}
 
-\item{N0_treatment}{scalar. Number of observations of the historical treatment group.}
+\item{N0_treatment}{scalar. Number of observations of the historical
+treatment group.}
 
 \item{y0_control}{scalar. Number of events for the historical control arm.}
 
-\item{N0_control}{scalar. Number of observations of the historical control group.}
+\item{N0_control}{scalar. Number of observations of the historical control
+group.}
 
 \item{alternative}{character. The string specifying the alternative
 hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
@@ -69,29 +71,30 @@ hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 missing data.}
 
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
-\code{h0=0}.}
+\code{h0 = 0}.}
 
-\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
+\item{number_mcmc}{scalar. Number of Markov Chain Monte Carlo draws in
 sampling posterior.}
 
 \item{prob_ha}{scalar. Probability of alternative hypothesis.}
 
 \item{futility_prob}{scalar. Probability of stopping early for futility.}
 
-\item{expected_success_prob}{scalar. Probability of stopping early for success.}
+\item{expected_success_prob}{scalar. Probability of stopping early for
+success.}
 
 \item{prior}{vector. Prior values of beta rate, Beta(a0, b0). The default is
 set to Beta(1, 1).}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(\code{discount_function="weibull"}), the scaled-Weibull function
-(\code{discount_function="scaledweibull"}), and the identity function
-(\code{discount_function="identity"}). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
-more details.}
+(\code{discount_function = "weibull"}), the scaled-Weibull function
+(\code{discount_function = "scaledweibull"}), and the identity function
+(\code{discount_function = "identity"}). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is \code{"identity"}. See
+\code{\link[bayesDP]{bdpnormal}} for more details.}
 
 \item{fix_alpha}{logical. Fix alpha at alpha_max? Default value is FALSE.}
 
@@ -105,25 +108,27 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".}
+weight of the historical control group. Not used when
+\code{discount_function = "identity"}.}
 
 \item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
 used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".}
+historical control group. Not used when \code{discount_function =
+"identity"}.}
 
-\item{method}{character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "\code{mc}" estimates alpha for each
-Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+\item{method}{character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method \code{"mc"} estimates alpha for each
+Monte Carlo iteration. Alternate value \code{"fixed"} estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-\code{bdpsurvival} vignette \cr
-\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
+\code{\link[bayesDP]{bdpsurvival}} vignette \cr
+\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more
+details.}
 }
 \value{
-A list of output for the Bayesian trial for binomial count.
+A list of output for the Bayesian trial for binomial count:
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
@@ -169,4 +174,11 @@ A list of output for the Bayesian trial for binomial count.
 Function to analyze a Bayesian trial for binomial count data
   which allows for early stopping and incorporation of historical data using
   the discount function approach.
+}
+\details{
+If the enrollment size is at the final sample size, i.e. the maximum
+  allowable sample size for the trial, then this function is not of practical
+  use since there is no opportunity to stop trial enrollment. In such a case,
+  it is expected that the follow-up will be conducted per the study protocol
+  and a final analysis made.
 }

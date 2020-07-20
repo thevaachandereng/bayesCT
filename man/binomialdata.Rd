@@ -6,6 +6,7 @@
 \title{Binomial dataset for analyzing adaptive Bayesian trials}
 \format{
 A data frame with 300 rows and 4 variables:
+
 \describe{
   \item{\code{id}}{
     Patient ID in the trial.}
@@ -29,5 +30,4 @@ A dataset containing the results of 300 patients with binomial
 \examples{
 data(binomialdata)
 }
-\keyword{dataset}
 \keyword{datasets}

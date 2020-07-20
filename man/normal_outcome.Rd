@@ -2,14 +2,15 @@
 % Please edit documentation in R/normal.R
 \name{normal_outcome}
 \alias{normal_outcome}
-\title{Parameters for treatment and control in normal case}
+\title{Parameters for treatment and control in continuous (normally
+  distributed) data case}
 \usage{
 normal_outcome(
   mu_control = NULL,
   sd_control = NULL,
   mu_treatment = NULL,
   sd_treatment = NULL,
-  data = NULL
+  .data = NULL
 )
 }
 \arguments{
@@ -21,14 +22,19 @@ normal_outcome(
 
 \item{sd_treatment}{numeric. The standard deviation for the treatment group.}
 
-\item{data}{NULL. stores the proportion of control and treatment, please do not fill it in.}
+\item{.data}{NULL. Stores the normal data for analysis. Should not be edited
+by the user.}
 }
 \value{
-a list with proportion of control and treatment group.
+A list with means and standard deviations for control and treatment
+  groups.
 }
 \description{
-Wrapper function for mean and standard deviation with normal outcome.
+Wrapper function for mean and standard deviation with continuous
+  (normally distributed) outcome.
 }
 \examples{
-normal_outcome(mu_control = 12, mu_treatment = 8, sd_treatment = 2.2, sd_control = 1.6)
+normal_outcome(mu_control = 12, mu_treatment = 8,
+               sd_treatment = 2.2, sd_control = 1.6)
+
 }

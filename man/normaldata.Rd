@@ -6,6 +6,7 @@
 \title{Gaussian dataset for analyzing adaptive Bayesian trials}
 \format{
 A data frame with 300 rows and 4 variables:
+
 \describe{
   \item{\code{id}}{
     Patient ID in the trial.}
@@ -22,8 +23,8 @@ A data frame with 300 rows and 4 variables:
 data(normaldata)
 }
 \description{
-A dataset containing the results of 300 patients with continuous (normal) outcome,
-the dataset is filled with loss to follow up.
+A dataset containing the results of 300 patients with continuous
+  (normal) outcome, the dataset is filled with loss to follow up.
 }
 \examples{
 data(normaldata)

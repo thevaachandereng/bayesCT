@@ -18,27 +18,27 @@ historical_survival(
 )
 }
 \arguments{
-\item{time}{vector. exposure time for the subjects. It must be the same length
-as the treatment variable.}
+\item{time}{vector. exposure time for the subjects. It must be the same
+length as the treatment variable.}
 
 \item{treatment}{vector. Treatment assignment for patients, 1 for treatment
 group and 0 for control group}
 
-\item{event}{vector. The status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
-all subjects are assumed to have an event.}
+\item{event}{vector. The status indicator, normally 0=alive, 1=dead. Other
+choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For censored
+data, the status indicator is 0 = right censored, 1 = event at time.
+Although unusual, the event indicator can be omitted, in which case all
+subjects are assumed to have an event.}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(\code{discount_function="weibull"}), the scaled-Weibull function
-(\code{discount_function="scaledweibull"}), and the identity function
-(\code{discount_function="identity"}). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
-more details.}
+(\code{discount_function = "weibull"}), the scaled-Weibull function
+(\code{discount_function = "scaledweibull"}), and the identity function
+(\code{discount_function = "identity"}). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is \code{"identity"}. See
+\code{\link[bayesDP]{bdpnormal}} for more details.}
 
 \item{alpha_max}{scalar. Maximum weight the discount function can apply.
 Default is 1. For a two-arm trial, users may specify a vector of two values
@@ -52,27 +52,31 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".}
+weight of the historical control group. Not used when
+\code{discount_function = "identity"}.}
 
 \item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
 used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".}
+historical control group. Not used when \code{discount_function =
+"identity"}.}
 
-\item{method}{character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "\code{mc}" estimates alpha for each
-Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+\item{method}{character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method \code{"mc"} estimates alpha for each
+Monte Carlo iteration. Alternate value \code{"fixed"} estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-\code{bdpsurvival} vignette \cr
-\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
+\code{\link[bayesDP]{bdpsurvival}} vignette \cr
+\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more
+details.}
 
-\item{.data}{NULL. stores the historical time, treatment and event , please do not fill it in.}
+\item{.data}{NULL. Stores the historical time, treatment and event. Should
+not be edited by the user.}
 }
 \value{
-a list with historical data for time-to-event outcome with the discount function.
+A list with historical data for time-to-event outcome with the
+  discount function.
 }
 \description{
 Wrapper function for historical data from time-to-event outcome.

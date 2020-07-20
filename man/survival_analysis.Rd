@@ -30,40 +30,40 @@ survival_analysis(
 )
 }
 \arguments{
-\item{time}{vector. exposure time for the subjects. It must be the same length
-as the treatment variable.}
+\item{time}{vector. exposure time for the subjects. It must be the same
+length as the treatment variable.}
 
 \item{treatment}{vector. Treatment assignment for patients, 1 for treatment
 group and 0 for control group}
 
-\item{event}{vector. The status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
-all subjects are assumed to have an event.}
+\item{event}{vector. The status indicator, normally 0=alive, 1=dead. Other
+choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For censored
+data, the status indicator is 0 = right censored, 1 = event at time.
+Although unusual, the event indicator can be omitted, in which case all
+subjects are assumed to have an event.}
 
-\item{time0}{vector. Historical exposure time for the subjects. It must be the same length
-as the treatment variable.}
+\item{time0}{vector. Historical exposure time for the subjects. It must be
+the same length as the treatment variable.}
 
-\item{treatment0}{vector. the historical treatment assignment for patients,
-1 for treatment group and 0 for control group.}
+\item{treatment0}{vector. the historical treatment assignment for patients, 1
+for treatment group and 0 for control group.}
 
 \item{event0}{vector. Historical status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
+Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For
+censored data, the status indicator is 0 = right censored, 1 = event at
+time. Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.}
 
-\item{surv_time}{scalar. scalar. Survival time of interest for computing the probability
-of survival for a single arm (OPC) trial. Default is overall, i.e.,
-current+historical, median survival time.}
+\item{surv_time}{scalar. scalar. Survival time of interest for computing the
+probability of survival for a single arm (OPC) trial. Default is overall
+(pooled), i.e. current and historical, median survival time.}
 
 \item{h0}{scalar. Threshold for comparing two mean values. Default is
-\code{h0=0}.}
+\code{h0 = 0}.}
 
-\item{breaks}{vector. Breaks (interval starts) used to compose the breaks of the piecewise
-exponential model. Do not include zero. Default breaks are the quantiles of the input
-times.}
+\item{breaks}{vector. Breaks (interval starts) used to compose the breaks of
+the piecewise exponential model. Do not include zero. Default breaks are
+the quantiles of the input times.}
 
 \item{alternative}{character. The string specifying the alternative
 hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
@@ -72,27 +72,28 @@ hypothesis, must be one of \code{"greater"} (default), \code{"less"} or
 \item{N_impute}{scalar. Number of imputations for Monte Carlo simulation of
 missing data.}
 
-\item{number_mcmc}{scalar. Number of Monte Carlo Markov Chain draws in
+\item{number_mcmc}{scalar. Number of Markov Chain Monte Carlo draws in
 sampling posterior.}
 
 \item{prob_ha}{scalar. Probability of alternative hypothesis.}
 
 \item{futility_prob}{scalar. Probability of stopping early for futility.}
 
-\item{expected_success_prob}{scalar. Probability of stopping early for success.}
+\item{expected_success_prob}{scalar. Probability of stopping early for
+success.}
 
-\item{prior}{vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
-set to Gamma(.1, .1).}
+\item{prior}{vector. Prior values of the gamma rate, Gamma(a0, b0). The
+default is set to Gamma(0.1, 0.1).}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
-(\code{discount_function="weibull"}), the scaled-Weibull function
-(\code{discount_function="scaledweibull"}), and the identity function
-(\code{discount_function="identity"}). The scaled-Weibull discount function
-scales the output of the Weibull CDF to have a max value of 1. The identity
-discount function uses the posterior probability directly as the discount
-weight. Default value is \code{"identity"}. See \code{\link{bdpnormal}} for
-more details.}
+(\code{discount_function = "weibull"}), the scaled-Weibull function
+(\code{discount_function = "scaledweibull"}), and the identity function
+(\code{discount_function = "identity"}). The scaled-Weibull discount
+function scales the output of the Weibull CDF to have a maximum value of 1.
+The identity discount function uses the posterior probability directly as
+the discount weight. Default value is \code{"identity"}. See
+\code{\link[bayesDP]{bdpnormal}} for more details.}
 
 \item{fix_alpha}{logical. Fix alpha at alpha_max? Default value is FALSE.}
 
@@ -106,36 +107,38 @@ used to compute alpha, the weight parameter of the historical data. Default
 value is 0.135. For a two-arm trial, users may specify a vector of two
 values where the first value is used to estimate the weight of the
 historical treatment group and the second value is used to estimate the
-weight of the historical control group. Not used when discount_function =
-"identity".}
+weight of the historical control group. Not used when
+\code{discount_function = "identity"}.}
 
 \item{weibull_shape}{scalar. Shape parameter of the Weibull discount function
 used to compute alpha, the weight parameter of the historical data. Default
 value is 3. For a two-arm trial, users may specify a vector of two values
 where the first value is used to estimate the weight of the historical
 treatment group and the second value is used to estimate the weight of the
-historical control group. Not used when discount_function = "identity".}
+historical control group. Not used when \code{discount_function =
+"identity"}.}
 
-\item{method}{character. Analysis method with respect to estimation of the weight
-parameter alpha. Default method "\code{mc}" estimates alpha for each
-Monte Carlo iteration. Alternate value "\code{fixed}" estimates alpha once
+\item{method}{character. Analysis method with respect to estimation of the
+weight parameter alpha. Default method \code{"mc"} estimates alpha for each
+Monte Carlo iteration. Alternate value \code{"fixed"} estimates alpha once
 and holds it fixed throughout the analysis.  See the the
-\code{bdpsurvival} vignette \cr
-\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more details.}
+\code{\link[bayesDP]{bdpsurvival}} vignette \cr
+\code{vignette("bdpsurvival-vignette", package="bayesDP")} for more
+details.}
 }
 \value{
-a list of output for the Bayesian trial for time-to-event.
+A list of output for the Bayesian trial for time-to-event:
 
 \describe{
   \item{\code{prob_of_accepting_alternative}}{
     scalar. The input parameter of probability of accepting the alternative.}
   \item{\code{margin}}{
-    scalar. The margin input value of difference between mean estimate of treatment
-     and mean estimate of the control.}
+    scalar. The margin input value of difference between mean estimate of
+    treatment and mean estimate of the control.}
   \item{\code{alternative}}{
-    character. The input parameter of alternative hypothesis. }
+    character. The input parameter of alternative hypothesis.}
   \item{\code{alpha_max}}{
-    scalar. The alpha_max input. }
+    scalar. The alpha_max input.}
   \item{\code{N_treatment}}{
     scalar. The number of patients enrolled in the experimental group for
     each simulation.}
@@ -150,9 +153,9 @@ a list of output for the Bayesian trial for time-to-event.
     each simulation.}
   \item{\code{N_enrolled}}{
     scalar. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation. )}
+    and experimental group for each simulation).}
   \item{\code{N_complete}}{
-    scalar. The number of patients whose time passes the surv_time.}
+    scalar. The number of patients whose time passes the \code{surv_time}.}
   \item{\code{alpha_discount}}{
     vector. The alpha discount function used for control and treatment.}
   \item{\code{post_prob_accept_alternative}}{
@@ -170,7 +173,7 @@ a list of output for the Bayesian trial for time-to-event.
 }
 }
 \description{
-Function to analyze Bayesian trial for time-to-event data
- which allows early stopping and incorporation of historical data using
- the discount function approach
+Function to analyze Bayesian trial for time-to-event data which
+  allows early stopping and incorporation of historical data using the
+  discount function approach.
 }
