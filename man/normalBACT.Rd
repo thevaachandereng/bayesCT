@@ -203,7 +203,7 @@ A list of output for a single trial simulation:
 }
 }
 \description{
-Simulation of normally distributed data for Bayesian adaptive
-  trials with various inputs to control for power, sample size, type I error
-  rate, etc.
+Simulation of continuous (normally distributed) data for
+  Bayesian adaptive trials with various inputs to control for power, sample
+  size, type I error rate, etc.
 }

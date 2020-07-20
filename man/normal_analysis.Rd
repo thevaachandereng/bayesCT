@@ -2,7 +2,7 @@
 % Please edit documentation in R/normal.R
 \name{normal_analysis}
 \alias{normal_analysis}
-\title{Analyzing Bayesian trial for normal mean data}
+\title{Analyzing Bayesian trial for continuous (normally distributed) data}
 \usage{
 normal_analysis(
   treatment,
@@ -154,7 +154,7 @@ A list of output for the analysis of Bayesian trial for normal mean:
 }
 }
 \description{
-Function to analyze Bayesian trial for normal mean data which
-  allows early stopping and incorporation of historical data using the
-  discount function approach.
+Function to analyze Bayesian trial for continuous (normally
+  distributed) data, which allows early stopping and incorporation of
+  historical data using the discount function approach.
 }

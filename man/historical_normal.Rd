@@ -86,7 +86,8 @@ A list with historical data for control and treatment group with the
   discount function.
 }
 \description{
-Wrapper function for historical data from normal outcome.
+Wrapper function for historical data from continuous (normally
+  distributed) outcome.
 }
 \examples{
 historical_normal(mu0_treatment = 15, sd0_treatment = 2, N0_treatment = 10,

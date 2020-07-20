@@ -1,8 +1,8 @@
 #' @title Normal distribution for Bayesian Adaptive Trials
 #'
-#' @description Simulation of normally distributed data for Bayesian adaptive
-#'   trials with various inputs to control for power, sample size, type I error
-#'   rate, etc.
+#' @description Simulation of continuous (normally distributed) data for
+#'   Bayesian adaptive trials with various inputs to control for power, sample
+#'   size, type I error rate, etc.
 #'
 #' @param mu_treatment scalar. Mean outcome in the treatment arm.
 #' @param sd_treatment scalar. Standard deviation of outcome in the treatment.
@@ -638,10 +638,11 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("Y", "Y_impute", "id", "
                                                         "subject_impute_success", "subject_impute_futility"))
 
 
-#' @title Parameters for treatment and control in normal case
+#' @title Parameters for treatment and control in continuous (normally
+#'   distributed) data case
 #'
-#' @description Wrapper function for mean and standard deviation with normal
-#'   outcome.
+#' @description Wrapper function for mean and standard deviation with continuous
+#'   (normally distributed) outcome.
 #'
 #' @param mu_control numeric. The mean for the control group.
 #' @param sd_control numeric. The standard deviation for the control group.
@@ -671,7 +672,8 @@ normal_outcome <- function(mu_control = NULL, sd_control = NULL, mu_treatment = 
 
 #' @title Historical data for normal distribution
 #'
-#' @description Wrapper function for historical data from normal outcome.
+#' @description Wrapper function for historical data from continuous (normally
+#'   distributed) outcome.
 #'
 #' @inheritParams normalBACT
 #' @param .data NULL. Stores the normal data for analysis. Should not
@@ -715,11 +717,11 @@ historical_normal <- function(mu0_treatment     = NULL,
 }
 
 
-#' @title Analyzing Bayesian trial for normal mean data
+#' @title Analyzing Bayesian trial for continuous (normally distributed) data
 #'
-#' @description Function to analyze Bayesian trial for normal mean data which
-#'   allows early stopping and incorporation of historical data using the
-#'   discount function approach.
+#' @description Function to analyze Bayesian trial for continuous (normally
+#'   distributed) data, which allows early stopping and incorporation of
+#'   historical data using the discount function approach.
 #'
 #' @inheritParams normalBACT
 #' @param treatment vector. Treatment assignment for patients, 1 for treatment
@@ -1045,7 +1047,7 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("complete", "outcome", "
                                                         "subject_impute_success", "p_outcome"))
 
 
-#' @title Data file for normal analysis
+#' @title Data file for continuous (normally distributed) data analysis
 #'
 #' @description Wrapper function for data file in normal analysis.
 #'

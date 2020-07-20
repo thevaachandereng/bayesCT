@@ -2,7 +2,8 @@
 % Please edit documentation in R/normal.R
 \name{normal_outcome}
 \alias{normal_outcome}
-\title{Parameters for treatment and control in normal case}
+\title{Parameters for treatment and control in continuous (normally
+  distributed) data case}
 \usage{
 normal_outcome(
   mu_control = NULL,
@@ -29,8 +30,8 @@ A list with means and standard deviations for control and treatment
   groups.
 }
 \description{
-Wrapper function for mean and standard deviation with normal
-  outcome.
+Wrapper function for mean and standard deviation with continuous
+  (normally distributed) outcome.
 }
 \examples{
 normal_outcome(mu_control = 12, mu_treatment = 8,

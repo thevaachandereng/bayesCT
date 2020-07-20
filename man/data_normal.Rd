@@ -2,7 +2,7 @@
 % Please edit documentation in R/normal.R
 \name{data_normal}
 \alias{data_normal}
-\title{Data file for normal analysis}
+\title{Data file for continuous (normally distributed) data analysis}
 \usage{
 data_normal(treatment, outcome, complete, .data = NULL)
 }
