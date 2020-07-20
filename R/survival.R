@@ -1087,5 +1087,3 @@ data_survival <- function(time, treatment, event, .data = NULL){
   .data$event      <- event
   .data
 }
-
-

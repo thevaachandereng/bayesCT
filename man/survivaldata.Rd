@@ -6,13 +6,14 @@
 \title{Time-to-event dataset for analyzing adaptive Bayesian trials}
 \format{
 A data frame with 100 rows and 4 variables:
+
 \describe{
-  \item{id}{Patient ID in the trial}
-  \item{treatment}{treatment assignment for patients, 1 for treatment group
-  0 for control group}
-  \item{time}{the follow up time for patients}
-  \item{event}{The status indicator, normally 0=alive, 1=dead or
-  0 = no event, 1 = event occurred}
+  \item{\code{id}}{Patient ID in the trial.}
+  \item{\code{treatment}}{Treatment assignment for patients, 1 for
+  treatment group 0 for control group.}
+  \item{\code{time}}{The follow up time for patients.}
+  \item{\code{event}}{The status indicator, normally 0=alive, 1=dead or
+  0 = no event, 1 = event occurred.}
 }
 }
 \usage{
