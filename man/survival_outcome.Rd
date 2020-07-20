@@ -33,5 +33,5 @@ Wrapper function for the piecewise constant hazard rates and the
 \examples{
 survival_outcome(hazard_treatment = 0.06,
                            hazard_control   = 0.08,
-                           cutpoint         = NULL )
+                           cutpoint         = NULL)
 }

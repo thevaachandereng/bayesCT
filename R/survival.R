@@ -277,7 +277,7 @@ survivalBACT <- function(
             filter(treatment == 0 & subject_impute_success) %>%
             bind_cols(time_impute  = impute_control$time,
                       event_impute = impute_control$event)
-        } else{
+        } else {
           data_control_success_impute <- NULL
         }
 
@@ -337,16 +337,16 @@ survivalBACT <- function(
           effect_imp <- post_imp$final$posterior_loghazard
           if (alternative == "two-sided") {
             success  <- max(c(mean(effect_imp > h0), mean(-effect_imp > h0)))
-          } else if(alternative == "greater") {
+          } else if (alternative == "greater") {
             success  <- mean(effect_imp > h0)
           } else {
             success  <- mean(-effect_imp > h0)
           }
         } else {
           effect_imp <- post_imp$final$posterior_survival
-          if (alternative == "two-sided"){
+          if (alternative == "two-sided") {
             success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
-          } else if(alternative == "greater") {
+          } else if (alternative == "greater") {
             success <- mean(effect_imp > h0)
           } else {
             success <- mean(effect_imp < h0)
@@ -439,9 +439,9 @@ survivalBACT <- function(
           }
         } else {
           effect_imp <- post_imp$final$posterior_survival
-          if (alternative == "two-sided"){
+          if (alternative == "two-sided") {
             success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
-          } else if (alternative == "greater"){
+          } else if (alternative == "greater") {
             success <- mean(effect_imp > h0)
           } else {
             success <- mean(effect_imp < h0)
@@ -536,12 +536,12 @@ survivalBACT <- function(
     effect <- post_final$final$posterior_loghazard
     if (alternative == "two-sided") {
       post_paa <- max(c(mean(effect > h0), mean(-effect > h0)))
-    } else if (alternative == "greater"){
+    } else if (alternative == "greater") {
       post_paa <- mean(effect > h0)
     } else {
       post_paa <- mean(-effect > h0)
     }
-  } else{
+  } else {
     effect <- post_final$final$posterior_survival
     if (alternative == "two-sided") {
       post_paa <- max(c(mean(effect > h0), mean(effect > h0)))
@@ -587,10 +587,10 @@ survivalBACT <- function(
 
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1") utils::globalVariables(c("time", "event", "event_impute", "real_time",
-                                                       "time_impute", "id", "futility", "treatment",
-                                                       "subject_impute_success", "real_event",
-                                                       "subject_impute_futility"))
+if (getRversion() >= "2.15.1") utils::globalVariables(c("time", "event", "event_impute", "real_time",
+                                                        "time_impute", "id", "futility", "treatment",
+                                                        "subject_impute_success", "real_event",
+                                                        "subject_impute_futility"))
 
 
 #' @title Analyzing Bayesian trial for time-to-event data
@@ -930,10 +930,10 @@ survival_analysis <- function(
 
 
 ## Quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1") utils::globalVariables(c("time", "event", "event_impute",
-                                                       "time_impute", "id", "futility", "treatment",
-                                                       "subject_impute_success",
-                                                       "subject_impute_futility"))
+if (getRversion() >= "2.15.1") utils::globalVariables(c("time", "event", "event_impute",
+                                                        "time_impute", "id", "futility", "treatment",
+                                                        "subject_impute_success",
+                                                        "subject_impute_futility"))
 
 
 #' @title Historical data for survival analysis
@@ -996,7 +996,7 @@ historical_survival <- function(time               = NULL,
 #'
 #' @export gamma_prior
 
-gamma_prior <- function(a0 = 0.1, b0 = 0.1, .data = NULL){
+gamma_prior <- function(a0 = 0.1, b0 = 0.1, .data = NULL) {
   .data$prior  <- c(a0, b0)
   .data
 }
@@ -1017,13 +1017,13 @@ gamma_prior <- function(a0 = 0.1, b0 = 0.1, .data = NULL){
 #'
 #' @examples survival_outcome(hazard_treatment = 0.06,
 #'                            hazard_control   = 0.08,
-#'                            cutpoint         = NULL )
+#'                            cutpoint         = NULL)
 #' @export survival_outcome
 
 survival_outcome <- function(hazard_treatment = NULL,
                              cutpoint         = NULL,
                              hazard_control   = NULL,
-                             .data = NULL){
+                             .data = NULL) {
   .data$hazard_treatment  <- hazard_treatment
   .data$cutpoint          <- cutpoint
   .data$hazard_control    <- hazard_control
@@ -1047,7 +1047,7 @@ survival_outcome <- function(hazard_treatment = NULL,
 #'
 #' @export data_survival
 
-data_survival <- function(time, treatment, event, .data = NULL){
+data_survival <- function(time, treatment, event, .data = NULL) {
   .data$time       <- time
   .data$treatment  <- treatment
   .data$event      <- event

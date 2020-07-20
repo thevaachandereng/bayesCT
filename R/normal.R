@@ -332,7 +332,7 @@ normalBACT <- function(
           mu_c  <- mean(data$Y[data$treatment == 0])
           sd_c  <- sd(data$Y[data$treatment == 0])
           N_c   <- length(data$treatment == 0)
-        } else{
+        } else {
           mu_c  <- NULL
           sd_c  <- NULL
           N_c   <- NULL
@@ -514,7 +514,7 @@ normalBACT <- function(
       } else {
         effect_int <- post$posterior_treatment$posterior_mu - post$posterior_control$posterior_mu
       }
-    } else{
+    } else {
       effect_int <- post$posterior_treatment$posterior_mu
     }
 
@@ -797,7 +797,7 @@ normal_analysis <- function(
 ) {
 
   # If complete is NULL, assume the data is complete
-  if(is.null(complete)){
+  if (is.null(complete)) {
     complete <- rep(1, length(outcome))
   }
 
@@ -922,9 +922,9 @@ normal_analysis <- function(
       }
     } else {
       effect_imp <- post_imp$final$posterior_mu
-      if (alternative == "two-sided"){
+      if (alternative == "two-sided") {
         success <- max(c(mean(effect_imp > h0), mean(effect_imp < h0)))
-      } else if (alternative == "greater"){
+      } else if (alternative == "greater") {
         success <- mean(effect_imp > h0)
       } else {
         success <- mean(effect_imp < h0)
@@ -1040,9 +1040,9 @@ normal_analysis <- function(
 
 
 ## Quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1") utils::globalVariables(c("complete", "outcome", "outcome_impute", "id",
-                                                       "futility", "treatment",
-                                                       "subject_impute_success", "p_outcome"))
+if (getRversion() >= "2.15.1") utils::globalVariables(c("complete", "outcome", "outcome_impute", "id",
+                                                        "futility", "treatment",
+                                                        "subject_impute_success", "p_outcome"))
 
 
 #' @title Data file for normal analysis
@@ -1063,7 +1063,7 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("complete", "outcome", "o
 #'
 #' @export data_normal
 
-data_normal <- function(treatment, outcome, complete, .data = NULL){
+data_normal <- function(treatment, outcome, complete, .data = NULL) {
   .data$treatment <- treatment
   .data$outcome   <- outcome
   .data$complete  <- complete
