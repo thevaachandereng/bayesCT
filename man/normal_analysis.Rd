@@ -8,6 +8,8 @@ normal_analysis(
   treatment,
   outcome,
   complete = NULL,
+  N_max_treatment = NULL,
+  N_max_control = NULL,
   mu0_treatment = NULL,
   sd0_treatment = NULL,
   N0_treatment = NULL,
@@ -38,6 +40,14 @@ group and 0 for control group.}
 \item{complete}{vector. Similar length as treatment and outcome variable, 1
 for complete outcome, 0 for loss to follow up. If complete is not provided,
 the dataset is assumed to be complete.}
+
+\item{N_max_treatment}{integer. Maximum allowable sample size for the
+treatment arm (including the currently enrolled subjects). Default is NULL,
+meaning we are already at the final analysis.}
+
+\item{N_max_control}{integer. Maximum allowable sample size for the control
+arm (including the currently enrolled subjects). Default is NULL, meaning
+we are already at the final analysis.}
 
 \item{mu0_treatment}{scalar. Mean of the historical treatment group.}
 
@@ -139,6 +149,12 @@ A list of output for the analysis of Bayesian trial for normal mean:
   \item{\code{N_complete}}{
     scalar. The number of patients who completed the trial and had no
     loss to follow-up.}
+  \item{\code{N_max_treatment}}{
+    integer. Maximum allowable sample size for the treatment arm
+    (including the currently enrolled subjects).}
+  \item{\code{N_max_control}}{
+    integer. Maximum allowable sample size for the control arm
+    (including the currently enrolled subjects).}
   \item{\code{post_prob_accept_alternative}}{
     vector. The final probability of accepting the alternative
     hypothesis after the analysis is done.}
@@ -157,4 +173,11 @@ A list of output for the analysis of Bayesian trial for normal mean:
 Function to analyze Bayesian trial for continuous (normally
   distributed) data, which allows early stopping and incorporation of
   historical data using the discount function approach.
+}
+\details{
+If the enrollment size is at the final sample size, i.e. the maximum
+  allowable sample size for the trial, then this function is not of practical
+  use since there is no opportunity to stop trial enrollment. In such a case,
+  it is expected that the follow-up will be conducted per the study protocol
+  and a final analysis made.
 }

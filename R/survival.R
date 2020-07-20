@@ -1,4 +1,4 @@
-#' @title Time-to-event outcome for Bayesian Adaptive Trials
+#' @title Time-to-event outcome for Bayesian Adaptive trials
 #'
 #' @description Simulation for time-to-event outcome for Bayesian Adaptive trial with
 #'   different inputs to control for power, sample size, type 1 error rate, etc.

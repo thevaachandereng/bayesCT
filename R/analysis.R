@@ -66,6 +66,7 @@ analysis <- function(input,
     input <- c(input, "N_max_treatment" = N_max_treatment, "N_max_control" = N_max_control)
     do.call(binomial_analysis, input)
   } else if (type == "normal") {
+    input <- c(input, "N_max_treatment" = N_max_treatment, "N_max_control" = N_max_control)
     do.call(normal_analysis, input)
   } else if (type == "survival") {
     do.call(survival_analysis, input)

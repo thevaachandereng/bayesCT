@@ -2,7 +2,7 @@
 % Please edit documentation in R/survival.R
 \name{survivalBACT}
 \alias{survivalBACT}
-\title{Time-to-event outcome for Bayesian Adaptive Trials}
+\title{Time-to-event outcome for Bayesian Adaptive trials}
 \usage{
 survivalBACT(
   hazard_treatment,

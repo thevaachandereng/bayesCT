@@ -2,7 +2,7 @@
 % Please edit documentation in R/normal.R
 \name{normalBACT}
 \alias{normalBACT}
-\title{Normal distribution for Bayesian Adaptive Trials}
+\title{Normal distribution for Bayesian Adaptive trials}
 \usage{
 normalBACT(
   mu_treatment,

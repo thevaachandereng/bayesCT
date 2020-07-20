@@ -1094,8 +1094,8 @@ binomial_analysis <- function(
     N_max_control                 = N_max_control,
     post_prob_accept_alternative  = post_paa,                 # Posterior probability that alternative hypothesis is true
     est_final                     = mean(effect),             # Posterior Mean of treatment effect
-    stop_futility                 = stop_futility,            # Did the trial stop for futility
-    stop_expected_success         = stop_expected_success     # Did the trial stop for expected success
+    stop_futility                 = stop_futility,            # Did the trial stop for futility?
+    stop_expected_success         = stop_expected_success     # Did the trial stop for expected success?
     #MLE_est                      = MLE$coe[2],               # Treatment effect using MLE
     #MLE_est_interim              = MLE_int$coe[2]            # Treatment effect using MLE at interim analysis
   )
