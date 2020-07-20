@@ -98,49 +98,51 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="bayesct---tool-for-simulation-and-analysis-of-adaptive-bayesian-clinical-trials" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#bayesct---tool-for-simulation-and-analysis-of-adaptive-bayesian-clinical-trials" class="anchor"></a>bayesCT - Tool for Simulation and Analysis of Adaptive Bayesian Clinical Trials <img src="reference/figures/logo.png" align="right" width="150" height="150">
-</h1></div>
 
-<p><strong>Authors</strong>: Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson and Theodore Lystig</p>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div id="bayesct" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#bayesct" class="anchor"></a>bayesCT <img src="reference/figures/logo.png" align="right" width="150" height="150">
+</h1></div>
+<!-- badges: start -->
+
+</div>
+<div id="overview" class="section level1">
+<h1 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h1>
 <p><code>bayesCT</code> is a R package for simulation and analysis of adaptive Bayesian randomized controlled trials under a range of trial designs and outcome types. Currently, it supports Gaussian, binomial, and time-to-event. The <code>bayesCT</code> package website is available <a href="https://thevaachandereng.github.io/bayesCT/">here</a>. Please note this package is still under development.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div id="installation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h1>
 <p>Prior to analyzing your data, the R package needs to be installed. The easiest way to install <code>bayesCT</code> is through CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"bayesCT"</span>)</pre></div>
-<p>There are other additional ways to download <code>bayesCT</code>. The first option is most useful if want to download a specific version of <code>bayesCT</code> (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
+<p><code>bayesCT</code> can also be downloaded and installed via GitHub. The most useful if want to download a <em>specific</em> version of the package (which can be found at <a href="https://github.com/thevaachandereng/bayesCT/releases" class="uri">https://github.com/thevaachandereng/bayesCT/releases</a>):</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT@vx.xx.x"</span>)
 
 <span class="co"># or </span>
 
 <span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_version</a></span>(<span class="st">"bayesCT"</span>, <span class="kw">version</span> <span class="kw">=</span> <span class="st">"x.x.x"</span>, <span class="kw">repos</span> <span class="kw">=</span> <span class="st">"http://cran.us.r-project.org"</span>)</pre></div>
-<p>The second option is to download through GitHub:</p>
+<p>The latest developmental version of the package can be downloaded and installed by running:</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"thevaachandereng/bayesCT"</span>)</pre></div>
 <p>After successful installation, the package must be loaded into the working space:</p>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">bayesCT</span>)</pre></div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<div id="usage" class="section level1">
+<h1 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h1>
 <p>See the vignettes for usage instructions and example.</p>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
+<div id="code-of-conduct" class="section level1">
+<h1 class="hasAnchor">
+<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h1>
 <p>Please note that this project is released with a <a href="https://github.com/thevaachandereng/bayesCT/blob/master/CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<div id="license" class="section level1">
+<h1 class="hasAnchor">
+<a href="#license" class="anchor"></a>License</h1>
 <p><code>bayesCT</code> is available under the open source <a href="https://www.r-project.org/Licenses/GPL-3">GNU General Public License, version 3</a>.</p>
 </div>
-</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
