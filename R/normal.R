@@ -694,7 +694,7 @@ historical_normal <- function(mu0_treatment     = NULL,
                               weibull_shape     = 3,            # Weibull parameter
                               method            = "fixed",
                               .data             = NULL) {
-  .data$mu0_treatment       <- mu0_treatmen
+  .data$mu0_treatment       <- mu0_treatment
   .data$sd0_treatment       <- sd0_treatment
   .data$N0_treatment        <- N0_treatment
   .data$mu0_control         <- mu0_control
@@ -1064,8 +1064,3 @@ data_normal <- function(treatment, outcome, complete, .data = NULL){
   .data$complete  <- complete
   .data
 }
-
-
-
-
-

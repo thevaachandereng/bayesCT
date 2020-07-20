@@ -5,11 +5,10 @@
 #'
 #' @docType data
 #'
-#' @keywords dataset
-#'
 #' @usage data(binomialdata)
 #'
 #' @format A data frame with 300 rows and 4 variables:
+#'
 #' \describe{
 #'   \item{\code{id}}{
 #'     Patient ID in the trial.}

@@ -1,7 +1,7 @@
 #' Gaussian dataset for analyzing adaptive Bayesian trials
 #'
-#' @description A dataset containing the results of 300 patients with continuous (normal) outcome,
-#' the dataset is filled with loss to follow up.
+#' @description A dataset containing the results of 300 patients with continuous
+#'   (normal) outcome, the dataset is filled with loss to follow up.
 #'
 #' @docType data
 #'
@@ -10,6 +10,7 @@
 #' @usage data(normaldata)
 #'
 #' @format A data frame with 300 rows and 4 variables:
+#'
 #' \describe{
 #'   \item{\code{id}}{
 #'     Patient ID in the trial.}
