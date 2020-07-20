@@ -38,10 +38,9 @@ easiest way to install `bayesCT` is through CRAN:
 install.packages("bayesCT")
 ```
 
-There are other additional ways to download `bayesCT`. The first option
-is most useful if want to download a specific version of `bayesCT`
-(which can be found at
-<https://github.com/thevaachandereng/bayesCT/releases>):
+`bayesCT` can also be downloaded and installed via GitHub. The most
+useful if want to download a *specific* version of the package (which
+can be found at <https://github.com/thevaachandereng/bayesCT/releases>):
 
 ``` r
 devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
@@ -51,7 +50,8 @@ devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
 devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.r-project.org")
 ```
 
-The second option is to download through GitHub:
+The latest developmental version of the package can be downloaded and
+installed by running:
 
 ``` r
 devtools::install_github("thevaachandereng/bayesCT")
