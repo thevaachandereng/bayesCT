@@ -1,15 +1,24 @@
 ---
 title: "bayesCT: An R package for Simulation in Adaptive Bayesian Clinical Trials"
-author: "Thevaa Chandereng, Donald Musgrove, Tarek Haddad, Graeme Hickey, Timothy Hanson, Theodore Lystig"
+author: "Thevaa Chandereng, Donald Musgrove, Graeme L. Hickey"
 output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
   rmarkdown::html_vignette:
-    toc: yes
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r]
 vignette: >
-  %\VignetteIndexEntry{bayesian trial}
-  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Bayesian Adaptive Trials}
   %\VignetteEncoding{UTF-8}
----
-  
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---  
   
 ```{r setup, echo=FALSE, results="hide"}
 knitr::opts_chunk$set(
@@ -19,10 +28,11 @@ knitr::opts_chunk$set(
 )
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(43232)
+library(bayesCT)
 ```
 
-
 # Introduction
+
 Randomized controlled trials (RCT) are the gold standard of pharmaceutical and medical device clinical studies. In a two-armed RCT, subjects are randomized to an intervention arm, with the standard framework being the comparison of a new treatment to an alternative treatment (or no treatment at all). The majority of research in the design of RCTs and their application is based on the frequentist paradigm. In recent years, the adaptive Bayesian trial design approach has gained attention.
 
 Adaptive Bayesian trials provide added flexibility compared to conventional frequentist approaches in terms of the design and analysis of a clinical trial. Notably, adaptive Bayesian trials can:
@@ -30,62 +40,32 @@ Adaptive Bayesian trials provide added flexibility compared to conventional freq
 - Incorporate historical data, helping to reduce the sample size
 - Easily carry out interim analyses to facilitate stopping early for success or futility
 - Work with multiple treatment arms (versus a single control), allowing for dropping of demonstrably unsuccessful treatments
-- Alter the randomization ratio (e.g., treatment to control ratio) to improve trial efficiency or even to increase trial recruitment
+- Alter the randomization ratio (e.g. treatment to control ratio) to improve trial efficiency or even to increase trial recruitment
 
 A fundamental requirement of an adaptive trial is the *a priori* and interim evaluation of the operating characteristics, e.g., power and type 1 error. In adaptive trials, these operating characteristics generally do not have closed-form solutions; hence, simulation approaches are required. Simulation of adaptive Bayesian trial designs have historically been substantially more complex compared to frequentist approaches. This package removes this complexity obstacle and allows for simulation of adaptive Bayesian trials under a range of designs and outcome types.
 
 `bayesCT` is an R package for the simulation and analysis of adaptive Bayesian randomized controlled trials under a range of trial designs and outcome types. Currently, it supports continuous-valued and binary outcome data types, with time-to-event data following soon. The package permits interim analyses of early stopping for futility or success and allows the (optional) incorporation of historical data. Please note this package is still under development. 
 
-If you use `bayesCT` in published research, please cite: **TBA**.
-
 If after reading through this vignette you have questions or problems using `bayesCT`, please post issues at https://github.com/thevaachandereng/bayesCT/issues. This will notify the package maintainers and we can work to address the issue(s). Please note that comments and questions should **not** be emailed directly to the package authors.
-
-
-# Running bayesCT
-Prior to analyzing your data, the R package needs to be installed. The easiest way to install `bayesCT` is through CRAN:
-
-```{r, eval = FALSE, echo=TRUE}
-install.packages("bayesCT")
-```
-
-There are additional ways to download `bayesCT`. The first option is most useful for downloading a specific version of `bayesCT` (which can be found at https://github.com/thevaachandereng/bayesCT/releases):
-
-```{r, eval = FALSE, echo=TRUE}
-devtools::install_github("thevaachandereng/bayesCT@vx.xx.x")
-
-# or 
-
-devtools::install_version("bayesCT", version = "x.x.x", repos = "http://cran.us.r-project.org")
-```
-
-The second option is to download the most recent stable version through GitHub:
-
-```{r, cache=FALSE, warning=FALSE, comment=FALSE, eval=FALSE, echo=TRUE}
-devtools::install_github("thevaachandereng/bayesCT")
-```
-
-After successful installation, the package must be loaded into the working space:
-
-```{r lib, results="asis", eval=TRUE, echo=TRUE}
-library(bayesCT)
-```
-
 
 # Recruitment
 
-An importance aspect of clinical trials is the rate at which subjects are recruited into the trial. In `bayesCT`, the subject recruitment rate is assumed to follow a Poisson process. We assume trial recruitment to be an independent process, thus the ["memoryless property"](https://en.wikipedia.org/wiki/Memorylessness) modeling of subject recruitment is used. Since the subject recruitment rate can vary over time, we can account for differential rates over time. That is, we are not restricted to a homogeneous Poisson process. 
+An importance aspect of clinical trials is the rate at which subjects are recruited into the trial. In `bayesCT`, the subject recruitment rate is assumed to follow a Poisson process. We assume trial recruitment to be an independent process, thus the ["memoryless property"](https://en.wikipedia.org/wiki/Memorylessness) modelling of subject recruitment is used. Since the subject recruitment rate can vary over time, we can account for differential rates over time. That is, we are not restricted to a homogeneous Poisson process. 
 
-The `enrollment()` function is used to specify subject enrollment into the trial. The function assumes a piecewise stationary Poisson process. Using this processes gives the ability to specify different enrollment rates, i.e., the Poisson rates, at different time intervals. The first trial enrollment is assumed to occur at time zero. 
+The `enrollment()` function is used to specify subject enrollment into the trial. The function assumes a piecewise stationary Poisson process. Using this processes gives the ability to specify different enrollment rates, i.e. the Poisson rates, at different time intervals. The first trial enrollment is assumed to occur at time zero. 
 
 To illustrate, suppose we use a piecewise function to specify the change in enrollment rate over time:
-\[  \lambda = \left\{
+
+\[
+\lambda = \left\{
 \begin{array}{ll}
       0.3 & \text{time} \in [0, 5) \\
       0.7 & \text{time} \in [5, 10) \\
       0.9 & \text{time} \in [10, 15) \\
       1.2 & \text{time} \in [15, \infty) \\
 \end{array} 
-\right. \]
+\right.
+\]
 
 Then, to simulate individual patient enrollment dates with a sample size (`N_total`) of 50, we use
 
@@ -93,59 +73,56 @@ Then, to simulate individual patient enrollment dates with a sample size (`N_tot
 enrollment(param = c(0.3, 0.7, 0.9, 1.2), N_total = 50, time = c(5, 10, 15))
 ```
 
-
-# Randomization Scheme
+# Randomization scheme
 
 Following recruitment, the desired randomization allocation of the trial subjects must be specified. Complete randomization may not always be ideal due to the chance of drawing a large block of a single treatment arm, potentially impacting the time to enrollment completion. Therefore, a block randomization allocation may be preferable. 
 
 In `bayeCT`, the block randomization allocation specification allows for different randomization ratios, but they must be given in integer form. Additionally, the block size should be an integer that is divisible by the sum of the randomization allocation. For example,
 
-```{r, eval = FALSE, echo = TRUE}
+```{r, eval=FALSE, echo=TRUE}
 randomization(N_total = 140, block = 7, allocation = c(2, 1))
 ```
 
-will not work (and will return an error) because the sum of the allocation is not a multiple of the block, i.e., $2+1=3$ is not a multiple of $7$. Changing the block size to 6 will work:
+will not work (and will return an error) because the sum of the allocation is not a multiple of the block, i.e. $2 + 1 = 3$ is not a multiple of $7$. Changing the block size to 6 will work:
 
-```{r, eval = TRUE, echo = TRUE}
+```{r, eval=TRUE, echo=TRUE}
 randomization(N_total = 140, block = 6, allocation = c(2, 1))
 ```
 
-In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. Since $2+1 = 3$ is a multiple of the block size of 6, this allocation is valid.
+In the code above, the total sample size is 140, the block size is 6 and the randomization ratio is 2:1 for control to treatment. Since $2 + 1 = 3$ is a multiple of the block size of 6, this allocation is valid.
 
 Complete randomization can be performed by setting the block size equal to the total sample size:
  
-```{r, eval = TRUE, echo = TRUE}
+```{r, eval=TRUE, echo=TRUE}
 randomization(N_total = 120, block = 120, allocation = c(2, 1))
 ```
 
-
-
-# Incorporation of Historical Data
+# Incorporation of historical data
 
 The Bayesian attitude is to use all available data to address the scientific question under consideration. Most clinical trials are not conducted in a vacuum. Often, pilot studies are conducted in small sample sizes to obtain an estimate of parameters for a clinical trial, e.g., clinically relevant effect size, sample size determination, recruitment rates, etc. Besides pilot studies, the control and/or treatment are usually studied in early phase lab or bench settings. However, clinical trialists need to carefully consider the inclusion and exclusion criteria of historical data in a trial. The R package `bayesDP` is used as a computational engine for incorporating historical data into a trial design.
 
 The vignettes presented in the `bayesDP` package are a rich resource for understanding the discount function approach and its implementation. Interested readers can refer to the vignettes available at [https://CRAN.R-project.org/package=bayesDP](https://CRAN.R-project.org/package=bayesDP).
 
-
-
-# Early Stopping for Futility or Success
+# Early stopping for futility or expected success
 
 With adaptive Bayesian trials, the trial can be stopped early for success or futility. In `bayesCT`, early success is achieved if the "probability of success" exceeds a pre-specified threshold. Likewise, futility occurs if the "probability of futility" is below a pre-specified threshold. In both cases, the probabilities are computed by imputing subjects that may be loss to follow-up or have not yet achieved the follow-up. However, final posterior estimation uses complete data only. 
 
-## Success
+## Expected success
+
 The probability of stopping early for success is specified as
 
-$$Pr(\theta_T - \theta_C > \delta| y, y_0) > \Delta,$$
+\[
+Pr(\theta_T - \theta_C > \delta| y, y_0),
+\]
 
-where $\theta_T$ and $\theta_C$ are the posterior means of the treatment and control groups, respectively, $\delta$ is the difference margin (important in non-inferiority design), $y$ and $y_0$ are the current and historical data, respectively, and $\Delta$ is the specified success criteria. If this probability exceeds $\Delta$, the trial will stop enrollment for early success. The default success probability is 0.90. If stopping early for success is not desired, the probability can be set to 1.
-
+where $\theta_T$ and $\theta_C$ are the posterior means of the treatment and control groups, respectively, $\delta$ is the difference margin (important in non-inferiority design), $y$ and $y_0$ are the current and historical data, respectively. Letting $\Delta$ denote a pre-specified success criteria, if this probability exceeds $\Delta$, the trial will stop enrollment early for expected success. The default success probability is 0.90. If stopping early for success is not desired, the probability can be set to 1.
 
 ## Futility
+
 The probability of stopping for futility is specified as
 
+\[
+Pr(\theta_T - \theta_C > \delta| y, y_0).
+\]
 
-$$Pr(\theta_T - \theta_C > \delta| y, y_0) < \omega,$$
-
-where $\omega$ is the specified futility criteria. Now, if this probability is below $\omega$, the trial will stop enrollment for futility. The default futility rate is set to 0.10. If stopping early for futility is not desired, the probability can be set to 0.
-
-
+Letting $\omega$ denote a pre-specified futility criteria, if this probability is below $\omega$, the trial will stop enrollment for futility. The default futility rate is set to 0.10. If stopping early for futility is not desired, the probability can be set to 0.

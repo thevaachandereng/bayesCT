@@ -10,7 +10,7 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
-tags: [r, binomial]
+tags: [r, normal]
 vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteIndexEntry{Continuous Outcomes}
