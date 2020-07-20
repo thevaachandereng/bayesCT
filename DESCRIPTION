@@ -3,19 +3,19 @@ Type: Package
 Title: Simulation and Analysis of Adaptive Bayesian Clinical Trials 
 Version: 0.99.3.9000
 Authors@R: c(person("Thevaa", "Chandereng", email = "chandereng@wisc.edu",
-                 role = c("aut", "cre", "cph"),
+                 role = c("aut", "cre"),
                  comment = c(ORCID = "0000-0003-4078-9176")), 
              person("Donald", "Musgrove",
-                 role = c("aut", "cph")), 
+                 role = "aut"), 
              person("Tarek", "Haddad", email = "tarek.d.haddad@medtronic.com",
-                 role = c("aut", "cph")),
+                 role = "aut"),
              person("Graeme L.", "Hickey", email = "graemeleehickey@gmail.com",
-                 role = c("aut", "cph"),
+                 role = "aut",
                  comment = c(ORCID = "0000-0002-4989-0054")), 
              person("Timothy", "Hanson", email = "tim.hanson2@medtronic.com",
-                 role = c("aut", "cph")),
+                 role = "aut"),
              person("Theodore", "Lystig", email = "theodore.lystig@medtronic.com",
-                 role = c("aut", "cph")))
+                 role = "aut"))
 Description: Simulation and analysis of Bayesian adaptive clinical trials for binomial, continuous, and time-to-event data types, 
       incorporates historical data and allows early stopping for futility or early success. The package uses novel 
       and efficient Monte Carlo methods for estimating Bayesian posterior probabilities, evaluation of loss to follow up, 
