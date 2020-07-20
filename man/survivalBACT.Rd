@@ -45,20 +45,20 @@ survivalBACT(
 
 \item{N_total}{scalar. Total sample size.}
 
-\item{breaks}{vector. Breaks (interval starts) used to compose the breaks of the piecewise
-exponential model. Do not include zero. Default breaks are the quantiles of the input
-times.}
+\item{breaks}{vector. Breaks (interval starts) used to compose the breaks of
+the piecewise exponential model. Do not include zero. Default breaks are
+the quantiles of the input times.}
 
-\item{time0}{vector. Historical exposure time for the subjects. It must be the same length
-as the treatment variable.}
+\item{time0}{vector. Historical exposure time for the subjects. It must be
+the same length as the treatment variable.}
 
-\item{treatment0}{vector. the historical treatment assignment for patients,
-1 for treatment group and 0 for control group.}
+\item{treatment0}{vector. the historical treatment assignment for patients, 1
+for treatment group and 0 for control group.}
 
 \item{event0}{vector. Historical status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
+Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For
+censored data, the status indicator is 0 = right censored, 1 = event at
+time. Although unusual, the event indicator can be omitted, in which case
 all subjects are assumed to have an event.}
 
 \item{lambda}{vector. Enrollment rates across simulated enrollment times. See
@@ -73,8 +73,8 @@ maximum sample size should not be included.}
 
 \item{EndofStudy}{scalar. Length of the study.}
 
-\item{prior}{vector. Prior values of the gamma rate, Gamma(a0, b0). The default is
-set to Gamma(.1, .1).}
+\item{prior}{vector. Prior values of the gamma rate, Gamma(a0, b0). The
+default is set to Gamma(0.1, 0.1).}
 
 \item{block}{scalar. Block size for generating the randomization schedule.}
 
@@ -147,7 +147,7 @@ and holds it fixed throughout the analysis.  See the the
 details.}
 }
 \value{
-a list of output for a single trial simulation.
+A list of output for a single trial simulation.
 \describe{
   \item{\code{lambda_treatment}}{
     vector. The input parameter of constant hazard rates in the
@@ -168,7 +168,7 @@ a list of output for a single trial simulation.
     scalar. The margin input value of difference between mean estimate of treatment
      and mean estimate of the control.}
   \item{\code{alternative}}{
-    character. The input parameter of alternative hypothesis. }
+    character. The input parameter of alternative hypothesis.}
   \item{\code{interim_look}}{
     vector. The sample size for each interim look.}
   \item{\code{N_treatment}}{
@@ -185,7 +185,7 @@ a list of output for a single trial simulation.
     each simulation.}
   \item{\code{N_enrolled}}{
     vector. The number of patients enrolled in the trial (sum of control
-    and experimental group for each simulation. )}
+    and experimental group for each simulation).}
   \item{\code{N_complete}}{
     scalar. The number of patients who completed the trial and had no
     loss to follow-up.}

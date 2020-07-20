@@ -18,17 +18,17 @@ historical_survival(
 )
 }
 \arguments{
-\item{time}{vector. exposure time for the subjects. It must be the same length
-as the treatment variable.}
+\item{time}{vector. exposure time for the subjects. It must be the same
+length as the treatment variable.}
 
 \item{treatment}{vector. Treatment assignment for patients, 1 for treatment
 group and 0 for control group}
 
-\item{event}{vector. The status indicator, normally 0=alive, 1=dead.
-Other choices are TRUE/FALSE (TRUE = death) or 1/2 (2=death).
-For censored data, the status indicator is 0=right censored, 1 = event at time.
-Although unusual, the event indicator can be omitted, in which case
-all subjects are assumed to have an event.}
+\item{event}{vector. The status indicator, normally 0=alive, 1=dead. Other
+choices are TRUE/FALSE (TRUE = death) or 1/2 (2 = death). For censored
+data, the status indicator is 0 = right censored, 1 = event at time.
+Although unusual, the event indicator can be omitted, in which case all
+subjects are assumed to have an event.}
 
 \item{discount_function}{character. If incorporating historical data, specify
 the discount function. Currently supports the Weibull function
@@ -71,10 +71,12 @@ and holds it fixed throughout the analysis.  See the the
 \code{vignette("bdpsurvival-vignette", package="bayesDP")} for more
 details.}
 
-\item{.data}{NULL. stores the historical time, treatment and event , please do not fill it in.}
+\item{.data}{NULL. Stores the historical time, treatment and event. Should
+not be edited by the user.}
 }
 \value{
-a list with historical data for time-to-event outcome with the discount function.
+A list with historical data for time-to-event outcome with the
+  discount function.
 }
 \description{
 Wrapper function for historical data from time-to-event outcome.

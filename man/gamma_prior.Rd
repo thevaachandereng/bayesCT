@@ -13,14 +13,17 @@ gamma_prior(a0 = 0.1, b0 = 0.1, .data = NULL)
 \item{b0}{numeric. The scale parameter in the beta distribution
 (\code{beta(a0, b0)}).}
 
-\item{.data}{NULL. stores the gamma prior rate, please do not fill it in.}
+\item{.data}{NULL. Stores the gamma prior rate. Should not be edited by the
+user.}
 }
 \value{
-a list with vector of gamma rate for the gamma prior for treatment and control group.
+A list with vector of gamma rate for the gamma prior for treatment
+  and control group.
 }
 \description{
 Wrapper function for gamma prior \code{Gamma(a0, b0)}.
 }
 \examples{
-gamma_prior(a0 = .1, b0 = .1)
+gamma_prior(a0 = 0.1, b0 = 0.1)
+
 }

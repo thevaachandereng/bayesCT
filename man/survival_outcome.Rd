@@ -2,7 +2,8 @@
 % Please edit documentation in R/survival.R
 \name{survival_outcome}
 \alias{survival_outcome}
-\title{Piecewise constant hazard rates and the cutpoint for control and treatment group}
+\title{Piecewise constant hazard rates and the cutpoint for control and
+  treatment group}
 \usage{
 survival_outcome(
   hazard_treatment = NULL,
@@ -18,14 +19,16 @@ survival_outcome(
 
 \item{hazard_control}{vector. Constant hazard rates under the control arm.}
 
-\item{.data}{NULL. stores the hazard rates and cutpoint, please do not fill it in.}
+\item{.data}{NULL. Stores the hazard rates and cutpoint. Should not be edited
+by the user.}
 }
 \value{
-a list with hazard rates and cutpoint for control and treatment group.
+A list with hazard rates and cutpoint for control and treatment
+  group.
 }
 \description{
-Wrapper function for the piecewise constant hazard rates and the cutpoint
-for control and treatment group.
+Wrapper function for the piecewise constant hazard rates and the
+  cutpoint for control and treatment group.
 }
 \examples{
 survival_outcome(hazard_treatment = 0.06,

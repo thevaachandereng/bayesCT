@@ -392,6 +392,8 @@ normalBACT <- function(
         ### Futility computations
         ##########################################################################
 
+        # TBA
+
         # For patients not enrolled, impute the outcome
         data_control_futility_impute <- data_success_impute %>%
           filter(treatment == 0) %>%
@@ -567,7 +569,10 @@ normalBACT <- function(
                           weibull_shape     = weibull_shape,
                           method            = method)
 
-  # Format and output results
+  ##############################################################################
+  ### Summary at the interim analysis
+  ##############################################################################
+
   # Posterior effect size: test vs. control or treatment itself
   if (!is.null(mu_control)) {
     if (alternative == "two-sided") {
